@@ -1,5 +1,7 @@
 package com.example.colors2web.zummix_app.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.Order;
 import com.example.colors2web.zummix_app.R;
 
@@ -14,8 +17,10 @@ import java.util.List;
 
 public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetailsAdapter.DetailsHolder> {
     List<Order> ordList;
+    Context mcontext;
 
-    public CustomerDetailsAdapter(List<Order> ordList) {
+    public CustomerDetailsAdapter(Context mcontext,List<Order> ordList)
+    {   this.mcontext =mcontext;
         this.ordList = ordList;
     }
 
@@ -58,6 +63,15 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
                     break;
 
         }
+        final String O_no_by_group= String.valueOf(ord.getId());
+        holder.t1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(mcontext, OrderSearch2Activity.class);
+                in.putExtra("O_no_by_group",O_no_by_group);
+                mcontext.startActivity(in);
+            }
+        });
 
     }
 

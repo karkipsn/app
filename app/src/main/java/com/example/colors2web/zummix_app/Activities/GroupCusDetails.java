@@ -47,7 +47,7 @@ public class GroupCusDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mrecycleview = findViewById(R.id.recycler_view_second);
-        cadapter = new CustomerDetailsAdapter(orderList) ;
+        cadapter = new CustomerDetailsAdapter(getApplicationContext(),orderList) ;
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String email = preferences.getString("email", "");
@@ -102,6 +102,7 @@ public class GroupCusDetails extends AppCompatActivity {
                             String zip = order.get(i).getCustomerZip();
                             String ship_method = order.get(i).getShipMethod();
                             String order_date = order.get(i).getOrderDate();
+                            String o_id = String.valueOf(order.get(i).getId());
 
 
                             dis.setOrderNumber(orders);
@@ -114,6 +115,7 @@ public class GroupCusDetails extends AppCompatActivity {
                             dis.setCustomerZip(zip);
                             dis.setShipMethod(ship_method);
                             dis.setOrderDate(order_date);
+                            dis.setId(Long.valueOf(o_id));
 
                             orderList.add(dis); // must be the object of empty list initiated
 

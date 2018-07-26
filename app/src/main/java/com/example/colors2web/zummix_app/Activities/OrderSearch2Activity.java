@@ -84,10 +84,25 @@ public class OrderSearch2Activity extends AppCompatActivity {
         Log.d("PathMail", email);
 
         final Intent i = getIntent();
-        final String Path = i.getExtras().getString("OPath");
 
-        Log.d("Path", Path);
+        if (i != null) {
 
+            final String Path = i.getExtras().getString("OPath");
+            if (Path != null) {
+                call(email, password, Path);
+            }
+
+
+            final String Path2 = i.getExtras().getString("O_no_by_group");
+            if (Path2 != null) {
+                call_next(email, password, Long.valueOf(Path2));
+            }
+
+        }
+
+    }
+
+    private void call(final String email, final String password, String Path) {
 
         Call<OrderSearchResponse> call = apiInterface.getOrder1(email, password, Path);
         call.enqueue(new Callback<OrderSearchResponse>() {
@@ -105,7 +120,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
 //                        batch.setText("Batch Number : " + order.getOrderNumber());
                         id = order.getId();
                         call_next(email, password, id);
-
 
                         SharedPreferences preferences1 = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
                         SharedPreferences.Editor editor = preferences1.edit();

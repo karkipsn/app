@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#EB0029</color>
+    <color name="colorPrimaryDark">#EB0029</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+
+    <!--<color name="colorPrimary">#EB0029</color>-->
+    <!--&lt;!&ndash;<color name="colorPrimaryDark">#00A1FF</color>&ndash;&gt;-->
+    <!--<color name="colorPrimaryDark">#c33e3a</color>-->
+    <color name="colorAccent">#000000 </color>
+    <color name="colorStatusBar">#c33e3a</color>
+    <color name="viewBack">#f1f5f8</color>
+
+
+    <color name="green_light">#00ff7f </color>
+    <color name="yellow">#ffff00</color>
+    <color name="blue">#0066ff</color>
+    <color name="green_dark">#00cc66</color>
+    <color name="purple">#663399</color>
+    <color name="blue_hard">#0066ff</color>
+    <color name="pink">#ff0066</color>
+    <color name="crimson">#ff0066</color>
+
+
+
+</resources>

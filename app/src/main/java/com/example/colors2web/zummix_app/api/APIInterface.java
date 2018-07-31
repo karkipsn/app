@@ -58,6 +58,11 @@ public interface APIInterface {
     @GET("orders/searchOrderByTrackingNumber/{order_number}")
     Call<OrdertrackResponse> getOrderByTrack(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
 
+    // tracking number merge on dropdown search api
+    @GET("orders/searchOrderByTrackingNumber/{order_number}")
+    Call<Order2Response> getOrderByTrackingNumber(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
+
+
 
     // box search api =>
     @GET("boxes/masterBoxes/{order_number}")

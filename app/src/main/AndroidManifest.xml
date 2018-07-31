@@ -59,6 +59,23 @@
 
         </activity>
 
+        <activity android:name=".Activities.TrackOrderSearchActivity"
+            android:label="Order Details"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+        </activity>
+
+        <activity android:name=".Activities.ItemSearchActivity"
+            android:label="Item Details"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+
+        </activity>
+
+        <activity android:name=".Activities.BoxSearchActivity"
+            android:label="Order Details"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,7 +23,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,14 +49,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.colors2web.zummix_app.R.layout.spinner;
+
 public class OrderGroupByCustomerActivity extends AppCompatActivity {
-    
+
     android.support.v7.widget.Toolbar toolbar;
 
     APIInterface apiInterface;
     RecyclerView mrecyclerView;
     GroupByCusADapter radapter;
     SearchView searchView;
+    String spine;
 
     List<Order> CusList = new ArrayList<>();
 
@@ -63,9 +69,9 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grp_by_customer);
 
 
-       toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -74,12 +80,12 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         final String password = preferences.getString("password", "");
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        radapter = new GroupByCusADapter(getApplicationContext(),CusList);
+        radapter = new GroupByCusADapter(getApplicationContext(), CusList);
 
-        mrecyclerView =  findViewById(R.id.recycler_view_first);
+        mrecyclerView = findViewById(R.id.recycler_view_first);
 
 //        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         mrecyclerView.setHasFixedSize(true);
         mrecyclerView.setLayoutManager(layoutManager);
 
@@ -92,15 +98,46 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         mrecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mrecyclerView.setAdapter(radapter);
-        loadAdapter(email,password);
+        loadAdapter(email, password);
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
-        // Associate searchable configuration with the SearchView
+        Spinner spinner = (Spinner) menu.findItem(R.id.mspinner).getActionView();
+//        spinner.setDropDownWidth(20);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_array, android.R.layout.simple_spinner_item);
+
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setPopupBackgroundResource(R.color.viewBack);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spine = parent.getItemAtPosition(position).toString();
+                if (spine != null) {
+                    Log.d("Spine",spine);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spine = parent.getItemAtPosition(0).toString();
+                if (spine != null) {
+                    Log.d("Spine1",spine);
+                }
+            }
+        });
+
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
@@ -111,12 +148,7 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Spinner spinner = (Spinner)findViewById(R.id.sp);
-//                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, android.R.id.text1);
-//                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spinner.setAdapter(spinnerAdapter);
-//                spinnerAdapter.add("value");
-//                spinnerAdapter.notifyDataSetChanged();
+
 
             }
         });
@@ -127,11 +159,38 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
 
                 String OPath = String.valueOf(searchView.getQuery());
 
-                Intent intent = new Intent(getApplicationContext(),OrderSearch2Activity.class);
-                intent.putExtra("OPath",OPath);
-                startActivity(intent);
+                switch(spine){
+                    case "Order":
+                        Intent intent = new Intent(getApplicationContext(), OrderSearch2Activity.class);
+                        intent.putExtra("OPath", OPath);
+                        startActivity(intent);
+                        break;
 
-               return false;
+                    case "Item":
+                        Intent intent1 = new Intent(getApplicationContext(), ItemSearchActivity.class);
+                        intent1.putExtra("OPath", OPath);
+                        startActivity(intent1);
+                        break;
+
+                    case "Tracking Number":
+                        Intent intent2 = new Intent(getApplicationContext(), TrackOrderSearchActivity.class);
+                        intent2.putExtra("OPath", OPath);
+                        startActivity(intent2);
+                        break;
+
+                    case "Boxes":
+                        Intent intent3 = new Intent(getApplicationContext(), OrderSearch2Activity.class);
+                        intent3.putExtra("OPath", OPath);
+                        startActivity(intent3);
+                        break;
+
+                    case "Barcode":
+                        Intent barcode = new Intent(getApplicationContext(),BarcodeMain.class);
+                        startActivity(barcode);
+                }
+
+
+                return false;
             }
 
             @Override
@@ -139,9 +198,10 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
                 return false;
             }
 
+        });
+        return true;
 
-    });
-        return true;}
+    }
 
 
     @Override
@@ -149,15 +209,17 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            return true;
+            case R.id.mspinner:
+                return true;
+
         }
-
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -174,9 +236,10 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
     private void loadAdapter(String email, String password) {
 
-        Call<OrdGrpByCus> call = apiInterface.getOrdersbyGroup(email,password);
+        Call<OrdGrpByCus> call = apiInterface.getOrdersbyGroup(email, password);
         call.enqueue(new Callback<OrdGrpByCus>() {
             @Override
             public void onResponse(Call<OrdGrpByCus> call, Response<OrdGrpByCus> response) {
@@ -243,3 +306,8 @@ public class OrderGroupByCustomerActivity extends AppCompatActivity {
         });
     }
 }
+//TODO: 1.progress dailog implementing
+//TODO: 2. Popup modal customization
+//TODO: 3.Data loading in popup and the fragments of the view pager
+//TODO: 4.foldersand subfolders of pckage to handle the layouts (to organize the certain Activity)
+//TODO: 5. Optimizing codes

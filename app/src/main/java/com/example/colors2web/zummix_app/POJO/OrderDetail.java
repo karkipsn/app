@@ -1,9 +1,11 @@
 
 package com.example.colors2web.zummix_app.POJO;
 
+
 import com.google.gson.annotations.SerializedName;
 
-public class OrderTDetails {
+
+public class OrderDetail {
 
     @SerializedName("applied_credit")
     private String mAppliedCredit;

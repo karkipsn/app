@@ -7,12 +7,11 @@
         android:title="Search"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
-
-    <item android:id="@+id/myspinner"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Spinner"
+    <item
+        android:id="@+id/mspinner"
+        android:title=" Spinner"
+        app:actionViewClass="android.widget.Spinner"
         app:showAsAction="always"
-       
-        />
+        android:visible="true"/>
 
 </menu>

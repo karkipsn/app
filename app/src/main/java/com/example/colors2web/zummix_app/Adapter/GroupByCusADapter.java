@@ -5,28 +5,23 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.colors2web.zummix_app.Activities.GroupCusDetails;
-import com.example.colors2web.zummix_app.Activities.OrderGroupByCustomerActivity;
+import com.example.colors2web.zummix_app.POJO.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.List;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class GroupByCusADapter extends RecyclerView.Adapter<GroupByCusADapter.GroupHolder> {
     private Context mcontext;

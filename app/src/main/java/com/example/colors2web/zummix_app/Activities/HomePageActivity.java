@@ -19,10 +19,10 @@ import com.example.colors2web.zummix_app.POJO.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.FieldOffice;
 import com.example.colors2web.zummix_app.POJO.MasterBox;
 import com.example.colors2web.zummix_app.POJO.MasterBoxResponse;
+import com.example.colors2web.zummix_app.POJO.OrderDetail;
 import com.example.colors2web.zummix_app.POJO.OrderDetails;
 import com.example.colors2web.zummix_app.POJO.OrderSearchResponse;
 import com.example.colors2web.zummix_app.POJO.OrderShippingAddress;
-import com.example.colors2web.zummix_app.POJO.OrderTDetails;
 import com.example.colors2web.zummix_app.POJO.OrdertrackResponse;
 import com.example.colors2web.zummix_app.POJO.ProSearchRes;
 import com.example.colors2web.zummix_app.R;
@@ -193,12 +193,12 @@ public class HomePageActivity extends AppCompatActivity {
 
                         if (response.isSuccessful()) {
                             OrdertrackResponse resp1 = response.body();
-                            List<OrderTDetails> orderList = (List<OrderTDetails>) resp1.getOrderDetails();
+                            List<OrderDetail> orderList = (List<OrderDetail>) resp1.getOrderDetails();
 
                             String displayResponse = "";
 
                             if (orderList != null) {
-                                for (OrderTDetails order : orderList) {
+                                for (OrderDetail order : orderList) {
 
                                     displayResponse = "Order Details:" + "\n" +
                                             "id: " + order.getId() + "\n" +

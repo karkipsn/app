@@ -57,7 +57,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    Long id;
     Bundle bundle;
 
     @Override
@@ -98,6 +97,16 @@ public class OrderSearch2Activity extends AppCompatActivity {
                 call_next(email, password, Long.valueOf(Path2));
             }
 
+            final String Path3 = i.getExtras().getString("id1");
+            if (Path3 != null) {
+                call_next(email, password, Long.valueOf(Path3));
+            }
+
+            final String Path4 = i.getExtras().getString("tadpt_id");
+            if (Path3 != null) {
+                call_next(email, password, Long.valueOf(Path4));
+            }
+
         }
 
     }
@@ -116,16 +125,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                     if (order != null) {
 
-//                        head.setText("Order Details Of " + order.getOrderNumber());
-//                        batch.setText("Batch Number : " + order.getOrderNumber());
-                        id = order.getId();
-                        call_next(email, password, id);
-
-                        SharedPreferences preferences1 = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
-                        SharedPreferences.Editor editor = preferences1.edit();
-                        editor.putLong("id", id);
-                        editor.apply();
-
+                      Long  id1 = order.getId();
+                        call_next(email, password, id1);
 
                     } else {
                         String d = response.body().getMessage();
@@ -159,7 +160,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
     }
 
 
-    private void call_next(String email, String password, Long id) {
+    private void call_next(String email, String password, final Long id) {
 
         Call<Order2Response> call = apiInterface.getsecsearch(email, password, id);
 
@@ -174,8 +175,15 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                     if (order != null) {
 
+                       Long id = order.getOrder().getId();
                         head.setText(String.valueOf(order.getOrder().getId()));
                         batch.setText("Batch Number : " + order.getOrder().getBatchNumber());
+
+                        SharedPreferences preferences1 = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                        SharedPreferences.Editor editor = preferences1.edit();
+                        editor.putLong("id", id);
+                        editor.apply();
+
 
                         //bundle
                         bundle = new Bundle();

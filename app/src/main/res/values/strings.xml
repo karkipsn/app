@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Zummix_App</string>
+
+
+    <string-array name="spinner_array">
+        <item>Order</item>
+        <item>Item</item>
+        <item>Tracking Number</item>
+        <item>Boxes</item>
+
+    </string-array>
 </resources>

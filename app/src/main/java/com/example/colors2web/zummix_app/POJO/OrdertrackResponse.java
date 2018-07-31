@@ -2,16 +2,16 @@
 package com.example.colors2web.zummix_app.POJO;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings("unused")
 public class OrdertrackResponse {
 
     @SerializedName("message")
     private String mMessage;
     @SerializedName("orderDetails")
-    private List<OrderTDetails> mOrderDetails;
+    private List<OrderDetail> mOrderDetails;
     @SerializedName("returnType")
     private String mReturnType;
 
@@ -23,12 +23,12 @@ public class OrdertrackResponse {
         mMessage = message;
     }
 
-    public List<OrderTDetails> getOrderDetails() {
+    public List<OrderDetail> getOrderDetails() {
         return mOrderDetails;
     }
 
-    public void setOrderDetails(List<OrderTDetails> orderTDetails) {
-        mOrderDetails = orderTDetails;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        mOrderDetails = orderDetails;
     }
 
     public String getReturnType() {

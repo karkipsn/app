@@ -9,6 +9,8 @@
     <dimen name="custom_tab_layout_height">72dp</dimen>
     <dimen name="btn_margin_top">10dp</dimen>
     <dimen name="toolbar_top">56dp</dimen>
+    <dimen name="activity_horizontal_margin_narrow">6dp</dimen>
+
 
 
 

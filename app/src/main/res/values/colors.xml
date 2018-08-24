@@ -11,6 +11,7 @@
     <color name="colorAccent">#000000 </color>
     <color name="colorStatusBar">#c33e3a</color>
     <color name="viewBack">#f1f5f8</color>
+    <color name="colorAccentSecondary">#ad1a7f</color>
 
 
     <color name="green_light">#00ff7f </color>
@@ -21,6 +22,23 @@
     <color name="blue_hard">#0066ff</color>
     <color name="pink">#ff0066</color>
     <color name="crimson">#ff0066</color>
+
+
+
+    <color name="primary">#E43F3F</color>
+    <color name="primary_dark">#E12929</color>
+    <color name="primary_darker">#CC1D1D</color>
+    <color name="accent">#FFFFFF</color>
+
+    <color name="black">#000000</color>
+    <color name="jet">#222222</color>
+    <color name="oil">#333333</color>
+    <color name="monsoon">#777777</color>
+    <color name="jumbo">#888888</color>
+    <color name="aluminum">#999999</color>
+    <color name="base">#AAAAAA</color>
+    <color name="iron">#CCCCCC</color>
+    <color name="white">#FFFFFF</color>
 
 
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/veiw_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/frag_layout"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/textview"
+                        android:layout_height="match_parent"
+                        android:text="Select"/>
+
+                    <Spinner
+                        android:id="@+id/myspinnerz"
+                        android:layout_width="45sp"
+                        android:paddingTop="70dp"
+                        android:layout_height="match_parent"
+                        android:drawSelectorOnTop="false"
+                        android:entries="@array/spinner_array"
+                        />
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_baccho"
+                    android:layout_width="260dp"
+                    android:layout_height="@dimen/toolbar_top"
+                    android:background="@color/colorPrimary"
+                    app:titleMargin="@dimen/activity_horizontal_margin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageview_barcode"
+                    android:src="@drawable/icon_barcode1"/>
+
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+</LinearLayout>

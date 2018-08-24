@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_toolbar"
+            android:paddingStart="0dp"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/toolbar_top"
+                android:background="@color/colorPrimary"
+                app:titleMargin="@dimen/activity_horizontal_margin_narrow"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/maintextview"
+                        android:textColor="@color/white"
+                        android:background="@drawable/textview"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:paddingBottom="5dp"
+                        android:layout_alignParentTop="true"
+                        android:text="Search by"/>
+
+                    <Spinner
+                        android:layout_below="@id/maintextview"
+                        android:id="@+id/mainspinnerz"
+                        android:layout_width="90dp"
+                        android:paddingTop="0dp"
+                        android:background="@drawable/spinner"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:paddingStart="0dp"
+                        android:drawSelectorOnTop="true"
+                        android:entries="@array/spinner_array"
+                        />
+                    <com.example.colors2web.zummix_app.EditTextWithClear
+                        android:layout_width="260dp"
+                        android:id="@+id/main_search_text"
+                        android:layout_toRightOf="@id/mainspinnerz"
+                        android:visibility="gone"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:actionLayout="@layout/action_item_edit_text"
+                        android:layout_height="match_parent" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:id="@+id/main_barcode"
+                        android:src="@drawable/icon_barcode1"
+                        android:layout_height="match_parent"
+                        android:foregroundGravity="right"
+                        android:layout_toEndOf="@id/main_search_text"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Customer*"
+                android:layout_gravity="top"
+                android:id="@+id/heading_text"/>
+
+            <!--<Spinner-->
+            <!--android:id="@+id/item_dr_spinner"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="left"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--/>-->
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/heading_text"
+                android:id="@+id/item_dr_spinner"
+                android:layout_gravity="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:dropDownHeight="155dp"
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
+                />
+        </RelativeLayout>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/pick_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:hint="From" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/pick_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:hint="To" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_pick_submit"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_round"
+        android:text="Submit"
+        android:textColor="@color/textColorPrimary"
+        android:textStyle="bold" />
+
+</LinearLayout>

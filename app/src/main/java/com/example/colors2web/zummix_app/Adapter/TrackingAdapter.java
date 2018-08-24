@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
-import com.example.colors2web.zummix_app.POJO.OrderDetail;
+import com.example.colors2web.zummix_app.POJO.OrderTrack.OrderDetail;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.List;
-
-import static com.example.colors2web.zummix_app.R.layout.activity_tracking_details;
 
 public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.TrackingHolder> {
     List<OrderDetail>Olist;

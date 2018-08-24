@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/editInput"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:hint="Search "
+        android:singleLine="true"
+        android:background="@android:color/white"
+        android:textColorHint="#BBBBBB"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:padding="6dp"/>
+
+</android.support.constraint.ConstraintLayout>

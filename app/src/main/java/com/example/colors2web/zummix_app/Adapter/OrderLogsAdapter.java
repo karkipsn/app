@@ -110,7 +110,7 @@ public class OrderLogsAdapter extends RecyclerView.Adapter<OrderLogsAdapter.LogV
                 break;
 
             default:
-                holder.ord_status.setText("Default");
+                holder.ord_status.setText(log.getOrderNumber());
                 holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.yellow));
                 break;
         }
@@ -119,7 +119,6 @@ public class OrderLogsAdapter extends RecyclerView.Adapter<OrderLogsAdapter.LogV
 
         holder.event_by.setText(log.getEventBy());
         holder.event_at.setText(log.getUpdatedAt());
-
 
     }
 

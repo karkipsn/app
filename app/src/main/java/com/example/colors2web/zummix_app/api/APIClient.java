@@ -21,6 +21,11 @@ public class APIClient {
                 .setLenient()
                 .create();
 
+//        Gson b_deserializer = new GsonBuilder().setLenient()
+//                .registerTypeAdapter(OrderDetails.class, new BoxdeSerializer()).
+//                        create();
+
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -34,8 +39,10 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://4c010c19.ngrok.io/zummix-api/public/")
+               .baseUrl("https://fcd17732.ngrok.io/zummix-api/public/")
+//              .baseUrl("https://zumsapi.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addConverterFactory(GsonConverterFactory.create(b_deserializer))
                 .client(client)
                 .build();
 

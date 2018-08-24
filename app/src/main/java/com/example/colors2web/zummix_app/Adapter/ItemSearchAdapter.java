@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.colors2web.zummix_app.POJO.CustomerItem;
+import com.example.colors2web.zummix_app.POJO.ProductSearch.CustomerItem;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.List;

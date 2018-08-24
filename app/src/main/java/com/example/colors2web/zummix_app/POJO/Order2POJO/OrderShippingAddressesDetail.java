@@ -1,10 +1,13 @@
 
 package com.example.colors2web.zummix_app.POJO.Order2POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 
-public class OrderShippingAddressesDetail {
+public class OrderShippingAddressesDetail implements Parcelable {
 
     @SerializedName("created_at")
     private String mCreatedAt;
@@ -48,6 +51,61 @@ public class OrderShippingAddressesDetail {
     private String mUpdatedAt;
     @SerializedName("updated_by")
     private Long mUpdatedBy;
+
+    public OrderShippingAddressesDetail() {
+
+    }
+
+    protected OrderShippingAddressesDetail(Parcel in) {
+        mCreatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mCreatedBy = null;
+        } else {
+            mCreatedBy = in.readLong();
+        }
+        mCustomerAddress1 = in.readString();
+        mCustomerAddress2 = in.readString();
+        mCustomerCity = in.readString();
+        mCustomerCountry = in.readString();
+        mCustomerEmail = in.readString();
+        mCustomerFname = in.readString();
+        mCustomerLname = in.readString();
+        mCustomerOfficeName = in.readString();
+        mCustomerPhone1 = in.readString();
+        mCustomerPhone2 = in.readString();
+        mCustomerState = in.readString();
+        mCustomerZip = in.readString();
+        mDeptCode = in.readString();
+        if (in.readByte() == 0) {
+            mId = null;
+        } else {
+            mId = in.readLong();
+        }
+        mNote = in.readString();
+        if (in.readByte() == 0) {
+            mOrderId = null;
+        } else {
+            mOrderId = in.readLong();
+        }
+        mUpdatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mUpdatedBy = null;
+        } else {
+            mUpdatedBy = in.readLong();
+        }
+    }
+
+    public static final Creator<OrderShippingAddressesDetail> CREATOR = new Creator<OrderShippingAddressesDetail>() {
+        @Override
+        public OrderShippingAddressesDetail createFromParcel(Parcel in) {
+            return new OrderShippingAddressesDetail(in);
+        }
+
+        @Override
+        public OrderShippingAddressesDetail[] newArray(int size) {
+            return new OrderShippingAddressesDetail[size];
+        }
+    };
 
     public String getCreatedAt() {
         return mCreatedAt;
@@ -217,4 +275,52 @@ public class OrderShippingAddressesDetail {
         mUpdatedBy = updatedBy;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mCreatedAt);
+        if (mCreatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mCreatedBy);
+        }
+        dest.writeString(mCustomerAddress1);
+        dest.writeString(mCustomerAddress2);
+        dest.writeString(mCustomerCity);
+        dest.writeString(mCustomerCountry);
+        dest.writeString(mCustomerEmail);
+        dest.writeString(mCustomerFname);
+        dest.writeString(mCustomerLname);
+        dest.writeString(mCustomerOfficeName);
+        dest.writeString(mCustomerPhone1);
+        dest.writeString(mCustomerPhone2);
+        dest.writeString(mCustomerState);
+        dest.writeString(mCustomerZip);
+        dest.writeString(mDeptCode);
+        if (mId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mId);
+        }
+        dest.writeString(mNote);
+        if (mOrderId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mOrderId);
+        }
+        dest.writeString(mUpdatedAt);
+        if (mUpdatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mUpdatedBy);
+        }
+    }
 }

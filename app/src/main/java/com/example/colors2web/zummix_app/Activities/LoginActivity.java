@@ -1,27 +1,32 @@
 package com.example.colors2web.zummix_app.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.POJO.Login;
-import com.example.colors2web.zummix_app.POJO.ResponseLogin;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.colors2web.zummix_app.POJO.login.Login;
+import com.example.colors2web.zummix_app.POJO.login.ResponseLogin;
+import com.example.colors2web.zummix_app.POJO.login.User;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,12 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btnlogin)
     Button signin;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-
     String u_email, u_password;
     APIInterface apiInterface;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+        imageView = findViewById(R.id.imageview_round);
 
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        Glide.with(this).load(R.mipmap.ic_launcher_zummix)
+//                .bitmapTransform(new BlurTransformation())
+//                .into(imageView);
+
+        Glide.with(this).load(R.mipmap.ic_launcher_zummix).apply(RequestOptions.circleCropTransform()).into(imageView);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
         signin.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +72,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 u_email = email.getText().toString();
                 u_password = password.getText().toString();
+
                 login(u_email, u_password);
 
-            }
-        });
-
-        fpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, ForgotActivity.class);
-                startActivity(i);
             }
         });
 
@@ -84,8 +86,16 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("email", u_email);
         Log.d("password", u_password);
 
-        Call<ResponseLogin> call = apiInterface.dologin(login);
+        signin.setEnabled(false);
 
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
+        Call<ResponseLogin> call = apiInterface.dologin(login);
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             @Nullable
@@ -96,23 +106,31 @@ public class LoginActivity extends AppCompatActivity {
                     //if u want the same method of extraction for 200 and 401 it wont works
 
                     ResponseLogin msg = response.body();
+                    User user = msg.getUser();
 
                     String toks = msg.getToken();
+                    String group_type = user.getGroupType();
+                    String l_id = String.valueOf(user.getId());
 
                     Log.d("token", toks);
 
+                    if(user!=null){
+                    Log.d("group_type", group_type);}
+
                     Toast.makeText(getApplicationContext(), msg.getType().toString()+"\n"+msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(getApplicationContext(), msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("email", u_email);
                     editor.putString("password", u_password);
+                    editor.putString("group_type",group_type);
+                    editor.putString("l_id",l_id);
                     Log.d("email",u_email);
                     editor.apply();
 
-//                    Intent i = new Intent(LoginActivity.this, HomePageActivity.class);
-//                    startActivity(i);
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    signin.setEnabled(true);
 
                     Intent i = new Intent(LoginActivity.this, OrderGroupByCustomerActivity.class);
                     startActivity(i);
@@ -120,8 +138,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else if (response.code() == 401) {
 
-//                    ResponseLogin msg1 = response.body();
-                   // Toast.makeText(getApplicationContext(), msg1.getType().toString(), Toast.LENGTH_SHORT).show();
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    signin.setEnabled(true);
+
                     Toast.makeText(getApplicationContext(), " Authentication Error:"+"\n"+"Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
@@ -129,12 +149,19 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if (response.code() == 404) {
 
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    signin.setEnabled(true);
+
                     Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 }else {
 
+                    if (progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    signin.setEnabled(true);
                     Toast.makeText(LoginActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -143,10 +170,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
                 call.cancel();
                 Log.e("response-failure", t.toString());
+                if (progressDialog.isShowing())
+                    progressDialog.dismiss();
+                signin.setEnabled(true);
                 Toast.makeText(LoginActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
             }
 
         });
 
-    }
+}
+
 }

@@ -11,8 +11,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.POJO.OrderDetails;
-import com.example.colors2web.zummix_app.POJO.OrderSearchResponse;
+import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderDetails;
+import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderSearchResponse;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;

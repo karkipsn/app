@@ -2,16 +2,31 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search"
-        app:showAsAction="always"
-        app:actionViewClass="android.widget.SearchView" />
+
     <item
-        android:id="@+id/mspinner"
-        android:title=" Spinner"
-        app:actionViewClass="android.widget.Spinner"
+        android:id="@+id/image2"
+        android:title=" item3"
+        android:orderInCategory="3"
         app:showAsAction="always"
-        android:visible="true"/>
+        app:actionViewClass="android.widget.ImageView"
+        />
+
+    <!--<item android:id="@+id/action_search"-->
+        <!--android:title="item2 "-->
+        <!--android:orderInCategory="2"-->
+        <!--android:actionLayout="@layout/action_item_edit_text"-->
+        <!--app:showAsAction="always"-->
+        <!--app:actionViewClass="android.widget.SearchView" />-->
+
+
 
 </menu>
+
+<!-- android:icon="@drawable/ic_search_black_24dp"-->
+    <!--<item-->
+    <!--android:id="@+id/mspinner"-->
+    <!--android:title=" item1"-->
+    <!--app:showAsAction="never"-->
+    <!--android:orderInCategory="1"-->
+    <!--app:actionViewClass="android.widget.Spinner"-->
+    <!--/>-->

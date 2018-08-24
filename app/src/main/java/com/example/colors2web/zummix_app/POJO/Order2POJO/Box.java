@@ -1,11 +1,19 @@
 
 package com.example.colors2web.zummix_app.POJO.Order2POJO;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Box {
+public class Box implements Parcelable{
+
+    public Box() {
+
+    }
 
     @SerializedName("auxiallary_label")
+
     private String mAuxiallaryLabel;
     @SerializedName("barcode_file_name")
     private String mBarcodeFileName;
@@ -85,6 +93,88 @@ public class Box {
     private String mWidth;
     @SerializedName("zummix_shipping_cost")
     private String mZummixShippingCost;
+
+    public Box(Parcel in) {
+        mAuxiallaryLabel = in.readString();
+        mBarcodeFileName = in.readString();
+        mBarcodeNumber = in.readString();
+        mBoxNumber = in.readString();
+        if (in.readByte() == 0) {
+            mBoxQuantity = null;
+        } else {
+            mBoxQuantity = in.readLong();
+        }
+        mBoxType = in.readString();
+        mCommercialInvoice = in.readString();
+        mCreatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mCreatedBy = null;
+        } else {
+            mCreatedBy = in.readLong();
+        }
+        mCustomerBarcodeFileName = in.readString();
+        mFirstName = in.readString();
+        mHeight = in.readString();
+        if (in.readByte() == 0) {
+            mId = null;
+        } else {
+            mId = in.readLong();
+        }
+        mItemName = in.readString();
+        mItemSku = in.readString();
+        mLastName = in.readString();
+        mLength = in.readString();
+        mMarkupPercentage = in.readString();
+        mMasterBoxCode = in.readString();
+        if (in.readByte() == 0) {
+            mOrderId = null;
+        } else {
+            mOrderId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            mOrderedQuantity = null;
+        } else {
+            mOrderedQuantity = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            mProductId = null;
+        } else {
+            mProductId = in.readLong();
+        }
+        mReasonForShippingOutside = in.readString();
+        if (in.readByte() == 0) {
+            mRemainingQuantity = null;
+        } else {
+            mRemainingQuantity = in.readLong();
+        }
+        mShipper = in.readString();
+        mShippingCompany = in.readString();
+        mShippingCost = in.readString();
+        mShippingLabel = in.readString();
+        mShippingMethod = in.readString();
+        mTrackingCode = in.readString();
+        mUpdatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mUpdatedBy = null;
+        } else {
+            mUpdatedBy = in.readLong();
+        }
+        mWeight = in.readString();
+        mWidth = in.readString();
+        mZummixShippingCost = in.readString();
+    }
+
+    public static final Creator<Box> CREATOR = new Creator<Box>() {
+        @Override
+        public Box createFromParcel(Parcel in) {
+            return new Box(in);
+        }
+
+        @Override
+        public Box[] newArray(int size) {
+            return new Box[size];
+        }
+    };
 
     public String getAuxiallaryLabel() {
         return mAuxiallaryLabel;
@@ -406,4 +496,87 @@ public class Box {
         mZummixShippingCost = zummixShippingCost;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAuxiallaryLabel);
+        dest.writeString(mBarcodeFileName);
+        dest.writeString(mBarcodeNumber);
+        dest.writeString(mBoxNumber);
+        if (mBoxQuantity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mBoxQuantity);
+        }
+        dest.writeString(mBoxType);
+        dest.writeString(mCommercialInvoice);
+        dest.writeString(mCreatedAt);
+        if (mCreatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mCreatedBy);
+        }
+        dest.writeString(mCustomerBarcodeFileName);
+        dest.writeString(mFirstName);
+        dest.writeString(mHeight);
+        if (mId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mId);
+        }
+        dest.writeString(mItemName);
+        dest.writeString(mItemSku);
+        dest.writeString(mLastName);
+        dest.writeString(mLength);
+        dest.writeString(mMarkupPercentage);
+        dest.writeString(mMasterBoxCode);
+        if (mOrderId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mOrderId);
+        }
+        if (mOrderedQuantity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mOrderedQuantity);
+        }
+        if (mProductId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mProductId);
+        }
+        dest.writeString(mReasonForShippingOutside);
+        if (mRemainingQuantity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mRemainingQuantity);
+        }
+        dest.writeString(mShipper);
+        dest.writeString(mShippingCompany);
+        dest.writeString(mShippingCost);
+        dest.writeString(mShippingLabel);
+        dest.writeString(mShippingMethod);
+        dest.writeString(mTrackingCode);
+        dest.writeString(mUpdatedAt);
+        if (mUpdatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mUpdatedBy);
+        }
+        dest.writeString(mWeight);
+        dest.writeString(mWidth);
+        dest.writeString(mZummixShippingCost);
+    }
 }

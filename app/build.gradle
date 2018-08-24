@@ -16,40 +16,79 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/activities',
+                            'src/main/res/layouts/fragments',
+                            'src/main/res/layouts/barcodes',
+                            'src/main/res/layouts/customer_fragments',
+                            'src/main/res/layouts/Customers',
+                            'src/main/res/layouts/post_activity',
+                            'src/main/res/layouts/masterbox',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
+        }
+    }
+
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'com.android.support:appcompat-v7:27.1.1'
+        implementation 'com.android.support:support-v4:27.1.1'
+        implementation 'com.android.support:design:27.1.1'
+        implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+        androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+        implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+        //for retrofit implementation
+
+        implementation('com.squareup.retrofit2:retrofit:2.1.0') {
+            exclude module: 'okhttp'
+        }
+
+//        Retrofit dependencies
+        implementation 'com.google.code.gson:gson:2.8.2'
+        implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+        implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+        implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+        implementation 'com.github.bumptech.glide:glide:4.7.1'
+
+        //for butterknife implememtation
+        implementation 'com.jakewharton:butterknife:8.8.1'
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        implementation 'com.squareup:otto:1.3.8'
+
+        //picasso
+        implementation 'com.squareup.picasso:picasso:2.71828'
+
+        //GLide
+        implementation 'com.github.bumptech.glide:glide:4.7.1'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+        implementation 'jp.wasabeef:glide-transformations:3.3.0'
+        // If you want to use the GPU Filters
+        implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+        //cardview
+        implementation 'com.android.support:cardview-v7:27.1.1'
+
+        // vision barcode scanner
+        implementation 'info.androidhive:barcode-reader:1.1.5'
+
+        // google vision library
+        implementation 'com.google.android.gms:play-services-vision:15.0.2'
+
+        /*Add QR Library Here Zxing library*/
+        implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    //for retrofit implementation
-
-    implementation ('com.squareup.retrofit2:retrofit:2.1.0') {
-        exclude module: 'okhttp'
-    }
-    implementation 'com.google.code.gson:gson:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-
-    //for butterknife implememtation
-    implementation 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    implementation 'com.squareup:otto:1.3.8'
-
-    //picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
-    //GLide
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    //cardview
-    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }

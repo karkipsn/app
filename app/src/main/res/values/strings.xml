@@ -7,6 +7,15 @@
         <item>Item</item>
         <item>Tracking Number</item>
         <item>Boxes</item>
+        <item>Parent_Id</item>
+        <item>Cus_Id</item>
+        <item>Cus_Items</item>
+        <item>Active_Cus</item>
+        <item>Dr_Shipment</item>
+        <item>Sales_History</item>
+        <item>Velocity Report</item>
+        <item>Home</item>
+
 
     </string-array>
 </resources>

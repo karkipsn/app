@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
     @NonNull
     @Override
     public CustomerDetailsAdapter.DetailsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_customer_details,null,true);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_customer_details,parent,false);
         return new DetailsHolder(view);
     }
 
@@ -42,6 +43,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
         holder.t6.setText(address);
         holder.t7.setText(ord.getShipMethod());
         holder.t8.setText(ord.getOrderDate());
+        holder.status.setText(ord.getOrderStatus());
 
         String ord_type =ord.getOrderType();
 
@@ -69,6 +71,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
             public void onClick(View v) {
                 Intent in = new Intent(mcontext, OrderSearch2Activity.class);
                 in.putExtra("O_no_by_group",O_no_by_group);
+                Log.d("test_id",O_no_by_group);
                 mcontext.startActivity(in);
             }
         });
@@ -86,7 +89,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
     }
 
     public class DetailsHolder extends RecyclerView.ViewHolder {
-        TextView t1,t2,t3,t4,t5,t6,t7,t8;
+        TextView t1,t2,t3,t4,t5,t6,t7,t8,status;
         public DetailsHolder(View itemView) {
             super(itemView);
 
@@ -98,6 +101,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
             t6 = itemView.findViewById(R.id.maddress);
             t7 = itemView.findViewById(R.id.mship_method);
             t8 = itemView.findViewById(R.id.morder_date);
+            status = itemView.findViewById(R.id.mostatus);
         }
     }
 }

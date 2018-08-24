@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.colors2web.zummix_app">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
 
-        <activity android:name=".Activities.LoginActivity"
+        <activity
+            android:name=".SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
@@ -18,64 +22,151 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activities.OrderActivity.OrderEditActivity"
+            android:label="Shipping Address"
+            android:parentActivityName=".Activities.OrderSearch2Activity">
 
         </activity>
 
-
-        <activity android:name=".Activities.ForgotActivity"></activity>
-
-
-        <activity android:name=".Activities.HomePageActivity"
-            android:label="HomePage"
-            android:parentActivityName=".Activities.LoginActivity"
-            android:theme="@style/MyMaterialTheme">
-
-
-        </activity>
-
-
-        <activity android:name=".Activities.OrderSearchActivity"
+        <activity
+            android:name=".Activities.PostActivity.Item_DR_HistoryActivity"
+            android:label="Dr. History"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.MasterBoxSearch.MasterBoxSearchActivity"
+            android:label="Box Details"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:label="Login"
+            android:theme="@style/AppTheme.Dark"></activity>
+        <activity
+            android:name=".Activities.OrderSearchActivity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.HomePageActivity">
-
-        </activity>
-
-        <activity android:name=".Activities.OrderSearch2Activity"
-            android:label="Order Details"
-            android:parentActivityName=".Activities.HomePageActivity">
-
-        </activity>
-
-        <activity android:name=".Activities.OrderGroupByCustomerActivity"
-            android:label="Order Groups"
-            android:parentActivityName=".Activities.LoginActivity">
-
-
-        </activity>
-
-        <activity android:name=".Activities.GroupCusDetails"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.OrderSearch2Activity"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.OrderGroupByCustomerActivity"
+            android:label="Customer Groups"></activity>
+        <activity
+            android:name=".Activities.GroupCusDetails"
             android:label="Customer Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-
-        </activity>
-
-        <activity android:name=".Activities.TrackOrderSearchActivity"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.OrderActivity.TrackOrderSearchActivity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
-
-        <activity android:name=".Activities.ItemSearchActivity"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+        <activity
+            android:name=".Activities.ItemSearchActivity"
             android:label="Item Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
-        </activity>
+        <!-- <activity android:name=".Activities.BoxSearchActivity" -->
+        <!-- android:label="Order Details" -->
+        <!-- android:parentActivityName=".Activities.OrderGroupByCustomerActivity"> -->
 
-        <activity android:name=".Activities.BoxSearchActivity"
+
+        <!-- </activity> -->
+
+        <activity
+            android:name=".Activities.BarcodeActivity.BarcodeMain"
+            android:label="SCAN"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.BarcodeActivity.ScannerActivity"
+            android:label="SCANNED VIEW"
+            android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
+            android:supportsRtl="true"></activity>
+        <activity
+            android:name=".Activities.BarcodeActivity.Barcode_ScanActivity"
+            android:label="SCAN"
+            android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".Activities.BarcodeActivity.BarcodeAPI_Activity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            android:parentActivityName=".Activities.BarcodeActivity.Barcode_ScanActivity" />
+        <activity
+            android:name=".Activities.CustomersSearchActivity.ByActiveCustomers"
+            android:label="Active Customers"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+        <activity
+            android:name=".Activities.CustomersSearchActivity.ByCustomerId"
+            android:label="Customers"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+        <activity
+            android:name=".Activities.CustomersSearchActivity.ByParentId"
+            android:label="Customers"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+        <activity
+            android:name=".Activities.CustomersSearchActivity.ByCustomerItems"
+            android:label="Customers"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+        <activity
+            android:name=".Activities.OrderActivity.OrderShippingLogsActivity"
+            android:label="Shipping Logs"
+            android:parentActivityName=".Activities.OrderSearch2Activity" />
 
-        </activity>
+        <!-- <activity android:name=".Activities.OrderActivity.OrderEditActivity" -->
+        <!-- android:label="Shipping Address" -->
+        <!-- android:parentActivityName=".Activities.OrderSearch2Activity"> -->
 
+
+        <!-- </activity> -->
+
+        <activity
+            android:name=".Activities.PostActivity.View_dr_historyActivity"
+            android:label="DrShipment History"
+            android:parentActivityName=".Activities.PostActivity.Item_DR_HistoryActivity"></activity>
+        <activity
+            android:name=".Activities.PostActivity.View_Pick_VelocityActivity"
+            android:label="Pick Velocity Report"
+            android:parentActivityName=".Activities.PostActivity.Pick_Velocity_ReportActivity"></activity>
+        <activity
+            android:name=".Activities.PostActivity.View_salesHistoryActivity"
+            android:label="Item Sales History"
+            android:parentActivityName=".Activities.PostActivity.Item_Sales_HistoryActivity"></activity>
+        <activity
+            android:name=".Activities.PostActivity.Item_Sales_HistoryActivity"
+            android:label="Item Sales History"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+
+        <!-- <activity android:name=".Activities.PostActivity.Item_DR_HistoryActivity" -->
+        <!-- android:label="Dr History" -->
+        <!-- android:parentActivityName=".Activities.OrderGroupByCustomerActivity"> -->
+
+
+        <!-- </activity> -->
+
+        <activity
+            android:name=".Activities.PostActivity.Pick_Velocity_ReportActivity"
+            android:label="Velocity Report"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.CityBins.BinHomeActivity"
+            android:label="Velocity Report"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.CityBins.BinBinActivity"
+            android:label="Velocity Report"
+            android:parentActivityName=".Activities.CityBins.BinHomeActivity"></activity>
+        <activity
+            android:name=".Activities.CityBins.CreateCityBinsActivity"
+            android:label="Create City Bins"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Activities.CityBins.UpdateCityBinsActivity"
+            android:label="Update City Bins"
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+        <activity
+            android:name=".Navigation_Watch"
+            android:label="@string/title_activity_navigation__watch"
+            android:theme="@style/MyMaterialTheme"></activity>
     </application>
 
 </manifest>

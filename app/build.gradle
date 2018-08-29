@@ -28,6 +28,8 @@ android {
                             'src/main/res/layouts/Customers',
                             'src/main/res/layouts/post_activity',
                             'src/main/res/layouts/masterbox',
+                            'src/main/res/layouts/navigation',
+                            'src/main/res/layouts/CityBins',
                             'src/main/res/layouts',
                             'src/main/res'
                     ]

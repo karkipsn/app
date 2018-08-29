@@ -1,7 +1,5 @@
 package com.example.colors2web.zummix_app.Fragments;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,23 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.OrderLogsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
-import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderLog;
 import com.example.colors2web.zummix_app.R;
-import com.example.colors2web.zummix_app.api.APIClient;
-import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class Frag_OrderLogs extends Fragment {
@@ -70,7 +59,7 @@ public class Frag_OrderLogs extends Fragment {
 
         radapter = new OrderLogsAdapter(LogList);
 
-        mrecyclerView = getActivity().findViewById(R.id.recycler_view);
+        mrecyclerView = getActivity().findViewById(R.id.recycle_view);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mrecyclerView.setHasFixedSize(true);

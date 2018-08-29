@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
-    >
+    android:background="@drawable/bg_gradient">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/AppTheme.Dark"
-       >
+        android:theme="@style/AppTheme.Dark">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_barcode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-             />
+            />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -39,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:src="@drawable/qrcode"
+            android:src="@drawable/icon_barcode1"
             android:tint="@android:color/white" />
 
         <TextView
@@ -48,7 +47,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:text="Scan the QR code of the product"
+            android:text="Scan Barcode "
             android:textColor="@android:color/white"
             android:textSize="16dp" />
     </LinearLayout>
@@ -61,10 +60,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:background="@android:color/transparent"
+        android:fontFamily="sans-serif-medium"
         android:foreground="?attr/selectableItemBackground"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:fontFamily="sans-serif-medium"
         android:text="Scan Barcode"
         android:textColor="@android:color/white"
         android:textSize="18sp" />

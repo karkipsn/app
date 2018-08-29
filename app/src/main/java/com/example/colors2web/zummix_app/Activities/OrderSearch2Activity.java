@@ -52,6 +52,7 @@ import com.google.gson.JsonElement;
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,7 @@ import retrofit2.Response;
 
 public class OrderSearch2Activity extends AppCompatActivity {
 
+    private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     APIInterface apiInterface;
 
     @BindView(R.id.dis_head)
@@ -97,7 +99,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
@@ -113,10 +116,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -127,7 +126,26 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         moveTaskToBack(true);
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == QUEUE_MSG) {
+//            if (resultCode == RESULT_OK) {
+//                Serializable tmp = data.getSerializableExtra(OrderSearch2Activity.back);
+//                if (tmp != null)
+//                    serializable = tmp;
+//            }
+//        }
+//    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -158,12 +176,10 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
         if (i != null) {
 
-
             final String Path = i.getExtras().getString("OPath");
             if (Path != null) {
                 call(group_type, email, password, Path);
             }
-
 
             final String Path2 = i.getExtras().getString("O_no_by_group");
             if (Path2 != null) {
@@ -184,6 +200,12 @@ public class OrderSearch2Activity extends AppCompatActivity {
             final String Path5 = i.getExtras().getString("edit_id");
             if (Path5 != null) {
                 call_next(group_type, email, password, Long.valueOf(Path5));
+            }
+
+            final String back = i.getExtras().getString("back_id");
+            if (back != null) {
+                call_next(group_type, email, password, Long.valueOf(back));
+                Log.d("back",back);
             }
         }
 
@@ -304,8 +326,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             if (order != null) {
 
                                 String id = String.valueOf(order.getOrder().getId());
-
                                 String ords_no = String.valueOf(order.getOrder().getOrderNumber());
+
                                 head.setText(String.valueOf(order.getOrder().getOrderNumber()));
 
                                 Long value1 = Long.valueOf(0);
@@ -539,15 +561,13 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                         } else {
                                             cancel_button.setVisibility(View.VISIBLE);
                                             showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
                                         }
+
                                     } else {
                                         cancel_button.setVisibility(View.GONE);
                                     }
 
-
                                 }
-
 
                                 ArrayList<ItemDetail> ItmList = new ArrayList<>();
                                 List<ItemDetail> deps = order.getItemDetails();
@@ -622,7 +642,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     String created_at = box.get(i).getCreatedAt();
                                     String tracking_code = box.get(i).getTrackingCode();
                                     String barcode = box.get(i).getBarcodeFileName();
-
 
                                     box1.setBoxNumber(box_no);
                                     box1.setCreatedAt(created_at);
@@ -1081,7 +1100,10 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     progressDialog.dismiss();
                                 }
 //                                call_next(type, email, password, order);
-                                call(type, email, password, ords_no);
+//                                call(type, email, password, ords_no);
+
+                                finish();
+                                startActivity(getIntent());
 
                             } else {
                                 if (progressDialog.isShowing()) {

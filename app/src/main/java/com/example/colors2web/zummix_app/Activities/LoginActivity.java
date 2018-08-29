@@ -1,10 +1,15 @@
 package com.example.colors2web.zummix_app.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.colors2web.zummix_app.Activities.Navigation.HomeActivity;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.login.ResponseLogin;
 import com.example.colors2web.zummix_app.POJO.login.User;
@@ -26,7 +32,6 @@ import com.example.colors2web.zummix_app.api.APIInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
     String u_email, u_password;
     APIInterface apiInterface;
     ImageView imageView;
-
+    @BindView( R.id.coordinatorLayout)
+     CoordinatorLayout coordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Call<ResponseLogin> call = apiInterface.dologin(login);
         call.enqueue(new Callback<ResponseLogin>() {
+            @SuppressLint("ResourceAsColor")
             @Override
             @Nullable
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
@@ -114,25 +121,26 @@ public class LoginActivity extends AppCompatActivity {
 
                     Log.d("token", toks);
 
-                    if(user!=null){
-                    Log.d("group_type", group_type);}
+                    if (user != null) {
+                        Log.d("group_type", group_type);
+                    }
 
-                    Toast.makeText(getApplicationContext(), msg.getType().toString()+"\n"+msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), msg.getType().toString() + "\n" + msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("email", u_email);
                     editor.putString("password", u_password);
-                    editor.putString("group_type",group_type);
-                    editor.putString("l_id",l_id);
-                    Log.d("email",u_email);
+                    editor.putString("group_type", group_type);
+                    editor.putString("l_id", l_id);
+                    Log.d("email", u_email);
                     editor.apply();
 
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
                     signin.setEnabled(true);
 
-                    Intent i = new Intent(LoginActivity.this, OrderGroupByCustomerActivity.class);
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(i);
 
 
@@ -142,22 +150,45 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     signin.setEnabled(true);
 
-                    Toast.makeText(getApplicationContext(), " Authentication Error:"+"\n"+"Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
-                }
-                else if (response.code() == 404) {
+                } else if (response.code() == 404) {
 
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
                     signin.setEnabled(true);
 
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
+                    final Snackbar snackbar = Snackbar
+                            .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                            .setAction("RETRY", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+//                                    onStart();
+
+//                                    finish();
+//                                    startActivity(getIntent());
+
+                                    login(u_email, u_password);
+                                }
+                            });
+
+                  // Changing message text color
+                    snackbar.setActionTextColor(Color.BLUE);
+
+                  // Changing action button text color
+                    View sbView = snackbar.getView();
+                    sbView.setBackgroundColor(R.color.colorPrimary);
+                    TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextColor(Color.YELLOW);
+                    snackbar.show();
+
+//                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
 
 
-                }else {
+                } else {
 
                     if (progressDialog.isShowing())
                         progressDialog.dismiss();
@@ -178,6 +209,6 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-}
+    }
 
 }

@@ -24,6 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,11 +36,9 @@ import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByCu
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByParentId;
 import com.example.colors2web.zummix_app.Activities.ItemSearchActivity;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MasterBoxSearchActivity;
+import com.example.colors2web.zummix_app.Activities.Navigation.HomeActivity;
 import com.example.colors2web.zummix_app.Activities.OrderGroupByCustomerActivity;
 import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.Item_DR_HistoryActivity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.Item_Sales_HistoryActivity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.Pick_Velocity_ReportActivity;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.OrderShippingAddress;
 import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderDetails;
@@ -64,6 +63,11 @@ import retrofit2.Response;
 public class SearchFragment extends Fragment {
     String spine;
     APIInterface apiInterface;
+    Spinner spinner;
+    LinearLayout mlayout;
+    TextView textView;
+    EditText editText;
+    ImageView bar;
 
     @Nullable
     @Override
@@ -71,19 +75,27 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.activity_search_fragment, container, false);
+        return rootView;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        toolbar.setTitle("Search");
-
-
-        Spinner spinner = getActivity().findViewById(R.id.mainspinnerz);
-        spinner.setVisibility(View.VISIBLE);
+//        toolbar.setTitle("Search");
+        spinner = getActivity().findViewById(R.id.fmainspinnerz);
+        mlayout = getActivity().findViewById(R.id.veiw_main);
         spinner.setPopupBackgroundResource(R.color.colorPrimary);
 
 
@@ -96,28 +108,9 @@ public class SearchFragment extends Fragment {
                     Log.d("Spine", spine);
                     switch (spine) {
 
-                        case "Active_Cus":
-                            Intent active = new Intent(getActivity(), ByActiveCustomers.class);
-                            startActivity(active);
-                            break;
-
-                        case "Dr_Shipment":
-                            Intent intentz = new Intent(getContext(), Item_DR_HistoryActivity.class);
-                            startActivity(intentz);
-                            break;
-
-                        case "Sales_History":
-                            Intent intenty = new Intent(getContext(), Item_Sales_HistoryActivity.class);
-                            startActivity(intenty);
-                            break;
-
-                        case "Velocity Report":
-                            Intent intentt = new Intent(getContext(), Pick_Velocity_ReportActivity.class);
-                            startActivity(intentt);
-                            break;
 
                         case "Home":
-                            Intent intenth = new Intent(getContext(), OrderGroupByCustomerActivity.class);
+                            Intent intenth = new Intent(getContext(), HomeActivity.class);
                             startActivity(intenth);
                             break;
 
@@ -138,13 +131,33 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        TextView textView = getActivity().findViewById(R.id.maintextview);
-        textView.setVisibility(View.VISIBLE);
+        textView = getActivity().findViewById(R.id.fmaintextview);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//
+                getActivity().getSupportFragmentManager().beginTransaction().remove(new SearchFragment()).commit();
+            }
+        });
 
-        final EditText editText = getActivity().findViewById(R.id.main_search_text);
+        editText = getActivity().findViewById(R.id.fmain_search_text);
+        bar = getActivity().findViewById(R.id.fmain_barcode);
         editText.setVisibility(View.VISIBLE);
         editText.setHint("Search....");
         editText.setFocusableInTouchMode(true);
+
+
+        editText.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_BACK) {
+                    editText.clearFocus();
+                    return true;
+                }
+                else return false;
+            }
+        });
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -161,7 +174,18 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Barcode Clicked", Toast.LENGTH_SHORT).show();
 
+                Intent barcode = new Intent(getActivity(), BarcodeMain.class);
+                barcode.putExtra("categories", spine);
+                startActivity(barcode);
+//                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                getActivity().overridePendingTransition(getResources().getAnimation(R.anim.pus), R.anim.push_left_out);
+            }
+        });
 //        editText.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(editText) {
 //
 //            @Override
@@ -193,7 +217,34 @@ public class SearchFragment extends Fragment {
 //        toolbar.inflateMenu(R.menu.search_menu);
 //        toolbar.setOnMenuItemClickListener(this);
 
-        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        new SearchFragment();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+
+                    if(getFragmentManager().getBackStackEntryCount() > 0) {
+
+                            getFragmentManager().popBackStack();
+
+//                        getActivity().getFragmentManager().popBackStack();
+//                        yo garda chai last ma iflate bhako item dekaune raixa
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -832,88 +883,8 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//               Toolbar toolbar = getActivity().findViewById(R.id.toolbar_baccho);
-//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        toolbar.setTitle("search");
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    //    @Override
-//    public boolean onMenuItemClick(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_search:
-//                //do sth here
-//                return true;
-//
-//            case R.id.mspinner:
-//            //do sth here
-//            return true;
-//
-//            case R.id.image:
-//                //do sth here
-//                return true;
-//        }
-//        return false;
-//    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
 
 
-        ImageView img = (ImageView) menu.findItem(R.id.image).getActionView();
-        img.setImageResource(R.drawable.icon_barcode1);
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Barcode Clicked", Toast.LENGTH_SHORT).show();
-
-                Intent barcode = new Intent(getActivity(), BarcodeMain.class);
-                barcode.putExtra("categories", spine);
-                startActivity(barcode);
-//                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                getActivity().overridePendingTransition(getResources().getAnimation(R.anim.pus), R.anim.push_left_out);
-
-            }
-        });
-    }
 }
 
 
-//////        spinner.setDropDownWidth(180);
-////        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-////                R.array.spinner_array, android.R.layout.simple_spinner_item);
-////        adapter.setDropDownViewResource(R.layout.spinner_item);
-////        spinner.setAdapter(adapter);
-////        spinner.setPopupBackgroundResource(R.color.base);
-
-//
-////        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-////            @Override
-////            public boolean onQueryTextSubmit(String query) {
-////
-////                }
-////                return false;
-////            }
-////
-////            @Override
-////            public boolean onQueryTextChange(String newText) {
-////                return false;
-////            }
-////
-////        });

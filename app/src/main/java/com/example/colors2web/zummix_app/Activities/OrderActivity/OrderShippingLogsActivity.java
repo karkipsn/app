@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.OrderShippingAddressLogs.OrderShippingAddressLog;
 import com.example.colors2web.zummix_app.POJO.OrderShippingAddressLogs.ShippingLogResponse;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 
 public class OrderShippingLogsActivity extends AppCompatActivity {
 
+    private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     APIInterface apiInterface;
     Toolbar toolbar;
     RecyclerView mrecyclerView;
@@ -46,11 +48,18 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cutomer_grp_details);
+        setContentView(R.layout.activity_common);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -89,9 +98,17 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
 //        String ordernumber = String.valueOf(10044);
 
         Intent i = getIntent();
+
         if(i!=null){
-            Order = i.getExtras().getString("o_id_edit","");
+            Order = i.getExtras().getString("o_id_logs","");
         }
+
+//        if (i.getExtras() != null) {
+//            Bundle b = i.getExtras();
+//            String od = b.getString("o_id_logs");
+//            Log.d("o_id_logs",od);
+////       Both does the same thing . Either can be processed through intent or bundle
+//      }
 
         Call<ShippingLogResponse>call =apiInterface.getOrderShippingLogs(email,password,Order);
         call.enqueue(new Callback<ShippingLogResponse>() {
@@ -200,6 +217,7 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -211,13 +229,13 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -227,12 +245,26 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+       super.onBackPressed();
+//      moveTaskToBack(true);
+//
+//        Intent back = new Intent(this, OrderSearch2Activity.class);
+//        back.putExtra("back_id",Order);
+//        Log.d("back",Order);
+//        setResult(RESULT_OK, back);
+//        finish();
     }
 }

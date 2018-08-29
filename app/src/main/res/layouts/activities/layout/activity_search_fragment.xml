@@ -4,59 +4,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/veiw_main"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
 
-        <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="match_parent"
+            android:id="@+id/main_toolbar"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/frag_layout"
-                android:orientation="horizontal">
 
-                <RelativeLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/toolbar_top"
+                android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:id="@+id/toolbar_hide_and_show"
+                    android:orientation="horizontal"
                     >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:id="@+id/textview"
+                    <LinearLayout
+                        android:layout_width="80dp"
                         android:layout_height="match_parent"
-                        android:text="Select"/>
+                        android:orientation="vertical">
 
-                    <Spinner
-                        android:id="@+id/myspinnerz"
-                        android:layout_width="45sp"
-                        android:paddingTop="70dp"
+                        <TextView
+                            android:id="@+id/fmaintextview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/textview"
+                            android:paddingBottom="5dp"
+                            android:text="Search by"
+                            android:textColor="@color/white"
+                            android:visibility="visible" />
+
+                        <Spinner
+                            android:layout_below="@id/fmaintextview"
+                            android:id="@+id/fmainspinnerz"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/spinner"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/spinner_array"
+                            />
+
+                    </LinearLayout>
+
+                    <com.example.colors2web.zummix_app.EditTextWithClear
+                        android:layout_width="230dp"
+                        android:id="@+id/fmain_search_text"
+                        android:layout_toRightOf="@id/fmainspinnerz"
+                        android:visibility="visible"
+                        android:focusableInTouchMode="true"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:padding="5dp"
+                        android:actionLayout="@layout/action_item_edit_text"
+                        android:layout_height="match_parent" />
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:id="@+id/fmain_barcode"
+                        android:src="@drawable/icon_barcode1"
                         android:layout_height="match_parent"
-                        android:drawSelectorOnTop="false"
-                        android:entries="@array/spinner_array"
-                        />
+                        android:foregroundGravity="right"
+                        android:tint="@android:color/white"
+                        android:layout_toEndOf="@id/fmain_search_text"
+                        android:visibility="visible"/>
 
-                </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.Toolbar>
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_baccho"
-                    android:layout_width="260dp"
-                    android:layout_height="@dimen/toolbar_top"
-                    android:background="@color/colorPrimary"
-                    app:titleMargin="@dimen/activity_horizontal_margin"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageview_barcode"
-                    android:src="@drawable/icon_barcode1"/>
-
-            </LinearLayout>
-
-        </android.support.design.widget.AppBarLayout>
-
+    </android.support.design.widget.AppBarLayout>
 
 </LinearLayout>

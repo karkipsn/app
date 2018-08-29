@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderEditActivity extends AppCompatActivity {
+public class OrderShippingEditActivity extends AppCompatActivity {
 
     @BindView(R.id.customer_fname)
     EditText mcustomer_fname;
@@ -81,6 +81,11 @@ public class OrderEditActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
 
+    @Override
+    public void onBackPressed() {
+//        moveTaskToBack(true);
+        super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +98,13 @@ public class OrderEditActivity extends AppCompatActivity {
         //for toolbarsetup with back arrow
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         moedit.setOnClickListener(new View.OnClickListener() {
@@ -117,8 +129,12 @@ public class OrderEditActivity extends AppCompatActivity {
         });
     }
 
+    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
+
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -130,13 +146,13 @@ public class OrderEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -146,14 +162,17 @@ public class OrderEditActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 
     private void doputorder() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -178,7 +197,7 @@ public class OrderEditActivity extends AppCompatActivity {
                 customer_address1, customer_address2
                 , customer_city, customer_country, customer_state, customer_zip, comment, updated_by);
 
-        final ProgressDialog progressDialog = new ProgressDialog(OrderEditActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(OrderShippingEditActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -200,7 +219,7 @@ public class OrderEditActivity extends AppCompatActivity {
 
                         case "success":
                             Toast.makeText(getApplicationContext(), resp1.getMessage(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(OrderEditActivity.this, OrderSearch2Activity.class);
+                            Intent intent = new Intent(OrderShippingEditActivity.this, OrderSearch2Activity.class);
                             intent.putExtra("edit_id", odr);
                             startActivity(intent);
                             break;
@@ -235,7 +254,7 @@ public class OrderEditActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else {
-                    Toast.makeText(OrderEditActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderShippingEditActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
@@ -250,7 +269,7 @@ public class OrderEditActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Toast.makeText(OrderEditActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderShippingEditActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
             }
 
         });

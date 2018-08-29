@@ -30,7 +30,6 @@ import retrofit2.Response;
 
 public class ItemSearchActivity extends AppCompatActivity {
 
-
     android.support.v7.widget.Toolbar toolbar;
 
     APIInterface apiInterface;
@@ -42,7 +41,7 @@ public class ItemSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_search_first);
+        setContentView(R.layout.fragment_nav_home);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,7 +52,7 @@ public class ItemSearchActivity extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         iadapter = new ItemSearchAdapter(getApplicationContext(), ItmList);
-        mrecyclerView = findViewById(R.id.recycler_view_item);
+        mrecyclerView = findViewById(R.id.recycle_view);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 //        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -73,6 +72,8 @@ public class ItemSearchActivity extends AppCompatActivity {
         final String password = preferences.getString("password", "");
         Log.d("PathMail", email);
 
+
+
         final Intent i = getIntent();
 
         if (i != null) {
@@ -82,6 +83,8 @@ public class ItemSearchActivity extends AppCompatActivity {
                 call(email, password, Path);
             }
         }
+
+
     }
 
     private void call(String email, String password, String path) {

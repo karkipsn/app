@@ -435,9 +435,6 @@ public class Item_DR_HistoryActivity extends AppCompatActivity {
 
                         mspinner.setAdapter(new ArrayAdapter<SpinnerPojo>(Item_DR_HistoryActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item, countryList));
-//                System.out.println("Spin: " + spin);
-//                Log.d("list", spin.toString());
-//                Link:https://stackoverflow.com/questions/47666321/opening-spinner-by-clicking-on-edittext/47667518#47667518?newreg=3755bd61db4b4a4d91ada181638da0d1
 
                         mspinner.setCursorVisible(false);
                         mspinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {

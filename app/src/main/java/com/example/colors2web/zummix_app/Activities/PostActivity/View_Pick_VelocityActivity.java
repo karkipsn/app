@@ -33,12 +33,13 @@ import java.util.List;
 
 public class View_Pick_VelocityActivity extends AppCompatActivity {
 
+    private static final String TAG_FRAGMENT ="SEARCH_FRAGMENT" ;
     Toolbar toolbar;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
     Pick_Velocity_BoxAdapter PickAdapter;
-    List<CustomerItems> ItemsList;
-    List<Boxes> BoxList;
+    List<CustomerItems> list;
+    List<Boxes> blist;
     List<MergeBCI>newarray;
     ImageView img;
 
@@ -69,8 +70,10 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
         loadAdapter();
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -82,7 +85,8 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
@@ -90,44 +94,39 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
     private void loadAdapter() {
         Intent i = getIntent();
         if (i != null) {
 
-            List<CustomerItems> list = (List<CustomerItems>) i.getSerializableExtra("CList");
+             list = (List<CustomerItems>) i.getSerializableExtra("CList");
 
-            List<Boxes> blist = (List<Boxes>) i.getSerializableExtra("BList");
+             blist = (List<Boxes>) i.getSerializableExtra("BList");
 
-//            PickAdapter.updateAnswers(blist,list);
 
-//            ArrayList<Employee> employees = new ArrayList<Employee>();
-//for(Person person : personList) {
-//  for(PersonNpi personNpi : npiList) {
-//    if (person.getName().equals(personNpi.getName()) &&
-//        person.getAddress().checkEquality(...address parts here...)) {
-//      employees.add(new Employee(person, personNpi));
-//    }
-//  }
-//}
             for(CustomerItems ci:list){
                 for(Boxes bi:blist){
 

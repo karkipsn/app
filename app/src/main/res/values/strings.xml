@@ -4,18 +4,25 @@
 
     <string-array name="spinner_array">
         <item>Order</item>
-        <item>Item</item>
+        <item>Product</item>
         <item>Tracking Number</item>
         <item>Boxes</item>
         <item>Parent_Id</item>
         <item>Cus_Id</item>
         <item>Cus_Items</item>
-        <item>Active_Cus</item>
-        <item>Dr_Shipment</item>
-        <item>Sales_History</item>
-        <item>Velocity Report</item>
         <item>Home</item>
 
+    </string-array>
+
+
+    <string-array name="nav_item_activity_titles">
+
+        <item>Active Customers</item>
+        <item>Customer Groups</item>
+        <item>Pick Velocity </item>
+        <item>Dr Shipment</item>
+        <item>Sales Report </item>
+        <item>CityBins</item>
 
     </string-array>
 </resources>

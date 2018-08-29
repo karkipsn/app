@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
@@ -66,7 +67,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
 
         }
         final String O_no_by_group= String.valueOf(ord.getId());
-        holder.t1.setOnClickListener(new View.OnClickListener() {
+        holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(mcontext, OrderSearch2Activity.class);
@@ -90,10 +91,12 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
 
     public class DetailsHolder extends RecyclerView.ViewHolder {
         TextView t1,t2,t3,t4,t5,t6,t7,t8,status;
+        Button more;
         public DetailsHolder(View itemView) {
             super(itemView);
 
             t1 = itemView.findViewById(R.id.morders);
+//            t1.setBackgroundColor(t1.getResources().getColor(R.color.colorPrimaryDark));
             t2 = itemView.findViewById(R.id.mtotal_pieces);
             t3 = itemView.findViewById(R.id.m_total_unique_items);
             t4 = itemView.findViewById(R.id.morder_type);
@@ -102,6 +105,7 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
             t7 = itemView.findViewById(R.id.mship_method);
             t8 = itemView.findViewById(R.id.morder_date);
             status = itemView.findViewById(R.id.mostatus);
+            more =itemView.findViewById(R.id.btn_more);
         }
     }
 }

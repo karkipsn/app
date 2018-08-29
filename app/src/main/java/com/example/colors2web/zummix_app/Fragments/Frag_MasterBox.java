@@ -12,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.colors2web.zummix_app.Adapter.BoxesAdapter;
 import com.example.colors2web.zummix_app.Adapter.MasterBoxAdapter;
-import com.example.colors2web.zummix_app.Adapter.OrderLogsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
-import com.example.colors2web.zummix_app.POJO.Order2POJO.Box;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.MasterBox;
 import com.example.colors2web.zummix_app.R;
 
@@ -43,7 +40,7 @@ public class Frag_MasterBox extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         radapter = new MasterBoxAdapter(MList);
 
-        mrecyclerView = getActivity().findViewById(R.id.recycler_view);
+        mrecyclerView = getActivity().findViewById(R.id.recycle_view);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mrecyclerView.setHasFixedSize(true);

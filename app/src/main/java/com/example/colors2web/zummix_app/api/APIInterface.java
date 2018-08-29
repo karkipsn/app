@@ -62,8 +62,8 @@ public interface APIInterface {
     Call<OrderEditResponse> putEditOrder(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number, @Body OrderEditPut editPut);
 
     //    Receiving The OrderSippingAddressLOgs
-    @GET("orders/viewOrderShippingAddressLogs/{order_number}")
-    Call<ShippingLogResponse> getOrderShippingLogs(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
+    @GET("orders/viewOrderShippingAddressLogs/{order_id}")
+    Call<ShippingLogResponse> getOrderShippingLogs(@Header("email") String email, @Header("Password") String password, @Path("order_id") String order_id);
 
 
     //trace id from order search and send that id as variable here

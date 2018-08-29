@@ -16,9 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.colors2web.zummix_app.Activities.OrderActivity.OrderEditActivity;
+import com.example.colors2web.zummix_app.Activities.OrderActivity.OrderShippingEditActivity;
 import com.example.colors2web.zummix_app.Activities.OrderActivity.OrderShippingLogsActivity;
-import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.Adapter.ShippingAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderShippingAddressesDetail;
@@ -74,28 +73,39 @@ public class Frag_Shipping_Adderss extends Fragment {
 
 
         if (getArguments() != null) {
+
             o_id = getArguments().getString("b_id");
             order_status = getArguments().getString("order_status");
             order_type = getArguments().getString("order_type");
+            Log.d("order_type",order_type);
+            Log.d("order_status",order_status);
+            Log.d("o_id",o_id);
+
+
             edit_shipping_address = getArguments().getString("edit_shipping_address");
 
             if (type != null) {
 //                     Session::get('user')->group_type == 'Super Admin') &&
 //                  ($orderDetails->order_status != 'Shipped') && ($orderDetails->order_type == 1))
 
-                if (type.equals("Super Admin")) {
+                if (type.equals("Super Admin")|| order_type.equals("1")) {
 //                edit button display
 
                     if (order_status.equals("Shipped")) {
                         edit.setVisibility(View.GONE);
-                    } else if (order_type.equals("1")) {
-                        edit.setVisibility(View.GONE);
-                    } else {
+                    }
+//                    else if ()) {
+//                        edit.setVisibility(View.VISIBLE);
+//                   }
+                   else {
                         edit.setVisibility(View.VISIBLE);
                     }
                 }
             }
 
+            if(edit_shipping_address!=null){
+                Log.d("edit_shipping_address",edit_shipping_address);
+            }
 
             if (edit_shipping_address.equals("1")) {
 //                   logs button to display
@@ -107,7 +117,7 @@ public class Frag_Shipping_Adderss extends Fragment {
                 @Override
                 public void onClick(View v) {
 //                Pass order id alongside the intent
-                    Intent editintent = new Intent(getContext(), OrderEditActivity.class);
+                    Intent editintent = new Intent(getContext(), OrderShippingEditActivity.class);
                     editintent.putExtra("o_id_edit", o_id);
                     startActivity(editintent);
 
@@ -142,6 +152,7 @@ public class Frag_Shipping_Adderss extends Fragment {
         }
     }
 
+
     private void loadAdapter() {
         if (getArguments() != null) {
 
@@ -150,9 +161,4 @@ public class Frag_Shipping_Adderss extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-    }
 }

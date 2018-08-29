@@ -24,4 +24,12 @@
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
 
+
+    <!--CardView-->
+    <dimen name="margin_left">10dp</dimen>
+    <dimen name="margin_down">5dp</dimen>
+    <dimen name="corner_radius">6dp</dimen>
+    <dimen name="elevation">1dp</dimen>
+
+
 </resources>

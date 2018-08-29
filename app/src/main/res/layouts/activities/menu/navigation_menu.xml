@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_active_customers"
+            android:title="@string/nav_active_customers" />
+        <item
+            android:id="@+id/nav_customers_group"
+            android:title="@string/nav_customers_group" />
+        <item
+            android:id="@+id/nav_pick_velocity"
+            android:title="@string/nav_pick_velocity" />
+
+        <item
+            android:id="@+id/nav_dr_shipment"
+            android:title="@string/nav_de_shipment" />
+
+        <item
+            android:id="@+id/nav_sales_report"
+            android:title="@string/nav_sales_report" />
+
+        <item
+            android:id="@+id/nav_city_bins"
+            android:title="@string/nav_city_bins" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/nav_logout" />
+    </group>
+
+    <!--<item android:title="Customers">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_about_us"-->
+                <!--android:title="@string/nav_about_us" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_privacy_policy"-->
+                <!--android:title="@string/privacy_policy" />-->
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>

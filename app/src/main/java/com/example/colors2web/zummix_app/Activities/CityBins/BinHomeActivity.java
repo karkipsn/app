@@ -43,6 +43,8 @@ public class BinHomeActivity extends AppCompatActivity {
     RecyclerView mrecycleView;
     TextView customer_id,create_bins;
     List<CityBins>BinList = new ArrayList<>();
+    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,9 +86,9 @@ public class BinHomeActivity extends AppCompatActivity {
         loadAdapter(email, password);
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -98,7 +100,8 @@ public class BinHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
@@ -113,25 +116,20 @@ public class BinHomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-// TODO: 1.progress dailog implementing
-//TODO: global search view implementing
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
+
 
         moveTaskToBack(true);
 

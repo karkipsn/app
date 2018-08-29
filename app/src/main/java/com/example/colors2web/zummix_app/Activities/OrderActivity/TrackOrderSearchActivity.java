@@ -50,7 +50,7 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_search_first);
+        setContentView(R.layout.activity_common);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +59,7 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         tadapter = new TrackingAdapter(ordList, getApplicationContext());
-        mrecyclerView = findViewById(R.id.recycler_view_item);
+        mrecyclerView = findViewById(R.id.recycle_view);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mrecyclerView.setHasFixedSize(true);
@@ -85,8 +85,13 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         }
     }
 
+
+    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
+
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -98,13 +103,13 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -114,13 +119,15 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

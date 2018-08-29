@@ -45,8 +45,9 @@ public class BinBinActivity extends AppCompatActivity {
     String cus_id;
     String cus_id_inner;
     RecyclerView mrecycleView;
-    TextView  create_bins;
+    TextView create_bins;
     List<CityBins> BinList = new ArrayList<>();
+    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,9 +84,9 @@ public class BinBinActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(BinBinActivity.this, CreateCityBinsActivity.class);
                 Bundle b = new Bundle();
-                b.putString("cus_id_inner",cus_id_inner);
+                b.putString("cus_id_inner", cus_id_inner);
                 intent.putExtras(b);
-                Log.d("cus_id_inner",cus_id_inner);
+                Log.d("cus_id_inner", cus_id_inner);
                 startActivity(intent);
                 finish();
             }
@@ -95,6 +96,7 @@ public class BinBinActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -106,7 +108,8 @@ public class BinBinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
@@ -121,16 +124,16 @@ public class BinBinActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-// TODO: 1.progress dailog implementing
-//TODO: global search view implementing
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 
     @Override
@@ -143,10 +146,10 @@ public class BinBinActivity extends AppCompatActivity {
     private void loadAdapter(String email, String password) {
 
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
 
-       cus_id = intent.getStringExtra("customer_id");
-            Log.d("customer_id",cus_id);
+            cus_id = intent.getStringExtra("customer_id");
+            Log.d("customer_id", cus_id);
             cus_id_inner = cus_id;
         }
 

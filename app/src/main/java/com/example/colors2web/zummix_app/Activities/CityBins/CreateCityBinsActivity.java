@@ -278,10 +278,15 @@ public class CreateCityBinsActivity extends AppCompatActivity{
         });
     }
 
+    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
+
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
+        ImageView img;
 
         img = (ImageView) menu.findItem(R.id.image).getActionView();
         img.setImageResource(android.R.drawable.ic_menu_search);
@@ -290,13 +295,13 @@ public class CreateCityBinsActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -306,13 +311,15 @@ public class CreateCityBinsActivity extends AppCompatActivity{
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
 

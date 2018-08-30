@@ -32,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/toolbar_hide_and_show"
+                    android:showDividers="middle"
                     android:orientation="horizontal"
                     >
                     <LinearLayout

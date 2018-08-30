@@ -119,31 +119,48 @@ public class LoginActivity extends AppCompatActivity {
                     String group_type = user.getGroupType();
                     String l_id = String.valueOf(user.getId());
 
-                    Log.d("token", toks);
 
-                    if (user != null) {
-                        Log.d("group_type", group_type);
+//                    if (user != null) {
+//                        Log.d("group_type", group_type);
+//                    }
+
+                    if(group_type.equals("Super Admin")) {
+
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("email", u_email);
+                        editor.putString("password", u_password);
+                        editor.putString("group_type", group_type);
+                        editor.putString("l_id", l_id);
+                        Log.d("email", u_email);
+                        editor.apply();
+
+                        if (progressDialog.isShowing())
+                            progressDialog.dismiss();
+                        signin.setEnabled(true);
+
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(i);
+                        Toast.makeText(getApplicationContext(), msg.getType().toString() + "\n" + msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+
+                    }else{
+
+                          Toast.makeText(getApplicationContext(),"Invalid Credentials",Toast.LENGTH_SHORT).show();
+
+                        final Snackbar snackbar = Snackbar
+                                .make(coordinatorLayout, "Invalid Credentials", Snackbar.LENGTH_LONG);
+
+                        // Changing message text color
+                        snackbar.setActionTextColor(Color.RED);
+
+                        // Changing action button text color
+                        View sbView = snackbar.getView();
+                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setTextColor(Color.YELLOW);
+                        snackbar.show();
+
                     }
-
-                    Toast.makeText(getApplicationContext(), msg.getType().toString() + "\n" + msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("email", u_email);
-                    editor.putString("password", u_password);
-                    editor.putString("group_type", group_type);
-                    editor.putString("l_id", l_id);
-                    Log.d("email", u_email);
-                    editor.apply();
-
-                    if (progressDialog.isShowing())
-                        progressDialog.dismiss();
-                    signin.setEnabled(true);
-
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
-
-
                 } else if (response.code() == 401) {
 
                     if (progressDialog.isShowing())
@@ -175,11 +192,10 @@ public class LoginActivity extends AppCompatActivity {
                             });
 
                   // Changing message text color
-                    snackbar.setActionTextColor(Color.BLUE);
+                    snackbar.setActionTextColor(Color.RED);
 
                   // Changing action button text color
                     View sbView = snackbar.getView();
-                    sbView.setBackgroundColor(R.color.colorPrimary);
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.YELLOW);
                     snackbar.show();

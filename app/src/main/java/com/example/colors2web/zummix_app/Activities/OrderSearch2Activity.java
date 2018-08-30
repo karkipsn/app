@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.colors2web.zummix_app.Fragments.Frag_AddAndItems;
 import com.example.colors2web.zummix_app.Fragments.Frag_Box;
 import com.example.colors2web.zummix_app.Fragments.Frag_ItemDetails;
 import com.example.colors2web.zummix_app.Fragments.OneFragment;
@@ -67,14 +68,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
     private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     APIInterface apiInterface;
 
-    @BindView(R.id.dis_head)
-    TextView head;
+//    @BindView(R.id.dis_head)
+//    TextView head;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.dis_batch)
-    TextView batch;
+//    @BindView(R.id.dis_batch)
+//    TextView batch;
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -84,6 +85,42 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     @BindView(R.id.cancel_button)
     Button cancel_button;
+
+    @BindView(R.id.ord2_storename)
+    TextView storename;
+
+//    @BindView(R.id.ord2_sdate)
+//    TextView odate;
+
+    @BindView(R.id.ord2_status)
+    TextView status;
+
+    @BindView(R.id.paused)
+    TextView paused;
+
+    @BindView(R.id.ready_to_batch)
+    TextView ready;
+
+    @BindView(R.id.refunded)
+    TextView refunded;
+
+    @BindView(R.id.ord2_sdate1)
+    TextView date;
+
+
+    @BindView(R.id.spp_request)
+    TextView pp;
+
+
+    @BindView(R.id.expedite)
+    TextView expedite;
+
+
+    @BindView(R.id.ship_it_now_batch)
+    TextView ready_now;
+
+    @BindView(R.id.batch_printed)
+    TextView printed;
 
 
     @Override
@@ -100,7 +137,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.frame_toolbar, new SearchFragment()).
-                addToBackStack(TAG_FRAGMENT).commit();
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
@@ -130,19 +167,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == QUEUE_MSG) {
-//            if (resultCode == RESULT_OK) {
-//                Serializable tmp = data.getSerializableExtra(OrderSearch2Activity.back);
-//                if (tmp != null)
-//                    serializable = tmp;
-//            }
-//        }
-//    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -164,7 +188,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        cancel_button.setVisibility(View.GONE);
+//        cancel_button.setVisibility(View.GONE);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String email = preferences.getString("email", "");
@@ -205,7 +229,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
             final String back = i.getExtras().getString("back_id");
             if (back != null) {
                 call_next(group_type, email, password, Long.valueOf(back));
-                Log.d("back",back);
+                Log.d("back", back);
             }
         }
 
@@ -241,7 +265,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                     } else {
                         String d = response.body().getMessage();
-                        head.setText(d);
+//                        head.setText(d);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -328,16 +352,18 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String id = String.valueOf(order.getOrder().getId());
                                 String ords_no = String.valueOf(order.getOrder().getOrderNumber());
 
-                                head.setText(String.valueOf(order.getOrder().getOrderNumber()));
+                                toolbar.setTitle(ords_no);
 
-                                Long value1 = Long.valueOf(0);
-                                Long value = order.getOrder().getBatchNumber();
-                                if (value1.longValue() != value.longValue()) {
-                                    batch.setText("Batch Number : " + value);
-                                }
+
+//                                head.setText(String.valueOf(order.getOrder().getOrderNumber()));
+
+//                                Long value1 = Long.valueOf(0);
+//                                Long value = order.getOrder().getBatchNumber();
+//                                if (value1.longValue() != value.longValue()) {
+//                                    batch.setText("Batch Number : " + value);
+//                                }
 
                                 String store_name = order.getOrder().getCustomerName();
-                                Log.d("store_name", store_name);
                                 String store_email = order.getOrder().getCustomerEmail();
                                 String order_no = order.getOrder().getOrderNumber();
                                 String cus_id = String.valueOf(order.getOrder().getCustomerId());
@@ -348,6 +374,138 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String order_type = order.getOrder().getOrderType();
                                 String order_status = order.getOrder().getOrderStatus();
                                 String emp_id = order.getOrder().getEmployeeId();
+
+                                String ispaused = order.getOrder().getIsPaused();
+                                String isready = order.getOrder().getIsReadyToBatch();
+                                String ispp = String.valueOf(order.getOrder().getIsPpRequestCreated());
+                                String isexpedite = order.getOrder().getmIsExpedite();
+                                String isready_now = order.getOrder().getIsReadyToBatch();
+                                String isprinted = String.valueOf(order.getOrder().getIsBatchPrinted());
+                                String isrefund = order.getOrder().getIsRefunded();
+
+
+                                storename.setText(store_name);
+                                date.setText(order_date);
+
+
+                                switch (order_status) {
+
+                                    case "Order Created":
+                                        status.setText("Order Created");
+                                        status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Cancelled":
+                                        status.setText("Cancelled");
+                                        status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Batch Created":
+                                        status.setText("Batch Created");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Picked":
+                                        status.setText("Picked");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Packed":
+                                        status.setText("Packed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.blue));
+                                        break;
+
+                                    case "IOR":
+                                        status.setText("IOR");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Shipped":
+                                        status.setText("Shipped");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_dark));
+                                        break;
+
+                                    case "Edited Shipping Address":
+                                        status.setText("Edited Shipping Address");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+
+                                    case "Pick List Printed":
+                                        status.setText("Pick List Printed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Cancelled Shipment":
+                                        status.setText("Cancelled Shipment");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Pick Started":
+                                        status.setText("Pick Started");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+                                    case "Pick Ended":
+                                        status.setText("Pick Ended");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_dark));
+
+                                        break;
+
+                                    case "Pack Started":
+                                        status.setText("Pack Started");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+                                    case "Pack Ended":
+                                        status.setText("Pack Ended");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "On Hold":
+                                        status.setText("On Hold");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+//                                status.setText(order_status);
+                                if (ispaused.equals("1")) {
+                                    paused.setVisibility(View.VISIBLE);
+                                }
+                                if (isready.equals("1")) {
+                                    ready.setVisibility(View.VISIBLE);
+                                }
+                                if (ispp.equals("1")) {
+                                    refunded.setVisibility(View.VISIBLE);
+                                }
+                                if (isexpedite.equals("1")) {
+                                    pp.setVisibility(View.VISIBLE);
+                                }
+                                if (isready_now.equals("1")) {
+                                    expedite.setVisibility(View.VISIBLE);
+                                }
+                                if (isprinted.equals("1")) {
+                                    ready_now.setVisibility(View.VISIBLE);
+                                }
+                                if (isrefund.equals("1")) {
+                                    printed.setVisibility(View.VISIBLE);
+                                }
 
                                 String type = group_type;
                                 if (type != null) {
@@ -397,6 +555,10 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 ArrayList<OrderShippingAddressesDetail> ShipList = new ArrayList<>();
                                 List<OrderShippingAddressesDetail> ord1 = order.getOrderShippingAddressesDetails();
 
+                                String customer_country = null;
+                                String customer_city = null;
+                                String customer_state = null;
+                                String customer_zip = null;
                                 for (int i = 0; i < ord1.size(); i++) {
 
                                     OrderShippingAddressesDetail ship = new OrderShippingAddressesDetail();
@@ -407,6 +569,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     String address = ord1.get(i).getCustomerAddress1();
                                     String email = ord1.get(i).getCustomerEmail();
                                     String office = ord1.get(i).getCustomerOfficeName();
+                                    customer_country = ord1.get(i).getCustomerCountry();
+                                    customer_city = ord1.get(i).getCustomerCity();
+                                    customer_state = ord1.get(i).getCustomerState();
+                                    customer_zip = ord1.get(i).getCustomerZip();
+
 
                                     ship.setCustomerFname(fname);
                                     ship.setCustomerLname(lname);
@@ -414,6 +581,12 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     ship.setCustomerAddress1(address);
                                     ship.setCustomerEmail(email);
                                     ship.setCustomerOfficeName(office);
+
+
+                                    ship.setCustomerCountry(customer_country);
+                                    ship.setCustomerCity(customer_city);
+                                    ship.setCustomerState(customer_state);
+                                    ship.setCustomerZip(customer_zip);
 
                                     ShipList.add(ship);
                                 }
@@ -480,7 +653,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 //pageviewer set up
 
                                 setupViewPager(viewPager, id, store_name, store_email, order_no, special_inst, order_date,
-                                        ship_method, order_type, order_status, edit_shipping_address, emp_id, ItmList, ShipList, LogList, BoxList, MBoxList);
+                                        ship_method, order_type, order_status, edit_shipping_address, emp_id, ItmList, ShipList,
+                                        LogList, BoxList, MBoxList);
                                 if (progressDialog.isShowing()) {
                                     progressDialog.dismiss();
                                 }
@@ -506,13 +680,15 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String id = String.valueOf(order.getOrder().getId());
                                 String ords_no = String.valueOf(order.getOrder().getOrderNumber());
 
-                                head.setText(String.valueOf(order.getOrder().getOrderNumber()));
+                                toolbar.setTitle(ords_no);
 
-                                Long value1 = Long.valueOf(0);
-                                Long value = order.getOrder().getBatchNumber();
-                                if (value1.longValue() != value.longValue()) {
-                                    batch.setText("Batch Number : " + value);
-                                }
+//                                head.setText(String.valueOf(order.getOrder().getOrderNumber()));
+//
+//                                Long value1 = Long.valueOf(0);
+//                                Long value = order.getOrder().getBatchNumber();
+//                                if (value1.longValue() != value.longValue()) {
+//                                    batch.setText("Batch Number : " + value);
+//                                }
 
                                 String store_name = order.getOrder().getCustomerName();
                                 Log.d("store_name", store_name);
@@ -527,22 +703,154 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String order_status = order.getOrder().getOrderStatus();
                                 String emp_id = order.getOrder().getEmployeeId();
 
+
+                                String ispaused = order.getOrder().getIsPaused();
+                                String isready = order.getOrder().getIsReadyToBatch();
+                                String ispp = String.valueOf(order.getOrder().getIsPpRequestCreated());
+                                String isexpedite = order.getOrder().getmIsExpedite();
+                                String isready_now = order.getOrder().getIsReadyToBatch();
+                                String isprinted = String.valueOf(order.getOrder().getIsBatchPrinted());
+                                String isrefund = order.getOrder().getIsRefunded();
+
+
+                                storename.setText(store_name);
+                                date.setText(order_date);
+
+                                switch (order_status) {
+
+                                    case "Order Created":
+                                        status.setText("Order Created");
+                                        status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Cancelled":
+                                        status.setText("Cancelled");
+                                        status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Batch Created":
+                                        status.setText("Batch Created");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Picked":
+                                        status.setText("Picked");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Packed":
+                                        status.setText("Packed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.blue));
+                                        break;
+
+                                    case "IOR":
+                                        status.setText("IOR");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Shipped":
+                                        status.setText("Shipped");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_dark));
+                                        break;
+
+                                    case "Edited Shipping Address":
+                                        status.setText("Edited Shipping Address");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+
+                                    case "Pick List Printed":
+                                        status.setText("Pick List Printed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Cancelled Shipment":
+                                        status.setText("Cancelled Shipment");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.colorPrimaryDark));
+                                        break;
+
+                                    case "Pick Started":
+                                        status.setText("Pick Started");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+                                    case "Pick Ended":
+                                        status.setText("Pick Ended");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_dark));
+
+                                        break;
+
+                                    case "Pack Started":
+                                        status.setText("Pack Started");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.purple));
+                                        break;
+
+                                    case "Pack Ended":
+                                        status.setText("Pack Ended");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "On Hold":
+                                        status.setText("On Hold");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+//                                status.setText(order_status);
+                                if (ispaused.equals("1")) {
+                                    paused.setVisibility(View.VISIBLE);
+                                }
+                                if (isready.equals("1")) {
+                                    ready.setVisibility(View.VISIBLE);
+                                }
+                                if (ispp.equals("1")) {
+                                    refunded.setVisibility(View.VISIBLE);
+                                }
+                                if (isexpedite.equals("1")) {
+                                    pp.setVisibility(View.VISIBLE);
+                                }
+                                if (isready_now.equals("1")) {
+                                    expedite.setVisibility(View.VISIBLE);
+                                }
+                                if (isprinted.equals("1")) {
+                                    ready_now.setVisibility(View.VISIBLE);
+                                }
+                                if (isrefund.equals("1")) {
+                                    printed.setVisibility(View.VISIBLE);
+                                }
+
                                 String type = group_type;
                                 if (type != null) {
 
 
-//                                    if (type.equals("Admin") || order_status.equals("On Hold")) {
-//
-//                                        cancel_button.setVisibility(View.VISIBLE);
-//                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-//
-//                                    } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
-//
-//                                        cancel_button.setVisibility(View.VISIBLE);
-//                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-//                                    } else {
-//                                        cancel_button.setVisibility(View.GONE);
-//                                    }
+                                    if (type.equals("Admin") || order_status.equals("On Hold")) {
+
+                                        cancel_button.setVisibility(View.VISIBLE);
+                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+
+                                    } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
+
+                                        cancel_button.setVisibility(View.VISIBLE);
+                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+                                    } else {
+                                        cancel_button.setVisibility(View.GONE);
+                                    }
 
 
                                     if (type.equals("Admin") || order_status.equals("On Hold")) {
@@ -607,6 +915,16 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     ship.setCustomerAddress1(address);
                                     ship.setCustomerEmail(email);
                                     ship.setCustomerOfficeName(office);
+
+                                    String customer_country = ord1.get(i).getCustomerCountry();
+                                    String customer_city = ord1.get(i).getCustomerCity();
+                                    String customer_state = ord1.get(i).getCustomerState();
+                                    String customer_zip = ord1.get(i).getCustomerZip();
+
+                                    ship.setCustomerCountry(customer_country);
+                                    ship.setCustomerCity(customer_city);
+                                    ship.setCustomerState(customer_state);
+                                    ship.setCustomerZip(customer_zip);
 
                                     ShipList.add(ship);
                                 }
@@ -680,7 +998,9 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             String id = String.valueOf(order2.getOrder().getId());
                             String ords_no = String.valueOf(order2.getOrder().getOrderNumber());
 
-                            head.setText(ords_no);
+                            toolbar.setTitle(ords_no);
+
+//                            head.setText(ords_no);
 //                            batch.setText("Batch Number : " + order2.getOrder().getBatchNumber());
 //                            Not needed because batch number already will be Zero
 
@@ -698,23 +1018,155 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             String order_status = order2.getOrder().getOrderStatus();
                             String emp_id = order2.getOrder().getEmployeeId();
 
+                            String ispaused = order2.getOrder().getIsPaused();
+                            String isready = order2.getOrder().getIsReadyToBatch();
+                            String ispp = String.valueOf(order2.getOrder().getIsPpRequestCreated());
+                            String isexpedite = order2.getOrder().getmIsExpedite();
+                            String isready_now = order2.getOrder().getIsReadyToBatch();
+                            String isprinted = String.valueOf(order2.getOrder().getIsBatchPrinted());
+                            String isrefund = order2.getOrder().getIsRefunded();
+
+
+                            storename.setText(store_name);
+                            date.setText(order_date);
+
+
+                            switch (order_status) {
+
+                                case "Order Created":
+                                    status.setText("Order Created");
+                                    status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                    break;
+
+                                case "Cancelled":
+                                    status.setText("Cancelled");
+                                    status.setTextColor(status.getResources().getColor(R.color.colorPrimaryDark));
+                                    break;
+
+                                case "Batch Created":
+                                    status.setText("Batch Created");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                    break;
+
+                                case "Picked":
+                                    status.setText("Picked");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Packed":
+                                    status.setText("Packed");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.blue));
+                                    break;
+
+                                case "IOR":
+                                    status.setText("IOR");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                    break;
+
+                                case "Shipped":
+                                    status.setText("Shipped");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_dark));
+                                    break;
+
+                                case "Edited Shipping Address":
+                                    status.setText("Edited Shipping Address");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.purple));
+                                    break;
+
+
+                                case "Pick List Printed":
+                                    status.setText("Pick List Printed");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Cancelled Shipment":
+                                    status.setText("Cancelled Shipment");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                    break;
+
+                                case "Pick Started":
+                                    status.setText("Pick Started");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.purple));
+                                    break;
+
+                                case "Pick Ended":
+                                    status.setText("Pick Ended");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_dark));
+
+                                    break;
+
+                                case "Pack Started":
+                                    status.setText("Pack Started");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.purple));
+                                    break;
+
+                                case "Pack Ended":
+                                    status.setText("Pack Ended");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "On Hold":
+                                    status.setText("On Hold");
+                                    status.setTextColor(status
+                                                    .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                default:
+                                    break;
+                            }
+//                            status.setText(order_status);
+
+                            if (ispaused.equals("1")) {
+                                paused.setVisibility(View.VISIBLE);
+                            }
+                            if (isready.equals("1")) {
+                                ready.setVisibility(View.VISIBLE);
+                            }
+                            if (ispp.equals("1")) {
+                                refunded.setVisibility(View.VISIBLE);
+                            }
+                            if (isexpedite.equals("1")) {
+                                pp.setVisibility(View.VISIBLE);
+                            }
+                            if (isready_now.equals("1")) {
+                                expedite.setVisibility(View.VISIBLE);
+                            }
+                            if (isprinted.equals("1")) {
+                                ready_now.setVisibility(View.VISIBLE);
+                            }
+                            if (isrefund.equals("1")) {
+                                printed.setVisibility(View.VISIBLE);
+                            }
+
 
                             String type = group_type;
                             if (type != null) {
 
-//                                if (type.equals("Admin") || order_status.equals("On Hold")) {
-//
-//                                    cancel_button.setVisibility(View.VISIBLE);
-//                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-//
-//                                } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
-//
-//                                    cancel_button.setVisibility(View.VISIBLE);
-//                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-//
-//                                } else {
-//                                    cancel_button.setVisibility(View.GONE);
-//                                }
+                                if (type.equals("Admin") || order_status.equals("On Hold")) {
+
+                                    cancel_button.setVisibility(View.VISIBLE);
+                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+
+                                } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
+
+                                    cancel_button.setVisibility(View.VISIBLE);
+                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+
+                                } else {
+                                    cancel_button.setVisibility(View.GONE);
+                                }
 
                                 if (type.equals("Admin") || order_status.equals("On Hold")) {
 
@@ -800,6 +1252,17 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 ship.setCustomerAddress1(address);
                                 ship.setCustomerEmail(email);
                                 ship.setCustomerOfficeName(office);
+
+
+                                String customer_country = ord1.get(i).getCustomerCountry();
+                                String customer_city = ord1.get(i).getCustomerCity();
+                                String customer_state = ord1.get(i).getCustomerState();
+                                String customer_zip = ord1.get(i).getCustomerZip();
+
+                                ship.setCustomerCountry(customer_country);
+                                ship.setCustomerCity(customer_city);
+                                ship.setCustomerState(customer_state);
+                                ship.setCustomerZip(customer_zip);
 
                                 ShipList.add(ship);
                             }
@@ -887,50 +1350,35 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     }
 
-    private void setupViewPager(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
-                                String special_inst, String order_date, String ship_method, String order_type, String order_status,
-                                String edit_shipping_address, String emp_id, ArrayList<ItemDetail> itmList,
+    private void setupViewPager(ViewPager viewPager, String id, String store_name,
+                                String store_email, String order_no, String special_inst, String order_date,
+                                String ship_method, String order_type, String order_status, String edit_shipping_address, String emp_id, ArrayList<ItemDetail> itmList,
                                 ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
                                 ArrayList<Box> boxList, ArrayList<MasterBox> mBoxList) {
+
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
 
-        Bundle bundle = new Bundle();
-        OneFragment one = new OneFragment();
-        bundle.putString("store_name", store_name);
-        bundle.putString("store_email", store_email);
-        bundle.putString("order_no", order_no);
-        bundle.putString("special_inst", special_inst);
-        bundle.putString("order_date", order_date);
-        bundle.putString("ship_method", ship_method);
-        bundle.putString("order_type", order_type);
-        bundle.putString("order_status", order_status);
-        bundle.putString("emp_id", emp_id);
-
-        one.setArguments(bundle);
-        adapter.addFrag(one, "Order Details");
-
         Bundle b = new Bundle();
+        Frag_AddAndItems add = new Frag_AddAndItems();
         b.putString("b_id", id);
         b.putString("order_status", order_status);
         b.putString("order_type", order_type);
         b.putString("edit_shipping_address", edit_shipping_address);
-        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
         b.putParcelableArrayList("shipping_detail", shipList);
-        two.setArguments(b);
-        adapter.addFrag(two, "Shipping Add");
+        b.putParcelableArrayList("item_detail", itmList);
+        add.setArguments(b);
+        adapter.addFrag(add, "Order Details");
+
+
 
         Frag_OrderLogs three = new Frag_OrderLogs();
         b.putParcelableArrayList("logs_detail", logList);
         three.setArguments(b);
         adapter.addFrag(three, "Order Logs");
 
-        Frag_ItemDetails four = new Frag_ItemDetails();
-        b.putParcelableArrayList("item_detail", itmList);
-        four.setArguments(b);
-        Log.d("display", itmList.toString());
-        adapter.addFrag(four, "Line Items");
+
 
         Frag_Box five = new Frag_Box();
         b.putParcelableArrayList("box_detail", boxList);
@@ -947,49 +1395,140 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     }
 
+
+
+//    private void setupViewPager(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
+//                                String special_inst, String order_date, String ship_method, String order_type, String order_status,
+//                                String edit_shipping_address, String emp_id, ArrayList<ItemDetail> itmList,
+//                                ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
+//                                ArrayList<Box> boxList, ArrayList<MasterBox> mBoxList) {
+//
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//
+//
+//        Bundle bundle = new Bundle();
+//        OneFragment one = new OneFragment();
+//        bundle.putString("store_name", store_name);
+//        bundle.putString("store_email", store_email);
+//        bundle.putString("order_no", order_no);
+//        bundle.putString("special_inst", special_inst);
+//        bundle.putString("order_date", order_date);
+//        bundle.putString("ship_method", ship_method);
+//        bundle.putString("order_type", order_type);
+//        bundle.putString("order_status", order_status);
+//        bundle.putString("emp_id", emp_id);
+//
+//        one.setArguments(bundle);
+//        adapter.addFrag(one, "Order Details");
+//
+//        Bundle b = new Bundle();
+//        b.putString("b_id", id);
+//        b.putString("order_status", order_status);
+//        b.putString("order_type", order_type);
+//        b.putString("edit_shipping_address", edit_shipping_address);
+//        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
+//        b.putParcelableArrayList("shipping_detail", shipList);
+//        two.setArguments(b);
+//        adapter.addFrag(two, "Shipping Add");
+//
+//        Frag_OrderLogs three = new Frag_OrderLogs();
+//        b.putParcelableArrayList("logs_detail", logList);
+//        three.setArguments(b);
+//        adapter.addFrag(three, "Order Logs");
+//
+//        Frag_ItemDetails four = new Frag_ItemDetails();
+//        b.putParcelableArrayList("item_detail", itmList);
+//        four.setArguments(b);
+//        Log.d("display", itmList.toString());
+//        adapter.addFrag(four, "Line Items");
+//
+//        Frag_Box five = new Frag_Box();
+//        b.putParcelableArrayList("box_detail", boxList);
+//        five.setArguments(b);
+//        adapter.addFrag(five, "Boxes");
+//
+//
+//        Frag_MasterBox six = new Frag_MasterBox();
+//        b.putParcelableArrayList("masterbox_detail", mBoxList);
+//        six.setArguments(b);
+//        adapter.addFrag(six, "Master Box");
+//
+//        viewPager.setAdapter(adapter);
+//
+//    }
+
     private void setupViewPager1(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
                                  String special_inst, String order_date, String ship_method, String edit_shipping_address,
                                  String order_type, String order_status, String emp_id, ArrayList<ItemDetail> itmList,
                                  ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
                                  ArrayList<Box> boxList) {
 
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//
+//        Bundle bundle = new Bundle();
+//        OneFragment one = new OneFragment();
+//        bundle.putString("store_name", store_name);
+//        bundle.putString("store_email", store_email);
+//        bundle.putString("order_no", order_no);
+//        bundle.putString("special_inst", special_inst);
+//        bundle.putString("order_date", order_date);
+//        bundle.putString("ship_method", ship_method);
+//        bundle.putString("order_type", order_type);
+//        bundle.putString("order_status", order_status);
+//        bundle.putString("emp_id", emp_id);
+//
+//        one.setArguments(bundle);
+//        adapter.addFrag(one, "Order Details");
+//
+//        Bundle b = new Bundle();
+//        b.putString("b_id", id);
+//        b.putString("order_status", order_status);
+//        b.putString("order_type", order_type);
+//        b.putString("edit_shipping_address", edit_shipping_address);
+//        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
+//        b.putParcelableArrayList("shipping_detail", shipList);
+//        two.setArguments(b);
+//        adapter.addFrag(two, "Shipping Add");
+//
+//        Frag_OrderLogs three = new Frag_OrderLogs();
+//        b.putParcelableArrayList("logs_detail", logList);
+//        three.setArguments(b);
+//        adapter.addFrag(three, "Order Logs");
+//
+//        Frag_ItemDetails four = new Frag_ItemDetails();
+//        b.putParcelableArrayList("item_detail", itmList);
+//        four.setArguments(b);
+//        Log.d("display", itmList.toString());
+//        adapter.addFrag(four, "Line Items");
+//
+//        Frag_Box five = new Frag_Box();
+//        b.putParcelableArrayList("box_detail", boxList);
+//        five.setArguments(b);
+//        adapter.addFrag(five, "Boxes");
+
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        Bundle bundle = new Bundle();
-        OneFragment one = new OneFragment();
-        bundle.putString("store_name", store_name);
-        bundle.putString("store_email", store_email);
-        bundle.putString("order_no", order_no);
-        bundle.putString("special_inst", special_inst);
-        bundle.putString("order_date", order_date);
-        bundle.putString("ship_method", ship_method);
-        bundle.putString("order_type", order_type);
-        bundle.putString("order_status", order_status);
-        bundle.putString("emp_id", emp_id);
-
-        one.setArguments(bundle);
-        adapter.addFrag(one, "Order Details");
 
         Bundle b = new Bundle();
+        Frag_AddAndItems add = new Frag_AddAndItems();
         b.putString("b_id", id);
         b.putString("order_status", order_status);
         b.putString("order_type", order_type);
         b.putString("edit_shipping_address", edit_shipping_address);
-        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
         b.putParcelableArrayList("shipping_detail", shipList);
-        two.setArguments(b);
-        adapter.addFrag(two, "Shipping Add");
+        b.putParcelableArrayList("item_detail", itmList);
+        add.setArguments(b);
+        adapter.addFrag(add, "Order Details");
+
+
 
         Frag_OrderLogs three = new Frag_OrderLogs();
         b.putParcelableArrayList("logs_detail", logList);
         three.setArguments(b);
         adapter.addFrag(three, "Order Logs");
 
-        Frag_ItemDetails four = new Frag_ItemDetails();
-        b.putParcelableArrayList("item_detail", itmList);
-        four.setArguments(b);
-        Log.d("display", itmList.toString());
-        adapter.addFrag(four, "Line Items");
+
 
         Frag_Box five = new Frag_Box();
         b.putParcelableArrayList("box_detail", boxList);
@@ -1005,45 +1544,66 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                  ArrayList<ItemDetail> itmList, ArrayList<OrderShippingAddressesDetail> shipList,
                                  ArrayList<OrderLog> logList) {
 
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//
+//        Bundle bundle = new Bundle();
+//        OneFragment one = new OneFragment();
+//        bundle.putString("store_name", store_name);
+//        bundle.putString("store_email", store_email);
+//        bundle.putString("order_no", order_no);
+//        bundle.putString("special_inst", special_inst);
+//        bundle.putString("order_date", order_date);
+//        bundle.putString("ship_method", ship_method);
+//        bundle.putString("order_type", order_type);
+//        bundle.putString("order_status", order_status);
+//        bundle.putString("emp_id", emp_id);
+//
+//        one.setArguments(bundle);
+//        adapter.addFrag(one, "Order Details");
+//
+//        Bundle b = new Bundle();
+//        b.putString("b_id", id);
+//        b.putString("order_status", order_status);
+//        b.putString("order_type", order_type);
+//        b.putString("edit_shipping_address", edit_shipping_address);
+//        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
+//        b.putParcelableArrayList("shipping_detail", shipList);
+//        two.setArguments(b);
+//        Log.d("shipping_display", shipList.toString());
+//        adapter.addFrag(two, "Shipping Add");
+//
+//        Frag_OrderLogs three = new Frag_OrderLogs();
+//        b.putParcelableArrayList("logs_detail", logList);
+//        three.setArguments(b);
+//        Log.d("log_display", logList.toString());
+//        adapter.addFrag(three, "Order Logs");
+//
+//        Frag_ItemDetails four = new Frag_ItemDetails();
+//        b.putParcelableArrayList("item_detail", itmList);
+//        four.setArguments(b);
+//        Log.d("display", itmList.toString());
+//        adapter.addFrag(four, "Line Items");
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        Bundle bundle = new Bundle();
-        OneFragment one = new OneFragment();
-        bundle.putString("store_name", store_name);
-        bundle.putString("store_email", store_email);
-        bundle.putString("order_no", order_no);
-        bundle.putString("special_inst", special_inst);
-        bundle.putString("order_date", order_date);
-        bundle.putString("ship_method", ship_method);
-        bundle.putString("order_type", order_type);
-        bundle.putString("order_status", order_status);
-        bundle.putString("emp_id", emp_id);
-
-        one.setArguments(bundle);
-        adapter.addFrag(one, "Order Details");
 
         Bundle b = new Bundle();
+        Frag_AddAndItems add = new Frag_AddAndItems();
         b.putString("b_id", id);
         b.putString("order_status", order_status);
         b.putString("order_type", order_type);
         b.putString("edit_shipping_address", edit_shipping_address);
-        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
         b.putParcelableArrayList("shipping_detail", shipList);
-        two.setArguments(b);
-        Log.d("shipping_display", shipList.toString());
-        adapter.addFrag(two, "Shipping Add");
+        b.putParcelableArrayList("item_detail", itmList);
+        add.setArguments(b);
+        adapter.addFrag(add, "Order Details");
+
 
         Frag_OrderLogs three = new Frag_OrderLogs();
         b.putParcelableArrayList("logs_detail", logList);
         three.setArguments(b);
-        Log.d("log_display", logList.toString());
         adapter.addFrag(three, "Order Logs");
 
-        Frag_ItemDetails four = new Frag_ItemDetails();
-        b.putParcelableArrayList("item_detail", itmList);
-        four.setArguments(b);
-        Log.d("display", itmList.toString());
-        adapter.addFrag(four, "Line Items");
 
         viewPager.setAdapter(adapter);
     }
@@ -1095,7 +1655,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             String returntype = cres.getmReturnType();
 
                             if (returntype.equals("success")) {
-                                cancel_button.setVisibility(View.GONE);
+//                                cancel_button.setVisibility(View.GONE);
                                 if (progressDialog.isShowing()) {
                                     progressDialog.dismiss();
                                 }

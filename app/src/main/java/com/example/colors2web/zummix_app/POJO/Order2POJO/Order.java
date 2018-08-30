@@ -51,10 +51,22 @@ public class Order {
     private Long mIsPpRequestCreated;
     @SerializedName("is_ready_to_batch")
     private String mIsReadyToBatch;
+
+    public String getmIsExpedite() {
+        return mIsExpedite;
+    }
+
+    public void setmIsExpedite(String mIsExpedite) {
+        this.mIsExpedite = mIsExpedite;
+    }
+
     @SerializedName("is_refunded")
     private String mIsRefunded;
     @SerializedName("is_return_label")
     private String mIsReturnLabel;
+
+    @SerializedName("is_expedite")
+    private String mIsExpedite;
     @SerializedName("is_ship_it_now_batch")
     private Long mIsShipItNowBatch;
     @SerializedName("order_channel")

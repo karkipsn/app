@@ -4,7 +4,6 @@
     android:id="@+id/linear_pop_to_display"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/viewBack"
     android:orientation="vertical">
 
 
@@ -27,15 +26,56 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Shipping Address"
-                    android:layout_margin="3dp"
-                    android:paddingLeft="8dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shipping Address"
+                        android:layout_margin="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="12dp"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sadpt_edit"
+                        android:text="Edit"
+                        android:gravity="right"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:background="@drawable/flag_gardient"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sadpt_logs"
+                        android:gravity="right"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:textColor="@color/white"
+                        android:text="Logs"
+                        android:background="@drawable/flag_gardient"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                
                 <TextView
                     android:id="@+id/sadpt_name"
                     android:layout_width="match_parent"
@@ -53,6 +93,14 @@
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/sadpt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:paddingLeft="12dp"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/sadpt_office"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"

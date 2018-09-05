@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class ActiveFragment extends Fragment {
 
     RecyclerView mrecycleView;
     Context mContext;
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     ParentAdapter_customer padapter;
     List<Customers> CList = new ArrayList<>();
 
-    public HomeFragment()
+    public ActiveFragment()
     {};
 
     @Nullable

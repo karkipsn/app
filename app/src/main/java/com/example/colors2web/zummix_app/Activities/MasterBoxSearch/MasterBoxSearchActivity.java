@@ -65,21 +65,18 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_common);
+        setContentView(R.layout.customer_customerid);
 
         ButterKnife.bind(this);
-
 
         //for toolbarsetup with back arrow
         setSupportActionBar(ctoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //  tablayout with pageviewer set up
         tabLayout.setupWithViewPager(viewPager);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
-
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String email = preferences.getString("email", "");
@@ -250,6 +247,7 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
 
 
                     ArrayList<MasterBox> MasterBoxList = new ArrayList<>();
+
                     List<MasterBox> box = resp.getMasterBoxes();
 
                     if (box != null) {

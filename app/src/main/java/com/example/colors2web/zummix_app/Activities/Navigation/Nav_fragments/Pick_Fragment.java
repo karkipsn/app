@@ -23,8 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Pick_Velocity_ReportActivity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.SpinnerPojo;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.Activities.PostActivity.View_Pick_VelocityActivity;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;

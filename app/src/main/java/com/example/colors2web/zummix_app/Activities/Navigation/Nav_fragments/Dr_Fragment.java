@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Item_DR_HistoryActivity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.SpinnerPojo;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.Activities.PostActivity.View_dr_historyActivity;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
@@ -44,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

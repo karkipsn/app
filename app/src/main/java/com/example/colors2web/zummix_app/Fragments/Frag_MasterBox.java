@@ -38,7 +38,7 @@ public class Frag_MasterBox extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        radapter = new MasterBoxAdapter(MList);
+        radapter = new MasterBoxAdapter(getContext(),MList);
 
         mrecyclerView = getActivity().findViewById(R.id.recycle_view);
 

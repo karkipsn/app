@@ -1,9 +1,12 @@
 
 package com.example.colors2web.zummix_app.POJO.OrderSearch;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class OrderDetails {
+public class OrderDetails implements Parcelable {
 
     @SerializedName("applied_credit")
     private String mAppliedCredit;
@@ -101,6 +104,114 @@ public class OrderDetails {
     private Long mUpdatedBy;
     @SerializedName("was_token_order")
     private String mWasTokenOrder;
+
+    public OrderDetails() {
+
+        }
+
+    public OrderDetails(Parcel in) {
+        mAppliedCredit = in.readString();
+        if (in.readByte() == 0) {
+            mBatchNumber = null;
+        } else {
+            mBatchNumber = in.readLong();
+        }
+        mCommit = in.readString();
+        mCreatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mCreatedBy = null;
+        } else {
+            mCreatedBy = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            mCsvActionLogId = null;
+        } else {
+            mCsvActionLogId = in.readLong();
+        }
+        mCustomerEmail = in.readString();
+        if (in.readByte() == 0) {
+            mCustomerId = null;
+        } else {
+            mCustomerId = in.readLong();
+        }
+        mCustomerName = in.readString();
+        mDepartment = in.readString();
+        mEditShippingAddress = in.readString();
+        mEmployeeId = in.readString();
+        if (in.readByte() == 0) {
+            mGroupShipId = null;
+        } else {
+            mGroupShipId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            mId = null;
+        } else {
+            mId = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            mIsBatchPrinted = null;
+        } else {
+            mIsBatchPrinted = in.readLong();
+        }
+        mIsClaimed = in.readString();
+        mIsPaused = in.readString();
+        if (in.readByte() == 0) {
+            mIsPpRequestCreated = null;
+        } else {
+            mIsPpRequestCreated = in.readLong();
+        }
+        mIsReadyToBatch = in.readString();
+        mIsRefunded = in.readString();
+        mIsReturnLabel = in.readString();
+        if (in.readByte() == 0) {
+            mIsShipItNowBatch = null;
+        } else {
+            mIsShipItNowBatch = in.readLong();
+        }
+        mOrderChannel = in.readString();
+        mOrderDate = in.readString();
+        mOrderNumber = in.readString();
+        mOrderSpecialInstruction = in.readString();
+        mOrderStatus = in.readString();
+        mOrderToken = in.readString();
+        mOrderType = in.readString();
+        mPreSale = in.readString();
+        mPrintItem = in.readString();
+        mProblemOrder = in.readString();
+        mRefundNote = in.readString();
+        mRefundType = in.readString();
+        mRefundedAt = in.readString();
+        mRefundedUserEmail = in.readString();
+        if (in.readByte() == 0) {
+            mRefundedUserId = null;
+        } else {
+            mRefundedUserId = in.readLong();
+        }
+        mRefundedUserName = in.readString();
+        mShipMethod = in.readString();
+        mShoppingListNumber = in.readString();
+        mSpecialProgramOrder = in.readString();
+        mTag = in.readString();
+        mUpdatedAt = in.readString();
+        if (in.readByte() == 0) {
+            mUpdatedBy = null;
+        } else {
+            mUpdatedBy = in.readLong();
+        }
+        mWasTokenOrder = in.readString();
+    }
+
+    public static final Creator<OrderDetails> CREATOR = new Creator<OrderDetails>() {
+        @Override
+        public OrderDetails createFromParcel(Parcel in) {
+            return new OrderDetails(in);
+        }
+
+        @Override
+        public OrderDetails[] newArray(int size) {
+            return new OrderDetails[size];
+        }
+    };
 
     public String getAppliedCredit() {
         return mAppliedCredit;
@@ -486,4 +597,112 @@ public class OrderDetails {
         mWasTokenOrder = wasTokenOrder;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAppliedCredit);
+        if (mBatchNumber == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mBatchNumber);
+        }
+        dest.writeString(mCommit);
+        dest.writeString(mCreatedAt);
+        if (mCreatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mCreatedBy);
+        }
+        if (mCsvActionLogId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mCsvActionLogId);
+        }
+        dest.writeString(mCustomerEmail);
+        if (mCustomerId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mCustomerId);
+        }
+        dest.writeString(mCustomerName);
+        dest.writeString(mDepartment);
+        dest.writeString(mEditShippingAddress);
+        dest.writeString(mEmployeeId);
+        if (mGroupShipId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mGroupShipId);
+        }
+        if (mId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mId);
+        }
+        if (mIsBatchPrinted == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mIsBatchPrinted);
+        }
+        dest.writeString(mIsClaimed);
+        dest.writeString(mIsPaused);
+        if (mIsPpRequestCreated == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mIsPpRequestCreated);
+        }
+        dest.writeString(mIsReadyToBatch);
+        dest.writeString(mIsRefunded);
+        dest.writeString(mIsReturnLabel);
+        if (mIsShipItNowBatch == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mIsShipItNowBatch);
+        }
+        dest.writeString(mOrderChannel);
+        dest.writeString(mOrderDate);
+        dest.writeString(mOrderNumber);
+        dest.writeString(mOrderSpecialInstruction);
+        dest.writeString(mOrderStatus);
+        dest.writeString(mOrderToken);
+        dest.writeString(mOrderType);
+        dest.writeString(mPreSale);
+        dest.writeString(mPrintItem);
+        dest.writeString(mProblemOrder);
+        dest.writeString(mRefundNote);
+        dest.writeString(mRefundType);
+        dest.writeString(mRefundedAt);
+        dest.writeString(mRefundedUserEmail);
+        if (mRefundedUserId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mRefundedUserId);
+        }
+        dest.writeString(mRefundedUserName);
+        dest.writeString(mShipMethod);
+        dest.writeString(mShoppingListNumber);
+        dest.writeString(mSpecialProgramOrder);
+        dest.writeString(mTag);
+        dest.writeString(mUpdatedAt);
+        if (mUpdatedBy == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(mUpdatedBy);
+        }
+        dest.writeString(mWasTokenOrder);
+    }
 }

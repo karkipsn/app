@@ -20,6 +20,22 @@ public class MasterBoxResponse {
     @SerializedName("returnType")
     private String mReturnType;
 
+    @SerializedName("boxes")
+    private List<Boxes> mBoxes;
+
+
+
+    @SerializedName("lineItems")
+    private List<LineItems> mLineItems;
+
+    public List<LineItems> getmLineItems() {
+        return mLineItems;
+    }
+
+    public void setmLineItems(List<LineItems> mLineItems) {
+        this.mLineItems = mLineItems;
+    }
+
     public CompanyDetails getCompanyDetails() {
         return mCompanyDetails;
     }
@@ -58,6 +74,14 @@ public class MasterBoxResponse {
 
     public void setOrderShippingAddress(OrderShippingAddress orderShippingAddress) {
         mOrderShippingAddress = orderShippingAddress;
+    }
+
+    public List<Boxes> getmBoxes() {
+        return mBoxes;
+    }
+
+    public void setmBoxes(List<Boxes> mBoxes) {
+        this.mBoxes = mBoxes;
     }
 
     public String getReturnType() {

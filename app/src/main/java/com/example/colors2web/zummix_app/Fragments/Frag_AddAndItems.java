@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.colors2web.zummix_app.Adapter.LineItemsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.ItemDetail;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderShippingAddressesDetail;
+import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderDetails;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class Frag_AddAndItems extends Fragment {
 
     List<ItemDetail> ItmList = new ArrayList<>();
     List<OrderShippingAddressesDetail> ShipList =new ArrayList<>();
+
+    String o_id,order_status,order_type,edit_shipping_address;
 
 
     public Frag_AddAndItems() {
@@ -66,7 +70,7 @@ public class Frag_AddAndItems extends Fragment {
         mrecyclerView.setItemAnimator(new DefaultItemAnimator());
         mrecyclerView.setAdapter(ladapter);
 
-        sAdapter = new SAdapter(ShipList);
+        sAdapter = new SAdapter(getContext(),ShipList);
         mrecyclerView1 = getActivity().findViewById(R.id.recycle_viewc1);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mrecyclerView1.setHasFixedSize(true);
@@ -81,11 +85,22 @@ public class Frag_AddAndItems extends Fragment {
     private void log(){
         if (getArguments() != null) {
 
+            o_id = getArguments().getString("b_id");
+            order_status = getArguments().getString("order_status");
+            order_type = getArguments().getString("order_type");
+            edit_shipping_address = getArguments().getString("edit_shipping_address");
+            Log.d("order_type",order_type);
+            Log.d("order_status",order_status);
+            Log.d("o_id",o_id);
+
             ArrayList<ItemDetail> arraylist = getArguments().getParcelableArrayList("item_detail");
             ladapter.updateAnswers(arraylist);
 
+
+            OrderDetails details = getArguments().getParcelable("OrderP");
+
             ArrayList<OrderShippingAddressesDetail> sarraylist = getArguments().getParcelableArrayList("shipping_detail");
-            sAdapter.updateAnswers(sarraylist);
+            sAdapter.updateAnswers(sarraylist,details);
         }
     }
 

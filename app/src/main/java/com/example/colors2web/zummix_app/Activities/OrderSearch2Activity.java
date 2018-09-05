@@ -1,6 +1,7 @@
 package com.example.colors2web.zummix_app.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,24 +15,31 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.colors2web.zummix_app.Fragments.Frag_AddAndItems;
 import com.example.colors2web.zummix_app.Fragments.Frag_Box;
-import com.example.colors2web.zummix_app.Fragments.Frag_ItemDetails;
-import com.example.colors2web.zummix_app.Fragments.OneFragment;
 import com.example.colors2web.zummix_app.Fragments.Frag_MasterBox;
 import com.example.colors2web.zummix_app.Fragments.Frag_OrderLogs;
-import com.example.colors2web.zummix_app.Fragments.Frag_Shipping_Adderss;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Box;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.ItemDetail;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.MasterBox;
@@ -40,7 +48,11 @@ import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response2;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response3;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderLog;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderShippingAddressesDetail;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditExpedite;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditOrderType;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditShipMethod;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.OrderCancel;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.OrderEditResponse;
 import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderDetails;
 import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderSearchResponse;
 import com.example.colors2web.zummix_app.R;
@@ -53,7 +65,6 @@ import com.google.gson.JsonElement;
 
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,14 +79,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
     private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     APIInterface apiInterface;
 
-//    @BindView(R.id.dis_head)
-//    TextView head;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-//    @BindView(R.id.dis_batch)
-//    TextView batch;
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -83,14 +88,28 @@ public class OrderSearch2Activity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    @BindView(R.id.cancel_button)
-    Button cancel_button;
 
     @BindView(R.id.ord2_storename)
     TextView storename;
 
-//    @BindView(R.id.ord2_sdate)
-//    TextView odate;
+    @BindView(R.id.ord2_ship_method)
+    TextView mship_method;
+
+    @BindView(R.id.cancel_button)
+    Button cancel_button;
+
+    @BindView(R.id.btn_edit_ship_method)
+    Button btn_ship_method;
+
+    @BindView(R.id.btn_edit_shipping_type)
+    Button btn_ship_type;
+
+    @BindView(R.id.btn_expedite)
+    Button mexpedite;
+
+
+    @BindView(R.id.ord2_ship_type)
+    TextView mship_type;
 
     @BindView(R.id.ord2_status)
     TextView status;
@@ -107,10 +126,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
     @BindView(R.id.ord2_sdate1)
     TextView date;
 
-
     @BindView(R.id.spp_request)
     TextView pp;
-
 
     @BindView(R.id.expedite)
     TextView expedite;
@@ -122,6 +139,12 @@ public class OrderSearch2Activity extends AppCompatActivity {
     @BindView(R.id.batch_printed)
     TextView printed;
 
+//    @BindView(R.id.btn_shipmethod2)
+//    Button ship_btn;
+
+
+    String selection;
+    String pshipp;
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -157,14 +180,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-// TODO: 1.progress dailog implementing
-//TODO: global search view implementing
-
 
     @Override
     public void onBackPressed() {
 
-        moveTaskToBack(true);
+        super.onBackPressed();
     }
 
     @Override
@@ -177,6 +197,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordersearch2);
+
+        btn_ship_method = findViewById(R.id.btn_edit_ship_method);
+        btn_ship_type = findViewById(R.id.btn_edit_shipping_type);
+//        btn_ship_type.setVisibility(View.VISIBLE);
+
         ButterKnife.bind(this);
 
         //for toolbarsetup with back arrow
@@ -194,6 +219,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
         final String group_type = preferences.getString("group_type", "");
+        final String l_id = preferences.getString("l_id", "");
+
         Log.d("PathMail", email);
 
         final Intent i = getIntent();
@@ -346,6 +373,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             Order2Response3 response_three = new Gson().fromJson(element.getAsJsonObject(), Order2Response3.class);
 
                             Order2Response3.OrderDetails order = response_three.getOrderDetails();
+                            OrderDetails orda = new OrderDetails();
 
                             if (order != null) {
 
@@ -353,7 +381,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String ords_no = String.valueOf(order.getOrder().getOrderNumber());
 
                                 toolbar.setTitle(ords_no);
-
 
 //                                head.setText(String.valueOf(order.getOrder().getOrderNumber()));
 
@@ -386,7 +413,13 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                 storename.setText(store_name);
                                 date.setText(order_date);
+                                mship_method.setText("OrderType: " + ship_method);
+                                mship_type.setText(order_type);
 
+                                orda.setId(Long.valueOf(id));
+                                orda.setOrderStatus(order_status);
+                                orda.setOrderType(order_type);
+                                orda.setEditShippingAddress(edit_shipping_address);
 
                                 switch (order_status) {
 
@@ -474,6 +507,66 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                                 .getResources().getColor(R.color.green_light));
                                         break;
 
+                                    case "Unboxed":
+                                        status.setText("Unboxed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Paused":
+                                        status.setText("Paused");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Unpaused":
+                                        status.setText("Unpaused");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Edited Deadline":
+                                        status.setText("Edited Deadline");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Unbatched":
+                                        status.setText("Unbatched");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Return Label":
+                                        status.setText("Return Label");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Quick Batch/Pack":
+                                        status.setText("Quick Batch/Pack");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Edited Shipping Method":
+                                        status.setText("Edited Shipping Method");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Expedite Order":
+                                        status.setText("Expedite Order");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Order Tupe Changed ":
+                                        status.setText("Order Tupe Changed ");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
                                     case "On Hold":
                                         status.setText("On Hold");
                                         status.setTextColor(status
@@ -492,22 +585,26 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     ready.setVisibility(View.VISIBLE);
                                 }
                                 if (ispp.equals("1")) {
-                                    refunded.setVisibility(View.VISIBLE);
-                                }
-                                if (isexpedite.equals("1")) {
                                     pp.setVisibility(View.VISIBLE);
                                 }
-                                if (isready_now.equals("1")) {
+                                if (isexpedite.equals("1")) {
                                     expedite.setVisibility(View.VISIBLE);
+                                } else {
+                                    mexpedite.setVisibility(View.VISIBLE);
+                                    makeExpedite(ords_no, id);
+                                }
+                                if (isready_now.equals("1")) {
+                                    ready.setVisibility(View.VISIBLE);
                                 }
                                 if (isprinted.equals("1")) {
-                                    ready_now.setVisibility(View.VISIBLE);
+                                    printed.setVisibility(View.VISIBLE);
                                 }
                                 if (isrefund.equals("1")) {
-                                    printed.setVisibility(View.VISIBLE);
+                                    refunded.setVisibility(View.VISIBLE);
                                 }
 
                                 String type = group_type;
+
                                 if (type != null) {
                                     if (type.equals("Admin") || order_status.equals("On Hold")) {
 
@@ -517,21 +614,45 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     } else if (type.equals("Super Admin")) {
 
                                         if (order_status.equals("Shipped")) {
-
                                             cancel_button.setVisibility(View.GONE);
+                                            mexpedite.setVisibility(View.GONE);
+
                                         } else if (order_status.equals("Cancelled")) {
-
                                             cancel_button.setVisibility(View.GONE);
+
                                         } else {
                                             cancel_button.setVisibility(View.VISIBLE);
                                             showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
                                         }
                                     } else {
                                         cancel_button.setVisibility(View.GONE);
                                     }
                                 }
 
+                                if (type.equals("Admin") || order_status.equals("On Hold")) {
+
+                                    btn_ship_type.setVisibility(View.VISIBLE);
+                                    btn_ship_method.setVisibility(View.VISIBLE);
+
+                                    showEditShipMethod(ords_no, id, ship_method);
+                                    showEditShipType(ords_no, id, order_type);;
+
+                                }
+
+                                if( type.equals("Super Admin")){
+
+                                    if (order_status.equals("Shipped") ) {
+
+                                        btn_ship_type.setVisibility(View.GONE);
+                                        btn_ship_method.setVisibility(View.GONE);
+
+                                    } else {
+                                        btn_ship_type.setVisibility(View.VISIBLE);
+                                        btn_ship_method.setVisibility(View.VISIBLE);
+
+                                        showEditShipMethod(ords_no, id, ship_method);
+                                        showEditShipType(ords_no, id, order_type);
+                                    }}
 
                                 ArrayList<ItemDetail> ItmList = new ArrayList<>();
                                 List<ItemDetail> deps = order.getItemDetails();
@@ -654,7 +775,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                 setupViewPager(viewPager, id, store_name, store_email, order_no, special_inst, order_date,
                                         ship_method, order_type, order_status, edit_shipping_address, emp_id, ItmList, ShipList,
-                                        LogList, BoxList, MBoxList);
+                                        LogList, BoxList, MBoxList, orda);
                                 if (progressDialog.isShowing()) {
                                     progressDialog.dismiss();
                                 }
@@ -674,6 +795,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             Order2Response response_one = new Gson().fromJson(element.getAsJsonObject(), Order2Response.class);
 
                             Order2Response.OrderDetails order = response_one.getOrderDetails();
+                            OrderDetails ordP = new OrderDetails();
 
                             if (order != null) {
 
@@ -703,6 +825,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 String order_status = order.getOrder().getOrderStatus();
                                 String emp_id = order.getOrder().getEmployeeId();
 
+                                ordP.setOrderStatus(order_status);
+                                ordP.setOrderType(order_type);
+                                ordP.setId(Long.valueOf(id));
+                                ordP.setEditShippingAddress(edit_shipping_address);
+
 
                                 String ispaused = order.getOrder().getIsPaused();
                                 String isready = order.getOrder().getIsReadyToBatch();
@@ -715,6 +842,10 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                 storename.setText(store_name);
                                 date.setText(order_date);
+                                mship_type.setText("OrderType: " + order_type);
+                                mship_method.setText(ship_method);
+//                                ship_btn.setVisibility(View.VISIBLE);
+//                                ship_type2.setVisibility(View.VISIBLE);
 
                                 switch (order_status) {
 
@@ -802,6 +933,66 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                                 .getResources().getColor(R.color.green_light));
                                         break;
 
+                                    case "Unboxed":
+                                        status.setText("Unboxed");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Paused":
+                                        status.setText("Paused");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Unpaused":
+                                        status.setText("Unpaused");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Edited Deadline":
+                                        status.setText("Edited Deadline");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Unbatched":
+                                        status.setText("Unbatched");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Return Label":
+                                        status.setText("Return Label");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Quick Batch/Pack":
+                                        status.setText("Quick Batch/Pack");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Edited Shipping Method":
+                                        status.setText("Edited Shipping Method");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Expedite Order":
+                                        status.setText("Expedite Order");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
+                                    case "Order Tupe Changed ":
+                                        status.setText("Order Tupe Changed ");
+                                        status.setTextColor(status
+                                                .getResources().getColor(R.color.green_light));
+                                        break;
+
                                     case "On Hold":
                                         status.setText("On Hold");
                                         status.setTextColor(status
@@ -820,62 +1011,76 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     ready.setVisibility(View.VISIBLE);
                                 }
                                 if (ispp.equals("1")) {
-                                    refunded.setVisibility(View.VISIBLE);
-                                }
-                                if (isexpedite.equals("1")) {
                                     pp.setVisibility(View.VISIBLE);
                                 }
-                                if (isready_now.equals("1")) {
+                                if (isexpedite.equals("1")) {
                                     expedite.setVisibility(View.VISIBLE);
+                                } else {
+                                    mexpedite.setVisibility(View.VISIBLE);
+                                    makeExpedite(ords_no, id);
+                                }
+                                if (isready_now.equals("1")) {
+                                    ready.setVisibility(View.VISIBLE);
                                 }
                                 if (isprinted.equals("1")) {
-                                    ready_now.setVisibility(View.VISIBLE);
-                                }
-                                if (isrefund.equals("1")) {
                                     printed.setVisibility(View.VISIBLE);
                                 }
+                                if (isrefund.equals("1")) {
+                                    refunded.setVisibility(View.VISIBLE);
+                                }
 
-                                String type = group_type;
-                                if (type != null) {
+                                String type1 = group_type;
+                                if (type1 != null) {
 
-
-                                    if (type.equals("Admin") || order_status.equals("On Hold")) {
-
-                                        cancel_button.setVisibility(View.VISIBLE);
-                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
-                                    } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
+                                    if (type1.equals("Admin") || order_status.equals("On Hold")) {
 
                                         cancel_button.setVisibility(View.VISIBLE);
-                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-                                    } else {
-                                        cancel_button.setVisibility(View.GONE);
-                                    }
+                                        showCancelButton(ords_no, id, cus_id, order_status, type1, email, password);
 
-
-                                    if (type.equals("Admin") || order_status.equals("On Hold")) {
-
-                                        cancel_button.setVisibility(View.VISIBLE);
-                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
-                                    } else if (type.equals("Super Admin")) {
+                                    } else if (type1.equals("Super Admin")) {
 
                                         if (order_status.equals("Shipped")) {
 
                                             cancel_button.setVisibility(View.GONE);
+                                            mexpedite.setVisibility(View.GONE);
+
                                         } else if (order_status.equals("Cancelled")) {
 
                                             cancel_button.setVisibility(View.GONE);
                                         } else {
                                             cancel_button.setVisibility(View.VISIBLE);
-                                            showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+                                            showCancelButton(ords_no, id, cus_id, order_status, type1, email, password);
                                         }
-
-                                    } else {
-                                        cancel_button.setVisibility(View.GONE);
                                     }
+                                } else {
+                                    cancel_button.setVisibility(View.GONE);
+                                }
+
+                                if (type1.equals("Admin") || order_status.equals("On Hold")) {
+
+                                    btn_ship_type.setVisibility(View.VISIBLE);
+                                    btn_ship_method.setVisibility(View.VISIBLE);
+
+                                    showEditShipMethod(ords_no, id, ship_method);
+                                    showEditShipType(ords_no, id, order_type);;
 
                                 }
+
+                                if( type1.equals("Super Admin")){
+
+                                    if (order_status.equals("Shipped") ) {
+
+                                        btn_ship_type.setVisibility(View.GONE);
+                                        btn_ship_method.setVisibility(View.GONE);
+
+                                    } else {
+                                        btn_ship_type.setVisibility(View.VISIBLE);
+                                        btn_ship_method.setVisibility(View.VISIBLE);
+
+                                        showEditShipMethod(ords_no, id, ship_method);
+                                        showEditShipType(ords_no, id, order_type);
+                                    }}
+
 
                                 ArrayList<ItemDetail> ItmList = new ArrayList<>();
                                 List<ItemDetail> deps = order.getItemDetails();
@@ -976,7 +1181,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 //pageviewer set up
                                 setupViewPager1(viewPager, id, store_name, store_email, order_no, special_inst,
                                         order_date, ship_method, edit_shipping_address,
-                                        order_type, order_status, emp_id, ItmList, ShipList, LogList, BoxList);
+                                        order_type, order_status, emp_id, ItmList, ShipList, LogList, BoxList, ordP);
 
                             } else {
                                 Log.d("data2", "No data");
@@ -992,6 +1197,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                         Order2Response2 response_two = new Gson().fromJson(element.getAsJsonObject(), Order2Response2.class);
                         Order2Response2.OrderDetails order2 = response_two.getM2OrderDetails();
+                        OrderDetails ordZ = new OrderDetails();
 
                         if (order2 != null) {
 
@@ -1018,6 +1224,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             String order_status = order2.getOrder().getOrderStatus();
                             String emp_id = order2.getOrder().getEmployeeId();
 
+                            ordZ.setId(Long.valueOf(id));
+                            ordZ.setOrderStatus(order_status);
+                            ordZ.setOrderType(order_type);
+                            ordZ.setEditShippingAddress(edit_shipping_address);
+
                             String ispaused = order2.getOrder().getIsPaused();
                             String isready = order2.getOrder().getIsReadyToBatch();
                             String ispp = String.valueOf(order2.getOrder().getIsPpRequestCreated());
@@ -1029,6 +1240,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                             storename.setText(store_name);
                             date.setText(order_date);
+                            mship_type.setText("OrderType: " + order_type);
+                            mship_method.setText(ship_method);
 
 
                             switch (order_status) {
@@ -1046,81 +1259,141 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 case "Batch Created":
                                     status.setText("Batch Created");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                            .getResources().getColor(R.color.colorPrimaryDark));
                                     break;
 
                                 case "Picked":
                                     status.setText("Picked");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_light));
+                                            .getResources().getColor(R.color.green_light));
                                     break;
 
                                 case "Packed":
                                     status.setText("Packed");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.blue));
+                                            .getResources().getColor(R.color.blue));
                                     break;
 
                                 case "IOR":
                                     status.setText("IOR");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                            .getResources().getColor(R.color.colorPrimaryDark));
                                     break;
 
                                 case "Shipped":
                                     status.setText("Shipped");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_dark));
+                                            .getResources().getColor(R.color.green_dark));
                                     break;
 
                                 case "Edited Shipping Address":
                                     status.setText("Edited Shipping Address");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.purple));
+                                            .getResources().getColor(R.color.purple));
                                     break;
 
 
                                 case "Pick List Printed":
                                     status.setText("Pick List Printed");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_light));
+                                            .getResources().getColor(R.color.green_light));
                                     break;
 
                                 case "Cancelled Shipment":
                                     status.setText("Cancelled Shipment");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.colorPrimaryDark));
+                                            .getResources().getColor(R.color.colorPrimaryDark));
                                     break;
 
                                 case "Pick Started":
                                     status.setText("Pick Started");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.purple));
+                                            .getResources().getColor(R.color.purple));
                                     break;
 
                                 case "Pick Ended":
                                     status.setText("Pick Ended");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_dark));
+                                            .getResources().getColor(R.color.green_dark));
 
                                     break;
 
                                 case "Pack Started":
                                     status.setText("Pack Started");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.purple));
+                                            .getResources().getColor(R.color.purple));
                                     break;
 
                                 case "Pack Ended":
                                     status.setText("Pack Ended");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_light));
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Unboxed":
+                                    status.setText("Unboxed");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Paused":
+                                    status.setText("Paused");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Unpaused":
+                                    status.setText("Unpaused");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Edited Deadline":
+                                    status.setText("Edited Deadline");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Unbatched":
+                                    status.setText("Unbatched");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Return Label":
+                                    status.setText("Return Label");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Quick Batch/Pack":
+                                    status.setText("Quick Batch/Pack");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Edited Shipping Method":
+                                    status.setText("Edited Shipping Method");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Expedite Order":
+                                    status.setText("Expedite Order");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
+                                    break;
+
+                                case "Order Tupe Changed ":
+                                    status.setText("Order Tupe Changed ");
+                                    status.setTextColor(status
+                                            .getResources().getColor(R.color.green_light));
                                     break;
 
                                 case "On Hold":
                                     status.setText("On Hold");
                                     status.setTextColor(status
-                                                    .getResources().getColor(R.color.green_light));
+                                            .getResources().getColor(R.color.green_light));
                                     break;
 
                                 default:
@@ -1135,39 +1408,47 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 ready.setVisibility(View.VISIBLE);
                             }
                             if (ispp.equals("1")) {
-                                refunded.setVisibility(View.VISIBLE);
-                            }
-                            if (isexpedite.equals("1")) {
                                 pp.setVisibility(View.VISIBLE);
                             }
-                            if (isready_now.equals("1")) {
+                            if (isexpedite.equals("1")) {
                                 expedite.setVisibility(View.VISIBLE);
+                            } else {
+                                mexpedite.setVisibility(View.VISIBLE);
+                                makeExpedite(ords_no, id);
+                            }
+                            if (isready_now.equals("1")) {
+                                ready.setVisibility(View.VISIBLE);
                             }
                             if (isprinted.equals("1")) {
-                                ready_now.setVisibility(View.VISIBLE);
-                            }
-                            if (isrefund.equals("1")) {
                                 printed.setVisibility(View.VISIBLE);
                             }
-
+                            if (isrefund.equals("1")) {
+                                refunded.setVisibility(View.VISIBLE);
+                            }
 
                             String type = group_type;
                             if (type != null) {
 
-                                if (type.equals("Admin") || order_status.equals("On Hold")) {
-
-                                    cancel_button.setVisibility(View.VISIBLE);
-                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
-                                } else if (type.equals("Super Admin") || !order_status.equals("Shipped") || !order_status.equals("Cancelled")) {
-
-                                    cancel_button.setVisibility(View.VISIBLE);
-                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
-                                } else {
-                                    cancel_button.setVisibility(View.GONE);
-                                }
-
+//                                if (type.equals("Admin") || order_status.equals("On Hold")) {
+//
+//                                    cancel_button.setVisibility(View.VISIBLE);
+//                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+//
+//                                } else if (type.equals("Super Admin") || !order_status.equals("Shipped") ||
+//                                        !order_status.equals("Cancelled")) {
+//
+//                                    cancel_button.setVisibility(View.VISIBLE);
+//                                    btn_ship_type.setVisibility(View.VISIBLE);
+//                                    btn_ship_method.setVisibility(View.VISIBLE);
+//                                    showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
+//                                    showEditShipMethod(ords_no,id);
+//                                    showEditShipType(ords_no,id);
+//
+//                                } else {
+//                                    cancel_button.setVisibility(View.GONE);
+//                                    btn_ship_type.setVisibility(View.GONE);
+//                                    btn_ship_method.setVisibility(View.GONE);
+//                                }
                                 if (type.equals("Admin") || order_status.equals("On Hold")) {
 
                                     cancel_button.setVisibility(View.VISIBLE);
@@ -1178,18 +1459,47 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     if (order_status.equals("Shipped")) {
 
                                         cancel_button.setVisibility(View.GONE);
-                                    } else if (order_status.equals("Cancelled")) {
 
+                                    } else if (order_status.equals("Cancelled")) {
                                         cancel_button.setVisibility(View.GONE);
+
+                                    } else if (order_status.equals("On Hold")) {
+
+                                        cancel_button.setVisibility(View.VISIBLE);
+                                        showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
                                     } else {
                                         cancel_button.setVisibility(View.VISIBLE);
                                         showCancelButton(ords_no, id, cus_id, order_status, type, email, password);
-
                                     }
                                 } else {
                                     cancel_button.setVisibility(View.GONE);
                                 }
                             }
+
+                            if (type.equals("Admin") || order_status.equals("On Hold")) {
+
+                                btn_ship_type.setVisibility(View.VISIBLE);
+                                btn_ship_method.setVisibility(View.VISIBLE);
+
+                                showEditShipMethod(ords_no, id, ship_method);
+                                showEditShipType(ords_no, id, order_type);;
+
+                            }
+
+                            if( type.equals("Super Admin")){
+
+                            if (order_status.equals("Shipped") ) {
+
+                                btn_ship_type.setVisibility(View.GONE);
+                                btn_ship_method.setVisibility(View.GONE);
+
+                            } else {
+                                btn_ship_type.setVisibility(View.VISIBLE);
+                                btn_ship_method.setVisibility(View.VISIBLE);
+
+                                showEditShipMethod(ords_no, id, ship_method);
+                                showEditShipType(ords_no, id, order_type);
+                            }}
 
 
                             ArrayList<ItemDetail> ItmList = new ArrayList<>();
@@ -1253,7 +1563,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 ship.setCustomerEmail(email);
                                 ship.setCustomerOfficeName(office);
 
-
                                 String customer_country = ord1.get(i).getCustomerCountry();
                                 String customer_city = ord1.get(i).getCustomerCity();
                                 String customer_state = ord1.get(i).getCustomerState();
@@ -1273,7 +1582,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                             //pageviewer set up
                             setupViewPager2(viewPager, id, store_name, store_email, order_no, special_inst, order_date,
-                                    ship_method, order_type, edit_shipping_address, order_status, emp_id, ItmList, ShipList, LogList);
+                                    ship_method, order_type, edit_shipping_address, order_status, emp_id, ItmList, ShipList,
+                                    LogList, ordZ);
 
                         } else {
                             Log.d("store_name1", "No data");
@@ -1350,11 +1660,339 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     }
 
+
+    private void makeExpedite(String ords_no, final String id) {
+
+        mexpedite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                final String email = preferences.getString("email", "");
+                final String password = preferences.getString("password", "");
+                final String l_id = preferences.getString("l_id", "");
+                String or_id = id;
+                String is_exped = "1";
+
+
+                EditExpedite sm1 = new EditExpedite(is_exped, l_id);
+
+                Call<OrderEditResponse> call = apiInterface.putmarkExpedite(email, password, or_id, sm1);
+
+                call.enqueue(new Callback<OrderEditResponse>() {
+                    @Override
+                    public void onResponse(Call<OrderEditResponse> call, Response<OrderEditResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(getIntent());
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderEditResponse> call, Throwable t) {
+
+                        Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
+                        call.cancel();
+                    }
+                });
+
+            }
+        });
+    }
+
+    private void showEditShipType(final String ords_no, final String id, final String order_type) {
+
+        btn_ship_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "I am Clicked", Toast.LENGTH_SHORT).show();
+
+                showpopup1_order_type(ords_no, id, order_type);
+
+
+            }
+        });
+    }
+
+    private void showpopup1_order_type(String pship, final String id, String order_type) {
+
+
+        LayoutInflater inflater = (LayoutInflater) OrderSearch2Activity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.modal_edit_order_type, null);
+
+        WindowManager wm = (WindowManager) OrderSearch2Activity.this.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+
+        int height = display.getHeight();
+        int width = display.getWidth();
+
+        final PopupWindow popup = new PopupWindow(popupView,
+                (int) (width * 0.8), WindowManager.LayoutParams.WRAP_CONTENT);
+//                (int) (height / 2.5)
+        popup.setFocusable(true);
+        popup.setOutsideTouchable(true);
+        popup.setAnimationStyle(android.R.style.Animation_Dialog);
+
+//                popup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popup.showAtLocation(tabLayout, Gravity.CENTER, 0, 0); //Displaying popup
+
+        View container = (View) popup.getContentView().getParent();
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.7f;
+        wm.updateViewLayout(container, p);
+
+
+        TextView psubmit, pcancel;
+        final TextView pship_type;
+        final AutoCompleteTextView aspinner;
+        Spinner lastoption;
+//                TODO:AutoCOmplete TextVIew Or Spinner Implementation
+
+        psubmit = popupView.findViewById(R.id.pop1_submit);
+        pcancel = popupView.findViewById(R.id.pop1_cancel);
+        pship_type = popupView.findViewById(R.id.pop1_ship_type);
+
+//        aspinner = popupView.findViewById(R.id.pop1_spinner);
+        lastoption = popupView.findViewById(R.id.pop2_spinner);
+
+
+        switch (order_type) {
+            case "0":
+
+                pship_type.setText("Field Office Delivery");
+                break;
+
+            case "1":
+                pship_type.setText("Ship To");
+                break;
+
+            case "2":
+                pship_type.setText("VIP Delivery");
+                break;
+        }
+
+        lastoption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selection = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+//Display the same Value
+                Toast.makeText(OrderSearch2Activity.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
+                selection = pship_type.getText().toString();
+            }
+        });
+
+        pcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+
+
+        psubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+
+                if (selection.equals("Field Office Delivery")) {
+                    pshipp = "0";
+                } else if (selection.equals("Ship To")) {
+                    pshipp = "1";
+                } else {
+                    pshipp = "2";
+                }
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                final String email = preferences.getString("email", "");
+                final String password = preferences.getString("password", "");
+                final String l_id = preferences.getString("l_id", "");
+                String or_id = id;
+
+                EditShipMethod sm = new EditShipMethod(pshipp, l_id);
+
+                Call<OrderEditResponse> call = apiInterface.puteditShipMethod(email, password, or_id, sm);
+
+                call.enqueue(new Callback<OrderEditResponse>() {
+                    @Override
+                    public void onResponse(Call<OrderEditResponse> call, Response<OrderEditResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(getIntent());
+                            popup.dismiss();
+
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
+                            popup.dismiss();
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderEditResponse> call, Throwable t) {
+
+                        Toast.makeText(getApplicationContext(), "Failed to Update." + "\n" + " No Internet Connection", Toast.LENGTH_SHORT).show();
+                        popup.dismiss();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+
+                    }
+                });
+
+
+            }
+        });
+
+    }
+
+    private void showEditShipMethod(final String ords_no, final String id, final String ship_method) {
+
+        btn_ship_method.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "I am Clicked1", Toast.LENGTH_SHORT).show();
+
+                showpop2_ship_method(ords_no, id, ship_method);
+            }
+        });
+    }
+
+    private void showpop2_ship_method(String ords_no, final String id, String ship_method) {
+
+        LayoutInflater inflater = (LayoutInflater) OrderSearch2Activity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.modal_edit_shippingmethod, null);
+
+        WindowManager wm = (WindowManager) OrderSearch2Activity.this.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int height = display.getHeight();
+        int width = display.getWidth();
+
+        final PopupWindow popup = new PopupWindow(popupView,
+                (int) (width * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
+//                (int) (height / 2.5)
+        popup.setFocusable(true);
+        popup.setOutsideTouchable(true);
+        popup.setAnimationStyle(android.R.style.Animation_Dialog);
+
+        popup.showAtLocation(tabLayout, Gravity.CENTER, 0, 0); //Displaying popup
+
+        View container = (View) popup.getContentView().getParent();
+        WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+        p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        p.dimAmount = 0.7f;
+        wm.updateViewLayout(container, p);
+
+        TextView psubmit, pcancel;
+        final EditText pship_type;
+
+        psubmit = popupView.findViewById(R.id.pop2_submit);
+        pcancel = popupView.findViewById(R.id.pop2_cancel);
+        pship_type = popupView.findViewById(R.id.pop2_order_type);
+        pship_type.setText(ship_method);
+        Log.d("Ship_method", ship_method);
+
+
+        pcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+
+        psubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
+                String p = pship_type.getText().toString();
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                final String email = preferences.getString("email", "");
+                final String password = preferences.getString("password", "");
+                final String l_id = preferences.getString("l_id", "");
+                String or_id = id;
+
+
+                EditOrderType sm = new EditOrderType(p, l_id);
+
+                Call<OrderEditResponse> call = apiInterface.puteditOrderType(email, password, or_id, sm);
+
+                call.enqueue(new Callback<OrderEditResponse>() {
+                    @Override
+                    public void onResponse(Call<OrderEditResponse> call, Response<OrderEditResponse> response) {
+                        if (response.isSuccessful()) {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(getIntent());
+                            popup.dismiss();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Edit Failed", Toast.LENGTH_SHORT).show();
+                            popup.dismiss();
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderEditResponse> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Operation Failed." + "\n" + " No Internet Connection", Toast.LENGTH_SHORT).show();
+                        popup.dismiss();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+
+                    }
+                });
+
+            }
+        });
+    }
+
     private void setupViewPager(ViewPager viewPager, String id, String store_name,
                                 String store_email, String order_no, String special_inst, String order_date,
                                 String ship_method, String order_type, String order_status, String edit_shipping_address, String emp_id, ArrayList<ItemDetail> itmList,
                                 ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
-                                ArrayList<Box> boxList, ArrayList<MasterBox> mBoxList) {
+                                ArrayList<Box> boxList, ArrayList<MasterBox> mBoxList, OrderDetails ordP) {
 
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -1368,16 +2006,15 @@ public class OrderSearch2Activity extends AppCompatActivity {
         b.putString("edit_shipping_address", edit_shipping_address);
         b.putParcelableArrayList("shipping_detail", shipList);
         b.putParcelableArrayList("item_detail", itmList);
+        b.putParcelable("OrderP", ordP);
         add.setArguments(b);
         adapter.addFrag(add, "Order Details");
-
 
 
         Frag_OrderLogs three = new Frag_OrderLogs();
         b.putParcelableArrayList("logs_detail", logList);
         three.setArguments(b);
         adapter.addFrag(three, "Order Logs");
-
 
 
         Frag_Box five = new Frag_Box();
@@ -1394,7 +2031,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
     }
-
 
 
 //    private void setupViewPager(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
@@ -1461,7 +2097,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                  String special_inst, String order_date, String ship_method, String edit_shipping_address,
                                  String order_type, String order_status, String emp_id, ArrayList<ItemDetail> itmList,
                                  ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
-                                 ArrayList<Box> boxList) {
+                                 ArrayList<Box> boxList, OrderDetails ordP) {
 
 //        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 //
@@ -1518,16 +2154,15 @@ public class OrderSearch2Activity extends AppCompatActivity {
         b.putString("edit_shipping_address", edit_shipping_address);
         b.putParcelableArrayList("shipping_detail", shipList);
         b.putParcelableArrayList("item_detail", itmList);
+        b.putParcelable("OrderP", ordP);
         add.setArguments(b);
         adapter.addFrag(add, "Order Details");
-
 
 
         Frag_OrderLogs three = new Frag_OrderLogs();
         b.putParcelableArrayList("logs_detail", logList);
         three.setArguments(b);
         adapter.addFrag(three, "Order Logs");
-
 
 
         Frag_Box five = new Frag_Box();
@@ -1542,47 +2177,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                  String special_inst, String order_date, String ship_method, String order_type,
                                  String edit_shipping_address, String order_status, String emp_id,
                                  ArrayList<ItemDetail> itmList, ArrayList<OrderShippingAddressesDetail> shipList,
-                                 ArrayList<OrderLog> logList) {
+                                 ArrayList<OrderLog> logList, OrderDetails ordP) {
 
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//
-//        Bundle bundle = new Bundle();
-//        OneFragment one = new OneFragment();
-//        bundle.putString("store_name", store_name);
-//        bundle.putString("store_email", store_email);
-//        bundle.putString("order_no", order_no);
-//        bundle.putString("special_inst", special_inst);
-//        bundle.putString("order_date", order_date);
-//        bundle.putString("ship_method", ship_method);
-//        bundle.putString("order_type", order_type);
-//        bundle.putString("order_status", order_status);
-//        bundle.putString("emp_id", emp_id);
-//
-//        one.setArguments(bundle);
-//        adapter.addFrag(one, "Order Details");
-//
-//        Bundle b = new Bundle();
-//        b.putString("b_id", id);
-//        b.putString("order_status", order_status);
-//        b.putString("order_type", order_type);
-//        b.putString("edit_shipping_address", edit_shipping_address);
-//        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
-//        b.putParcelableArrayList("shipping_detail", shipList);
-//        two.setArguments(b);
-//        Log.d("shipping_display", shipList.toString());
-//        adapter.addFrag(two, "Shipping Add");
-//
-//        Frag_OrderLogs three = new Frag_OrderLogs();
-//        b.putParcelableArrayList("logs_detail", logList);
-//        three.setArguments(b);
-//        Log.d("log_display", logList.toString());
-//        adapter.addFrag(three, "Order Logs");
-//
-//        Frag_ItemDetails four = new Frag_ItemDetails();
-//        b.putParcelableArrayList("item_detail", itmList);
-//        four.setArguments(b);
-//        Log.d("display", itmList.toString());
-//        adapter.addFrag(four, "Line Items");
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -1595,6 +2191,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
         b.putString("edit_shipping_address", edit_shipping_address);
         b.putParcelableArrayList("shipping_detail", shipList);
         b.putParcelableArrayList("item_detail", itmList);
+        b.putParcelable("OrderP", ordP);
         add.setArguments(b);
         adapter.addFrag(add, "Order Details");
 
@@ -1637,13 +2234,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                 progressDialog.show();
 
                 Call<OrderCancel> call = apiInterface.putCancel(email, password, ords_no, cancel);
-                Log.d("but_ords_no", ords_no);
-                Log.d("btn_id", id);
-                Log.d("btn_cus_id", cus_id);
-                Log.d("btn_order_status", order_status);
-                Log.d("btn_type", type);
-                Log.d("btn_email", email);
-                Log.d("btn_password", password);
+
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                 call.enqueue(new Callback<OrderCancel>() {
                     @Override

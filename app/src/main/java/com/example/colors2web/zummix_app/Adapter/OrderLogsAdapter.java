@@ -39,79 +39,120 @@ public class OrderLogsAdapter extends RecyclerView.Adapter<OrderLogsAdapter.LogV
 
             case "0":
                 holder.ord_status.setText("Order Created");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
                 break;
 
             case "1":
                 holder.ord_status.setText("Cancelled");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
                 break;
 
             case "2":
                 holder.ord_status.setText("Batch Created");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
                 break;
 
             case "3":
                 holder.ord_status.setText("Picked");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.green_light));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
                 break;
 
             case "4":
                 holder.ord_status.setText("Packed");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.blue));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.blue));
                 break;
 
             case "5":
                 holder.ord_status.setText("IOR");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
                 break;
 
             case "6":
                 holder.ord_status.setText("Shipped");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.green_dark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_dark));
                 break;
 
             case "7":
                 holder.ord_status.setText("Edited Shipping Address");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.purple));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.purple));
                 break;
 
 
             case "8":
                 holder.ord_status.setText("Pick List Printed");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.green_light));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
                 break;
 
             case "9":
                 holder.ord_status.setText(" Cancelled Shipment");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.colorPrimaryDark));
                 break;
 
             case "10":
                 holder.ord_status.setText("Pick Started");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.purple));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.purple));
                 break;
 
             case "11":
                 holder.ord_status.setText("Pick Ended");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.green_dark));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_dark));
 
                 break;
 
             case "12":
                 holder.ord_status.setText("Pack Started");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.purple));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.purple));
                 break;
 
             case "13":
                 holder.ord_status.setText(" Pack Ended");
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.green_light));
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+
+            case "14":
+                holder.ord_status.setText(" Unboxed");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+
+            case "15":
+                holder.ord_status.setText(" Paused");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "16":
+                holder.ord_status.setText(" Unpaused");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "17":
+                holder.ord_status.setText(" Edited Deadline");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "18":
+                holder.ord_status.setText(" Unbatched");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "19":
+                holder.ord_status.setText(" Return Label");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "20":
+                holder.ord_status.setText(" Quick Batch/Pack");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "21":
+                holder.ord_status.setText(" Edited Shipping Method");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+            case "22":
+                holder.ord_status.setText(" Expedite Order");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
+                break;
+
+            case "23":
+                holder.ord_status.setText("Order Tupe Changed ");
+                holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
                 break;
 
             default:
-                holder.ord_status.setText(log.getOrderNumber());
-                holder.ord_status.setTextColor( holder.ord_status.getResources().getColor(R.color.yellow));
                 break;
         }
         // holder.ord_status.setText(log.getOrderStatus());

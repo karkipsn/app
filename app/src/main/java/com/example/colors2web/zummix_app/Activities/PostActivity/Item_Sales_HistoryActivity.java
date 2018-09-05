@@ -25,10 +25,10 @@ import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
-import com.example.colors2web.zummix_app.POJO.PostSearch.DrShipment;
 import com.example.colors2web.zummix_app.POJO.PostSearch.Orders;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostResponse;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostServer;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;

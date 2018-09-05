@@ -10,6 +10,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -68,6 +70,13 @@ public class SearchFragment extends Fragment {
     TextView textView;
     EditText editText;
     ImageView bar;
+    ImageView mb1,mb2;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
+
+
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -75,12 +84,16 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.activity_search_fragment, container, false);
+        mb1=getActivity().findViewById(R.id.image);
+        mb2=getActivity().findViewById(R.id.image_try);
+
         return rootView;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -89,15 +102,54 @@ public class SearchFragment extends Fragment {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+////        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        drawerLayout =(DrawerLayout)getActivity().findViewById(R.id.drawer_layout);
+//
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+////        toolbar.setTitle("Search");
+//
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(getFragmentManager().getBackStackEntryCount() > 0) {
+//
+//                   getFragmentManager().popBackStack();
+////                    getActivity().finish();
+//                   ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//                            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//
+//
+//                    actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar,
+//                            R.string.openDrawer, R.string.closeDrawer) {
+//
+//                        @Override
+//                        public void onDrawerClosed(View drawerView) {
+//                            // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+//                            super.onDrawerClosed(drawerView);
+//                        }
+//
+//                        @Override
+//                        public void onDrawerOpened(View drawerView) {
+//                            // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+//                            super.onDrawerOpened(drawerView);
+//                        }
+//                    };
+//                        //Setting the actionbarToggle to drawer layout
+//                        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+//                        //calling sync state is necessary or else your hamburger icon wont show up
+//                        actionBarDrawerToggle.syncState();
+//                }
+//            }
+//        });
 
-//        toolbar.setTitle("Search");
+
         spinner = getActivity().findViewById(R.id.fmainspinnerz);
         mlayout = getActivity().findViewById(R.id.veiw_main);
         spinner.setPopupBackgroundResource(R.color.colorPrimary);
 
+//        mb1.setVisibility(View.GONE);
+//        mb2.setVisibility(View.VISIBLE);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,7 +160,6 @@ public class SearchFragment extends Fragment {
                     Log.d("Spine", spine);
                     switch (spine) {
 
-
                         case "Home":
                             Intent intenth = new Intent(getContext(), HomeActivity.class);
                             startActivity(intenth);
@@ -116,8 +167,6 @@ public class SearchFragment extends Fragment {
 
                         default:
                             break;
-
-
                     }
                 }
             }
@@ -217,6 +266,62 @@ public class SearchFragment extends Fragment {
 //        toolbar.inflateMenu(R.menu.search_menu);
 //        toolbar.setOnMenuItemClickListener(this);
 
+    }
+
+//    Do this same with some button
+//    Try with floating action button
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+        // Do something that differs the Activity's menu here
+//        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.search_menu2, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+
+        MenuItem item = menu.getItem(0);
+        MenuItem item1 = menu.getItem(1);
+
+        item.setVisible(false);
+        item1.setVisible(true);
+
+        ImageView img,try2;
+
+//        img = (ImageView) menu.findItem(R.id.image).getActionView();
+//        img.setVisibility(View.GONE);
+        try2 = (ImageView) menu.findItem(R.id.image_try).getActionView();
+//        try2.setVisibility(View.VISIBLE);
+//        img.setImageResource(android.R.drawable.ic_menu_search);
+
+        try2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(getFragmentManager().getBackStackEntryCount() > 0) {
+
+                    getFragmentManager().popBackStack();
+
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.image:
+                // Not implemented here
+                return false;
+            case R.id.image_try:
+                // Do Fragment menu item stuff here
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     @Override

@@ -54,7 +54,15 @@ public class GroupCusDetails extends AppCompatActivity {
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+       mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               finish();
+           }
+       });
+
         mrecycleview = findViewById(R.id.recycle_view);
+
         cadapter = new CustomerDetailsAdapter(getApplicationContext(), orderList);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -128,7 +136,9 @@ public class GroupCusDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        moveTaskToBack(true);
+        super.onBackPressed();
+
+//        moveTaskToBack(true);
     }
 
 

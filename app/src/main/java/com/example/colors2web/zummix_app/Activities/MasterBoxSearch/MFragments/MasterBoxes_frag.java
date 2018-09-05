@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class MasterBoxes_frag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        kadapter = new MBoxAdapter(MBoxList);
+        kadapter = new MBoxAdapter(getContext(),MBoxList);
 
         srecycleview = getActivity().findViewById(R.id.recycler_view_shipping);
 
@@ -79,4 +80,5 @@ public class MasterBoxes_frag extends Fragment {
 
             ArrayList<MasterBox> boxes = (ArrayList<MasterBox>)getArguments().getSerializable("masterBoxList");
             kadapter.updateAnswers(boxes);
+            Log.d("masterboxList",boxes.toString());
 }}}

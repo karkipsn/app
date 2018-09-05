@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.SpinnerPojo;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;

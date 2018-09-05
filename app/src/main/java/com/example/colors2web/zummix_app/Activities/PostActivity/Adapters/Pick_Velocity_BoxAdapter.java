@@ -1,18 +1,13 @@
 package com.example.colors2web.zummix_app.Activities.PostActivity.Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.colors2web.zummix_app.POJO.PostSearch.Boxes;
-import com.example.colors2web.zummix_app.POJO.PostSearch.CustomerItems;
-import com.example.colors2web.zummix_app.POJO.PostSearch.MergeBCI;
-import com.example.colors2web.zummix_app.POJO.ProductSearch.CustomerItem;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.MergeBCI;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.List;

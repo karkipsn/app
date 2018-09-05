@@ -19,12 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Item_Sales_HistoryActivity;
-import com.example.colors2web.zummix_app.Activities.PostActivity.SpinnerPojo;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.Activities.PostActivity.View_salesHistoryActivity;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;

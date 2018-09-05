@@ -10,8 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,16 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.colors2web.zummix_app.Activities.CityBins.BinHomeActivity;
 import com.example.colors2web.zummix_app.Activities.LoginActivity;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Dr_Fragment;
-import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Group_Fragment;
-import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.HomeFragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Home_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.ActiveFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Pick_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sales_Fragment;
-import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 
@@ -60,14 +56,16 @@ public class HomeActivity extends AppCompatActivity {
     private TextView nav_email, post;
     private ImageView imgProfile;
     RelativeLayout layout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
     private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
 
     // tags used to attach the fragments
-    private static final String TAG_HOME = "active customers";
-    private static final String TAG_GROUP = "customer groups";
+    private static final String TAG_HOME = "customer group";
+    private static final String TAG_ACTIVE = "active customers";
     private static final String TAG_DR = "Dr Shipment";
     private static final String TAG_Sales = "sales report";
     private static final String TAG_PICK = "pick velocity";
@@ -161,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     case R.id.nav_customers_group:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_GROUP;
+                        CURRENT_TAG = TAG_ACTIVE;
                         break;
 
                     case R.id.nav_pick_velocity:
@@ -210,7 +208,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -293,13 +291,17 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
-                // home
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                // home// Customers Groups
+                Home_Fragment home_fragment = new Home_Fragment();
+                return home_fragment;
+
+
             case 1:
-                // group
-                Group_Fragment group_fragment = new Group_Fragment();
-                return group_fragment;
+                // activr customers
+            ActiveFragment activeFragment = new ActiveFragment();
+            return activeFragment;
+
+
 
             case 2:
                 // pick fragment
@@ -317,7 +319,7 @@ public class HomeActivity extends AppCompatActivity {
                 return sales_fragment;
 
             default:
-                return new HomeFragment();
+                return new ActiveFragment();
         }
 
     }
@@ -343,8 +345,7 @@ public class HomeActivity extends AppCompatActivity {
                 return;
             }
         }
-
-    }
+       }
 
 
     @Override
@@ -352,9 +353,16 @@ public class HomeActivity extends AppCompatActivity {
 
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
-        ImageView img;
+        ImageView img,try2;
+
+//        MenuItem item = menu.getItem(0);
+//        final MenuItem item1 = menu.getItem(1);
+//
+//        item.setVisible(true);
+//        item1.setVisible(false);
 
         img = (ImageView) menu.findItem(R.id.image).getActionView();
+//        try2 = (ImageView) menu.findItem(R.id.image_try).getActionView();
         img.setImageResource(android.R.drawable.ic_menu_search);
 
         img.setOnClickListener(new View.OnClickListener() {
@@ -363,6 +371,7 @@ public class HomeActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.frame_toolbar, new SearchFragment()).
                         addToBackStack(TAG_FRAGMENT).commit();
+
             }
         });
 
@@ -377,6 +386,9 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.image:
+                return true;
+
+            case R.id.image_try:
                 return true;
         }
         return super.onOptionsItemSelected(item);

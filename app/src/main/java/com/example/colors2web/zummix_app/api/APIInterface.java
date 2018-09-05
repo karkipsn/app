@@ -4,12 +4,18 @@ package com.example.colors2web.zummix_app.api;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditExpedite;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditOrderType;
+import com.example.colors2web.zummix_app.POJO.OrderEdit.EditShipMethod;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.OrderCancel;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.OrderEditPut;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.OrderEditResponse;
 import com.example.colors2web.zummix_app.POJO.OrderShippingAddressLogs.ShippingLogResponse;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostResponse;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostServer;
+import com.example.colors2web.zummix_app.POJO.ProblemSKU.PackageInput;
+import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
+import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response;
@@ -23,6 +29,7 @@ import com.google.gson.JsonElement;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -66,8 +73,22 @@ public interface APIInterface {
     Call<ShippingLogResponse> getOrderShippingLogs(@Header("email") String email, @Header("Password") String password, @Path("order_id") String order_id);
 
 
+    //    editShipMethod
+    @PUT("orders/editShipMethod/{order_id}")
+    Call<OrderEditResponse> puteditShipMethod(@Header("email") String email, @Header("Password") String password, @Path("order_id") String order_number, @Body EditShipMethod editShipMethod);
+
+    //   markExpedite  //9653
+    @PUT("orders/markExpedite/{order_id}")
+    Call<OrderEditResponse> putmarkExpedite(@Header("email") String email, @Header("Password") String password, @Path("order_id") String order_number, @Body EditExpedite editExpedite);
+
+
+    //    editOrderType
+    @PUT("orders/editOrderType/{order_id}")
+    Call<OrderEditResponse> puteditOrderType(@Header("email") String email, @Header("Password") String password, @Path("order_id") String order_number, @Body EditOrderType editOrderType);
+
+
     //trace id from order search and send that id as variable here
-//    orderSearch2
+    //    orderSearch2
     @GET("orders/{order_number}")
     Call<JsonElement> getsecsearch(@Header("email") String email, @Header("Password") String password, @Path("order_number") Long order_number);
 
@@ -122,13 +143,64 @@ public interface APIInterface {
     @GET("cityBins/boxCreate/customer/{customer_id}")
     Call<CityBinsResponse> getBins(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String cus_id);
 
-//    update city bin api
+    //    update city bin api
     @PUT("cityBins/{id}")
-    Call<CityBinsResponse>putCitybin(@Header("email") String email, @Header("Password") String password, @Path("id") String id, @Body CityBins bins);
+    Call<CityBinsResponse> putCitybin(@Header("email") String email, @Header("Password") String password, @Path("id") String id, @Body CityBins bins);
 
     //    Create City Bins Either from Inside or Outside
     @POST("cityBins")
-    Call<CityBinsResponse>CreateCitybin(@Header("email") String email, @Header("Password") String password, @Body CityBins bins);
+    Call<CityBinsResponse> CreateCitybin(@Header("email") String email, @Header("Password") String password, @Body CityBins bins);
+
+    //    ProblenSKU
+    @GET("problemSku")
+    Call<ProblemResponse> getProblemSKU(@Header("email") String email, @Header("Password") String password);
+
+    //    getUOM
+    @GET("unitOfMeasurements")
+    Call<ProblemResponse> getUOM(@Header("email") String email, @Header("Password") String password);
+
+//    post for problems
+//    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
+    @POST("customerItems/edit/customer/{customerID}/sku/{ItemSku}")
+    Call<ProblemResponse> postProblem(@Header("email") String email, @Header("Password") String password,@Path("customerID") String cus_id,@Path("ItemSku") String item_sku, @Body ProblemInput input );
+
+//    Delete for problemsku
+//problemSku/'.$input['id'],
+    @DELETE("problemSku/{id}")
+    Call<ProblemResponse> deleteProblemsku(@Header("email") String email, @Header("Password") String password,@Path("id") String id );
+
+
+    //    Update for problemsku
+    @PUT("problemSku/{id}")
+    Call<ProblemResponse> updateProblemsku(@Header("email") String email, @Header("Password") String password,@Path("id") String id,@Body ProblemInput input);
+
+
+    //    Packages
+    @GET("packages/customer/0")
+    Call<ProblemResponse> getPackages(@Header("email") String email, @Header("Password") String password);
+
+    //    post for packages
+    @POST("packages")
+    Call<ProblemResponse> postPackage(@Header("email") String email, @Header("Password") String password, @Body PackageInput input );
+
+    //  update for packages
+    @PUT("packages/{packageId}")
+    Call<ProblemResponse> updatePackage(@Header("email") String email,@Header("Password") String password,@Path("packageId") String packageId,  @Body PackageInput input );
+
+    //    Box inside MasterBox
+//    boxes/masterBoxes/2465840302/getAllBoxes
+    @GET("boxes/masterBoxes/{masterBoxNumber}/getAllBoxes")
+    Call<MasterBoxResponse> getMboxBox(@Header("email") String email, @Header("Password") String password,@Path("masterBoxNumber")String mBox);
+
+
+    //  Items inside  Box inside MasterBox
+//    boxes/lineItems/boxNumber/2047023661
+    @GET("boxes/lineItems/boxNumber/{boxNumber}")
+    Call<MasterBoxResponse> getMboxBoxItems(@Header("email") String email, @Header("Password") String password,@Path("boxNumber")String box);
+
+
+
+
 
 }
 

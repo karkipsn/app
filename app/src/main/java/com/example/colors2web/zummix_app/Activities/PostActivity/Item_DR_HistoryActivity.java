@@ -27,6 +27,7 @@ import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.POJO.PostSearch.DrShipment;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostResponse;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostServer;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
@@ -414,9 +415,6 @@ public class Item_DR_HistoryActivity extends AppCompatActivity {
 
                         ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
-//                        spin = new ArrayList<String>();
-//                        spin_value = new ArrayList<Long>();
-//                for spinner try
                         for (int i = 0; i < order.size(); i++) {
 
                             SpinnerPojo order1 = new SpinnerPojo();

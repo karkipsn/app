@@ -72,7 +72,8 @@ public class OrderCancel {
         this.updated_by = updated_by;
     }
 
-    public OrderCancel(String customer_id, String order_status, String group_type, String created_by, String updated_by) {
+    public OrderCancel(String customer_id, String order_status, String group_type,
+                       String created_by, String updated_by) {
         this.customer_id = customer_id;
         this.order_status = order_status;
         this.group_type = group_type;

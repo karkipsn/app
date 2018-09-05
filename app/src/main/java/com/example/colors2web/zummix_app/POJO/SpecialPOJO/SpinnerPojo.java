@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.PostActivity;
+package com.example.colors2web.zummix_app.POJO.SpecialPOJO;
 
 public class SpinnerPojo {
     String name;
@@ -30,6 +30,8 @@ public class SpinnerPojo {
     }
 
     //to display object as a string in spinner
+//    What you intended to DIsplay there just return that in that format
+//    https://www.codevoila.com/post/65/java-json-tutorial-and-example-json-java-orgjson//Javabeans Concept
     @Override
     public String toString() {
         return name;
@@ -38,9 +40,10 @@ public class SpinnerPojo {
     @Override
     public boolean equals(Object obj) {
 
-        if(obj instanceof SpinnerPojo){
-            SpinnerPojo c = (SpinnerPojo ) obj;
-            if(c.getName().equals(name) && c.getCus_id()== cus_id )
+        if (obj instanceof SpinnerPojo) {
+            SpinnerPojo c = (SpinnerPojo) obj;
+
+            if (c.getName().equals(name) && c.getCus_id() == cus_id)
                 return true;
         }
 

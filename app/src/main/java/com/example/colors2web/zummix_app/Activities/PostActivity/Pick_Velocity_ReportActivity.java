@@ -1,6 +1,7 @@
 package com.example.colors2web.zummix_app.Activities.PostActivity;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,11 +11,14 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,6 +34,7 @@ import com.example.colors2web.zummix_app.POJO.PostSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.PostSearch.CustomerItems;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostResponse;
 import com.example.colors2web.zummix_app.POJO.PostSearch.PostServer;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
@@ -88,74 +93,105 @@ public class Pick_Velocity_ReportActivity extends AppCompatActivity {
 
         spinner(email, password);
 
+        mform.setInputType(InputType.TYPE_NULL);
+
         mform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Pick_Velocity_ReportActivity.this,
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(Pick_Velocity_ReportActivity.this,
                         R.style.AppTheme_Light_DatePicker, new DatePickerDialog.OnDateSetListener() {
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-                                int mmonth = month + 1;
-                                String formattedMonth = "" + mmonth;
-                                String formattedDayOfMonth = "" + dayOfMonth;
+                        int mmonth = month + 1;
+                        String formattedMonth = "" + mmonth;
+                        String formattedDayOfMonth = "" + dayOfMonth;
 
-                                if (mmonth < 10) {
+                        if (mmonth < 10) {
 
-                                    formattedMonth = "0" + mmonth;
-                                }
-                                if (dayOfMonth < 10) {
+                            formattedMonth = "0" + mmonth;
+                        }
+                        if (dayOfMonth < 10) {
 
-                                    formattedDayOfMonth = "0" + dayOfMonth;
-                                }
+                            formattedDayOfMonth = "0" + dayOfMonth;
+                        }
 
-                                mform.setText(year + "-" + formattedMonth + "-" + formattedDayOfMonth);
-                            }
+                        mform.setText(year + "-" + formattedMonth + "-" + formattedDayOfMonth);
+                    }
 
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+                }, mYear, mMonth, mDay);
 
+                mform.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            datePickerDialog.show();
+                        } else {
+                            datePickerDialog.hide();
+                        }
+                    }
+                });
 
             }
         });
 
+
+        mto.setInputType(InputType.TYPE_NULL);
         mto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mto.requestFocus();
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(Pick_Velocity_ReportActivity.this,
-                        R.style.AppTheme_Light_DatePicker,new DatePickerDialog.OnDateSetListener() {
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(Pick_Velocity_ReportActivity.this,
+                        R.style.AppTheme_Light_DatePicker, new DatePickerDialog.OnDateSetListener() {
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                int mmonth = month + 1;
-                                String formattedMonth = "" + mmonth;
-                                String formattedDayOfMonth = "" + dayOfMonth;
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        int mmonth = month + 1;
+                        String formattedMonth = "" + mmonth;
+                        String formattedDayOfMonth = "" + dayOfMonth;
 
-                                if (mmonth < 10) {
+                        if (mmonth < 10) {
 
-                                    formattedMonth = "0" + mmonth;
-                                }
-                                if (dayOfMonth < 10) {
+                            formattedMonth = "0" + mmonth;
+                        }
+                        if (dayOfMonth < 10) {
 
-                                    formattedDayOfMonth = "0" + dayOfMonth;
-                                }
+                            formattedDayOfMonth = "0" + dayOfMonth;
+                        }
 
-                                mto.setText(year + "-" + formattedMonth + "-" + formattedDayOfMonth);
-                            }
+                        mto.setText(year + "-" + formattedMonth + "-" + formattedDayOfMonth);
+                    }
 
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+                }, mYear, mMonth, mDay);
+
+                mto.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            datePickerDialog.show();
+                        } else {
+                            datePickerDialog.show();
+                        }
+                    }
+                });
 
 
             }
@@ -342,7 +378,7 @@ public class Pick_Velocity_ReportActivity extends AppCompatActivity {
 
                                              CItems.add(items);
                                          }
-                                        List<Boxes> box = res.getmBoxes();
+                                         List<Boxes> box = res.getmBoxes();
                                          if (box != null) {
 
                                              for (int i = 0; i < box.size(); i++) {
@@ -457,8 +493,6 @@ public class Pick_Velocity_ReportActivity extends AppCompatActivity {
 
                         ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
-//                        spin = new ArrayList<String>();
-//                        spin_value = new ArrayList<Long>();
 //                for spinner try
                         for (int i = 0; i < order.size(); i++) {
 
@@ -471,16 +505,11 @@ public class Pick_Velocity_ReportActivity extends AppCompatActivity {
                             order1.setName(name);
 
                             countryList.add(order1);
-//                            spin.add(name);
-//                            spin_value.add(cus_id);
                         }
                         Log.d("spinner_list", countryList.toString());
 
                         mspinner.setAdapter(new ArrayAdapter<SpinnerPojo>(Pick_Velocity_ReportActivity.this,
                                 android.R.layout.simple_spinner_dropdown_item, countryList));
-//                System.out.println("Spin: " + spin);
-//                Log.d("list", spin.toString());
-//                Link:https://stackoverflow.com/questions/47666321/opening-spinner-by-clicking-on-edittext/47667518#47667518?newreg=3755bd61db4b4a4d91ada181638da0d1
 
                         mspinner.setCursorVisible(false);
                         mspinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
@@ -50,31 +50,30 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:id="@+id/ord2_card1"
             android:layout_marginLeft="@dimen/margin_down"
             android:layout_marginRight="@dimen/margin_down"
             android:layout_marginTop="@dimen/margin_down"
             android:layout_marginBottom="@dimen/margin_down"
-            android:background="@color/viewBack"
             android:elevation="@dimen/elevation">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/ord2_storename"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:gravity="left"
                         android:padding="2dp"
@@ -96,7 +95,7 @@
                     <TextView
                         android:id="@+id/ord2_status"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:gravity="right"
                         android:layout_gravity="right"
@@ -108,10 +107,14 @@
 
                     <Button
                         android:layout_width="match_parent"
-                        android:layout_height="28dp"
+                        android:layout_height="18dp"
                         android:layout_weight="7"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:textColor="@color/white"
                         android:id="@+id/cancel_button"
-                        android:background="@color/primary_dark"
+                        android:background="@drawable/flag_gardient"
+                        android:backgroundTint="@color/pink"
                         android:visibility="gone"
                         android:text="CANCEL "
 
@@ -121,7 +124,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginBottom="@dimen/margin_down"
                     android:orientation="horizontal">
@@ -130,7 +133,7 @@
                     <TextView
                         android:id="@+id/ord2_sdate1"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/ord2_sdate"
                         android:layout_weight="1"
                         android:gravity="left"
@@ -142,9 +145,10 @@
                     <TextView
                         android:id="@+id/paused"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
+                        android:padding="4dp"
                         android:text="Paused"
                         android:visibility="gone"
                         android:textColor="@color/black"
@@ -153,45 +157,47 @@
                     <TextView
                         android:id="@+id/ready_to_batch"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
-                        android:visibility="gone"
+                        android:padding="4dp"
                         android:text="Ready"
+                        android:visibility="gone"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"  />
 
                     <TextView
                         android:id="@+id/refunded"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:layout_toEndOf="@+id/ord2_status"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
-                        android:visibility="gone"
+                        android:padding="4dp"
                         android:text="Refunded"
+                        android:visibility="gone"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"  />
 
                     <TextView
                         android:id="@+id/spp_request"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:layout_toEndOf="@+id/ord2_status"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
-                        android:visibility="gone"
+                        android:padding="4dp"
                         android:text="PP Request"
+                        android:visibility="gone"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"  />
 
 
                     <TextView
                         android:id="@+id/expedite"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
+                        android:padding="4dp"
                         android:visibility="gone"
                         android:text="Expedite"
                         android:textColor="@color/black"
@@ -200,10 +206,10 @@
                     <TextView
                         android:id="@+id/ship_it_now_batch"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:layout_toEndOf="@+id/ord2_status"
-                        android:background="@color/green_dark"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
+                        android:padding="4dp"
                         android:visibility="gone"
                         android:text="Ship It Now"
                         android:textColor="@color/black"
@@ -212,27 +218,110 @@
                     <TextView
                         android:id="@+id/batch_printed"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
-                        android:background="@color/green_dark"
+                        android:padding="4dp"
                         android:visibility="gone"
                         android:text="Batch Printed"
                         android:textColor="@color/black"
                         android:textSize="10sp" />
 
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ord2_ship_method"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:gravity="left"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/btn_edit_ship_method"
+                        android:background="@drawable/flag_gardient"
+                        android:visibility="gone"
+                        android:text="EDIT "/>
+
+                    <!--<Button-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="28dp"-->
+                        <!--android:id="@+id/btn_shipmethod2"-->
+                        <!--android:paddingLeft="4dp"-->
+                        <!--android:paddingRight="12dp"-->
+                        <!--android:paddingTop="2dp"-->
+                        <!--android:paddingBottom="2dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:background="@drawable/flag_gardient"-->
+                        <!--android:text="Edit"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:layout_margin="4dp"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="16sp"/>-->
                 </LinearLayout>
 
 
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                  <!---->
+                    <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ord2_ship_type"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:gravity="left"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
 
-                <!--</LinearLayout>-->
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/btn_edit_shipping_type"
+                        android:background="@drawable/flag_gardient"
+                        android:visibility="gone"
+                        android:text="EDIT "/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:id="@+id/btn_expedite"
+                        android:paddingLeft="2dp"
+                        android:layout_marginLeft="6dp"
+                        android:paddingRight="2dp"
+                        android:visibility="gone"
+                        android:background="@drawable/flag_gardient"
+                        android:text=" Make Expedite"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

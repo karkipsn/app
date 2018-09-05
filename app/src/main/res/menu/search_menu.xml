@@ -4,12 +4,13 @@
 
 
     <item
-        android:id="@+id/image2"
-        android:title=" item3"
-        android:orderInCategory="3"
-        app:showAsAction="always"
-        app:actionViewClass="android.widget.ImageView"
-        />
+    android:id="@+id/image_try"
+    android:title=" Image"
+    android:src="@android:drawable/ic_media_previous"
+    android:icon="@android:drawable/ic_media_previous"
+    app:showAsAction="always"
+    app:actionViewClass="android.widget.ImageView"
+    />
 
     <!--<item android:id="@+id/action_search"-->
         <!--android:title="item2 "-->

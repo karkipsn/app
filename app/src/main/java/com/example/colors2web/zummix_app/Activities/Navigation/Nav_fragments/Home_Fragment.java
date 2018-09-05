@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Group_Fragment extends Fragment {
+public class Home_Fragment extends Fragment {
 
     android.support.v7.widget.Toolbar toolbar;
 
@@ -48,7 +48,7 @@ public class Group_Fragment extends Fragment {
     List<Order> CusList = new ArrayList<>();
 
 
-    public Group_Fragment(){
+    public Home_Fragment(){
 
     }
 

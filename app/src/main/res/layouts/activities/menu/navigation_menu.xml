@@ -4,11 +4,13 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_active_customers"
-            android:title="@string/nav_active_customers" />
-        <item
             android:id="@+id/nav_customers_group"
             android:title="@string/nav_customers_group" />
+
+        <item
+            android:id="@+id/nav_active_customers"
+            android:title="@string/nav_active_customers" />
+
         <item
             android:id="@+id/nav_pick_velocity"
             android:title="@string/nav_pick_velocity" />
@@ -24,6 +26,19 @@
         <item
             android:id="@+id/nav_city_bins"
             android:title="@string/nav_city_bins" />
+
+        <item
+            android:id="@+id/nav_inactive_items"
+            android:title="@string/nav_inactive_items" />
+
+        <item
+            android:id="@+id/nav_parent_id"
+            android:title="@string/nav_parent_id" />
+
+        <item
+            android:id="@+id/nav_customer_items"
+            android:title="@string/nav_customer_items" />
+
 
         <item
             android:id="@+id/nav_logout"

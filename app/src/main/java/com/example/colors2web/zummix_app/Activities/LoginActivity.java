@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(i);
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                         Toast.makeText(getApplicationContext(), msg.getType().toString() + "\n" + msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
 

@@ -52,7 +52,7 @@ public class BinHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_citybins_home);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        customer_id = findViewById(R.id.cus_parent_Id);
+//        customer_id = findViewById(R.id.cus_parent_Id);
         create_bins = findViewById(R.id.create_bins_order);
         create_bins.setOnClickListener(new View.OnClickListener() {
             @Override

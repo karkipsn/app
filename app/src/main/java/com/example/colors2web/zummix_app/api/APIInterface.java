@@ -1,9 +1,11 @@
 package com.example.colors2web.zummix_app.api;
 
 
+import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchResponse;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
+import com.example.colors2web.zummix_app.POJO.InactiveCustomers.InactiveResponse;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.EditExpedite;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.EditOrderType;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.EditShipMethod;
@@ -108,9 +110,10 @@ public interface APIInterface {
     @GET("customers/{customer_id}")
     Call<CustomerResponse> getCustomer(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id);
 
-    // customers search by parent Customer Id =>
-    @GET("customers/parentCustomer/{parent_id}")
-    Call<CustomerResponse> getParentCustomer(@Header("email") String email, @Header("Password") String password, @Path("parent_id") String parent_id);
+    // customers search by parent Customer Id =>Hardcoded for now
+//    @GET("customers/parentCustomer/{parent_id}")
+    @GET("customers/parentCustomer/0")
+    Call<CustomerResponse> getParentCustomer(@Header("email") String email, @Header("Password") String password);
 
     // Activecustomers search  =>
     @GET("customers/activeCustomers")
@@ -159,20 +162,20 @@ public interface APIInterface {
     @GET("unitOfMeasurements")
     Call<ProblemResponse> getUOM(@Header("email") String email, @Header("Password") String password);
 
-//    post for problems
+    //    post for problems
 //    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
     @POST("customerItems/edit/customer/{customerID}/sku/{ItemSku}")
-    Call<ProblemResponse> postProblem(@Header("email") String email, @Header("Password") String password,@Path("customerID") String cus_id,@Path("ItemSku") String item_sku, @Body ProblemInput input );
+    Call<ProblemResponse> postProblem(@Header("email") String email, @Header("Password") String password, @Path("customerID") String cus_id, @Path("ItemSku") String item_sku, @Body ProblemInput input);
 
-//    Delete for problemsku
+    //    Delete for problemsku
 //problemSku/'.$input['id'],
     @DELETE("problemSku/{id}")
-    Call<ProblemResponse> deleteProblemsku(@Header("email") String email, @Header("Password") String password,@Path("id") String id );
+    Call<ProblemResponse> deleteProblemsku(@Header("email") String email, @Header("Password") String password, @Path("id") String id);
 
 
     //    Update for problemsku
     @PUT("problemSku/{id}")
-    Call<ProblemResponse> updateProblemsku(@Header("email") String email, @Header("Password") String password,@Path("id") String id,@Body ProblemInput input);
+    Call<ProblemResponse> updateProblemsku(@Header("email") String email, @Header("Password") String password, @Path("id") String id, @Body ProblemInput input);
 
 
     //    Packages
@@ -181,25 +184,31 @@ public interface APIInterface {
 
     //    post for packages
     @POST("packages")
-    Call<ProblemResponse> postPackage(@Header("email") String email, @Header("Password") String password, @Body PackageInput input );
+    Call<ProblemResponse> postPackage(@Header("email") String email, @Header("Password") String password, @Body PackageInput input);
 
     //  update for packages
     @PUT("packages/{packageId}")
-    Call<ProblemResponse> updatePackage(@Header("email") String email,@Header("Password") String password,@Path("packageId") String packageId,  @Body PackageInput input );
+    Call<ProblemResponse> updatePackage(@Header("email") String email, @Header("Password") String password, @Path("packageId") String packageId, @Body PackageInput input);
 
     //    Box inside MasterBox
 //    boxes/masterBoxes/2465840302/getAllBoxes
     @GET("boxes/masterBoxes/{masterBoxNumber}/getAllBoxes")
-    Call<MasterBoxResponse> getMboxBox(@Header("email") String email, @Header("Password") String password,@Path("masterBoxNumber")String mBox);
+    Call<MasterBoxResponse> getMboxBox(@Header("email") String email, @Header("Password") String password, @Path("masterBoxNumber") String mBox);
 
 
     //  Items inside  Box inside MasterBox
 //    boxes/lineItems/boxNumber/2047023661
     @GET("boxes/lineItems/boxNumber/{boxNumber}")
-    Call<MasterBoxResponse> getMboxBoxItems(@Header("email") String email, @Header("Password") String password,@Path("boxNumber")String box);
+    Call<MasterBoxResponse> getMboxBoxItems(@Header("email") String email, @Header("Password") String password, @Path("boxNumber") String box);
 
+    //    https://f860f607.ngrok.io/zummix-api/public/orderBatch/allBatchOrders/batchNumber/153596655211
+//    BatchSearch
+    @GET("orderBatch/allBatchOrders/batchNumber/{batchnumber}")
+    Call<BatchResponse> getBatchResponse(@Header("email") String email, @Header("Password") String password, @Path("batchnumber") String batchnumber);
 
-
+    //    InactiveItems Search //https://f860f607.ngrok.io/zummix-api/public/customerItems/inactiveItems/customerId/15
+    @GET("customerItems/inactiveItems/customerId/{customerid}")
+    Call<InactiveResponse> getInactiveFilteredResponse(@Header("email") String email, @Header("Password") String password, @Path("customerid") String customerid);
 
 
 }

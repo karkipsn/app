@@ -1,5 +1,7 @@
 package com.example.colors2web.zummix_app.Activities.CustomersSearchActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +15,12 @@ import com.example.colors2web.zummix_app.R;
 import java.util.List;
 
 public class ParentAdapter_customer extends RecyclerView.Adapter<ParentAdapter_customer.ParentHolder> {
+    Context mContext;
     List<Customers> Plist;
 
-    public ParentAdapter_customer(List<Customers> plist) {
+    public ParentAdapter_customer(Context context,List<Customers> plist)
+    {
+        this.mContext = context;
         this.Plist = plist;
     }
 
@@ -43,6 +48,17 @@ public class ParentAdapter_customer extends RecyclerView.Adapter<ParentAdapter_c
         holder.t3.setText(cadd);
         holder.t4.setText(coname);
         holder.t5.setText(coadd);
+        final String id = String.valueOf(customers.getId());
+
+        holder.t1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,ByCustomerId.class);
+                intent.putExtra("cid",id);
+                mContext.startActivity(intent);
+                
+            }
+        });
 
     }
 

@@ -29,11 +29,11 @@ public class CustomerItemsAdapter extends RecyclerView.Adapter<CustomerItemsAdap
     @Override
     public void onBindViewHolder(@NonNull CustomerItemsAdapter.CustomHolder holder, int position) {
         CustomerItem customerItem = CList.get(position);
-        holder.t1.setText(String.valueOf(customerItem.getCustomerId()));
-        holder.t2.setText(customerItem.getItemSkuNumber());
-        holder.t3.setText(customerItem.getItemName());
-        holder.t4.setText(customerItem.getPrice());
-        holder.t5.setText(String.valueOf(customerItem.getTrQuantity()));
+        holder.t1.setText(String.valueOf(customerItem.getId()));
+        holder.item_sku.setText(customerItem.getItemSkuNumber());
+        holder.item_name.setText(customerItem.getItemName());
+        holder.price.setText(customerItem.getPrice());
+        holder.qty.setText(String.valueOf(customerItem.getTrQuantity()));
 
     }
 
@@ -49,15 +49,15 @@ public class CustomerItemsAdapter extends RecyclerView.Adapter<CustomerItemsAdap
 
     public class CustomHolder extends RecyclerView.ViewHolder {
 
-        TextView t1, t2, t3, t4, t5;
+        TextView t1, item_sku, item_name, price, qty;
 
         public CustomHolder(View itemView) {
             super(itemView);
             t1 = itemView.findViewById(R.id.cus_list_id);
-            t3 = itemView.findViewById(R.id.cus_list_sku);
-            t2 = itemView.findViewById(R.id.cus_list_name);
-            t4 = itemView.findViewById(R.id.cus_list_price);
-            t5 = itemView.findViewById(R.id.cus_list_quantity);
+            item_sku = itemView.findViewById(R.id.cus_list_sku);
+            item_name = itemView.findViewById(R.id.cus_list_name);
+            price = itemView.findViewById(R.id.cus_list_price);
+            qty = itemView.findViewById(R.id.cus_list_quantity);
         }
     }
 }

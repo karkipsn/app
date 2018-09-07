@@ -28,6 +28,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.colors2web.zummix_app.Activities.CityBins.BinHomeActivity;
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByCustomerItems;
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByParentId;
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ItemsElementory;
+import com.example.colors2web.zummix_app.Activities.InActiveActivity;
 import com.example.colors2web.zummix_app.Activities.LoginActivity;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Dr_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Home_Fragment;
@@ -64,11 +68,11 @@ public class HomeActivity extends AppCompatActivity {
     public static int navItemIndex = 0;
 
     // tags used to attach the fragments
-    private static final String TAG_HOME = "customer group";
+    private static final String TAG_HOME = "Dashboard";
     private static final String TAG_ACTIVE = "active customers";
-    private static final String TAG_DR = "Dr Shipment";
-    private static final String TAG_Sales = "sales report";
-    private static final String TAG_PICK = "pick velocity";
+    private static final String TAG_DR = "Item DrHistory";
+    private static final String TAG_Sales = "Item Sales report";
+    private static final String TAG_PICK = "Pick velocity Report";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -150,14 +154,13 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
 
-                    case R.id.nav_active_customers:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
-                        Log.d("Tag", TAG_HOME);
-                        break;
-
 
                     case R.id.nav_customers_group:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
+                        break;
+
+                    case R.id.nav_active_customers:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_ACTIVE;
                         break;
@@ -182,6 +185,27 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
                         drawerLayout.closeDrawers();
                         break;
+
+
+                    case R.id.nav_inactive_items:
+                        startActivity(new Intent(HomeActivity.this, InActiveActivity.class));
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
+
+
+                    case R.id.nav_parent_id:
+                        startActivity(new Intent(HomeActivity.this, ByParentId.class));
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.nav_customer_items:
+                        startActivity(new Intent(HomeActivity.this, ItemsElementory.class));
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
+
 
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -371,6 +395,7 @@ public class HomeActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.frame_toolbar, new SearchFragment()).
                         addToBackStack(TAG_FRAGMENT).commit();
+                overridePendingTransition(R.anim.search_push_left_in,R.anim.search_push_left_out);
 
             }
         });

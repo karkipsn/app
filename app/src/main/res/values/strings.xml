@@ -6,22 +6,20 @@
         <item>Order</item>
         <item>Product</item>
         <item>Tracking Number</item>
-        <item>Boxes</item>
-        <item>Parent_Id</item>
-        <item>By_Cusyomer_Id</item>
-        <item>Customer_Items</item>
+        <item>Box/Master Box</item>
+        <item>Batch Status</item>
         <item>Home</item>
 
     </string-array>
 
     <string-array name="nav_item_activity_titles">
 
-        <item> Customers </item>
+        <item> Dashboard </item>
         <item>Active Customers</item>
-        <item>Pick Velocity </item>
-        <item>Dr Shipment</item>
-        <item>Sales Report </item>
-        <item>CityBins</item>
+        <item>Pick Velocity Report </item>
+        <item>Item DrHistory Report</item>
+        <item>Item Sales Report </item>
+        <item>Field Office</item>
 
     </string-array>
 

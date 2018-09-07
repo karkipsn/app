@@ -59,6 +59,8 @@ public class ByCustomerId extends AppCompatActivity {
     @BindView(R.id.viewpager_customer)
     ViewPager viewPager;
     String cid1;
+    String sc_id,sc_email,sc_vendor ,sc_cus_id,sc_c_at,sid,ssid,scid ,sca,sidn;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +72,14 @@ public class ByCustomerId extends AppCompatActivity {
         //for toolbarsetup with back arrow
         setSupportActionBar(ctoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ctoolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ByCustomerId.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
 
 
         //  tablayout with pageviewer set up
@@ -116,20 +126,23 @@ public class ByCustomerId extends AppCompatActivity {
 
                             ShipStationCredential sp = resp1.getmShipStationCredential();
 
-                            String sidn = sp.getCompanyIdentifier();
+                            if(sp!=null){
+
+                             sidn = sp.getCompanyIdentifier();
                             Log.d("sidn", sidn);
-                            String sid = String.valueOf(sp.getId());
-                            String ssid = sp.getStoreId();
-                            String scid = String.valueOf(sp.getCustomerId());
-                            String sca = sp.getCreatedAt();
+                             sid = String.valueOf(sp.getId());
+                             ssid = sp.getStoreId();
+                             scid = String.valueOf(sp.getCustomerId());
+                             sca = sp.getCreatedAt();}
 
                             ShopifyCredential sc = resp1.getmShopifyCredential();
 
-                            String sc_id = String.valueOf(sc.getId());
-                            String sc_email = sc.getEmail();
-                            String sc_vendor = sc.getVendor();
-                            String sc_cus_id = String.valueOf(sc.getCustomerId());
-                            String sc_c_at = sc.getCreatedAt();
+                             if(sc!=null){
+                             sc_id = String.valueOf(sc.getId());
+                             sc_email = sc.getEmail();
+                             sc_vendor = sc.getVendor();
+                             sc_cus_id = String.valueOf(sc.getCustomerId());
+                             sc_c_at = sc.getCreatedAt();}
 
 //                        Shipping_method_credential
                             ArrayList<ShippingMethods> ShipList = new ArrayList<>();
@@ -215,6 +228,11 @@ public class ByCustomerId extends AppCompatActivity {
 
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    }
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
 
         final MenuInflater inflater = getMenuInflater();
@@ -227,6 +245,7 @@ public class ByCustomerId extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.frame_toolbar, new SearchFragment()).
                         addToBackStack(TAG_FRAGMENT).commit();
@@ -238,9 +257,7 @@ public class ByCustomerId extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
 
             case R.id.image:
@@ -255,19 +272,13 @@ public class ByCustomerId extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
-//    }
-
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+//       moveTaskToBack(true);
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        super.onBackPressed();
     }
+
 
     private void setupViewPager(ViewPager viewPager, String cidx, String cname, String cemail, String cadd, String coname, String coadd,
                                 String sidn, String sid, String ssid, String scid, String sca, String sc_id, String sc_email, String sc_vendor

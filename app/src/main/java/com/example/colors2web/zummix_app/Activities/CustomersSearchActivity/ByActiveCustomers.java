@@ -55,7 +55,7 @@ public class ByActiveCustomers extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mrecycleView = findViewById(R.id.recycler_view_customer);
-        padapter = new ParentAdapter_customer(CList);
+        padapter = new ParentAdapter_customer(ByActiveCustomers.this,CList);
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
 //        mrecycleView.setHasFixedSize(true);

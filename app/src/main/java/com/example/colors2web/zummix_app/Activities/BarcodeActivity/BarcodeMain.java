@@ -12,9 +12,13 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByCustomerId;
@@ -34,6 +38,7 @@ import com.example.colors2web.zummix_app.POJO.customers.ShipStationCredential;
 import com.example.colors2web.zummix_app.POJO.customers.ShippingMethods;
 import com.example.colors2web.zummix_app.POJO.customers.ShopifyCredential;
 import com.example.colors2web.zummix_app.R;
+import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -48,6 +53,7 @@ import retrofit2.Response;
 
 public class BarcodeMain extends AppCompatActivity {
 
+    private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     APIInterface apiInterface;
 
     @Override
@@ -61,6 +67,13 @@ public class BarcodeMain extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_barcode);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BarcodeMain.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -133,7 +146,7 @@ public class BarcodeMain extends AppCompatActivity {
                                 call_order2(email, password, OPath);
                                 break;
 
-                            case "Item":
+                            case "Product":
                                 call_item(email, password, OPath);
                                 break;
 
@@ -141,22 +154,9 @@ public class BarcodeMain extends AppCompatActivity {
                                 call_tracking_number(email, password, OPath);
                                 break;
 
-                            case "Boxes":
+                            case "Box/Master Box":
                                 call_box(email,password,OPath);
                                 break;
-
-                            case "Parent_Id":
-                                call_parent(email,password,OPath);
-                                break;
-
-                            case "Cus_Id":
-                                call_customer_id(email,password,OPath);
-                                break;
-
-                            case "Cus_Items":
-                                call_customer_items(email,password,OPath);
-                                break;
-
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Error in Process", Toast.LENGTH_SHORT).show();
@@ -169,247 +169,299 @@ public class BarcodeMain extends AppCompatActivity {
         }
     }
 
-    private void call_customer_items(String email, String password, final String oPath) {
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu2, menu);
+        ImageView img;
 
-        Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password, oPath);
-        call.enqueue(new Callback<CustomerResponse>() {
+        img = (ImageView) menu.findItem(R.id.image).getActionView();
+        img.setImageResource(android.R.drawable.ic_menu_search);
+
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
+            public void onClick(View v) {
 
-                if (response.isSuccessful()) {
-                    CustomerResponse resp1 = response.body();
-
-                    List<com.example.colors2web.zummix_app.POJO.customers.CustomerItem> cus = resp1.getCustomerItems();
-
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
-                    if (cus != null) {
-
-                        Intent intent7 = new Intent(getApplicationContext(), ByCustomerItems.class);
-                        intent7.putExtra("ciid", oPath);
-
-                        startActivity(intent7);
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-
-                    } else {
-                        String d = response.body().getMessage();
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-                } else if (response.code() == 401) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-
-
-                } else if (response.code() == 404) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                }
-                else if (response.code() == 500) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                }
-                else {
-                    Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CustomerResponse> call, Throwable t) {
-                call.cancel();
-                Log.e("response-failure", t.toString());
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
+
+        return true;
     }
 
-    private void call_customer_id(String email, String password, final String oPath) {
-        final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<CustomerResponse> call = apiInterface.getCustomer(email, password, oPath);
-        call.enqueue(new Callback<CustomerResponse>() {
+        switch (item.getItemId()) {
 
-            @Override
-            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
-
-                if (response.isSuccessful()) {
-                    CustomerResponse resp1 = response.body();
-                    if (resp1 != null) {
-                        Intent intent6 = new Intent(getApplicationContext(), ByCustomerId.class);
-                        intent6.putExtra("cid", oPath);
-                        startActivity(intent6);
-//                        TODO:Null detection on Customer_id
-                    }else{
-                        Toast.makeText(getApplicationContext(),resp1.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-                } else if (response.code() == 401) {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-
-
-                } else if (response.code() == 404) {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                }
-                else if (response.code() == 500) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                }
-                else {
-                    Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CustomerResponse> call, Throwable t) {
-                call.cancel();
-
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Log.e("response-failure", t.toString());
-                Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    private void call_parent(String email, String password, final String oPath) {
-
-            final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
-                    R.style.AppTheme_Dark_Dialog);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage("Loading...");
-            progressDialog.show();
-
-            Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password, oPath);
-            call.enqueue(new Callback<CustomerResponse>() {
-                @Override
-                public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
-
-                    if (response.isSuccessful()) {
-                        CustomerResponse resp1 = response.body();
-
-                        List<Customers> cus = resp1.getmCustomer();
-
-                        if (cus != null) {
-
-                            Intent intent5 = new Intent(getApplicationContext(), ByParentId.class);
-                            intent5.putExtra("pid", oPath);
-                            startActivity(intent5);
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-
-
-                        } else {
-                            String d = response.body().getMessage();
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-                        }
-                    } else if (response.code() == 401) {
-
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-                        Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                        Log.d("Error", response.errorBody().toString());
-
-
-                    } else if (response.code() == 404) {
-
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-                        Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                        Log.d("Error", response.errorBody().toString());
-                    }
-                    else if (response.code() == 500) {
-
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-                        Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
-                        Log.d("Error", response.errorBody().toString());
-                    }
-                    else {
-
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<CustomerResponse> call, Throwable t) {
-                    call.cancel();
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Log.e("response-failure", t.toString());
-                    Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
-                }
-            });
+            case R.id.image:
+                return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+//       moveTaskToBack(true);
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        super.onBackPressed();
+    }
+
+//    private void call_customer_items(String email, String password, final String oPath) {
+//
+//        final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
+//                R.style.AppTheme_Dark_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.show();
+//
+//        Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password, oPath);
+//        call.enqueue(new Callback<CustomerResponse>() {
+//            @Override
+//            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
+//
+//                if (response.isSuccessful()) {
+//                    CustomerResponse resp1 = response.body();
+//
+//                    List<com.example.colors2web.zummix_app.POJO.customers.CustomerItem> cus = resp1.getCustomerItems();
+//
+//                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//
+//                    if (cus != null) {
+//
+//                        Intent intent7 = new Intent(getApplicationContext(), ByCustomerItems.class);
+//                        intent7.putExtra("ciid", oPath);
+//
+//                        startActivity(intent7);
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//
+//
+//                    } else {
+//                        String d = response.body().getMessage();
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//                    }
+//                } else if (response.code() == 401) {
+//
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//
+//
+//                } else if (response.code() == 404) {
+//
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//                }
+//                else if (response.code() == 500) {
+//
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//                }
+//                else {
+//                    Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CustomerResponse> call, Throwable t) {
+//                call.cancel();
+//                Log.e("response-failure", t.toString());
+//                if (progressDialog.isShowing()) {
+//                    progressDialog.dismiss();
+//                }
+//                Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+//    private void call_customer_id(String email, String password, final String oPath) {
+//        final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
+//                R.style.AppTheme_Dark_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.show();
+//
+//        apiInterface = APIClient.getClient().create(APIInterface.class);
+//        Call<CustomerResponse> call = apiInterface.getCustomer(email, password, oPath);
+//        call.enqueue(new Callback<CustomerResponse>() {
+//
+//            @Override
+//            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
+//
+//                if (response.isSuccessful()) {
+//                    CustomerResponse resp1 = response.body();
+//                    if (resp1 != null) {
+//                        Intent intent6 = new Intent(getApplicationContext(), ByCustomerId.class);
+//                        intent6.putExtra("cid", oPath);
+//                        startActivity(intent6);
+////                        TODO:Null detection on Customer_id
+//                    }else{
+//                        Toast.makeText(getApplicationContext(),resp1.getMessage(),Toast.LENGTH_LONG).show();
+//                    }
+//                } else if (response.code() == 401) {
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//
+//
+//                } else if (response.code() == 404) {
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//                }
+//                else if (response.code() == 500) {
+//
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//
+//                    Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
+//                    Log.d("Error", response.errorBody().toString());
+//                }
+//                else {
+//                    Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CustomerResponse> call, Throwable t) {
+//                call.cancel();
+//
+//                if (progressDialog.isShowing()) {
+//                    progressDialog.dismiss();
+//                }
+//                Log.e("response-failure", t.toString());
+//                Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//    }
+//
+//    private void call_parent(String email, String password, final String oPath) {
+//
+//            final ProgressDialog progressDialog = new ProgressDialog(BarcodeMain.this,
+//                    R.style.AppTheme_Dark_Dialog);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setCancelable(false);
+//            progressDialog.setMessage("Loading...");
+//            progressDialog.show();
+//
+//            Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password, oPath);
+//            call.enqueue(new Callback<CustomerResponse>() {
+//                @Override
+//                public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
+//
+//                    if (response.isSuccessful()) {
+//                        CustomerResponse resp1 = response.body();
+//
+//                        List<Customers> cus = resp1.getmCustomer();
+//
+//                        if (cus != null) {
+//
+//                            Intent intent5 = new Intent(getApplicationContext(), ByParentId.class);
+//                            intent5.putExtra("pid", oPath);
+//                            startActivity(intent5);
+//                            if (progressDialog.isShowing()) {
+//                                progressDialog.dismiss();
+//                            }
+//
+//
+//                        } else {
+//                            String d = response.body().getMessage();
+//                            if (progressDialog.isShowing()) {
+//                                progressDialog.dismiss();
+//                            }
+//                        }
+//                    } else if (response.code() == 401) {
+//
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//
+//                        Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+//                        Log.d("Error", response.errorBody().toString());
+//
+//
+//                    } else if (response.code() == 404) {
+//
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//
+//                        Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+//                        Log.d("Error", response.errorBody().toString());
+//                    }
+//                    else if (response.code() == 500) {
+//
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//
+//                        Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
+//                        Log.d("Error", response.errorBody().toString());
+//                    }
+//                    else {
+//
+//                        if (progressDialog.isShowing()) {
+//                            progressDialog.dismiss();
+//                        }
+//                        Toast.makeText(BarcodeMain.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<CustomerResponse> call, Throwable t) {
+//                    call.cancel();
+//
+//                    if (progressDialog.isShowing()) {
+//                        progressDialog.dismiss();
+//                    }
+//                    Log.e("response-failure", t.toString());
+//                    Toast.makeText(BarcodeMain.this, "Network Error", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
 
     private void call_box(String email, String password, String oPath) {
 //        TODO: BoxOrderSearch Implementation is left
@@ -671,4 +723,8 @@ public class BarcodeMain extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 }

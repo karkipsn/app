@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.GroupCusDetails;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.Order;
@@ -38,10 +39,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ByParentId extends AppCompatActivity {
+    private static final String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     Toolbar toolbar;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
-    TextView parentId;
+//    TextView parentId;
     ParentAdapter_customer padapter;
     List<Customers> CList = new ArrayList<>();
 
@@ -52,20 +54,30 @@ public class ByParentId extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        parentId = findViewById(R.id.cus_parent_Id);
+//        parentId = findViewById(R.id.cus_parent_Id);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ByParentId.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
+
         mrecycleView = findViewById(R.id.recycler_view_customer);
-        padapter = new ParentAdapter_customer(CList);
+        padapter = new ParentAdapter_customer(ByParentId.this,CList);
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+//        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.HORIZONTAL, 16));
+
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(padapter);
 
@@ -73,15 +85,19 @@ public class ByParentId extends AppCompatActivity {
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
-        String p_id = getIntent().getStringExtra("pid");
-        Log.d("p_id", p_id);
 
-        loadAdapter(email, password, p_id);
+        loadAdapter(email, password );
 
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    }
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -92,50 +108,42 @@ public class ByParentId extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
-        moveTaskToBack(true);
+//       moveTaskToBack(true);
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        super.onBackPressed();
     }
 
 
-    private void loadAdapter(String email, String password, String p_id) {
-
-        String Path = p_id;
-        Log.d("Path", Path);
-        Log.d("Path", email);
-        Log.d("Path", p_id);
+    private void loadAdapter(String email, String password) {
 
         final ProgressDialog progressDialog = new ProgressDialog(ByParentId.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -144,7 +152,7 @@ public class ByParentId extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password, Path);
+        Call<CustomerResponse> call = apiInterface.getParentCustomer(email, password);
         call.enqueue(new Callback<CustomerResponse>() {
             @Override
             public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
@@ -163,8 +171,10 @@ public class ByParentId extends AppCompatActivity {
                             Customers cus1 = new Customers();
 
                             String p_id = String.valueOf(cus.get(i).getParentId());
+                            toolbar.setTitle("Parent Id:"+ p_id);
 
 
+                            long id = cus.get(i).getId();
                             String cname = cus.get(i).getCompanyName();
                             String cemail = cus.get(i).getCompanyEmail();
                             String add1 = cus.get(i).getCompanyAddress1();
@@ -177,8 +187,9 @@ public class ByParentId extends AppCompatActivity {
                             String lname = cus.get(i).getContactLname();
                             String coemail = cus.get(i).getContactEmail();
 
-                            parentId.setText("Parent Id:" + p_id);
+//                            parentId.setText("Parent Id:" + p_id);
 
+                            cus1.setId(id);
                             cus1.setCompanyName(cname);
                             cus1.setCompanyEmail(cemail);
                             cus1.setCompanyAddress1(add1);

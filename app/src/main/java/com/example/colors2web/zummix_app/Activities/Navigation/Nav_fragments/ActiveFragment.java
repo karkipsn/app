@@ -56,7 +56,7 @@ public class ActiveFragment extends Fragment {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         mrecycleView = getActivity().findViewById(R.id.recycle_view);
-        padapter = new ParentAdapter_customer(CList);
+        padapter = new ParentAdapter_customer(getContext(),CList);
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(getActivity());
 //        mrecycleView.setHasFixedSize(true);

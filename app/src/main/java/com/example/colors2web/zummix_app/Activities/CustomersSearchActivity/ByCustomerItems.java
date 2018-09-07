@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
@@ -35,10 +36,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ByCustomerItems extends AppCompatActivity {
+    private static final String TAG_FRAGMENT ="SEARCH_FRAGMENT" ;
     Toolbar toolbar;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
-    TextView customer_id;
+//    TextView customer_id;
     CustomerItemsAdapter cadapter;
     List<CustomerItem> CList = new ArrayList<>();
 
@@ -49,11 +51,21 @@ public class ByCustomerItems extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        customer_id = findViewById(R.id.cus_parent_Id);
+//        customer_id = findViewById(R.id.cus_parent_Id);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ByCustomerItems.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+
+
+            }
+        });
 
         mrecycleView = findViewById(R.id.recycler_view_customer);
         cadapter = new CustomerItemsAdapter(CList);
@@ -62,7 +74,8 @@ public class ByCustomerItems extends AppCompatActivity {
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+//        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(ByCustomerItems.this, LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(cadapter);
 
@@ -70,15 +83,26 @@ public class ByCustomerItems extends AppCompatActivity {
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
+
+        if(getIntent()!=null){
         String ciid = getIntent().getStringExtra("ciid");
         Log.d("ciid", ciid);
 
-        loadAdapter(email, password, ciid);
+        loadAdapter(email, password, ciid);}
+        else {
+            Toast.makeText(ByCustomerItems.this,"Retrevied null value",Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    }
+    @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
         ImageView img;
@@ -89,44 +113,38 @@ public class ByCustomerItems extends AppCompatActivity {
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
             }
         });
 
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
 
             case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-// TODO: 1.progress dailog implementing
-//TODO: global search view implementing
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public void onBackPressed() {
-//        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-//        } else {
-//            getFragmentManager().popBackStack();
-//        }
-
-            moveTaskToBack(true);
+//       moveTaskToBack(true);
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 
     }
 
@@ -173,7 +191,8 @@ public class ByCustomerItems extends AppCompatActivity {
                             String quan = String.valueOf(cus.get(i).getTrQuantity());
 
 
-                            customer_id.setText("Parent Id:" + p_id);
+//                            customer_id.setText("Parent Id:" + p_id);
+                            toolbar.setTitle("Parent Id :" + p_id);
 
                             cus1.setId(Long.valueOf(id));
                             cus1.setItemSkuNumber(sku);

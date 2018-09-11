@@ -27,10 +27,7 @@ public class Country {
     }
 
     public Country() {
-
     }
-
-
 
     @Override
     public String toString() {

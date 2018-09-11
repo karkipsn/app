@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Activities.CityBins.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -19,17 +20,18 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
 
-    public HomeAdapter(List<CityBins> binList) {
+    Activity mActivity;List<CityBins> BinList;
+
+
+    public HomeAdapter(Activity mActivity, List<CityBins> binList) {
+        this.mActivity = mActivity;
         BinList = binList;
     }
-
-    List<CityBins> BinList;
-    Context mContext;
-
-    public HomeAdapter(List<CityBins> binList, Context mContext) {
-        BinList = binList;
-        this.mContext = mContext;
-    }
+    
+//    public HomeAdapter(List<CityBins> binList, Context mActivity) {
+//        BinList = binList;
+//        this.mActivity = mActivity;
+//    }
 
     @NonNull
     @Override
@@ -57,10 +59,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             @Override
             public void onClick(View v) {
                 String customer_id = String.valueOf(bins.getCustomerId());
-                Intent intent = new Intent(mContext, BinBinActivity.class);
+                Intent intent = new Intent(mActivity, BinBinActivity.class);
                 intent.putExtra("customer_id",customer_id);
                 Log.d("customer_id",customer_id);
-                mContext.startActivity(intent);
+                mActivity.startActivity(intent);
 
             }
         });
@@ -86,7 +88,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             name = itemView.findViewById(R.id.bin_store);
             quantity = itemView.findViewById(R.id.bin_binquantity);
             bin = itemView.findViewById(R.id.bin_bin);
-//            bins = itemView.findViewById(R.id.btn_bin);
         }
     }
 

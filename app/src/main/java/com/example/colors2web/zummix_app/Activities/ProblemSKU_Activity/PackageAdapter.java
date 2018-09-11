@@ -36,12 +36,12 @@ import retrofit2.Response;
 
 public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageHolder> {
     Context mContext;
-    List<Packages>PackList;
+    List<Packages> PackList;
     RadioButton prb;
-    String status,radio;
+    String status, radio;
 
     public PackageAdapter(Context applicationContext, List<Packages> pList) {
-        mContext =applicationContext;
+        mContext = applicationContext;
         PackList = pList;
     }
 
@@ -58,21 +58,41 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
         Packages pack = PackList.get(position);
 
         holder.mCustomer.setText(pack.getCompanyName());
-        holder.mpname.setText(pack.getPackageName());
+
+        final String packname = pack.getPackageName();
+        holder.mpname.setText(packname);
+
         holder.mpsku.setText(pack.getPackageSku());
-        holder.mweight.setText(pack.getWeight());
-        holder.mheight.setText(pack.getHeight());
-        holder.mlength.setText(pack.getLength());
-        holder.mprice.setText(pack.getPackageCost());
-        holder.mwidth.setText(pack.getWidth());
-        holder.mstatus.setText(pack.getStatus());
+        final String weight = pack.getWeight();
+        holder.mweight.setText(weight);
+
+        final String hight = pack.getHeight();
+        holder.mheight.setText(hight);
+
+        final String length = pack.getLength();
+        holder.mlength.setText(length);
+
+        final String cost = pack.getPackageCost();
+        holder.mprice.setText(cost);
+
+        final String with = pack.getWidth();
+        holder.mwidth.setText(with);
+
+        final String statuz = pack.getStatus();
+        if (statuz.equals("0")) {
+            holder.mstatus.setText("InActive");
+        } else {
+            holder.mstatus.setText("Active");
+        }
+
+
         final Long id = pack.getId();
 
         holder.mupdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View popupView = inflater.inflate(R.layout.modal_update_packages, null);
 
                 WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -95,34 +115,48 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                 p.dimAmount = 0.7f;
                 wm.updateViewLayout(container, p);
 
-                Button submit,cancle;
-                final EditText pname,psku,pweight,plength,pwidth,pheight,pcost;
-                 RadioGroup pradio;
+                Button submit, cancle;
+                final EditText pname, psku, pweight, plength, pwidth, pheight, pcost;
+                RadioGroup pradio;
 
 
-                pname =popupView.findViewById(R.id.pack_adpt_name);
-                psku =popupView.findViewById(R.id.pack_sku);
-                pweight =popupView.findViewById(R.id.pack_adpt_weight);
-                plength =popupView.findViewById(R.id.pack_adpt_length);
-                pwidth =popupView.findViewById(R.id.pack_adpt_width);
-                pheight =popupView.findViewById(R.id.pack_adpt_height);
-                pcost =popupView.findViewById(R.id.pack_adpt_cost);
+                pname = popupView.findViewById(R.id.pack_adpt_name);
+                pname.setText(packname);
+
+                psku = popupView.findViewById(R.id.pack_sku);
+                pweight = popupView.findViewById(R.id.pack_adpt_weight);
+                pweight.setText(weight);
+
+                plength = popupView.findViewById(R.id.pack_adpt_length);
+                plength.setText(length);
+
+                pwidth = popupView.findViewById(R.id.pack_adpt_width);
+                pwidth.setText(with);
+                pheight = popupView.findViewById(R.id.pack_adpt_height);
+                pheight.setText(hight);
+                pcost = popupView.findViewById(R.id.pack_adpt_cost);
+                pcost.setText(cost);
 
 
 //                radiogroup //send these radiogroup inside the button
 
-                pradio =popupView.findViewById(R.id.toggle_update);
+                pradio = popupView.findViewById(R.id.toggle_update);
+                if (statuz.equals("1")) {
+                    pradio.check(R.id.yes);
+                } else {
+                    pradio.check(R.id.no);
+                }
 
                 pradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                        switch (checkedId){
+                        switch (checkedId) {
                             case R.id.yes:
 
                                 prb = popupView.findViewById(checkedId);
                                 radio = prb.getText().toString();
-                                Log.d("radio",radio);
+                                Log.d("radio", radio);
                                 break;
 
                             case R.id.no:
@@ -142,36 +176,36 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                     @Override
                     public void onClick(View v) {
 
-                        String qname =pname.getText().toString();
-                        String qweight =pweight.getText().toString();
-                        String qlength =plength.getText().toString();
-                        String qwidth =pwidth.getText().toString();
-                        String qheight =pheight.getText().toString();
-                        String qcost =pcost.getText().toString();
+                        String qname = pname.getText().toString();
+                        String qweight = pweight.getText().toString();
+                        String qlength = plength.getText().toString();
+                        String qwidth = pwidth.getText().toString();
+                        String qheight = pheight.getText().toString();
+                        String qcost = pcost.getText().toString();
 
                         if (!Validation(qname)) {
-                                if (!Validation(qweight)) {
-                                    if (!Validation(qlength)) {
-                                        if (!Validation(qwidth)) {
-                                            if (!Validation(qheight)) {
-                                                if (!Validation(qcost)) {
-                                                    pcost.setError("Invalid Cost");
-                                                }
-                                                pheight.setError("Invalid Height");
+                            if (!Validation(qweight)) {
+                                if (!Validation(qlength)) {
+                                    if (!Validation(qwidth)) {
+                                        if (!Validation(qheight)) {
+                                            if (!Validation(qcost)) {
+                                                pcost.setError("Invalid Cost");
                                             }
-                                            pwidth.setError("Invalid Width");
+                                            pheight.setError("Invalid Height");
                                         }
-                                        plength.setError("Invalid Length");
+                                        pwidth.setError("Invalid Width");
                                     }
-                                    pweight.setError("Invalid Weight");
+                                    plength.setError("Invalid Length");
+                                }
+                                pweight.setError("Invalid Weight");
                             }
                             pname.setError("Invalid Name");
                         }
 
-                        if(radio.equals("YES")){
-                            status ="1";
-                        }else{
-                            status="0";
+                        if (radio.equals("YES")) {
+                            status = "1";
+                        } else {
+                            status = "0";
                         }
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -181,12 +215,11 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                         final String group_type = preferences.getString("group_type", "");
                         final String l_id = preferences.getString("l_id", "");
 
-                        PackageInput input = new PackageInput(qname,qlength,qwidth,qheight,l_id,qweight,qcost,status);
-                        putPackage(email,password,group_type,l_id,input,id,popup);
+                        PackageInput input = new PackageInput(qname, qlength, qwidth, qheight, l_id, qweight, qcost, status);
+                        putPackage(email, password, group_type, l_id, input, id, popup);
 
                     }
                 });
-
 
 
                 cancle.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +238,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         String p_id = String.valueOf(id);
-        Call<ProblemResponse> call = apiInterface.updatePackage(email, password,p_id,input);
+        Call<ProblemResponse> call = apiInterface.updatePackage(email, password, p_id, input);
 
         call.enqueue(new Callback<ProblemResponse>() {
             @Override
@@ -213,8 +246,8 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                 if (response.isSuccessful()) {
                     ProblemResponse resp1 = response.body();
-                    if(resp1.getReturnType().equals("success")){
-                        Toast.makeText(mContext,resp1.getMessage(),Toast.LENGTH_SHORT).show();
+                    if (resp1.getReturnType().equals("success")) {
+                        Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         popup.dismiss();
 
 //                        ((Activity)mContext).finish();
@@ -222,7 +255,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                     } else {
                         String d = response.body().getMessage();
-                        Toast.makeText(mContext,d,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, d, Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -234,7 +267,6 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
 
                 } else if (response.code() == 404) {
-
 
 
                     Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
@@ -261,7 +293,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
     }
 
     private boolean Validation(String qname) {
-        if (qname != null ) {
+        if (qname != null) {
             return true;
         }
         return false;
@@ -273,7 +305,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
     }
 
     public void updateAnswers(List<Packages> pList) {
-        PackList =pList;
+        PackList = pList;
         notifyDataSetChanged();
     }
 

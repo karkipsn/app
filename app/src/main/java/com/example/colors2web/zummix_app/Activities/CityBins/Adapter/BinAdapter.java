@@ -23,6 +23,7 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
     List<CityBins> BinList;
     Context mcontext;
 
+
     public BinAdapter(List<CityBins> binList, Context mcontext) {
         BinList = binList;
         this.mcontext = mcontext;
@@ -31,8 +32,8 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
     @NonNull
     @Override
     public BinAdapter.BinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater= LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.activity_bin_bin,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.activity_bin_bin, parent, false);
         return new BinViewHolder(view);
     }
 
@@ -43,6 +44,8 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
         holder.name.setText(bins.getCompanyName());
         holder.created.setText(bins.getCreatedAt());
 
+
+
         holder.up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,16 +53,16 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
                 String bin_id = String.valueOf(bins.getId());
 
                 Intent intent = new Intent(mcontext, UpdateCityBinsActivity.class);
-                intent.putExtra("customer_id",customer_id);
-                intent.putExtra("bin_id",bin_id);
-                Log.d("bin_id_home",bin_id);
+                intent.putExtra("customer_id", customer_id);
+                intent.putExtra("bin_id", bin_id);
+                Log.d("bin_id_home", bin_id);
                 mcontext.startActivity(intent);
             }
         });
         holder.master.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mcontext,"Further Action Remaining",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mcontext, "Further Action Remaining", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -75,15 +78,17 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
     }
 
     public class BinViewHolder extends RecyclerView.ViewHolder {
-        TextView city,name,created;
-        Button up,master;
+        TextView city, name, created;
+
+        Button up, master;
+
         public BinViewHolder(View itemView) {
             super(itemView);
-            city =itemView.findViewById(R.id.bin_bin_citybin);
-            name =itemView.findViewById(R.id.bin_bin_storename);
-            created =itemView.findViewById(R.id.bin_bin_created);
-            up =itemView.findViewById(R.id.bin_bin_bin_update);
-            master =itemView.findViewById(R.id.bin_bin_master);
+            city = itemView.findViewById(R.id.bin_bin_citybin);
+            name = itemView.findViewById(R.id.bin_bin_storename);
+            created = itemView.findViewById(R.id.bin_bin_created);
+            up = itemView.findViewById(R.id.bin_bin_bin_update);
+            master = itemView.findViewById(R.id.bin_bin_master);
         }
     }
 }

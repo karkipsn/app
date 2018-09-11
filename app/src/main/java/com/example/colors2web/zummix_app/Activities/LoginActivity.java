@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                     signin.setEnabled(true);
 
                     final Snackbar snackbar = Snackbar
-                            .make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                            .make(coordinatorLayout, "Link not found!", Snackbar.LENGTH_LONG)
                             .setAction("RETRY", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

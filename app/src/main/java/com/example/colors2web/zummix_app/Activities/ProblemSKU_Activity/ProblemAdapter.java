@@ -1,5 +1,7 @@
 package com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -30,10 +32,12 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemSKUs;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.Country;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,22 +47,27 @@ import retrofit2.Response;
 
 public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemHolder> {
 
-
-    public Context mContext;
+    Activity mActivity ;
     private TextView mweight;
     private Spinner spinner,
             spinnerCountry;
-    String uom, country,country1;
 
-    RadioButton prb;
-    String sku_remove, radio;
+    private String uom, country,country1;
+
+    private RadioButton prb;
+    private String sku_remove, radio;
 
 
     List<ProblemSKUs> ProblemList;
 
-    public ProblemAdapter(Context context, List<ProblemSKUs> pList) {
-        mContext = context;
-        ProblemList = pList;
+//    public ProblemAdapter(Context context, List<ProblemSKUs> pList) {
+//        this.mActivity = context;
+//        this.ProblemList = pList;
+//    }
+
+    public ProblemAdapter(Activity mActivity, List<ProblemSKUs> problemList) {
+        this.mActivity = mActivity;
+        ProblemList = problemList;
     }
 
     @NonNull
@@ -87,39 +96,44 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
         holder.moquant.setText(problemSKUs.getOrderQty());
         holder.mtorder.setText(problemSKUs.getTotalOrder());
-        holder.mweight.setText(problemSKUs.getWeight());
-        holder.mprice.setText(problemSKUs.getPrice());
+
+        final String wt = problemSKUs.getWeight();
+        holder.mweight.setText(wt);
+
+        final String cost =problemSKUs.getPrice();
+        holder.mprice.setText(cost);
+
         holder.mUOM.setText(problemSKUs.getUom());
         holder.mcountry.setText(problemSKUs.getCountry());
 
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
         final String group_type = preferences.getString("group_type", "");
         final String l_id = preferences.getString("l_id", "");
 
 
-        holder.minsert.setOnClickListener(new View.OnClickListener() {
+        holder.mupdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View popupView = inflater.inflate(R.layout.modal_problem_insert, null);
 
-                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+                WindowManager wm = (WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
 
                 int height = display.getHeight();
                 int width = display.getWidth();
 
                 final PopupWindow popup = new PopupWindow(popupView,
-                        (int) (width), WindowManager.LayoutParams.WRAP_CONTENT);
+                        (int) (width*0.9), WindowManager.LayoutParams.WRAP_CONTENT);
                 popup.setFocusable(true);
                 popup.setOutsideTouchable(true);
                 popup.setAnimationStyle(android.R.style.Animation_Dialog);
 
-                popup.showAtLocation(holder.minsert, Gravity.CENTER, 0, 0); //Displaying popup
+                popup.showAtLocation(holder.mupdate, Gravity.CENTER, 0, 0); //Displaying popup
 
                 final View container = (View) popup.getContentView().getParent();
                 WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
@@ -139,7 +153,10 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 spinnerCountry = popupView.findViewById(R.id.country_spinner);
 
                 price = popupView.findViewById(R.id.pop_prob_price);
+                price.setText(cost);
+
                 weight = popupView.findViewById(R.id.pop_prob_weight);
+                weight.setText(wt);
 
                 post = popupView.findViewById(R.id.pop_prob_submit);
                 cancel = popupView.findViewById(R.id.prop_prob_cancel);
@@ -148,6 +165,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 final String qweight = weight.getText().toString();
 
                 radioGroup = popupView.findViewById(R.id.toggle_prob_adapter);
+                radioGroup.check(R.id.yes);
+
                 radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -170,46 +189,65 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 });
 
 //        loading SPinners
-                loadspinner(email, password);
-                loadCountrySpinner();
+               loadspinner(email, password);
+               loadCountrySpinner();
                 Log.d("spinner",spinner.toString());
                 Log.d("spinnerc",spinnerCountry.toString());
+
+
+//                String[] firstNames = { "Dennis", "Grace", "Bjarne", "James" };
+//
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity,
+//                        android.R.layout.simple_spinner_item, firstNames);
+//
+//                adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+//                spinner.setAdapter(adapter);
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                      uom = parent.getItemAtPosition(position).toString();
+
+//                        UOM sp = (UOM) parent.getItemAtPosition(position);
+//                        uom = sp.getUnit();
+//
+//                        Toast.makeText(mActivity, "Cus ID: " + sp.getUnit(),
+//                                 Toast.LENGTH_SHORT).show();
+                        Log.d("uom", String.valueOf(uom));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        uom = parent.getItemAtPosition(0).toString();
+
+                        Log.d("uom1", String.valueOf(uom));
+
+                    }
+                });
+
+
+
+                spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        Country sp = (Country) parent.getItemAtPosition(position);
+                        country = sp.getCode();
+                        Log.d("Country", country);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        Country sp = (Country) parent.getItemAtPosition(0);
+                        country = sp.getCode();
+                        Log.d("Country1", country);
+                    }
+                });
 
 
                 post.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                uom = parent.getItemAtPosition(position).toString();
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                                uom = parent.getItemAtPosition(0).toString();
-
-                            }
-                        });
-
-                        spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                                Country sp = (Country) parent.getItemAtPosition(position);
-                                country = sp.getCode();
-                                Log.d("Country", country);
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                                Country sp = (Country) parent.getItemAtPosition(0);
-                                country = sp.getCode();
-                                Log.d("Country1", country);
-                            }
-                        });
-
 
                         ProblemInput input = new ProblemInput(qprice, qweight, uom, country);
                         insert_popup(email, password, l_id, group_type, cus_id, item_sku, input, sku_remove, popup, id);
@@ -223,13 +261,6 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                         popup.dismiss();
                     }
                 });
-            }
-        });
-
-        holder.mupdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
@@ -250,7 +281,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                     ProblemResponse resp1 = response.body();
 
                     if (resp1.getReturnType().equals("success")) {
-                        Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         if (sku_remove.equals("1")) {
                             call_delete(email, password, id, apiInterface, popup);
 //                            delete API
@@ -264,28 +295,28 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                     } else {
                         String d = response.body().getMessage();
-                        Toast.makeText(mContext, d, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, d, Toast.LENGTH_SHORT).show();
 
                     }
                 } else if (response.code() == 401) {
 
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else if (response.code() == 404) {
 
 
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else {
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -294,7 +325,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 call.cancel();
 
                 Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -315,35 +346,35 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                     if (resp1.getReturnType().equals("success")) {
 
-                        Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         popup.dismiss();
 
                     } else {
                         String d = response.body().getMessage();
-                        Toast.makeText(mContext, d, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, d, Toast.LENGTH_SHORT).show();
 
 
                     }
                 } else if (response.code() == 401) {
 
 
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else if (response.code() == 404) {
 
 
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else {
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -352,7 +383,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 call.cancel();
 
                 Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -367,36 +398,36 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                     ProblemResponse resp1 = response.body();
 
                     if (resp1.getReturnType().equals("success")) {
-                        Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
 
                         popup.dismiss();
 
                     } else {
                         String d = response.body().getMessage();
-                        Toast.makeText(mContext, d, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, d, Toast.LENGTH_SHORT).show();
 
 
                     }
                 } else if (response.code() == 401) {
 
 
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else if (response.code() == 404) {
 
 
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
 
                 } else {
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -405,7 +436,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 call.cancel();
 
                 Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -414,7 +445,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
         ArrayList<Country> countryList = new ArrayList<>();
 
-        Resources res = mContext.getResources();
+        Resources res = mActivity.getResources();
         Country country = new Country();
 
         String my_countries[] = res.getStringArray(R.array.Countries_full_array);
@@ -426,7 +457,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
         String[] arr2 =new String[my_code.length];
 
         for (int i = 0; i < my_countries.length; i++) {
-            
+
             cont = my_countries[i];
             country.setName(cont);
             arr1[i] = cont;
@@ -437,11 +468,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
         }
 
-
-
         for (int j=0; j<arr1.length;j++){
-            Log.d("array1",arr1[j].toString());
-            Log.d("array2",arr2[j].toString());
+
             country.setName(arr1[j]);
             country.setCode(arr2[j]);
 
@@ -449,10 +477,11 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
         countryList.add(country);
         Log.d("clist",countryList.toString());
 
-        ArrayAdapter<Country> adapter = new ArrayAdapter<Country>(mContext,
+        ArrayAdapter<Country> adapter = new ArrayAdapter<Country>(mActivity,
                 android.R.layout.simple_spinner_item, countryList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerCountry.setAdapter(adapter);
+
         Log.d("spinner_country",countryList.toString());
 
     }
@@ -461,12 +490,12 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-//        final ProgressDialog progressDialog = new ProgressDialog(mContext,
-//                R.style.AppTheme_Dark_Dialog);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setCancelable(false);
-//        progressDialog.setMessage("Loading...");
-//        progressDialog.show();
+        final ProgressDialog progressDialog = new ProgressDialog(mActivity,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         Call<ProblemResponse> call = apiInterface.getUOM(email, password);
 
@@ -480,51 +509,56 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                     List<UOM> order = resp1.getUOMs();
 
-                    List<String> uomlist = new ArrayList<>();
+                    List<String> uomlist = new ArrayList<String>();
+
 
                     if (order != null) {
 
                         for (int i = 0; i < order.size(); i++) {
+//                            UOM u = new UOM();
 
                             String mUnit = order.get(i).getUnit();
+//                            u.setUnit(mUnit);
                             uomlist.add(mUnit);
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mActivity,
                                 android.R.layout.simple_spinner_item, uomlist);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                         spinner.setAdapter(adapter);
+
                         Log.d("uom",uomlist.toString());
-//                        if (progressDialog.isShowing()) {
-//                            progressDialog.dismiss();
-//                        }
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
 
 
                     } else {
                         String d = response.body().getMessage();
-//                        if (progressDialog.isShowing()) {
-//                            progressDialog.dismiss();
-//                        }
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                     }
                 } else if (response.code() == 404) {
 
-//                    if (progressDialog.isShowing()) {
-//                        progressDialog.dismiss();
-//                    }
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
 
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
-//                    if (progressDialog.isShowing()) {
-//                        progressDialog.dismiss();
-//                    }
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
 
                 } else {
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "Operation Failed", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -532,11 +566,11 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
             @Override
             public void onFailure(Call<ProblemResponse> call, Throwable t) {
                 call.cancel();
-//                if (progressDialog.isShowing()) {
-//                    progressDialog.dismiss();
-//                }
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
                 Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -555,7 +589,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
     public class ProblemHolder extends RecyclerView.ViewHolder {
 
         TextView mCustomer, mpname, mpsku, mtorder, mweight, moquant, mprice, mUOM, mcountry;
-        Button minsert, mupdate;
+        Button mupdate;
 
         public ProblemHolder(View itemView) {
             super(itemView);
@@ -569,8 +603,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
             mprice = itemView.findViewById(R.id.problem_price);
             mUOM = itemView.findViewById(R.id.problem_UOM);
             mcountry = itemView.findViewById(R.id.problem_country);
-            minsert = itemView.findViewById(R.id.btn_problem_insert);
-            mupdate = itemView.findViewById(R.id.btn_problem_update);
+            mupdate = itemView.findViewById(R.id.btn_problem_insert);
         }
     }
 }

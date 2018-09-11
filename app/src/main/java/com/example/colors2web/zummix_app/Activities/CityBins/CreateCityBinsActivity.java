@@ -109,6 +109,12 @@ public class CreateCityBinsActivity extends AppCompatActivity{
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateCityBinsActivity.super.onBackPressed();
+            }
+        });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 

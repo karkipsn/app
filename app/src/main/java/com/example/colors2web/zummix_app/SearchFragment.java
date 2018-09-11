@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,8 +77,6 @@ public class SearchFragment extends Fragment {
     ImageView mb1,mb2;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
-
-
 
     Toolbar toolbar;
 
@@ -148,8 +147,15 @@ public class SearchFragment extends Fragment {
 
 
         spinner = getActivity().findViewById(R.id.fmainspinnerz);
+
+        ArrayAdapter<CharSequence>adapter1 = ArrayAdapter.createFromResource(getContext(),R.array.spinner_array,
+                android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setAdapter(adapter1);
+
         mlayout = getActivity().findViewById(R.id.veiw_main);
-        spinner.setPopupBackgroundResource(R.color.colorPrimary);
+//        spinner.setPopupBackgroundResource(R.color.colorPrimary);
+
 
 //        mb1.setVisibility(View.GONE);
 //        mb2.setVisibility(View.VISIBLE);
@@ -162,11 +168,6 @@ public class SearchFragment extends Fragment {
                 if (spine != null) {
                     Log.d("Spine", spine);
                     switch (spine) {
-
-                        case "Home":
-                            Intent intenth = new Intent(getContext(), HomeActivity.class);
-                            startActivity(intenth);
-                            break;
 
                         case "Batch_No":
                             bar.setVisibility(View.GONE);
@@ -395,9 +396,6 @@ public class SearchFragment extends Fragment {
                     case "Batch Status":
                         call_batch(email,password,OPath);
                         break;
-
-
-
 
                 }
             }

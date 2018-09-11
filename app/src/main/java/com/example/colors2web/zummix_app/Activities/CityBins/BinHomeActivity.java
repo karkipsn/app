@@ -66,9 +66,15 @@ public class BinHomeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BinHomeActivity.super.onBackPressed();
+            }
+        });
 
         mrecycleView = findViewById(R.id.recycle_view_bins);
-        homeAdapter = new HomeAdapter(BinList,getApplicationContext());
+        homeAdapter = new HomeAdapter(BinHomeActivity.this,BinList);
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
 //        mrecycleView.setHasFixedSize(true);
@@ -129,12 +135,11 @@ public class BinHomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
-
-        moveTaskToBack(true);
+//        moveTaskToBack(true);
 
     }
-
 
     private void loadAdapter(String email, String password) {
 

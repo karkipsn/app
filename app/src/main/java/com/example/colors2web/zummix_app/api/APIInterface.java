@@ -4,6 +4,7 @@ package com.example.colors2web.zummix_app.api;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchResponse;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
+import com.example.colors2web.zummix_app.POJO.CityBins.CityEditResponse;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
 import com.example.colors2web.zummix_app.POJO.InactiveCustomers.InactiveResponse;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.EditExpedite;
@@ -18,6 +19,7 @@ import com.example.colors2web.zummix_app.POJO.PostSearch.PostServer;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.PackageInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
+import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response;
@@ -146,6 +148,12 @@ public interface APIInterface {
     @GET("cityBins/boxCreate/customer/{customer_id}")
     Call<CityBinsResponse> getBins(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String cus_id);
 
+
+    //  get citybins with bin ind only in case of update
+    @GET("cityBins/{id}")
+    Call<CityEditResponse> getCitybin(@Header("email") String email, @Header("Password") String password, @Path("id") String id);
+
+
     //    update city bin api
     @PUT("cityBins/{id}")
     Call<CityBinsResponse> putCitybin(@Header("email") String email, @Header("Password") String password, @Path("id") String id, @Body CityBins bins);
@@ -161,6 +169,10 @@ public interface APIInterface {
     //    getUOM
     @GET("unitOfMeasurements")
     Call<ProblemResponse> getUOM(@Header("email") String email, @Header("Password") String password);
+
+    @POST("unitOfMeasurements")
+    Call<ProblemResponse> postUOM(@Header("email") String email, @Header("Password") String password, @Body UOM uom);
+
 
     //    post for problems
 //    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']

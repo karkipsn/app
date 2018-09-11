@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +51,7 @@ public class Sales_Fragment extends Fragment {
     APIInterface apiInterface;
     Context mContext;
 
-    AutoCompleteTextView mspinner;
+    Spinner mspinner;
     TextView msku,mform,mto;
     Button btn_submit;
 
@@ -75,7 +76,7 @@ public class Sales_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mspinner = getActivity().findViewById(R.id.item_dr_spinner);
+        mspinner = getActivity().findViewById(R.id.dr_spinner);
         msku = getActivity().findViewById(R.id.item_dr_sku);
         msku.setVisibility(View.VISIBLE);
         mform = getActivity().findViewById(R.id.item_dr_from);
@@ -192,30 +193,29 @@ public class Sales_Fragment extends Fragment {
 //                            spin.add(name);
 //                            spin_value.add(cus_id);
                         }
-                        Log.d("spinner_list", countryList.toString());
+                        ArrayAdapter<SpinnerPojo>adapter =new ArrayAdapter<SpinnerPojo>(getContext(),
+                                android.R.layout.simple_spinner_item, countryList);
+                        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                        mspinner.setAdapter(adapter);
+                        mspinner.setPrompt("Select Customers");
 
-                        mspinner.setAdapter(new ArrayAdapter<SpinnerPojo>(getContext(),
-                                android.R.layout.simple_spinner_dropdown_item, countryList));
 
-                        mspinner.setCursorVisible(false);
-                        mspinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        mspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                mspinner.showDropDown();
-//                                selection = (String) parent.getItemAtPosition(position);
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                                 cus_id = sp.getCus_id();
 
-
                                 Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
                                         " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+                                Log.d("cus_id", String.valueOf(cus_id));
                             }
-                        });
-                        mspinner.setOnClickListener(new View.OnClickListener() {
+
                             @Override
-                            public void onClick(View v) {
-                                mspinner.showDropDown();
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
+                                cus_id = sp.getCus_id();
                             }
                         });
 

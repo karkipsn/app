@@ -8,17 +8,16 @@
         <item>Tracking Number</item>
         <item>Box/Master Box</item>
         <item>Batch Status</item>
-        <item>Home</item>
 
     </string-array>
 
     <string-array name="nav_item_activity_titles">
 
         <item> Dashboard </item>
-        <item>Active Customers</item>
         <item>Pick Velocity Report </item>
         <item>Item DrHistory Report</item>
         <item>Item Sales Report </item>
+        <item>Unit Of Measurement</item>
         <item>Field Office</item>
 
     </string-array>

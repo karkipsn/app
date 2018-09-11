@@ -59,6 +59,12 @@ public class BinBinActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BinBinActivity.super.onBackPressed();
+            }
+        });
 
         mrecycleView = findViewById(R.id.recycle_view_bins);
         binAdapter = new BinAdapter(BinList, getApplicationContext());
@@ -118,9 +124,7 @@ public class BinBinActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
 
             case R.id.image:
@@ -139,7 +143,8 @@ public class BinBinActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        moveTaskToBack(true);
+//       moveTaskToBack(true);
+       super.onBackPressed();
 
     }
 
@@ -185,6 +190,21 @@ public class BinBinActivity extends AppCompatActivity {
                             String created_at = cus.get(i).getCreatedAt();
 //                            String customer_id = String.valueOf(cus.get(i).getCustomerId());
                             String customer_id = cus.get(i).getCustomerId();
+                            String mbin =cus.get(i).getBin();
+                            String mship_to_name =cus.get(i).getShipToName();
+                            String maddress1 =cus.get(i).getAddress1();
+                            String maddress2 =cus.get(i).getAddress2();
+                            String mcity =cus.get(i).getCity();
+                            String mcountry =cus.get(i).getCountry();
+                            String mstate =cus.get(i).getState();
+                            String mzip =cus.get(i).getZip();
+                            String mmanager1_name =cus.get(i).getManager1Name();
+                            String mmanager1_email =cus.get(i).getManager1Email();
+                            String mmanager1_phone =cus.get(i).getmManager1Phone();
+                            String mmanager2_name =cus.get(i).getManager2Name();
+                            String mmanager2_email =cus.get(i).getManager2Email();
+                            String mcompany_email =cus.get(i).getCompanyEmail();
+                            String mmanager2_phone =cus.get(i).getmManager2Phone();
 
 
                             bin.setCity(city);
@@ -192,6 +212,20 @@ public class BinBinActivity extends AppCompatActivity {
                             bin.setCompanyName(company_name);
                             bin.setCreatedAt(created_at);
                             bin.setCustomerId(customer_id);
+                            bin.setBin(mbin);
+                            bin.setShipToName(mship_to_name);
+                            bin.setAddress1(maddress1);
+                            bin.setAddress2(maddress2);
+                            bin.setCity(mcity);
+                            bin.setCountry(mcountry);
+                            bin.setState(mstate);
+                            bin.setZip(mzip);
+                            bin.setManager1Name(mmanager1_name);
+                            bin.setManager1Email(mmanager1_email);
+                            bin.setManager2Name(mmanager2_name);
+                            bin.setManager2Email(mmanager2_email);
+                            bin.setmManager1Phone(mmanager1_phone);
+                            bin.setmManager2Phone(mmanager2_phone);
 
                             BinList.add(bin); // must be the object of empty list initiated
 

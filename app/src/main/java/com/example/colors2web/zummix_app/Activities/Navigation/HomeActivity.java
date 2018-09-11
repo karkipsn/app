@@ -38,6 +38,9 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Hom
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.ActiveFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Pick_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sales_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.UOMFragment;
+import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
+import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 
@@ -45,6 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity {
+
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -69,10 +73,10 @@ public class HomeActivity extends AppCompatActivity {
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "Dashboard";
-    private static final String TAG_ACTIVE = "active customers";
     private static final String TAG_DR = "Item DrHistory";
     private static final String TAG_Sales = "Item Sales report";
     private static final String TAG_PICK = "Pick velocity Report";
+    private static final String TAG_UOM = "Unit Of Measurement";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -124,6 +128,10 @@ public class HomeActivity extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
+        }else{
+            navItemIndex = 4;
+            CURRENT_TAG = TAG_UOM;
+            loadHomeFragment();
         }
     }
 
@@ -160,25 +168,25 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_HOME;
                         break;
 
-                    case R.id.nav_active_customers:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_ACTIVE;
-                        break;
-
                     case R.id.nav_pick_velocity:
-                        navItemIndex = 2;
+                        navItemIndex = 1;
                         CURRENT_TAG = TAG_DR;
                         break;
 
 
                     case R.id.nav_dr_shipment:
-                        navItemIndex = 3;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_Sales;
                         break;
 
                     case R.id.nav_sales_report:
-                        navItemIndex = 4;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_PICK;
+                        break;
+
+                    case R.id.nav_uom:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_UOM;
                         break;
 
                     case R.id.nav_city_bins:
@@ -206,6 +214,18 @@ public class HomeActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
 
+
+                    case R.id.nav_packages:
+                        startActivity(new Intent(HomeActivity.this, PackageActivity.class));
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
+
+                    case R.id.nav_problem_sku:
+                        startActivity(new Intent(HomeActivity.this, ProblemSKU.class));
+                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
 
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -260,7 +280,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // selecting appropriate nav menu item
         selectNavMenu();
-
         // set toolbar title
         setToolbarTitle();
 
@@ -319,28 +338,25 @@ public class HomeActivity extends AppCompatActivity {
                 Home_Fragment home_fragment = new Home_Fragment();
                 return home_fragment;
 
-
             case 1:
-                // activr customers
-            ActiveFragment activeFragment = new ActiveFragment();
-            return activeFragment;
-
-
-
-            case 2:
                 // pick fragment
                 Pick_Fragment pick_fragment = new Pick_Fragment();
                 return pick_fragment;
 
-            case 3:
+            case 2:
 //                De Shipment fragment
                 Dr_Fragment dr_fragment = new Dr_Fragment();
                 return dr_fragment;
 
-            case 4:
+            case 3:
                 // sales fragment
                 Sales_Fragment sales_fragment = new Sales_Fragment();
                 return sales_fragment;
+
+            case 4:
+                // unit of measurement
+                UOMFragment uomFragment = new UOMFragment();
+                return uomFragment;
 
             default:
                 return new ActiveFragment();

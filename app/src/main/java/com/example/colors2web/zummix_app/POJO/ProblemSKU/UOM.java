@@ -18,6 +18,10 @@ public class UOM {
     @SerializedName("updated_by")
     private Long mUpdatedBy;
 
+    public UOM() {
+
+    }
+
     public String getCreatedAt() {
         return mCreatedAt;
     }
@@ -66,4 +70,10 @@ public class UOM {
         mUpdatedBy = updatedBy;
     }
 
+
+    public UOM(Long mCreatedBy, String mUnit, Long mUpdatedBy) {
+        this.mCreatedBy = mCreatedBy;
+        this.mUnit = mUnit;
+        this.mUpdatedBy = mUpdatedBy;
+    }
 }

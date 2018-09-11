@@ -269,7 +269,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:background="@color/primary_dark"
-                    android:text="INSERT"
+                    android:text="UPDATE"
                     android:padding="10dp"
                     android:id="@+id/btn_problem_insert"
                     android:layout_margin="4dp"
@@ -278,16 +278,16 @@
                     android:layout_weight="8"/>
 
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:background="@color/primary_dark"
-                    android:text="UPDATE"
-                    android:id="@+id/btn_problem_update"
-                    android:layout_margin="4dp"
-                    android:padding="10dp"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="8"/>
+                <!--<Button-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:background="@color/primary_dark"-->
+                    <!--android:text="UPDATE"-->
+                    <!--android:id="@+id/btn_problem_update"-->
+                    <!--android:layout_margin="4dp"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="8"/>-->
 
 
 

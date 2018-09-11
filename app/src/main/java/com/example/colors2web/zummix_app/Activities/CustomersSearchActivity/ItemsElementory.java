@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.Frag_Elementary;
+import com.example.colors2web.zummix_app.Fragments.Frag_InActive;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
@@ -49,8 +51,8 @@ public class ItemsElementory extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.inactive_spinner)
-    AutoCompleteTextView mspinner;
+//    @BindView(R.id.inactive_spinner)
+//    AutoCompleteTextView mspinner;
 
     @BindView(R.id.real_spinner)
     Spinner spinner1;
@@ -59,7 +61,6 @@ public class ItemsElementory extends AppCompatActivity {
     Button mbutton;
 
     APIInterface apiInterface;
-
     Long cus_id;
 
     @Override
@@ -141,46 +142,30 @@ public class ItemsElementory extends AppCompatActivity {
                         }
                         Log.d("spinner_list", countryList.toString());
 
-//                        try Spinner
 
+                        ArrayAdapter<SpinnerPojo> adapter2 = new ArrayAdapter<SpinnerPojo>(ItemsElementory.this,
+                                android.R.layout.simple_spinner_item, countryList);
 
-                        ArrayAdapter<SpinnerPojo> adapter1 = new ArrayAdapter<SpinnerPojo>(ItemsElementory.this,
-                                android.R.layout.select_dialog_singlechoice, countryList);
+                        adapter2.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                        spinner1.setAdapter(adapter2);
 
-//                        adapter1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                        mspinner.setAdapter(adapter1);
-
-
-//                        mspinner.setAdapter(new ArrayAdapter<SpinnerPojo>(ItemsElementory.this,
-//                                android.R.layout.simple_spinner_dropdown_item, countryList));
-
-                        WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
-                        Display display = wm.getDefaultDisplay();
-                        int width = display.getWidth();
-                        double width1 = width * 0.8;
-                        int fin = (int) width1;
-
-
-                        mspinner.setDropDownWidth(fin);
-                        mspinner.setCursorVisible(false);
-                        mspinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        spinner1.setPrompt("Select Customers");
+                        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                mspinner.showDropDown();
-//                                selection = (String) parent.getItemAtPosition(position);
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                                 cus_id = sp.getCus_id();
 
-
                                 Toast.makeText(getApplicationContext(), "Cus ID: " + sp.getCus_id() + ",  " +
                                         " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+                                Log.d("cus_id", String.valueOf(cus_id));
                             }
-                        });
-                        mspinner.setOnClickListener(new View.OnClickListener() {
+
                             @Override
-                            public void onClick(View v) {
-                                mspinner.showDropDown();
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
+                                cus_id = sp.getCus_id();
                             }
                         });
 
@@ -266,11 +251,22 @@ public class ItemsElementory extends AppCompatActivity {
 
                     if (cus != null) {
 
-                        Intent intent7 = new Intent(ItemsElementory.this, ByCustomerItems.class);
-                        intent7.putExtra("ciid", oPath);
-                        Log.d("Opath",oPath);
-                        startActivity(intent7);
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+//                        Intent intent7 = new Intent(ItemsElementory.this, ByCustomerItems.class);
+//                        intent7.putExtra("ciid", oPath);
+//                        Log.d("Opath",oPath);
+//                        startActivity(intent7);
+//                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ciid", oPath);
+
+                        Frag_Elementary elem = new Frag_Elementary();
+                        elem.setArguments(bundle);
+                        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+
+                        getSupportFragmentManager().beginTransaction().
+                                add(R.id.frame_inactive, elem).
+                                commit();
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();

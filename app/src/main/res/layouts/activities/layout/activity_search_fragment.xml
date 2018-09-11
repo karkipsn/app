@@ -58,8 +58,12 @@
                             android:background="@drawable/spinner"
                             android:layout_height="wrap_content"
                             android:textSize="10sp"
-                            android:drawSelectorOnTop="true"
-                            android:entries="@array/spinner_array"
+                            style="@style/Spinner"
+                            android:spinnerMode="dialog"
+                            android:textColor="@color/white"
+                            android:popupBackground="@color/primary_dark"
+
+
                             />
 
                     </LinearLayout>

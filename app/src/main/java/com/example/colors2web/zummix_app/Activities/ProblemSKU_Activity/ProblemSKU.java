@@ -81,7 +81,7 @@ public class ProblemSKU extends AppCompatActivity {
             }
         });
 
-        cadapter = new ProblemAdapter(getApplicationContext(),PList);
+        cadapter = new ProblemAdapter(ProblemSKU.this,PList);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 

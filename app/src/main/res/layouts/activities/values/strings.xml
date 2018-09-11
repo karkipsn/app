@@ -7,15 +7,17 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_customers_group">Dashboard</string>
-    <string name="nav_active_customers">Active Customers</string>
     <string name="nav_pick_velocity">Pick Velocity Report</string>
     <string name="nav_de_shipment">Item Dr History</string>
     <string name="nav_sales_report">Item Sales Report</string>
     <string name="nav_city_bins">Field Office</string>
     <string name="nav_inactive_items">InActive Items</string>
-    <string name="nav_parent_id">Parent Id</string>
+    <string name="nav_parent_id">Customers</string>
     <string name="nav_customer_items">Customer Inventory</string>
     <string name="nav_logout"> Logout</string>
+    <string name="nav_uom"> Unit Of Measurement</string>
+    <string name="nav_packages"> Packages</string>
+    <string name="nav_problem_sku"> Problem SKU</string>
 
 
 

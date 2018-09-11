@@ -50,17 +50,17 @@ public class CustomerItem {
     @SerializedName("min_quantity")
     private Long mMinQuantity;
     @SerializedName("ordered_quantity")
-    private Object mOrderedQuantity;
+    private Long mOrderedQuantity;
     @SerializedName("pick")
-    private String mPick;
+    private Long mPick;
     @SerializedName("pick_balance")
-    private Object mPickBalance;
+    private Long mPickBalance;
     @SerializedName("price")
     private String mPrice;
     @SerializedName("replenish")
-    private String mReplenish;
+    private Long mReplenish;
     @SerializedName("requested_quantity")
-    private Object mRequestedQuantity;
+    private Long mRequestedQuantity;
     @SerializedName("special_program_number")
     private String mSpecialProgramNumber;
     @SerializedName("tr_quantity")
@@ -252,27 +252,27 @@ public class CustomerItem {
         mMinQuantity = minQuantity;
     }
 
-    public Object getOrderedQuantity() {
+    public Long getOrderedQuantity() {
         return mOrderedQuantity;
     }
 
-    public void setOrderedQuantity(Object orderedQuantity) {
+    public void setOrderedQuantity(Long orderedQuantity) {
         mOrderedQuantity = orderedQuantity;
     }
 
-    public String getPick() {
+    public Long getPick() {
         return mPick;
     }
 
-    public void setPick(String pick) {
+    public void setPick(long pick) {
         mPick = pick;
     }
 
-    public Object getPickBalance() {
+    public Long getPickBalance() {
         return mPickBalance;
     }
 
-    public void setPickBalance(Object pickBalance) {
+    public void setPickBalance(Long pickBalance) {
         mPickBalance = pickBalance;
     }
 
@@ -284,19 +284,19 @@ public class CustomerItem {
         mPrice = price;
     }
 
-    public String getReplenish() {
+    public Long getReplenish() {
         return mReplenish;
     }
 
-    public void setReplenish(String replenish) {
+    public void setReplenish(Long replenish) {
         mReplenish = replenish;
     }
 
-    public Object getRequestedQuantity() {
+    public Long getRequestedQuantity() {
         return mRequestedQuantity;
     }
 
-    public void setRequestedQuantity(Object requestedQuantity) {
+    public void setRequestedQuantity(Long requestedQuantity) {
         mRequestedQuantity = requestedQuantity;
     }
 

@@ -8,10 +8,6 @@
             android:title="@string/nav_customers_group" />
 
         <item
-            android:id="@+id/nav_active_customers"
-            android:title="@string/nav_active_customers" />
-
-        <item
             android:id="@+id/nav_pick_velocity"
             android:title="@string/nav_pick_velocity" />
 
@@ -22,6 +18,11 @@
         <item
             android:id="@+id/nav_sales_report"
             android:title="@string/nav_sales_report" />
+
+        <item
+            android:id="@+id/nav_uom"
+            android:title="@string/nav_uom" />
+
 
         <item
             android:id="@+id/nav_city_bins"
@@ -38,6 +39,14 @@
         <item
             android:id="@+id/nav_customer_items"
             android:title="@string/nav_customer_items" />
+
+        <item
+            android:id="@+id/nav_packages"
+            android:title="@string/nav_packages" />
+
+        <item
+            android:id="@+id/nav_problem_sku"
+            android:title="@string/nav_problem_sku" />
 
 
         <item

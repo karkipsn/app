@@ -27,7 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:padding="6dp"
+                android:paddingTop="6dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:paddingBottom="8dp"
@@ -36,7 +38,7 @@
 
             <Spinner
                 android:id="@+id/pack_customer_spinner"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:layout_width="200dp"
                 android:background="@drawable/popup_spinner"
                 android:layout_height="wrap_content"
@@ -69,7 +71,7 @@
                     android:textColor="@color/black"
                     android:paddingBottom="8dp"
                     android:paddingLeft="11dp"
-                    android:hint="Is GLobal Package?" />
+                    android:hint="Global Package?" />
 
                 <RadioGroup
                     android:id="@+id/toggle_update"

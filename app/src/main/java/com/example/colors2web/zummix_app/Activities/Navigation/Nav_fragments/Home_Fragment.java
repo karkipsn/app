@@ -111,7 +111,8 @@ public class Home_Fragment extends Fragment {
                     OrdGrpByCus resp1 = response.body();
 
                     List<Order> order = resp1.getOrders();
-                    Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
+//                    Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (order != null) {
 

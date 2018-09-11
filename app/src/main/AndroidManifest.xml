@@ -52,7 +52,7 @@
 
         <activity
             android:name=".Activities.MasterBoxSearch.MasterBoxSearchActivity"
-            android:label="Box Details"
+            android:label="Master/Box Details"
             android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
         </activity>
 
@@ -93,7 +93,7 @@
 
         <activity
             android:name=".Activities.ItemSearchActivity"
-            android:label="Item Details"
+            android:label="Product Details"
             android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
 
         </activity>
@@ -189,32 +189,32 @@
 
         <activity
             android:name=".Activities.PostActivity.Pick_Velocity_ReportActivity"
-            android:label="Velocity Report"
+            android:label="Pick Velocity Report"
             android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
         </activity>
 
         <activity
             android:name=".Activities.CityBins.BinHomeActivity"
-            android:label="Velocity Report"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            android:label="Field Office"
+            >
         </activity>
 
         <activity
             android:name=".Activities.CityBins.BinBinActivity"
-            android:label="Velocity Report"
-            android:parentActivityName=".Activities.Navigation.HomeActivity">
+            android:label="Field Office"
+            >
         </activity>
 
         <activity
             android:name=".Activities.CityBins.CreateCityBinsActivity"
             android:label="Create City Bins"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            >
         </activity>
 
         <activity
             android:name=".Activities.CityBins.UpdateCityBinsActivity"
             android:label="Update City Bins"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+           >
         </activity>
 
         <activity
@@ -224,14 +224,16 @@
         </activity>
 
         <activity
-            android:name=".Activities.ProblemSKU_Activity.PackageActivity">
+            android:name=".Activities.ProblemSKU_Activity.PackageActivity"
+            android:label="Packages">
         </activity>
 
         <activity
-            android:name=".Activities.ProblemSKU_Activity.ProblemSKU">
+            android:name=".Activities.ProblemSKU_Activity.ProblemSKU"
+            android:label="Problemsku">
         </activity>
         <activity android:name=".Activities.OrderActivity.BatchSearchActivity"
-            android:label="Batch Number">
+            android:label="Batch Status">
         </activity>
 
         <activity android:name=".Activities.InActiveActivity"

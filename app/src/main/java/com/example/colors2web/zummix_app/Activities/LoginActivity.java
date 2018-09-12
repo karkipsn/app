@@ -32,6 +32,7 @@ import com.example.colors2web.zummix_app.api.APIInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,8 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_password)
     EditText password;
 
-    @BindView(R.id.forgot_password)
-    TextView fpass;
+
 
     @BindView(R.id.btnlogin)
     Button signin;
@@ -69,7 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 //                .bitmapTransform(new BlurTransformation())
 //                .into(imageView);
 
-        Glide.with(this).load(R.mipmap.ic_launcher_zummix).apply(RequestOptions.circleCropTransform()).into(imageView);
+        Glide.with(this).load(R.drawable.ic_launcher_voxship).
+                apply(RequestOptions.bitmapTransform(new BrightnessFilterTransformation())).into(imageView);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
         signin.setOnClickListener(new View.OnClickListener() {

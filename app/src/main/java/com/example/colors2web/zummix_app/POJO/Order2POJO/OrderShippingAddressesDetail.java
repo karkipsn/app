@@ -6,8 +6,11 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
-public class OrderShippingAddressesDetail implements Parcelable {
+
+public class OrderShippingAddressesDetail extends ArrayList<Parcelable> implements Parcelable {
 
     @SerializedName("created_at")
     private String mCreatedAt;
@@ -322,5 +325,10 @@ public class OrderShippingAddressesDetail implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(mUpdatedBy);
         }
+    }
+
+    @Override
+    public Stream<Parcelable> stream() {
+        return null;
     }
 }

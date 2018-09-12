@@ -1,68 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item android:title="Orders">
+        <menu>
+            <item
+                android:id="@+id/nav_customers_group"
+                android:title="@string/nav_customers_group" />
+
+            <item
+                android:id="@+id/nav_inactive_items"
+                android:title="@string/nav_inactive_items" />
+
+        </menu>
+        </item>
+    </group>
+
+
+    <group android:checkableBehavior="single">
+        <item android:title="Reports">
+            <menu>
+                <item
+                    android:id="@+id/nav_pick_velocity"
+                    android:title="@string/nav_pick_velocity" />
+
+                <item
+                    android:id="@+id/nav_dr_shipment"
+                    android:title="@string/nav_de_shipment" />
+
+                <item
+                    android:id="@+id/nav_sales_report"
+                    android:title="@string/nav_sales_report" />
+            </menu>
+        </item>
+    </group>
+
 
     <group android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/nav_customers_group"
-            android:title="@string/nav_customers_group" />
+        <item android:title="Admin Tools">
+            <menu>
 
-        <item
-            android:id="@+id/nav_pick_velocity"
-            android:title="@string/nav_pick_velocity" />
+                <item
+                    android:id="@+id/nav_uom"
+                    android:title="@string/nav_uom" />
 
-        <item
-            android:id="@+id/nav_dr_shipment"
-            android:title="@string/nav_de_shipment" />
+                <item
+                    android:id="@+id/nav_packages"
+                    android:title="@string/nav_packages" />
 
-        <item
-            android:id="@+id/nav_sales_report"
-            android:title="@string/nav_sales_report" />
-
-        <item
-            android:id="@+id/nav_uom"
-            android:title="@string/nav_uom" />
+                <item
+                    android:id="@+id/nav_problem_sku"
+                    android:title="@string/nav_problem_sku" />
 
 
-        <item
-            android:id="@+id/nav_city_bins"
-            android:title="@string/nav_city_bins" />
+            </menu>
 
-        <item
-            android:id="@+id/nav_inactive_items"
-            android:title="@string/nav_inactive_items" />
-
-        <item
-            android:id="@+id/nav_parent_id"
-            android:title="@string/nav_parent_id" />
-
-        <item
-            android:id="@+id/nav_customer_items"
-            android:title="@string/nav_customer_items" />
-
-        <item
-            android:id="@+id/nav_packages"
-            android:title="@string/nav_packages" />
-
-        <item
-            android:id="@+id/nav_problem_sku"
-            android:title="@string/nav_problem_sku" />
-
-
-        <item
-            android:id="@+id/nav_logout"
-            android:title="@string/nav_logout" />
+        </item>
     </group>
 
-    <!--<item android:title="Customers">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_about_us"-->
-                <!--android:title="@string/nav_about_us" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_privacy_policy"-->
-                <!--android:title="@string/privacy_policy" />-->
-        <!--</menu>-->
-    <!--</item>-->
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Customers">
+            <menu>
+                <item
+                    android:id="@+id/nav_parent_id"
+                    android:title="@string/nav_parent_id" />
+
+                <item
+                    android:id="@+id/nav_customer_items"
+                    android:title="@string/nav_customer_items" />
+
+                <item
+                    android:id="@+id/nav_city_bins"
+                    android:title="@string/nav_city_bins" />
+
+            </menu>
+        </item>
+    </group>
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/navig_group_logout"
+        app:itemBackground="@drawable/flag_gardient">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/nav_logout"
+            />
+    </group>
 
 </menu>

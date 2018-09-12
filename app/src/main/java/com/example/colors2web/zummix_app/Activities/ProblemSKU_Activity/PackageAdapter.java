@@ -102,7 +102,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                 int width = display.getWidth();
 
                 final PopupWindow popup = new PopupWindow(popupView,
-                        (int) (width), WindowManager.LayoutParams.WRAP_CONTENT);
+                        (int) (width*0.9), WindowManager.LayoutParams.WRAP_CONTENT);
                 popup.setFocusable(true);
                 popup.setOutsideTouchable(true);
                 popup.setAnimationStyle(android.R.style.Animation_Dialog);

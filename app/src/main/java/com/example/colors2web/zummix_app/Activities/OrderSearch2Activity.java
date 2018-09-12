@@ -413,7 +413,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                 storename.setText(store_name);
                                 date.setText(order_date);
-                                mship_method.setText("OrderType: " + ship_method);
+
+                                if (order_type.equals("0")) {
+                                    mship_method.setText("OrderType: " + "Field Office Delivery");
+                                } else if (ship_method.equals("1")) {
+                                    mship_method.setText("OrderType: " + "Ship To");
+                                } else {
+                                    mship_method.setText("OrderType: " + "VIP Delivery");
+                                }
                                 mship_type.setText(order_type);
 
                                 orda.setId(Long.valueOf(id));
@@ -635,13 +642,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     btn_ship_method.setVisibility(View.VISIBLE);
 
                                     showEditShipMethod(ords_no, id, ship_method);
-                                    showEditShipType(ords_no, id, order_type);;
+                                    showEditShipType(ords_no, id, order_type);
+                                    ;
 
                                 }
 
-                                if( type.equals("Super Admin")){
+                                if (type.equals("Super Admin")) {
 
-                                    if (order_status.equals("Shipped") ) {
+                                    if (order_status.equals("Shipped")) {
 
                                         btn_ship_type.setVisibility(View.GONE);
                                         btn_ship_method.setVisibility(View.GONE);
@@ -652,7 +660,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                         showEditShipMethod(ords_no, id, ship_method);
                                         showEditShipType(ords_no, id, order_type);
-                                    }}
+                                    }
+                                }
 
                                 ArrayList<ItemDetail> ItmList = new ArrayList<>();
                                 List<ItemDetail> deps = order.getItemDetails();
@@ -842,7 +851,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                 storename.setText(store_name);
                                 date.setText(order_date);
-                                mship_type.setText("OrderType: " + order_type);
+
+                                if (order_type.equals("0")) {
+                                    mship_type.setText("OrderType: " + "Field Office Delivery");
+                                } else if (ship_method.equals("1")) {
+                                    mship_type.setText("OrderType: " + "Ship To");
+                                } else {
+                                    mship_type.setText("OrderType: " + "VIP Delivery");
+                                }
                                 mship_method.setText(ship_method);
 //                                ship_btn.setVisibility(View.VISIBLE);
 //                                ship_type2.setVisibility(View.VISIBLE);
@@ -1062,13 +1078,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     btn_ship_method.setVisibility(View.VISIBLE);
 
                                     showEditShipMethod(ords_no, id, ship_method);
-                                    showEditShipType(ords_no, id, order_type);;
+                                    showEditShipType(ords_no, id, order_type);
+                                    ;
 
                                 }
 
-                                if( type1.equals("Super Admin")){
+                                if (type1.equals("Super Admin")) {
 
-                                    if (order_status.equals("Shipped") ) {
+                                    if (order_status.equals("Shipped")) {
 
                                         btn_ship_type.setVisibility(View.GONE);
                                         btn_ship_method.setVisibility(View.GONE);
@@ -1079,7 +1096,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                                         showEditShipMethod(ords_no, id, ship_method);
                                         showEditShipType(ords_no, id, order_type);
-                                    }}
+                                    }
+                                }
 
 
                                 ArrayList<ItemDetail> ItmList = new ArrayList<>();
@@ -1240,8 +1258,15 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                             storename.setText(store_name);
                             date.setText(order_date);
-                            mship_type.setText("OrderType: " + order_type);
                             mship_method.setText(ship_method);
+
+                            if (order_type.equals("0")) {
+                                mship_type.setText("OrderType: " + "Field Office Delivery");
+                            } else if (ship_method.equals("1")) {
+                                mship_type.setText("OrderType: " + "Ship To");
+                            } else {
+                                mship_type.setText("OrderType: " + "VIP Delivery");
+                            }
 
 
                             switch (order_status) {
@@ -1482,24 +1507,26 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 btn_ship_method.setVisibility(View.VISIBLE);
 
                                 showEditShipMethod(ords_no, id, ship_method);
-                                showEditShipType(ords_no, id, order_type);;
+                                showEditShipType(ords_no, id, order_type);
+                                ;
 
                             }
 
-                            if( type.equals("Super Admin")){
+                            if (type.equals("Super Admin")) {
 
-                            if (order_status.equals("Shipped") ) {
+                                if (order_status.equals("Shipped")) {
 
-                                btn_ship_type.setVisibility(View.GONE);
-                                btn_ship_method.setVisibility(View.GONE);
+                                    btn_ship_type.setVisibility(View.GONE);
+                                    btn_ship_method.setVisibility(View.GONE);
 
-                            } else {
-                                btn_ship_type.setVisibility(View.VISIBLE);
-                                btn_ship_method.setVisibility(View.VISIBLE);
+                                } else {
+                                    btn_ship_type.setVisibility(View.VISIBLE);
+                                    btn_ship_method.setVisibility(View.VISIBLE);
 
-                                showEditShipMethod(ords_no, id, ship_method);
-                                showEditShipType(ords_no, id, order_type);
-                            }}
+                                    showEditShipMethod(ords_no, id, ship_method);
+                                    showEditShipType(ords_no, id, order_type);
+                                }
+                            }
 
 
                             ArrayList<ItemDetail> ItmList = new ArrayList<>();

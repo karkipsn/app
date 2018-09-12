@@ -1,7 +1,6 @@
 package com.example.colors2web.zummix_app.POJO.SpecialPOJO;
 
-public class Country {
-
+public class StatesPOJO {
     String name;
     String code;
 
@@ -21,12 +20,12 @@ public class Country {
         this.code = code;
     }
 
-    public Country(String name, String code) {
+    public StatesPOJO(String name, String code) {
         this.name = name;
         this.code = code;
     }
 
-    public Country() {
+    public StatesPOJO() {
     }
 
     @Override
@@ -38,7 +37,7 @@ public class Country {
     public boolean equals(Object obj) {
 
         if (obj instanceof Country) {
-            Country c = (Country) obj;
+            StatesPOJO c = (StatesPOJO) obj;
 
             if (c.getName().equals(name) && c.getCode() == code)
                 return true;
@@ -47,5 +46,3 @@ public class Country {
         return false;
     }
 }
-
-

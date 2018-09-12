@@ -16,6 +16,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +49,7 @@ import com.example.colors2web.zummix_app.SearchFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -101,6 +105,11 @@ public class HomeActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
 
         navHeader = navigationView.getHeaderView(0);
+//        For Text color change
+//       MenuItem menuitem = navigationView.getMenu().findItem(R.id.navig_group_logout);
+//        Spannable spannable = new SpannableString(menuitem.getTitle());
+//        spannable.setSpan(new BackgroundColorSpan(getResources().getColor(R.color.colorPrimaryDark)), 0, menuitem.getTitle().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        menuitem.setTitle(spannable);
 
         post = navHeader.findViewById(R.id.nav_post);
         imgProfile = navHeader.findViewById(R.id.img_profile);
@@ -128,7 +137,7 @@ public class HomeActivity extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
-        }else{
+        } else {
             navItemIndex = 4;
             CURRENT_TAG = TAG_UOM;
             loadHomeFragment();
@@ -150,8 +159,10 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // Loading profile image
-        Glide.with(this).load(R.mipmap.ic_launcher_zummix).apply(RequestOptions.circleCropTransform()).
-                into(imgProfile);
+//        Glide.with(this).load(R.mipmap.ic_launcher_zummix).apply(RequestOptions.circleCropTransform()).
+//                into(imgProfile);
+        Glide.with(this).load(R.drawable.ic_launcher_voxship).
+                apply(RequestOptions.bitmapTransform(new BrightnessFilterTransformation())).into(imgProfile);
 
     }
 
@@ -197,33 +208,33 @@ public class HomeActivity extends AppCompatActivity {
 
                     case R.id.nav_inactive_items:
                         startActivity(new Intent(HomeActivity.this, InActiveActivity.class));
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         drawerLayout.closeDrawers();
                         break;
 
 
                     case R.id.nav_parent_id:
                         startActivity(new Intent(HomeActivity.this, ByParentId.class));
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         drawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_customer_items:
                         startActivity(new Intent(HomeActivity.this, ItemsElementory.class));
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         drawerLayout.closeDrawers();
                         break;
 
 
                     case R.id.nav_packages:
                         startActivity(new Intent(HomeActivity.this, PackageActivity.class));
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         drawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_problem_sku:
                         startActivity(new Intent(HomeActivity.this, ProblemSKU.class));
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         drawerLayout.closeDrawers();
                         break;
 
@@ -252,7 +263,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -385,7 +396,7 @@ public class HomeActivity extends AppCompatActivity {
                 return;
             }
         }
-       }
+    }
 
 
     @Override
@@ -393,7 +404,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu2, menu);
-        ImageView img,try2;
+        ImageView img, try2;
 
 //        MenuItem item = menu.getItem(0);
 //        final MenuItem item1 = menu.getItem(1);
@@ -411,7 +422,7 @@ public class HomeActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.frame_toolbar, new SearchFragment()).
                         addToBackStack(TAG_FRAGMENT).commit();
-                overridePendingTransition(R.anim.search_push_left_in,R.anim.search_push_left_out);
+                overridePendingTransition(R.anim.search_push_left_in, R.anim.search_push_left_out);
 
             }
         });

@@ -42,9 +42,10 @@ public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SAdapter.ShippingHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SAdapter.ShippingHolder holder, final int position) {
 
-        OrderShippingAddressesDetail detail = ShippingList.get(position);
+        final OrderShippingAddressesDetail detail = ShippingList.get(position);
+
 
         holder.sname.setText(detail.getCustomerFname() + detail.getCustomerLname());
         holder.sphone.setText(detail.getCustomerPhone1());
@@ -66,19 +67,20 @@ public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
             holder.soffice.setVisibility(View.VISIBLE);
             holder.soffice.setText(office);
 
-//            ShippingList.remove(position);
-//            notifyItemChanged(position);
-//            notifyItemRangeRemoved(position, 1);
-//            holder.soffice.setVisibility(View.GONE);
-
-//            dataset.removeAt(position);
-//            notifyItemChanged(position);
-//            notifyItemRangeRemoved(position, 1);
-
-//            int removeIndex = 4;
-//            ShippingList.remove(removeIndex);
-//            notifyItemRemoved(removeIndex);
         }
+        final String o_id = String.valueOf(Details.getId());
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //  Pass order id alongside the intent
+                Intent editintent = new Intent(mContext, OrderShippingEditActivity.class);
+                editintent.putExtra("o_id_edit", o_id);
+                editintent.putParcelableArrayListExtra("details",detail);
+                mContext.startActivity(editintent);
+            }
+
+        });
 
     }
 
@@ -109,7 +111,7 @@ public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
             edit = itemView.findViewById(R.id.sadpt_edit);
             logs = itemView.findViewById(R.id.sadpt_logs);
 
-            o_id = String.valueOf(Details.getId());
+//            o_id = String.valueOf(Details.getId());
             o_type = Details.getOrderType();
             o_status = Details.getOrderStatus();
             o_edit_shipping_add = Details.getEditShippingAddress();
@@ -140,17 +142,17 @@ public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
                 logs.setVisibility(View.VISIBLE);
             }
 
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //  Pass order id alongside the intent
-                    Intent editintent = new Intent(mContext, OrderShippingEditActivity.class);
-                    editintent.putExtra("o_id_edit", o_id);
-                    mContext.startActivity(editintent);
-                }
-
-            });
+//            edit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    //  Pass order id alongside the intent
+//                    Intent editintent = new Intent(mContext, OrderShippingEditActivity.class);
+//                    editintent.putExtra("o_id_edit", o_id);
+//                    mContext.startActivity(editintent);
+//                }
+//
+//            });
 
             logs.setOnClickListener(new View.OnClickListener() {
                 @Override

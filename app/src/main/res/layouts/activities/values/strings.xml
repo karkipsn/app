@@ -12,7 +12,7 @@
     <string name="nav_sales_report">Item Sales Report</string>
     <string name="nav_city_bins">Field Office</string>
     <string name="nav_inactive_items">InActive Items</string>
-    <string name="nav_parent_id">Customers</string>
+    <string name="nav_parent_id">Customers List</string>
     <string name="nav_customer_items">Customer Inventory</string>
     <string name="nav_logout"> Logout</string>
     <string name="nav_uom"> Unit Of Measurement</string>

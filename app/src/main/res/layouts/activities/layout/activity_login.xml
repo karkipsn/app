@@ -26,28 +26,29 @@
             tools:layout_editor_absoluteY="25dp">
 
             <ImageView
+
                 android:id="@+id/imageview_round"
-                android:layout_width="120dp"
+                android:layout_width="280dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/ic_launcher_zummix" />
+                android:src="@drawable/ic_launcher_voxship" />
 
             <!-- android:background="@drawable/img"-->
 
-            <TextView
-                android:id="@+id/forgot_password"
-                style="?android:textAppearanceSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="Welcome"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="32sp"
+            <!--<TextView-->
+                <!--android:id="@+id/forgot_password"-->
+                <!--style="?android:textAppearanceSmall"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="Welcome"-->
+                <!--android:textColor="@color/textColorPrimary"-->
+                <!--android:textSize="32sp"-->
 
-                />
+                <!--/>-->
 
             <TextView
                 style="?android:textAppearanceSmall"
@@ -57,7 +58,7 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:text="Sign in to your account"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="@color/black"
                 android:textSize="16sp"
 
                 />
@@ -158,10 +159,10 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/button_round"
+                android:layout_marginTop="18dp"
                 android:text="Sign In"
-                android:textColor="@color/textColorPrimary"
+                android:background="#94C83D"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
 

@@ -12,21 +12,20 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <FrameLayout
+            android:id="@+id/frame_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame_toolbar"
-            android:paddingStart="0dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="0dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/toolbar_top"
                 android:background="@color/colorPrimary"
-                app:titleMargin="@dimen/activity_horizontal_margin_narrow"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-            </android.support.v7.widget.Toolbar>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:titleMargin="@dimen/activity_horizontal_margin_narrow"></android.support.v7.widget.Toolbar>
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -41,15 +40,15 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/id1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/id1">
+                    android:layout_weight="1">
 
                     <EditText
                         android:id="@+id/customer_fname"
@@ -111,78 +110,146 @@
 
             </LinearLayout>
 
-
             <LinearLayout
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                   >
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/customer_city"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginBottom="@dimen/margin_down"
+                        android:hint="Country(*):"
+                        android:paddingStart="@dimen/margin_down"
+                        android:textColor="@color/iron"
+                        android:textColorHint="@color/iron" />
+
+                    <Spinner
+                        android:id="@+id/country_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:hint="City*" />
-
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
-
                     <EditText
-                        android:id="@+id/customer_country"
+                        android:id="@+id/customer_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:hint="Country*" />
-
+                        android:hint="City*" />
                 </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <EditText
-                    android:id="@+id/customer_state"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:hint="State*" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                >
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/customer_zip"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:hint="Zip*" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/customer_state"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="State*" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/citybins_spineheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginBottom="@dimen/margin_down"
+                        android:hint="State(*):"
+                        android:paddingStart="@dimen/margin_down"
+                        android:textColor="@color/iron"
+                        android:textColorHint="@color/iron"
+                        android:visibility="gone" />
+
+                    <Spinner
+                        android:id="@+id/us_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+
+                        />
+
+                    <Spinner
+                        android:id="@+id/mx_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+
+                        />
+
+                    <Spinner
+                        android:id="@+id/ca_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+
+                        />
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/customer_zip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:hint="Zip*" />
+
+                </android.support.design.widget.TextInputLayout>
+
 
             </LinearLayout>
 
@@ -195,9 +262,9 @@
                     android:id="@+id/customer_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
                     android:clickable="true"
-                    android:hint="Email*" />
+                    android:hint="Email*"
+                    android:inputType="textEmailAddress" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -210,8 +277,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:inputType="number"
-                    android:hint="Phone*" />
+                    android:hint="Phone*"
+                    android:inputType="number" />
 
             </android.support.design.widget.TextInputLayout>
 

@@ -135,9 +135,9 @@ public class OrderShippingEditActivity extends AppCompatActivity {
         Intent i = getIntent();
         if (i != null) {
             odr = i.getExtras().getString("o_id_edit", "");
-            Parcelable[] detail = i.getExtras().getParcelableArray("details");
+//            Parcelable[] detail = i.getExtras().getParcelableArray("details");
             Log.d("edit_order_no", odr);
-            Log.d("detail", detail.toString());
+//            Log.d("detail", detail.toString());
         }
 
 

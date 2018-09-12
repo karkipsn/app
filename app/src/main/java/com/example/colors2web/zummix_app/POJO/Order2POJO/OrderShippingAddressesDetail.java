@@ -1,4 +1,3 @@
-
 package com.example.colors2web.zummix_app.POJO.Order2POJO;
 
 import android.os.Parcel;
@@ -6,11 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
-
-public class OrderShippingAddressesDetail extends ArrayList<Parcelable> implements Parcelable {
+public class OrderShippingAddressesDetail implements Parcelable {
 
     @SerializedName("created_at")
     private String mCreatedAt;
@@ -325,10 +321,5 @@ public class OrderShippingAddressesDetail extends ArrayList<Parcelable> implemen
             dest.writeByte((byte) 1);
             dest.writeLong(mUpdatedBy);
         }
-    }
-
-    @Override
-    public Stream<Parcelable> stream() {
-        return null;
     }
 }

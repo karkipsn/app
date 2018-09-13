@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities;
+package com.example.colors2web.zummix_app.Activities.ProductDetails;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.Order_Adapters.ItemSearchAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProSearchRes;
 import com.example.colors2web.zummix_app.R;
@@ -34,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +44,8 @@ public class ItemSearchActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     APIInterface apiInterface;
+
+    @BindView(R.id.recycle_view)
     RecyclerView mrecyclerView;
     ItemSearchAdapter iadapter;
 
@@ -54,8 +55,8 @@ public class ItemSearchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
+        ButterKnife.bind(this);
 
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -63,8 +64,7 @@ public class ItemSearchActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        iadapter = new ItemSearchAdapter(getApplicationContext(), ItmList);
-        mrecyclerView = findViewById(R.id.recycle_view);
+        iadapter = new ItemSearchAdapter(ItemSearchActivity.this, ItmList);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 //        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -180,10 +180,14 @@ public class ItemSearchActivity extends AppCompatActivity {
                             String cus_name = items.get(i).getCompanyName();
                             String sku = items.get(i).getItemSkuNumber();
                             String name = items.get(i).getItemName();
+                            Long id = items.get(i).getId();
+                            Long cus_id = items.get(i).getCustomerId();
 
                             itemz.setCompanyName(cus_name);
                             itemz.setItemSkuNumber(sku);
                             itemz.setItemName(name);
+                            itemz.setId(id);
+                            itemz.setCustomerId(cus_id);
 
                             ItmList.add(itemz);
 

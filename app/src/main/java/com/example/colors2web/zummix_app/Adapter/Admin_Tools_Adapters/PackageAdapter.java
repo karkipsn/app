@@ -140,6 +140,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 //                radiogroup //send these radiogroup inside the button
 
                 pradio = popupView.findViewById(R.id.toggle_update);
+
                 if (statuz.equals("1")) {
                     pradio.check(R.id.yes);
                 } else {

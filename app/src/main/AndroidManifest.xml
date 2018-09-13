@@ -27,47 +27,43 @@
 
 
         <!--<activity-->
-            <!--android:name=".Activities.InActiveActivity"-->
-            <!--android:label="InActive Customer"-->
-            <!--android:theme="@style/MyMaterialTheme">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--android:name=".Activities.InActiveActivity"-->
+        <!--android:label="InActive Customer"-->
+        <!--android:theme="@style/MyMaterialTheme">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <!--<activity-->
-            <!--android:name=".Activities.OrderActivity.OrderEditActivity"-->
-            <!--android:label="Shipping Address"-->
-            <!--android:parentActivityName=".Activities.OrderSearch2Activity">-->
+        <!--android:name=".Activities.OrderActivity.OrderEditActivity"-->
+        <!--android:label="Shipping Address"-->
+        <!--android:parentActivityName=".Activities.OrderSearch2Activity">-->
 
         <!--</activity>-->
 
         <activity
             android:name=".Activities.PostActivity.Item_DR_HistoryActivity"
             android:label="Item Dr History"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
         <activity
             android:name=".Activities.MasterBoxSearch.MasterBoxSearchActivity"
             android:label="Master/Box Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
 
         <activity
             android:name=".Activities.LoginActivity"
             android:label="Login"
-            android:theme="@style/AppTheme.Dark">
-        </activity>
+            android:theme="@style/AppTheme.Dark"></activity>
 
         <activity
             android:name=".Activities.OrderSearchActivity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
         <activity
             android:name=".Activities.OrderSearch2Activity"
@@ -77,24 +73,21 @@
         </activity>
         <activity
             android:name=".Activities.OrderGroupByCustomerActivity"
-            android:label="Customer Groups">
-        </activity>
+            android:label="Customer Groups"></activity>
 
         <activity
             android:name=".Activities.GroupCusDetails"
-            android:label="Customer Details"
-            >
+            android:label="Customer Details">
+
         </activity>
 
         <activity
             android:name=".Activities.OrderActivity.TrackOrderSearchActivity"
-            android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+            android:label="Order Details" />
 
         <activity
-            android:name=".Activities.ItemSearchActivity"
-            android:label="Product Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            android:name=".Activities.ProductDetails.ItemSearchActivity"
+            android:label="Product Details">
 
         </activity>
 
@@ -113,15 +106,13 @@
             android:name=".Activities.BarcodeActivity.ScannerActivity"
             android:label="SCANNED VIEW"
             android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
-            android:supportsRtl="true">
-        </activity>
+            android:supportsRtl="true"></activity>
 
         <activity
             android:name=".Activities.BarcodeActivity.Barcode_ScanActivity"
             android:label="SCAN"
             android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".Activities.BarcodeActivity.BarcodeAPI_Activity"
@@ -133,27 +124,23 @@
             android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByCustomerId"
-            android:label="Customers"
-             />
+            android:label="Customers" />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByParentId"
-            android:label="Customers"
-            />
+            android:label="Customers" />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByCustomerItems"
-            android:label="Customers"
-             />
+            android:label="Customers" />
         <activity
             android:name=".Activities.OrderActivity.OrderShippingLogsActivity"
-            android:label="Shipping Logs"
-             />
+            android:label="Shipping Logs" />
 
-         <activity android:name=".Activities.OrderActivity.OrderShippingEditActivity"
-         android:label="Shipping Address Form"
-         >
+        <activity
+            android:name=".Activities.OrderActivity.OrderShippingEditActivity"
+            android:label="Shipping Address Form">
 
 
-         </activity>
+        </activity>
 
         <activity
             android:name=".Activities.PostActivity.View_dr_historyActivity"
@@ -165,20 +152,17 @@
         <activity
             android:name=".Activities.PostActivity.View_Pick_VelocityActivity"
             android:label="Pick Velocity Report"
-            android:parentActivityName=".Activities.PostActivity.Pick_Velocity_ReportActivity">
-        </activity>
+            android:parentActivityName=".Activities.PostActivity.Pick_Velocity_ReportActivity"></activity>
 
         <activity
             android:name=".Activities.PostActivity.View_salesHistoryActivity"
             android:label="Item Sales History"
-            android:parentActivityName=".Activities.PostActivity.Item_Sales_HistoryActivity">
-        </activity>
+            android:parentActivityName=".Activities.PostActivity.Item_Sales_HistoryActivity"></activity>
 
         <activity
             android:name=".Activities.PostActivity.Item_Sales_HistoryActivity"
             android:label="Item Sales History"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
         <!-- <activity android:name=".Activities.PostActivity.Item_DR_HistoryActivity" -->
         <!-- android:label="Dr History" -->
@@ -190,58 +174,53 @@
         <activity
             android:name=".Activities.PostActivity.Pick_Velocity_ReportActivity"
             android:label="Pick Velocity Report"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
-        </activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
 
         <activity
             android:name=".Activities.CityBins.BinHomeActivity"
-            android:label="Field Office"
-            >
-        </activity>
+            android:label="Field Office"></activity>
 
         <activity
             android:name=".Activities.CityBins.BinBinActivity"
-            android:label="Field Office"
-            >
-        </activity>
+            android:label="Field Office"></activity>
 
         <activity
             android:name=".Activities.CityBins.CreateCityBinsActivity"
-            android:label="Create City Bins"
-            >
-        </activity>
+            android:label="Create City Bins"></activity>
 
         <activity
             android:name=".Activities.CityBins.UpdateCityBinsActivity"
-            android:label="Update City Bins"
-           >
-        </activity>
+            android:label="Update City Bins"></activity>
 
-        <activity
-            android:name=".Activities.Navigation.HomeActivity">
+        <activity android:name=".Activities.Navigation.HomeActivity">
 
 
         </activity>
 
         <activity
             android:name=".Activities.ProblemSKU_Activity.PackageActivity"
-            android:label="Packages">
-        </activity>
+            android:label="Packages"></activity>
 
         <activity
             android:name=".Activities.ProblemSKU_Activity.ProblemSKU"
-            android:label="Problemsku">
-        </activity>
-        <activity android:name=".Activities.OrderActivity.BatchSearchActivity"
-            android:label="Batch Status">
-        </activity>
+            android:label="Problemsku"></activity>
+        <activity
+            android:name=".Activities.OrderActivity.BatchSearchActivity"
+            android:label="Batch Status"></activity>
 
-        <activity android:name=".Activities.InActiveActivity"
-            android:label="InActive Customers">
-        </activity>
+        <activity
+            android:name=".Activities.InActiveActivity"
+            android:label="InActive Customers"></activity>
 
-        <activity android:name=".Activities.CustomersSearchActivity.ItemsElementory"
+        <activity
+            android:name=".Activities.CustomersSearchActivity.ItemsElementory"
             android:label="Items Inventory">
+
+        </activity>
+
+        <activity
+            android:name=".Activities.ProductDetails.ProductDetails"
+            android:label="Searched Item Details">
 
         </activity>
 

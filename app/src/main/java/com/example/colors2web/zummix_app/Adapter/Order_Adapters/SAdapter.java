@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
-    List<OrderShippingAddressesDetail> ShippingList;
-    OrderDetails Details;
-    Context mContext;
+   private List<OrderShippingAddressesDetail> ShippingList;
+    private OrderDetails Details;
+
+   private Context mContext;
 
 
     public SAdapter(Context context,List<OrderShippingAddressesDetail> shippingList) {
@@ -174,24 +175,3 @@ public class SAdapter extends RecyclerView.Adapter<SAdapter.ShippingHolder> {
     }
 }
 
-
-//            edit.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                Pass order id alongside the intent
-//                    Intent editintent = new Intent(getContext(), OrderShippingEditActivity.class);
-//                    editintent.putExtra("o_id_edit", o_id);
-//                    startActivity(editintent);
-//
-//                }
-//            });
-//            logs.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////               Pass order id alongside the intent
-//                    Intent logsintent = new Intent(getContext(), OrderShippingLogsActivity.class);
-//                    logsintent.putExtra("o_id_logs", o_id);
-//                    startActivity(logsintent);
-//
-//                }
-//            });

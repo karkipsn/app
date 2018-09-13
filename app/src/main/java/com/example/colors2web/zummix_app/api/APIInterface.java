@@ -20,6 +20,7 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.PackageInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
+import com.example.colors2web.zummix_app.POJO.ProductSearch.ProductDetailsResponse;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response;
@@ -221,6 +222,22 @@ public interface APIInterface {
     //    InactiveItems Search //https://f860f607.ngrok.io/zummix-api/public/customerItems/inactiveItems/customerId/15
     @GET("customerItems/inactiveItems/customerId/{customerid}")
     Call<InactiveResponse> getInactiveFilteredResponse(@Header("email") String email, @Header("Password") String password, @Path("customerid") String customerid);
+
+    //    ProductDetails//Address
+//    https://40ecef9e.ngrok.io/zummix-api/public/customerItems/searchedCustomerItemsDetail/1334
+    @GET("customerItems/searchedCustomerItemsDetail/{itemid}")
+    Call<ProductDetailsResponse> getProductitems(@Header("email") String email, @Header("Password") String password, @Path("itemid") String itemid);
+
+
+    //  drShipmentItemLocations/sku/TEST150001/customer/15
+    @GET("drShipmentItemLocations/sku/{sku_id}/customer/{customer_id}")
+    Call<ProductDetailsResponse> getProductLocations(@Header("email") String email, @Header("Password") String password, @Path("sku_id") String sku_id,@Path("customer_id") String customer_id);
+
+
+    //    ProductDetails//Logs
+//    inventoryLogs/customerId/15/sku/TEST150001/eventType/all
+    @GET("inventoryLogs/customerId/{customer_id}/sku/{sku_id}/eventType/all")
+    Call<ProductDetailsResponse> getProductLogs(@Header("email") String email, @Header("Password") String password,@Path("customer_id") String customer_id, @Path("sku_id") String sku_id);
 
 
 }

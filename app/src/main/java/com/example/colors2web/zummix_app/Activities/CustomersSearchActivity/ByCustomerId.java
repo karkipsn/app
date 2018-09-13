@@ -1,6 +1,5 @@
 package com.example.colors2web.zummix_app.Activities.CustomersSearchActivity;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,9 +21,9 @@ import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.Frag_Shipping_method;
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.Frag_customer;
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.ShippingMethodAdapter;
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.frag_shipstation_credential;
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.frag_shopify_credential;
+import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
 import com.example.colors2web.zummix_app.POJO.customers.Customers;
 import com.example.colors2web.zummix_app.POJO.customers.ShipStationCredential;

@@ -16,12 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Adapter.InActiveAdapter;
-import com.example.colors2web.zummix_app.Adapter.LineItemsAdapter;
+import com.example.colors2web.zummix_app.Adapter.Order_Adapters.InActiveAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.InactiveCustomers.InactiveResponse;
 import com.example.colors2web.zummix_app.POJO.InactiveCustomers.StoreInactiveItem;
-import com.example.colors2web.zummix_app.POJO.Order2POJO.ItemDetail;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;

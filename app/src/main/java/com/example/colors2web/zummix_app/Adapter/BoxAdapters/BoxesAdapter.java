@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.MasterBoxSearch;
+package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,14 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.colors2web.zummix_app.Constant;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.LineItems;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
+import com.example.colors2web.zummix_app.POJO.Order2POJO.Box;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
@@ -33,41 +37,50 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHolder> {
-    List<Boxes> BoxList;
-    Context mContext;
+public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder> {
+
+    List<Box> boxList;
+    private Context mContext;
     List<LineItems> LineList = new ArrayList<>();
 
-    public PopBoxAdapter( Context mContext, List<Boxes> boxList) {
+    public BoxesAdapter(Context mContext,List<Box> boxList) {
         this.mContext = mContext;
-        BoxList = boxList;
+        this.boxList = boxList;
     }
 
     @NonNull
+
     @Override
-    public PopBoxAdapter.PopBoxHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mbox_modal_adapter, parent, false);
-        return new PopBoxHolder(view);
+    public BoxesAdapter.BoxesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.actitvity_adapter_boxes,parent,false);
+        return new BoxesHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final PopBoxAdapter.PopBoxHolder holder, int position) {
-        Boxes boxes = BoxList.get(position);
-
-        final String box_no=boxes.getBoxNumber();
-        holder.package_no.setText(box_no);
-        holder.order_no.setText(boxes.getOrderNumber());
+    public void onBindViewHolder(@NonNull BoxesAdapter.BoxesHolder holder, int position) {
+        Box box = boxList.get(position);
 
 
-        holder.package_no.setOnClickListener(new View.OnClickListener() {
+         final String box_number = box.getBoxNumber();
+        holder.box_no.setText(box_number);
+
+
+        holder.created.setText(box.getCreatedAt());
+        holder.tracking_code.setText(box.getTrackingCode());
+
+        String url2 = box.getBarcodeFileName();
+
+        String url1 = Constant.url+"/barcodes/";
+
+        Glide.with(mContext).load(url1+url2).into(holder.barcode);
+        Log.d("url",url1+url2);
+
+//        Picasso.get().load(url1+url).into(holder.barcode);
+
+        holder.box_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-//                    PopBox2Adapter kadapter;
-//                    kadapter = new PopBox2Adapter(mContext,LineList);
-//                    loadAdapter(box_no,kadapter);
-
 
                 LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View popupView = inflater.inflate(R.layout.mbox_modal_line, null);
@@ -92,7 +105,7 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                 p.dimAmount = 0.7f;
                 wm.updateViewLayout(container, p);
 
-                RecyclerView rv = popupView.findViewById(R.id.recycle_view);
+                final RecyclerView rv = popupView.findViewById(R.id.recycle_view);
                 Button cancel = popupView.findViewById(R.id.pop_up_cancel);
 
 
@@ -108,30 +121,34 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                 rv.setItemAnimator(new DefaultItemAnimator());
 
                 rv.setAdapter(kadapter);
-                loadAdapter(box_no,kadapter);
+                loadAdapter(box_number,kadapter);
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popup.dismiss();
+//                        to clear the date stored in the adapterlist of the adapter
+//                        call the function get access to the list and clear it
                         kadapter.updateAnswers2();
+
+
                     }
                 });
+            }
+        });
 
-                }
-            });
 
     }
 
-    private void loadAdapter(String box_no, final PopBox2Adapter kadapter) {
-//        api adapter loading
+    private void loadAdapter(String box_number, final PopBox2Adapter kadapter) {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         String email = preferences.getString("email","");
         String password = preferences.getString("password","");
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<MasterBoxResponse> call  =apiInterface.getMboxBoxItems(email,password,box_no);
+        Call<MasterBoxResponse> call  =apiInterface.getMboxBoxItems(email,password,box_number);
         call.enqueue(new Callback<MasterBoxResponse>() {
             @Override
             public void onResponse(Call<MasterBoxResponse> call, Response<MasterBoxResponse> response) {
@@ -161,7 +178,6 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                     }
                     else{
                         Toast.makeText(mContext,res.getReturnType(),Toast.LENGTH_SHORT).show();
-
                     }}
                 else {
                     Toast.makeText(mContext,"Operation Failed",Toast.LENGTH_SHORT).show();
@@ -176,33 +192,40 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
 
             }
         });
-
-
-
     }
 
     @Override
     public int getItemCount() {
-        return BoxList.size();
+        return boxList.size();
+    }
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
-    public void updateAnswers(List<Boxes> b) {
-        BoxList =b;
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public void updateAnswers(List<Box> List) {
+        boxList =List;
         notifyDataSetChanged();
+
     }
 
-    public void updateAnswer2() {
-        BoxList.clear();
-        notifyDataSetChanged();
-    }
-
-    public class PopBoxHolder extends RecyclerView.ViewHolder {
-
-        TextView package_no, order_no;
-        public PopBoxHolder(View itemView) {
+    public class BoxesHolder extends RecyclerView.ViewHolder {
+        TextView box_no, created,tracking_code;
+        ImageView barcode;
+        public BoxesHolder(View itemView) {
             super(itemView);
-            package_no = itemView.findViewById(R.id.pop_box_adp_pack_no);
-            order_no = itemView.findViewById(R.id.pop_box_adp_orderno);
+
+            box_no=itemView.findViewById(R.id.rv_boxno);
+
+            created=itemView.findViewById(R.id.rv_created_at);
+            tracking_code=itemView.findViewById(R.id.rv_tracking_code);
+            barcode=itemView.findViewById(R.id.box_imageview);
+
         }
     }
 }

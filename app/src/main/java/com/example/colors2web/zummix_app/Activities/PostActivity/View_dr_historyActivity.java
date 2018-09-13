@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Adapters.Dr_history_Adapter;
+import com.example.colors2web.zummix_app.Adapter.ReportsAdapters.Dr_history_Adapter;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.PostSearch.DrShipment;
 import com.example.colors2web.zummix_app.R;

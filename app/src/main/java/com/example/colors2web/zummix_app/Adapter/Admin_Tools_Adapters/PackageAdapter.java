@@ -1,6 +1,5 @@
-package com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity;
+package com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

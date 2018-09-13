@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Adapter.GroupByCusADapter;
+import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.GroupByCusADapter;
 import com.example.colors2web.zummix_app.ItemDecoration.GridSpacingItemDecoration;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;

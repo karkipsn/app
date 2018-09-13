@@ -1,10 +1,9 @@
-package com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity;
+package com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -32,12 +31,10 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemSKUs;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.Country;
-import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

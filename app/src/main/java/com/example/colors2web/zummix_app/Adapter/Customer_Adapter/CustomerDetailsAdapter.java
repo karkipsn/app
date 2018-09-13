@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.Customer_Adapter;
 
 import android.content.Context;
 import android.content.Intent;

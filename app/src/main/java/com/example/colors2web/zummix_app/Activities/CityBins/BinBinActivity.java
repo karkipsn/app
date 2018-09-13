@@ -21,8 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.CityBins.Adapter.BinAdapter;
-import com.example.colors2web.zummix_app.Activities.CityBins.Adapter.HomeAdapter;
+import com.example.colors2web.zummix_app.Adapter.BinsAdapter.BinAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;

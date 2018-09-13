@@ -6,31 +6,43 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Adapter.ItemSearchAdapter;
+import com.example.colors2web.zummix_app.Adapter.Order_Adapters.ItemSearchAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProSearchRes;
 import com.example.colors2web.zummix_app.R;
+import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ItemSearchActivity extends AppCompatActivity {
 
-    android.support.v7.widget.Toolbar toolbar;
+    private static final String TAG_FRAGMENT ="SEARCH_FRAGMENT" ;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     APIInterface apiInterface;
     RecyclerView mrecyclerView;
@@ -41,7 +53,7 @@ public class ItemSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_nav_home);
+        setContentView(R.layout.activity_common);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,8 +72,8 @@ public class ItemSearchActivity extends AppCompatActivity {
         mrecyclerView.setLayoutManager(layoutManager);
 
 
-//        mrecyclerView.addItemDecoration(new MyDividerItemDecoration(getApplicationContext(), LinearLayoutManager.HORIZONTAL, 16));
-        mrecyclerView.addItemDecoration(new SimpleItemDecoration(this));
+       mrecyclerView.addItemDecoration(new MyDividerItemDecoration(getApplicationContext(), LinearLayoutManager.HORIZONTAL, 16));
+//        mrecyclerView.addItemDecoration(new SimpleItemDecoration(this));
         mrecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mrecyclerView.setAdapter(iadapter);
@@ -85,6 +97,59 @@ public class ItemSearchActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu2, menu);
+        ImageView img;
+
+
+        img = (ImageView) menu.findItem(R.id.image).getActionView();
+        img.setImageResource(android.R.drawable.ic_menu_search);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.frame_toolbar, new SearchFragment()).
+                        addToBackStack(TAG_FRAGMENT).commit();
+                overridePendingTransition(R.anim.search_push_left_in, R.anim.search_push_left_out);
+
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.image:
+                return true;
+
+            case R.id.image_try:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void call(String email, String password, String path) {

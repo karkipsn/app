@@ -1,9 +1,7 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.Order_Adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

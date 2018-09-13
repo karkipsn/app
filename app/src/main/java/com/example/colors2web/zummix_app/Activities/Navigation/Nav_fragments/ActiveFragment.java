@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ParentAdapter_customer;
+import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.ParentAdapter_customer;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
 import com.example.colors2web.zummix_app.POJO.customers.Customers;

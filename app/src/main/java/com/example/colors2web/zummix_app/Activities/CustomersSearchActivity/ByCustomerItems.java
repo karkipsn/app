@@ -16,11 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.CustomerItemsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
 import com.example.colors2web.zummix_app.R;

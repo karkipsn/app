@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.CityBins.Adapter;
+package com.example.colors2web.zummix_app.Adapter.BinsAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.CityBins.CreateCityBinsActivity;
 import com.example.colors2web.zummix_app.Activities.CityBins.UpdateCityBinsActivity;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.R;

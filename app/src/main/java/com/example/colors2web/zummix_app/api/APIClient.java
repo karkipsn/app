@@ -39,7 +39,7 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-              .baseUrl("https://c77a05c0.ngrok.io/zummix-api/public/")
+              .baseUrl("https://40ecef9e.ngrok.io/zummix-api/public/")
 //                .baseUrl("https://zumsapi.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
 //                .addConverterFactory(GsonConverterFactory.create(b_deserializer))

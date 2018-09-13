@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.Order_Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +11,6 @@ import com.example.colors2web.zummix_app.POJO.Order2POJO.ItemDetail;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LineItemsAdapter extends RecyclerView.Adapter<LineItemsAdapter.LineHolder> {
 

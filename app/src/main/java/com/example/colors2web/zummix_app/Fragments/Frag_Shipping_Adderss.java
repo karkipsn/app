@@ -18,7 +18,7 @@ import android.widget.Button;
 
 import com.example.colors2web.zummix_app.Activities.OrderActivity.OrderShippingEditActivity;
 import com.example.colors2web.zummix_app.Activities.OrderActivity.OrderShippingLogsActivity;
-import com.example.colors2web.zummix_app.Adapter.ShippingAdapter;
+import com.example.colors2web.zummix_app.Adapter.Order_Adapters.ShippingAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderShippingAddressesDetail;
 import com.example.colors2web.zummix_app.R;

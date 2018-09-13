@@ -55,7 +55,7 @@ public interface APIInterface {
     @GET("orders/customer/{order_number}")
     Call<CustomerGroup> getCustomerDetails(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
 
-    //Product search Dymanic way
+    //Product search Dymanic way//ZUMX262543 //TEST150001
     @GET("customerItems/search/{variable}")
     Call<ProSearchRes> getProduct1(@Header("email") String email, @Header("Password") String password, @Path("variable") String variable);
 

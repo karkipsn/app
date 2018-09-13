@@ -16,12 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByCustomerItems;
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.CustomerItemsAdapter;
-import com.example.colors2web.zummix_app.Adapter.InActiveAdapter;
+import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.CustomerItemsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.POJO.InactiveCustomers.InactiveResponse;
-import com.example.colors2web.zummix_app.POJO.InactiveCustomers.StoreInactiveItem;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerItem;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
 import com.example.colors2web.zummix_app.R;

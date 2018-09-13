@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.MasterBoxSearch;
+package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -21,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.Boxes;
-import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBox;
+import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.LineItems;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
@@ -34,43 +33,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
+public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHolder> {
+    List<Boxes> BoxList;
     Context mContext;
-    List<MasterBox> MList;
-    List<Boxes>BList = new ArrayList<>();
+    List<LineItems> LineList = new ArrayList<>();
 
-    public MBoxAdapter(Context context,List<MasterBox> MList) {
-        this.mContext =context;
-        this.MList = MList;
+    public PopBoxAdapter( Context mContext, List<Boxes> boxList) {
+        this.mContext = mContext;
+        BoxList = boxList;
     }
 
     @NonNull
     @Override
-    public MBoxAdapter.MBoxHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.box_masterbox_adapter, parent, false);
-        return new MBoxHolder(view);
-
+    public PopBoxAdapter.PopBoxHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mbox_modal_adapter, parent, false);
+        return new PopBoxHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MBoxAdapter.MBoxHolder holder, int position) {
-        MasterBox masterBox = MList.get(position);
+    public void onBindViewHolder(@NonNull final PopBoxAdapter.PopBoxHolder holder, int position) {
+        Boxes boxes = BoxList.get(position);
 
-        holder.bid.setText(masterBox.getOrderId());
-        holder.mbarno.setText(masterBox.getBarcodeNumber());
-        holder.mboxno.setText(masterBox.getBoxNumber());
-        final String master_box_no =masterBox.getMasterBoxCode();
-        holder.mmboxno.setText(master_box_no);
-        holder.mtrcode.setText(masterBox.getMasterBoxTrackingCode());
-        holder.mcusname.setText(masterBox.getCompanyName());
-        holder.memail.setText(masterBox.getCompanyEmail());
+        final String box_no=boxes.getBoxNumber();
+        holder.package_no.setText(box_no);
+        holder.order_no.setText(boxes.getOrderNumber());
 
-        holder.mmboxno.setOnClickListener(new View.OnClickListener() {
+
+        holder.package_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+//                    PopBox2Adapter kadapter;
+//                    kadapter = new PopBox2Adapter(mContext,LineList);
+//                    loadAdapter(box_no,kadapter);
+
+
                 LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final View popupView = inflater.inflate(R.layout.mbox_modal_masterbox, null);
+                final View popupView = inflater.inflate(R.layout.mbox_modal_line, null);
 
                 WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
@@ -84,7 +84,7 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
                 popup.setOutsideTouchable(true);
                 popup.setAnimationStyle(android.R.style.Animation_Dialog);
 
-                popup.showAtLocation(holder.mmboxno, Gravity.CENTER, 0, 0); //Displaying popup
+                popup.showAtLocation(popupView, Gravity.CENTER, 0, 0); //Displaying popup
 
                 final View container = (View) popup.getContentView().getParent();
                 WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
@@ -96,8 +96,8 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
                 Button cancel = popupView.findViewById(R.id.pop_up_cancel);
 
 
-                final PopBoxAdapter kadapter;
-                kadapter = new PopBoxAdapter(mContext,BList);
+                final PopBox2Adapter kadapter;
+                kadapter = new PopBox2Adapter(mContext,LineList);
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
 //            mrecyclerView.setHasFixedSize(true);
@@ -108,29 +108,30 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
                 rv.setItemAnimator(new DefaultItemAnimator());
 
                 rv.setAdapter(kadapter);
-                loadAdapter(master_box_no,kadapter);
+                loadAdapter(box_no,kadapter);
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popup.dismiss();
-                        kadapter.updateAnswer2();
-
+                        kadapter.updateAnswers2();
                     }
                 });
-            }
-        });
+
+                }
+            });
 
     }
 
-    private void loadAdapter(String master_box_no, final PopBoxAdapter kadapter) {
+    private void loadAdapter(String box_no, final PopBox2Adapter kadapter) {
+//        api adapter loading
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         String email = preferences.getString("email","");
         String password = preferences.getString("password","");
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<MasterBoxResponse> call  =apiInterface.getMboxBox(email,password,master_box_no);
+        Call<MasterBoxResponse> call  =apiInterface.getMboxBoxItems(email,password,box_no);
         call.enqueue(new Callback<MasterBoxResponse>() {
             @Override
             public void onResponse(Call<MasterBoxResponse> call, Response<MasterBoxResponse> response) {
@@ -140,23 +141,25 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
 
                     if(res.getReturnType().equals("success")){
 
-                   List <Boxes> boxes = res.getmBoxes();
+                        List<LineItems>items = res.getmLineItems();
 //                   List<Boxes>arraylist = new ArrayList<>();
-                   Boxes b = new Boxes();
+                        LineItems b = new LineItems();
 
-                   for(int i = 0;i<boxes.size();i++){
+                        for(int i = 0;i<items.size();i++){
 
-                       String mpack = boxes.get(i).getBoxNumber();
-                       String mord = boxes.get(i).getOrderNumber();
+                            String msku = items.get(i).getItemSku();
+                            String mname = items.get(i).getItemName();
+                            String mqty = items.get(i).getBoxQuantity();
 
-                       b.setBoxNumber(mpack);
-                       b.setOrderNumber(mord);
-                       BList.add(b);
-                   }
+                            b.setItemSku(msku);
+                            b.setItemName(mname);
+                            b.setBoxQuantity(mqty);
+                            LineList.add(b);
+                        }
 
-                   kadapter.updateAnswers(BList);
-                }
-                else{
+                        kadapter.updateAnswers(LineList);
+                    }
+                    else{
                         Toast.makeText(mContext,res.getReturnType(),Toast.LENGTH_SHORT).show();
 
                     }}
@@ -174,31 +177,32 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
             }
         });
 
+
+
     }
 
     @Override
     public int getItemCount() {
-        return MList.size();
+        return BoxList.size();
     }
 
-    public void updateAnswers(ArrayList<MasterBox> boxes) {
-        MList=boxes;
+    public void updateAnswers(List<Boxes> b) {
+        BoxList =b;
         notifyDataSetChanged();
     }
 
-    public class MBoxHolder extends RecyclerView.ViewHolder {
-        TextView bid, mbarno, mboxno, mmboxno, mtrcode, mcusname, memail;
+    public void updateAnswer2() {
+        BoxList.clear();
+        notifyDataSetChanged();
+    }
 
-        public MBoxHolder(View itemView) {
+    public class PopBoxHolder extends RecyclerView.ViewHolder {
 
+        TextView package_no, order_no;
+        public PopBoxHolder(View itemView) {
             super(itemView);
-            bid = itemView.findViewById(R.id.box_box_oid);
-            mbarno = itemView.findViewById(R.id.box_box_bar_no);
-            mboxno = itemView.findViewById(R.id.box_box_no);
-            mmboxno = itemView.findViewById(R.id.box_mbox_no);
-            mtrcode = itemView.findViewById(R.id.box_track_code);
-            mcusname = itemView.findViewById(R.id.box_cus_name);
-            memail = itemView.findViewById(R.id.box_email);
+            package_no = itemView.findViewById(R.id.pop_box_adp_pack_no);
+            order_no = itemView.findViewById(R.id.pop_box_adp_orderno);
         }
     }
 }

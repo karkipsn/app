@@ -11,21 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.ShippingMethodAdapter;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MBoxAdapter;
+import com.example.colors2web.zummix_app.Adapter.BoxAdapters.MBoxAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.CompanyDetails;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBox;
-import com.example.colors2web.zummix_app.POJO.customers.ShippingMethods;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MasterBoxes_frag extends Fragment {
 

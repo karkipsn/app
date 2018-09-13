@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.CustomersSearchActivity;
+package com.example.colors2web.zummix_app.Adapter.Customer_Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ByCustomerId;
 import com.example.colors2web.zummix_app.POJO.customers.Customers;
 import com.example.colors2web.zummix_app.R;
 

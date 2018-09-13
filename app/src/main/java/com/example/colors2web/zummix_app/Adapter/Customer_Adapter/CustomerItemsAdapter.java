@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.CustomersSearchActivity;
+package com.example.colors2web.zummix_app.Adapter.Customer_Adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

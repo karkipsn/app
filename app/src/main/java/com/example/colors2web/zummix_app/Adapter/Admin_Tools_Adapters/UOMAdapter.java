@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

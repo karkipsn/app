@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.MasterBoxSearch;
+package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

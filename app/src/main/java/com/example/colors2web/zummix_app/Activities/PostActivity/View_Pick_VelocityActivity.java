@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Adapters.Pick_Velocity_BoxAdapter;
+import com.example.colors2web.zummix_app.Adapter.ReportsAdapters.Pick_Velocity_BoxAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.PostSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.PostSearch.CustomerItems;

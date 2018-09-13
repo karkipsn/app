@@ -19,12 +19,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.PostActivity.Adapters.Pick_Velocity_BoxAdapter;
 import com.example.colors2web.zummix_app.Adapter.BatchAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchOrder;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchResponse;
-import com.example.colors2web.zummix_app.POJO.SpecialPOJO.MergeBCI;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;

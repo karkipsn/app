@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ViewPagerAdapter;
+import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.CompanyDetails_frag;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.FieldOffice_frag;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.MasterBoxes_frag;

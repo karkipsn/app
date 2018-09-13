@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,11 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.PopBoxAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
-import com.example.colors2web.zummix_app.POJO.Order2POJO.Box;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.MasterBox;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;

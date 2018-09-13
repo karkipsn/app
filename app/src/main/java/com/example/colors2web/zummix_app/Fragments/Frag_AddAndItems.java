@@ -12,7 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.colors2web.zummix_app.Adapter.LineItemsAdapter;
+import com.example.colors2web.zummix_app.Adapter.Order_Adapters.LineItemsAdapter;
+import com.example.colors2web.zummix_app.Adapter.Order_Adapters.SAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.ItemDetail;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.OrderShippingAddressesDetail;

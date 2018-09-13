@@ -19,14 +19,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Adapter.UOMAdapter;
+import com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters.UOMAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;

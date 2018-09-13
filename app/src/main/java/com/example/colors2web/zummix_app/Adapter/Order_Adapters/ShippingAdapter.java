@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Adapter;
+package com.example.colors2web.zummix_app.Adapter.Order_Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

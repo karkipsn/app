@@ -45,7 +45,7 @@ public class UOMFragment extends Fragment {
     RecyclerView mrecycleView;
     Context mContext;
     APIInterface apiInterface;
-    TextView create;
+    Button create;
     UOMAdapter padapter;
     String uominput;
     int navItemIndex;

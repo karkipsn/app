@@ -1,6 +1,5 @@
 package com.example.colors2web.zummix_app.Adapter.ProductAdapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,28 +13,25 @@ import com.example.colors2web.zummix_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductLogsAdapter extends RecyclerView.Adapter<ProductLogsAdapter.LogsHolder>{
-
-    Context mContext;
-    List<InventoryLogs> LogsList ;
-
-    public ProductLogsAdapter(Context mContext, List<InventoryLogs> logsList) {
-        this.mContext = mContext;
-        LogsList = logsList;
+public class ProductLogsAdapter extends RecyclerView.Adapter<ProductLogsAdapter.ProductHolder> {
+    public ProductLogsAdapter(List<InventoryLogs> IList) {
+        this.IList = IList;
     }
 
+    List<InventoryLogs>IList;
 
     @NonNull
     @Override
-    public ProductLogsAdapter.LogsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductLogsAdapter.ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.frag_inventry_logs,parent,false);
-        return new LogsHolder(view);
+        return new ProductHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductLogsAdapter.LogsHolder holder, int position) {
-        InventoryLogs logs = LogsList.get(position);
+    public void onBindViewHolder(@NonNull ProductLogsAdapter.ProductHolder holder, int position) {
+
+        InventoryLogs logs = IList.get(position);
 
         holder.id.setText(String.valueOf(logs.getId()));
         holder.e_type.setText(logs.getEventType());
@@ -44,35 +40,36 @@ public class ProductLogsAdapter extends RecyclerView.Adapter<ProductLogsAdapter.
         holder.to.setText(logs.getToLocation());
         if(logs.getCurrentQty()!=null && logs.getUpdateQty()!=null){
 
-        Long current =logs.getCurrentQty();
-        Long up =logs.getUpdateQty();
-        Long tot = current+up;
-        holder.present.setText(String.valueOf(current));
-        holder.moved.setText(String.valueOf(up));
-        holder.total.setText(String.valueOf(tot));
+            Long current =logs.getCurrentQty();
+            Long up =logs.getUpdateQty();
+            Long tot = current+up;
+            holder.present.setText(String.valueOf(current));
+            holder.moved.setText(String.valueOf(up));
+            holder.total.setText(String.valueOf(tot));
         }
         holder.pallet.setText(String.valueOf(logs.getOldPalletNumber()));
         holder.comment.setText(logs.getComment());
         holder.newpallet.setText(String.valueOf(logs.getNewPalletNumber()));
 
-
     }
 
     @Override
     public int getItemCount() {
-        return LogsList.size();
+        return IList.size();
     }
 
-    public void updateAnswers(ArrayList<InventoryLogs> logList) {
-        LogsList = logList;
+    public void updateAnswers(ArrayList<InventoryLogs> logs) {
+        IList=logs;
         notifyDataSetChanged();
     }
 
-    public class LogsHolder extends RecyclerView.ViewHolder {
+    public class ProductHolder extends RecyclerView.ViewHolder {
 
         TextView id,e_type,e_date,from,to,present,moved,total,pallet,comment,newpallet;
-        public LogsHolder(View itemView) {
-            super(itemView);
+
+        public ProductHolder(View view) {
+            super(view);
+
             id = itemView.findViewById(R.id.frag_logs_id);
             e_type = itemView.findViewById(R.id.frag_logs_event_type);
             e_date = itemView.findViewById(R.id.frag_logs_event_date);
@@ -87,3 +84,5 @@ public class ProductLogsAdapter extends RecyclerView.Adapter<ProductLogsAdapter.
         }
     }
 }
+
+

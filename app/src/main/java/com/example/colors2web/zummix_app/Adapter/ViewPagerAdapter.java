@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
+
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -22,13 +24,25 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
     }
 
     @Override
+    public int getItemPosition(@NonNull Object object) {
+        int index = mFragmentList.indexOf (object);
+
+        if (index == -1)
+            return POSITION_NONE;
+        else
+            return index;
+    }
+
+    @Override
     public int getCount() {
         return mFragmentList.size();
     }
 
     public void addFrag(Fragment fragment, String title) {
+
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
+        notifyDataSetChanged();
     }
 
     @Nullable

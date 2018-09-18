@@ -57,6 +57,7 @@ public class ByCustomerId extends AppCompatActivity {
 
     @BindView(R.id.viewpager_customer)
     ViewPager viewPager;
+
     String cid1;
     String sc_id,sc_email,sc_vendor ,sc_cus_id,sc_c_at,sid,ssid,scid ,sca,sidn;
 

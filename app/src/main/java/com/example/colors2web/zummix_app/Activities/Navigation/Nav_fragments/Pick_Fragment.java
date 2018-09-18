@@ -345,7 +345,6 @@ public class Pick_Fragment extends Fragment {
 //                            spin.add(name);
 //                            spin_value.add(cus_id);
                         }
-                        Log.d("spinner_list", countryList.toString());
                         ArrayAdapter<SpinnerPojo>adapter =new ArrayAdapter<SpinnerPojo>(getContext(),
                                 android.R.layout.simple_spinner_item, countryList);
                         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);

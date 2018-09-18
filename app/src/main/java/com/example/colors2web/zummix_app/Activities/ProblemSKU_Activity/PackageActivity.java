@@ -412,8 +412,13 @@ public class PackageActivity extends AppCompatActivity {
 
                         }
 
-                        Customer.setAdapter(new ArrayAdapter<SpinnerPojo>(PackageActivity.this,
-                                android.R.layout.simple_spinner_dropdown_item, countryList));
+                        ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(PackageActivity.this,
+                                android.R.layout.simple_spinner_dropdown_item, countryList);
+                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+
+                        Customer.setAdapter(adp1);
+//                        Customer.setAdapter(new ArrayAdapter<SpinnerPojo>(PackageActivity.this,
+//                                android.R.layout.simple_spinner_dropdown_item, countryList));
 
 
 

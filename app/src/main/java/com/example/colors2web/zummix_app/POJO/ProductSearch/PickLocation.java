@@ -3,8 +3,10 @@ package com.example.colors2web.zummix_app.POJO.ProductSearch;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class PickLocation {
+
+public class PickLocation implements Serializable{
 
     @SerializedName("pick_aisle_id")
     private Long mPickAisleId;
@@ -26,6 +28,16 @@ public class PickLocation {
     private Long mWarehouseId;
     @SerializedName("warehouse_name")
     private String mWarehouseName;
+
+    private String picku;
+
+    public String getPicku() {
+        return picku;
+    }
+
+    public void setPicku(String picku) {
+        this.picku = picku;
+    }
 
     public Long getPickAisleId() {
         return mPickAisleId;

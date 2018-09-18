@@ -24,6 +24,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/toolbar_top"
+
                 android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
@@ -32,12 +33,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/toolbar_hide_and_show"
+                    android:layout_weight="1"
                     android:showDividers="middle"
                     android:orientation="horizontal"
                     >
                     <LinearLayout
-                        android:layout_width="80dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="8"
                         android:orientation="vertical">
 
                         <TextView
@@ -69,10 +72,11 @@
                     </LinearLayout>
 
                     <com.example.colors2web.zummix_app.EditTextWithClear
-                        android:layout_width="230dp"
+                        android:layout_width="match_parent"
                         android:id="@+id/fmain_search_text"
                         android:layout_toRightOf="@id/fmainspinnerz"
                         android:visibility="visible"
+                        android:layout_weight="3"
                         android:focusableInTouchMode="true"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
@@ -83,6 +87,7 @@
                     <ImageView
                         android:layout_width="fill_parent"
                         android:id="@+id/fmain_barcode"
+                        android:layout_weight="9"
                         android:src="@drawable/icon_barcode1"
                         android:layout_height="match_parent"
                         android:foregroundGravity="right"

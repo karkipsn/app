@@ -53,9 +53,10 @@
 
         <Button
             android:layout_width="match_parent"
-            android:background="@color/primary_dark"
+            android:background="@drawable/flag_gardient"
             android:text="MORE"
             android:id="@+id/btn_more"
+            android:gravity="center"
             android:textColor="@color/white"
             android:layout_height="22dp"
             android:layout_weight="8"/>

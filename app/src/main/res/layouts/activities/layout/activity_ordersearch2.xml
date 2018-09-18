@@ -74,7 +74,7 @@
                         android:id="@+id/ord2_storename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="4"
                         android:gravity="left"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -100,17 +100,19 @@
                         android:gravity="right"
                         android:layout_gravity="right"
                         android:padding="4dp"
-                        android:layout_weight="5"
+                        android:layout_weight="6"
                         android:textStyle="bold"
                         android:textSize="16sp" />
 
 
                     <Button
                         android:layout_width="match_parent"
-                        android:layout_height="18dp"
-                        android:layout_weight="7"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="3dp"
+                        android:layout_height="28dp"
+                        android:layout_weight="6"
+                        android:paddingLeft="2dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:gravity="center"
                         android:textColor="@color/white"
                         android:id="@+id/cancel_button"
                         android:background="@drawable/flag_gardient"
@@ -151,7 +153,8 @@
                         android:padding="4dp"
                         android:text="Paused"
                         android:visibility="gone"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp" />
 
                     <TextView
@@ -163,7 +166,8 @@
                         android:padding="4dp"
                         android:text="Ready"
                         android:visibility="gone"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp"  />
 
                     <TextView
@@ -175,7 +179,8 @@
                         android:padding="4dp"
                         android:text="Refunded"
                         android:visibility="gone"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp"  />
 
                     <TextView
@@ -187,7 +192,8 @@
                         android:padding="4dp"
                         android:text="PP Request"
                         android:visibility="gone"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp"  />
 
 
@@ -200,7 +206,8 @@
                         android:padding="4dp"
                         android:visibility="gone"
                         android:text="Expedite"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp" />
 
                     <TextView
@@ -212,7 +219,8 @@
                         android:padding="4dp"
                         android:visibility="gone"
                         android:text="Ship It Now"
-                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:textSize="10sp" />
 
                     <TextView
@@ -221,10 +229,11 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/flag_gardient"
                         android:layout_margin="4dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
                         android:padding="4dp"
                         android:visibility="gone"
                         android:text="Batch Printed"
-                        android:textColor="@color/black"
                         android:textSize="10sp" />
 
 
@@ -250,10 +259,11 @@
 
 
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="44dp"
                         android:layout_height="28dp"
                         android:paddingLeft="3dp"
                         android:paddingRight="3dp"
+                        android:gravity="center"
                         android:textColor="@color/white"
                         android:id="@+id/btn_edit_ship_method"
                         android:background="@drawable/flag_gardient"
@@ -299,10 +309,11 @@
 
 
                     <Button
-                        android:layout_width="48dp"
+                        android:layout_width="44dp"
                         android:layout_height="28dp"
                         android:paddingLeft="2dp"
                         android:layout_marginLeft="4dp"
+                        android:gravity="center"
                         android:paddingRight="2dp"
                         android:textColor="@color/white"
                         android:id="@+id/btn_edit_shipping_type"
@@ -315,6 +326,7 @@
                         android:layout_height="28dp"
                         android:id="@+id/btn_expedite"
                         android:paddingLeft="2dp"
+                        android:gravity="center"
                         android:layout_marginLeft="4dp"
                         android:paddingRight="2dp"
                         android:visibility="gone"

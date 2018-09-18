@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.colors2web.zummix_app.Activities.Navigation.HomeActivity;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.login.ResponseLogin;
-import com.example.colors2web.zummix_app.POJO.login.User;
+import com.example.colors2web.zummix_app.POJO.login.UserLogin;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
@@ -114,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     //if u want the same method of extraction for 200 and 401 it wont works
 
                     ResponseLogin msg = response.body();
-                    User user = msg.getUser();
+                    UserLogin user = msg.getUser();
 
                     String toks = msg.getToken();
                     String group_type = user.getGroupType();

@@ -20,7 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Activities.ProductDetails.ItemSearchActivity;
+import com.example.colors2web.zummix_app.Activities.ProductDetails.ProductSearchActivity;
 import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderDetails;
 import com.example.colors2web.zummix_app.POJO.OrderSearch.OrderSearchResponse;
@@ -573,7 +573,7 @@ public class BarcodeMain extends AppCompatActivity {
 
                     if (items != null) {
 
-                        Intent intent1 = new Intent(getApplicationContext(), ItemSearchActivity.class);
+                        Intent intent1 = new Intent(getApplicationContext(), ProductSearchActivity.class);
                         intent1.putExtra("OPath", Path);
                         startActivity(intent1);
 

@@ -21,6 +21,10 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProductDetailsResponse;
+import com.example.colors2web.zummix_app.POJO.Users.GroupResponse;
+import com.example.colors2web.zummix_app.POJO.Users.SProgramResponse;
+import com.example.colors2web.zummix_app.POJO.Users.UserCreatePOJO;
+import com.example.colors2web.zummix_app.POJO.Users.UsersResponse;
 import com.example.colors2web.zummix_app.POJO.login.Login;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Order2Response;
@@ -231,13 +235,29 @@ public interface APIInterface {
 
     //  drShipmentItemLocations/sku/TEST150001/customer/15
     @GET("drShipmentItemLocations/sku/{sku_id}/customer/{customer_id}")
-    Call<ProductDetailsResponse> getProductLocations(@Header("email") String email, @Header("Password") String password, @Path("sku_id") String sku_id,@Path("customer_id") String customer_id);
+    Call<ProductDetailsResponse> getProductLocations(@Header("email") String email, @Header("Password") String password, @Path("sku_id") String sku_id, @Path("customer_id") String customer_id);
 
 
     //    ProductDetails//Logs
 //    inventoryLogs/customerId/15/sku/TEST150001/eventType/all
     @GET("inventoryLogs/customerId/{customer_id}/sku/{sku_id}/eventType/all")
-    Call<ProductDetailsResponse> getProductLogs(@Header("email") String email, @Header("Password") String password,@Path("customer_id") String customer_id, @Path("sku_id") String sku_id);
+    Call<ProductDetailsResponse> getProductLogs(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id, @Path("sku_id") String sku_id);
+
+    //    GET USERS
+    @GET("users")
+    Call<UsersResponse> getUsers(@Header("email") String email, @Header("Password") String password);
+
+    //    POST USERS
+    @POST("users")
+    Call<UsersResponse> createUsers(@Header("email") String email, @Header("Password") String password, @Body UserCreatePOJO pojo);
+
+    //    GET GROUPS
+    @GET("groups")
+    Call<GroupResponse> getGroups(@Header("email") String email, @Header("Password") String password);
+
+
+    @GET("specialPrograms/getSpecialProgramsByCustomerId/customer/{customer_id}")
+    Call<SProgramResponse> getSpecialPrograms(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id);
 
 
 }

@@ -19,6 +19,7 @@
         <item>Item Sales Report </item>
         <item>Unit Of Measurement</item>
         <item>Field Office</item>
+        <item>Users</item>
 
     </string-array>
 
@@ -26,6 +27,11 @@
         <item>Field Office Delivery</item>
         <item>Ship To</item>
         <item>VIP Delivery</item>
+    </string-array>
+
+    <string-array name="User_activated">
+        <item>Yes</item>
+        <item>No</item>
     </string-array>
 
 

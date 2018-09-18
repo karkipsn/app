@@ -1,7 +1,6 @@
 
 package com.example.colors2web.zummix_app.POJO.login;
 
-import com.example.colors2web.zummix_app.POJO.login.User;
 import com.google.gson.annotations.SerializedName;
 
 
@@ -20,7 +19,7 @@ public class ResponseLogin {
     private String mType;
 
     @SerializedName("user")
-    private User mUser;
+    private UserLogin mUser;
 
     public Long getId() {
         return mId;
@@ -54,11 +53,11 @@ public class ResponseLogin {
         mType = type;
     }
 
-    public User getUser() {
+    public UserLogin getUser() {
         return mUser;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLogin user) {
         mUser = user;
     }
 

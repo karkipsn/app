@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ItemSearchActivity extends AppCompatActivity {
+public class ProductSearchActivity extends AppCompatActivity {
 
     private static final String TAG_FRAGMENT ="SEARCH_FRAGMENT" ;
     @BindView(R.id.toolbar)
@@ -59,12 +59,19 @@ public class ItemSearchActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductSearchActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        iadapter = new ItemSearchAdapter(ItemSearchActivity.this, ItmList);
+        iadapter = new ItemSearchAdapter(ProductSearchActivity.this, ItmList);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 //        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -154,7 +161,7 @@ public class ItemSearchActivity extends AppCompatActivity {
 
     private void call(String email, String password, String path) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(ItemSearchActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(ProductSearchActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -210,7 +217,7 @@ public class ItemSearchActivity extends AppCompatActivity {
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
-                        Toast.makeText(ItemSearchActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductSearchActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -223,7 +230,7 @@ public class ItemSearchActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Toast.makeText(ItemSearchActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductSearchActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
 
             }
         });

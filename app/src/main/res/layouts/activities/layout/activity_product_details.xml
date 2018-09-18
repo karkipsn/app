@@ -1,443 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="fill_vertical"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-
-            <LinearLayout
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:id="@+id/frame_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingStart="0dp">
-
-
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/toolbar_top"
-                        android:background="@color/colorPrimary"
-                        app:layout_scrollFlags="scroll|enterAlways"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                        app:titleMargin="@dimen/activity_horizontal_margin_narrow">
-
-
-                    </android.support.v7.widget.Toolbar>
-
-                </FrameLayout>
-
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/ord2_card1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_down"
-            android:layout_marginLeft="@dimen/margin_down"
-            android:layout_marginRight="@dimen/margin_down"
-            android:layout_marginTop="@dimen/margin_down"
-            android:elevation="@dimen/elevation">
-
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
                 android:orientation="vertical">
 
 
-                <LinearLayout
+                <android.support.design.widget.AppBarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Customer "
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/pr_cus_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Product"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/pr_cus_product"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Product Status"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/main_toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                        <RadioGroup
-                            android:id="@+id/radio_pr_cus"
-                            android:layout_width="138dp"
-                            android:layout_height="35dp"
-                            android:background="@drawable/pink_out_line"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:layout_marginTop="1dp"
-                                android:layout_marginBottom="1dp"
-                                android:layout_marginLeft="1dp"
-                                android:id="@+id/pr_cus_yes"
-                                android:background="@drawable/toggle_widget_background"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="ACTIVE"
-                                android:textColor="@color/white" />
-
-                            <RadioButton
-                                android:layout_marginRight="1dp"
-                                android:layout_marginTop="1dp"
-                                android:layout_marginBottom="1dp"
-                                android:id="@+id/pr_cus_no"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@drawable/toggle_widget_background"
-                                android:button="@null"
-                                android:gravity="center"
-                                android:text="INACTIVE"
-                                android:textColor="@color/white" />
-                        </RadioGroup>
+                        <FrameLayout
+                            android:id="@+id/frame_toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingStart="0dp">
 
 
+                            <android.support.v7.widget.Toolbar
+                                android:id="@+id/toolbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/toolbar_top"
+                                android:background="@color/colorPrimary"
+                                app:layout_scrollFlags="scroll|enterAlways"
+                                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                                app:titleMargin="@dimen/activity_horizontal_margin_narrow">
 
 
+                            </android.support.v7.widget.Toolbar>
+
+                        </FrameLayout>
 
                     </LinearLayout>
+                </android.support.design.widget.AppBarLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ord2_card1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:layout_marginBottom="@dimen/margin_down"
+                    android:layout_marginLeft="@dimen/margin_down"
+                    android:layout_marginRight="@dimen/margin_down"
+                    android:layout_marginTop="@dimen/margin_down"
+                    android:elevation="@dimen/elevation">
 
-                    <TextView
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Declared Price"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/pr_cus_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Weight/UOM"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Customer "
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/pr_cus_wt_uom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
 
-                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/pr_cus_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Country Of Origin"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Product"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/pr_cus_product"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Replenish"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp"
+                                android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_replenish"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Product Status"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pick"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                                    <RadioGroup
+                                        android:id="@+id/radio_pr_cus"
+                                        android:layout_width="138dp"
+                                        android:layout_height="35dp"
+                                        android:background="@drawable/pink_out_line"
+                                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_pick"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                        <RadioButton
+                                            android:id="@+id/pr_cus_yes"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="1dp"
+                                            android:layout_marginLeft="1dp"
+                                            android:layout_marginTop="1dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/toggle_widget_background"
+                                            android:button="@null"
+                                            android:gravity="center"
+                                            android:text="ACTIVE"
+                                            android:textColor="@color/white" />
 
-                </LinearLayout>
+                                        <RadioButton
+                                            android:id="@+id/pr_cus_no"
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="1dp"
+                                            android:layout_marginRight="1dp"
+                                            android:layout_marginTop="1dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/toggle_widget_background"
+                                            android:button="@null"
+                                            android:gravity="center"
+                                            android:text="INACTIVE"
+                                            android:textColor="@color/white" />
+                                    </RadioGroup>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="QOH"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/ipr_cus_qoh"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
 
-                </LinearLayout>
+                            </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pick Balance"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_pickbalance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <Switch
+                                    android:id="@+id/switch_status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Product Status:"
+                                    android:layout_weight="2"
+                                    android:textColor="#808080"
+                                    android:textOff="INACTIVE"
+                                    android:textOn="ACTIVE"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Ordered Quantity"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_ord"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Declared Price"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/pr_cus_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="COmmitted"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_committed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Weight/UOM"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/pr_cus_wt_uom"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="A2S"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/ipr_cus_a2s"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:textSize="16sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Country Of Origin"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
-                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
 
+                                    <TextView
+                                        android:id="@+id/ipr_cus_country"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_weight="1"
+                                        android:textSize="16sp" />
+
+                                    <TextView
+                                        android:id="@+id/ipr_cus_view_more"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_weight="2"
+                                        android:background="@drawable/flag_gardient"
+                                        android:gravity="center"
+                                        android:text="MORE"
+                                        android:textColor="@color/white"
+                                        android:textSize="16sp" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
+        </ScrollView>
 
-
-        </android.support.v7.widget.CardView>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -447,17 +339,15 @@
             app:tabMode="scrollable"
             app:tabTextColor="@color/green_dark" />
 
-
         <android.support.v4.view.ViewPager
 
-            android:id="@+id/viewpager"
+            android:id="@+id/viewpager_product"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/elevation"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@id/ord2_card1" />
 
     </LinearLayout>
-    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

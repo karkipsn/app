@@ -42,6 +42,7 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Act
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Pick_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sales_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.UOMFragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.User_fragment.User_Fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
 import com.example.colors2web.zummix_app.R;
@@ -81,6 +82,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_Sales = "Item Sales report";
     private static final String TAG_PICK = "Pick velocity Report";
     private static final String TAG_UOM = "Unit Of Measurement";
+    private static final String TAG_USER = "Users";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -137,11 +139,12 @@ public class HomeActivity extends AppCompatActivity {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
-        } else {
-            navItemIndex = 4;
-            CURRENT_TAG = TAG_UOM;
-            loadHomeFragment();
         }
+//        } else {
+//            navItemIndex = 4;
+//            CURRENT_TAG = TAG_UOM;
+//            loadHomeFragment();
+//        }
     }
 
     private void loadNavHeader() {
@@ -199,6 +202,12 @@ public class HomeActivity extends AppCompatActivity {
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_UOM;
                         break;
+
+                    case R.id.nav_users:
+                        navItemIndex = 5;
+                        CURRENT_TAG = TAG_USER;
+                        break;
+
 
                     case R.id.nav_city_bins:
                         startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
@@ -368,6 +377,11 @@ public class HomeActivity extends AppCompatActivity {
                 // unit of measurement
                 UOMFragment uomFragment = new UOMFragment();
                 return uomFragment;
+
+            case 5:
+                // unit of measurement
+                User_Fragment uFragment = new User_Fragment();
+                return uFragment;
 
             default:
                 return new ActiveFragment();

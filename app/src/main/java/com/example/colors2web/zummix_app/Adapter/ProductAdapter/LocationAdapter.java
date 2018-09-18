@@ -53,6 +53,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     public void updateAnswers(ArrayList<DrShipmentItemLocations> ship) {
         LocationList =ship;
+        notifyDataSetChanged();
     }
 
 

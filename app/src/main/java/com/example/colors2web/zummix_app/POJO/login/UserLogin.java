@@ -4,7 +4,7 @@ package com.example.colors2web.zummix_app.POJO.login;
 import com.google.gson.annotations.SerializedName;
 
 
-public class User {
+public class UserLogin {
 
     @SerializedName("activated")
     private Boolean mActivated;

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,13 @@ import java.util.List;
 
 public class Frag_Inv_Logs extends Fragment {
 
-    Context mContext;
-    ProductLogsAdapter adapter;
+
+    ProductLogsAdapter padapter;
     RecyclerView mrecycleView;
     List<InventoryLogs> LogsList = new ArrayList<>();
+
+    public Frag_Inv_Logs() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,26 +42,26 @@ public class Frag_Inv_Logs extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.frag_cus_shipping_method, container, false);
-        return view;
+//        View view = inflater.inflate(R.layout.frag_cus_shipping_method, container, false);
+//        return view;
+        return inflater.inflate(R.layout.frag_cus_inventory_logs, container, false);
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ProductLogsAdapter(getContext(),LogsList);
 
-        mrecycleView = getActivity().findViewById(R.id.recycler_view_shipping);
+        padapter = new ProductLogsAdapter(LogsList);
 
+        mrecycleView =view.findViewById(R.id.recycler_view_shipping);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-//            mrecyclerView.setHasFixedSize(true);
+        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mLayoutManager);
 
         mrecycleView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
-
-        mrecycleView.setAdapter(adapter);
+        mrecycleView.setAdapter(padapter);
         loadAdapter();
     }
 
@@ -65,8 +69,9 @@ public class Frag_Inv_Logs extends Fragment {
         if (getArguments() != null) {
 
 //            Serializable ship = getArguments().getSerializable("ItmList");
-            ArrayList<InventoryLogs> logList = getArguments().getParcelableArrayList("LogList");
-            adapter.updateAnswers(logList);
+            ArrayList<InventoryLogs> logs = getArguments().getParcelableArrayList("LogList");
+            Log.d("logslogs",logs.toString());
+            padapter.updateAnswers(logs);
 
         }
     }

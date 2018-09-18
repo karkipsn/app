@@ -1,7 +1,9 @@
 package com.example.colors2web.zummix_app.Activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -208,6 +210,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OrderSearch2Activity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
+
         //  tablayout with pageviewer set up
         tabLayout.setupWithViewPager(viewPager);
 
@@ -261,7 +271,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
         }
 
     }
-
 
     private void call(final String group_type, final String email, final String password, String Path) {
         final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
@@ -2237,7 +2246,35 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+          public void onClick(View v) {
+////                Alert Dailog adding
+//
+//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderSearch2Activity.this);
+//                alertDialogBuilder.setMessage("Are you sure,You wanted to cancel Order?");
+//
+//                alertDialogBuilder.setPositiveButton("Proceed",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface arg0, int arg1) {
+////                                        Toast.makeText(OrderSearch2Activity.this,"You clicked yes
+////                                                button",Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+//
+//                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+//                    Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+//                    }
+//                });
+//
+//                AlertDialog alertDialog = alertDialogBuilder.create();
+//                alertDialog.show();
+//            }
+
+
+
+
                 String ad;
 
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);

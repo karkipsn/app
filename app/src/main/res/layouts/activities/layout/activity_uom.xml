@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -13,19 +13,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create UOM"
+            android:text="Create"
             android:id="@+id/uom_create"
             android:gravity="center"
-            android:layout_gravity="center"
+            android:background="@color/white"
+            android:layout_gravity="left"
             android:clickable="true"
+            android:padding="8dp"
             android:textColor="@color/primary_dark"
             android:textSize="16sp"/>
 
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:id="@+id/recycle_view_uom">
 
@@ -35,5 +39,5 @@
 
     </LinearLayout>
 
-</ScrollView>
+</android.support.constraint.ConstraintLayout>
 

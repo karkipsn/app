@@ -60,15 +60,12 @@
             android:label="Login"
             android:theme="@style/AppTheme.Dark"></activity>
 
-        <activity
-            android:name=".Activities.OrderSearchActivity"
-            android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+
 
         <activity
             android:name=".Activities.OrderSearch2Activity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+            >
 
         </activity>
         <activity
@@ -86,7 +83,7 @@
             android:label="Order Details" />
 
         <activity
-            android:name=".Activities.ProductDetails.ItemSearchActivity"
+            android:name=".Activities.ProductDetails.ProductSearchActivity"
             android:label="Product Details">
 
         </activity>
@@ -100,28 +97,28 @@
 
         <activity
             android:name=".Activities.BarcodeActivity.BarcodeMain"
-            android:label="SCAN"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+            android:label="SCAN">
+
+        </activity>
+
         <activity
             android:name=".Activities.BarcodeActivity.ScannerActivity"
             android:label="SCANNED VIEW"
-            android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
             android:supportsRtl="true"></activity>
 
         <activity
             android:name=".Activities.BarcodeActivity.Barcode_ScanActivity"
             android:label="SCAN"
-            android:parentActivityName=".Activities.BarcodeActivity.BarcodeMain"
             android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".Activities.BarcodeActivity.BarcodeAPI_Activity"
             android:label="Order Details"
-            android:parentActivityName=".Activities.BarcodeActivity.Barcode_ScanActivity" />
+            />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByActiveCustomers"
             android:label="Active Customers"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity" />
+           />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByCustomerId"
             android:label="Customers" />

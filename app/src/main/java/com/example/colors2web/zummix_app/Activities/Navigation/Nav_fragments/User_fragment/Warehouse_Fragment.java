@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.colors2web.zummix_app.Adapter.UserAdapter.WarehouseAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.Users.User;
 import com.example.colors2web.zummix_app.R;
 
@@ -67,6 +68,12 @@ public class Warehouse_Fragment extends Fragment {
             ArrayList<User> logs = getArguments().getParcelableArrayList("WareList");
             Log.d("warelist",logs.toString());
             padapter.updateAnswers(logs);
+
+            ArrayList<SpinnerPojo> grouplog = getArguments().getParcelableArrayList("GroupList");
+           ArrayList<SpinnerPojo> cuslog = getArguments().getParcelableArrayList("CustomerList");
+            padapter.providemodaldata(grouplog,cuslog);
+
+
         }
     }
 

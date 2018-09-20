@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.User_fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.colors2web.zummix_app.Adapter.UserAdapter.UserAdapter;
 import com.example.colors2web.zummix_app.Adapter.UserAdapter.WarehouseAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.Users.User;
 import com.example.colors2web.zummix_app.R;
 
@@ -26,6 +28,10 @@ public class ClientPortal_Fragment extends Fragment {
     UserAdapter padapter;
     RecyclerView mrecycleView;
     List<User> UList = new ArrayList<>();
+    Context mContext;
+
+    User_Fragment user_fragment;
+
 
     public ClientPortal_Fragment() {
     }
@@ -67,8 +73,10 @@ public class ClientPortal_Fragment extends Fragment {
         if (getArguments() != null) {
 
             ArrayList<User> logs1 = getArguments().getParcelableArrayList("UserList");
-            Log.d("userlist", logs1.toString());
+            ArrayList<SpinnerPojo> grouplog = getArguments().getParcelableArrayList("GroupList");
+            ArrayList<SpinnerPojo> cuslog = getArguments().getParcelableArrayList("CustomerList");
             padapter.updateAnswers(logs1);
+            padapter.providemodaldata(grouplog,cuslog);
 
         }
     }

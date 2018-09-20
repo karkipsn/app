@@ -1,6 +1,10 @@
 package com.example.colors2web.zummix_app.POJO.SpecialPOJO;
 
-public class SpinnerPojo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SpinnerPojo implements Parcelable {
+
     String name;
     Long cus_id;
 
@@ -12,6 +16,43 @@ public class SpinnerPojo {
     public SpinnerPojo() {
 
     }
+
+    protected SpinnerPojo(Parcel in) {
+        name = in.readString();
+        if (in.readByte() == 0) {
+            cus_id = null;
+        } else {
+            cus_id = in.readLong();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        if (cus_id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(cus_id);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<SpinnerPojo> CREATOR = new Creator<SpinnerPojo>() {
+        @Override
+        public SpinnerPojo createFromParcel(Parcel in) {
+            return new SpinnerPojo(in);
+        }
+
+        @Override
+        public SpinnerPojo[] newArray(int size) {
+            return new SpinnerPojo[size];
+        }
+    };
 
     public String getName() {
         return name;

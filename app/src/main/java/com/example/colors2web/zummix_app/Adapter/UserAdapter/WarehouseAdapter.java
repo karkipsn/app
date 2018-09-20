@@ -50,8 +50,10 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
 
     private List<User> WareList;
     private Activity mContext;
+    private Context context;
     private APIInterface apiInterface;
     private Warehouse_Fragment fragment;
+    private User_Fragment main_fragment;
 
     private String s_customer, s_program, s_activity, s_groups;
     private String s_cus1, s_pr1, s_act1, fname1, lname1, s_email1, pass1, cpass1;
@@ -59,6 +61,9 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
 
 
     ArrayList<SpinnerPojo> prgList = new ArrayList<>();
+    ArrayList<SpinnerPojo> groupList = new ArrayList<>();
+    ArrayList<SpinnerPojo> customList = new ArrayList<>();
+
     private EditText e_fname, e_lname, e_pass, e_cpass, e_email;
 
     private Spinner s_cus, s_act, s_prg, s_grp;
@@ -72,6 +77,12 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
     public WarehouseAdapter(List<User> wareList, Activity mContext) {
         WareList = wareList;
         this.mContext = mContext;
+    }
+
+    public WarehouseAdapter(List<User> wareList, Context context, User_Fragment main_fragment) {
+        WareList = wareList;
+        this.context = context;
+        this.main_fragment = main_fragment;
     }
 
     @NonNull
@@ -154,9 +165,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
 
                 submit = popupView.findViewById(R.id.user_modal_submit);
                 cancle = popupView.findViewById(R.id.user_modal_cancel);
-
-                loadspinner_customer(email, password);
-                loadspinner_groups(email, password);
+                loadcustomer();
 
                 s_cus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -191,7 +200,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
                     }
                 });
 
-
+                loadgroups();
                 s_grp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -208,6 +217,8 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
                     }
                 });
 
+
+                loadactivation();
                 s_act.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -235,7 +246,9 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
                     public void onClick(View v) {
 
                         s_cus1 = String.valueOf(cus_id);
+
                         s_pr1 = s_program;
+
                         if (s_activity.equals("Yes")) {
                             s_act1 = String.valueOf(1);
                         } else {
@@ -264,6 +277,40 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
                 });
             }
         });
+
+    }
+
+    private void loadactivation() {
+
+        List<String>active = new ArrayList<>();
+        active.add("Yes");
+        active.add("No");
+
+        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(mContext,
+                android.R.layout.simple_spinner_dropdown_item,active );
+        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        s_act.setAdapter(adp1);
+        s_act.setPrompt("Select Activation");
+    }
+
+    private void loadcustomer() {
+
+        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(mContext,
+                android.R.layout.simple_spinner_dropdown_item, customList);
+        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        s_cus.setAdapter(adp1);
+        s_cus.setPrompt("Select Customers");
+    }
+
+    private void loadgroups() {
+
+        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(mContext,
+                android.R.layout.simple_spinner_dropdown_item, groupList);
+
+        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        s_grp.setAdapter(adp3);
+        s_grp.setPrompt("Select Groups");
+
 
     }
 
@@ -296,6 +343,7 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
                         }
                         popup.dismiss();
                         fragment.refresh();
+//                            main_fragment.refresh1();
 
 
                     } else {
@@ -429,211 +477,6 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
 
     }
 
-    private void loadspinner_groups(String email, String password) {
-
-        final ProgressDialog progressDialog = new ProgressDialog(mContext,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-        Call<GroupResponse> call = apiInterface.getGroups(email, password);
-
-        call.enqueue(new Callback<GroupResponse>() {
-            @Override
-            public void onResponse(Call<GroupResponse> call, Response<GroupResponse> response) {
-
-                if (response.isSuccessful()) {
-
-                    GroupResponse resp1 = response.body();
-
-                    List<Group> cus = resp1.getGroups();
-
-                    Toast.makeText(mContext, resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
-                    ArrayList<SpinnerPojo> groupList = new ArrayList<>();
-
-                    if (cus != null) {
-
-                        for (int i = 0; i < cus.size(); i++) {
-
-                            SpinnerPojo order1 = new SpinnerPojo();
-
-                            String name = cus.get(i).getName();
-                            Long cus_id = cus.get(i).getId();
-
-                            order1.setCus_id(cus_id);
-                            order1.setName(name);
-
-                            groupList.add(order1);// must be the object of empty list initiated
-
-                        }
-
-                    } else {
-                        String d = response.body().getMessage();
-
-                    }
-                    ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(mContext,
-                            android.R.layout.simple_spinner_dropdown_item, groupList);
-
-                    adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                    s_grp.setAdapter(adp3);
-                    s_grp.setPrompt("Select Groups");
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                } else if (response.code() == 401) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-
-                    }
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-
-
-                } else if (response.code() == 404) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                } else if (response.code() == 500) {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
-                    Log.d("Error", response.errorBody().toString());
-
-
-                } else {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GroupResponse> call, Throwable t) {
-                call.cancel();
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void loadspinner_customer(String email, String password) {
-
-        final ProgressDialog progressDialog = new ProgressDialog(mContext,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-        Call<CustomerResponse> call = apiInterface.getActiveCustomers(email, password);
-        call.enqueue(new Callback<CustomerResponse>() {
-            @Override
-            public void onResponse(Call<CustomerResponse> call, Response<CustomerResponse> response) {
-
-                if (response.isSuccessful()) {
-                    CustomerResponse resp1 = response.body();
-
-                    List<Customers> cus = resp1.getmCustomer();
-
-                    Toast.makeText(mContext, resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
-                    if (cus != null) {
-
-                        ArrayList<SpinnerPojo> countryList = new ArrayList<>();
-
-                        for (int i = 0; i < cus.size(); i++) {
-
-                            SpinnerPojo order1 = new SpinnerPojo();
-
-                            String name = cus.get(i).getCompanyName();
-                            Long cus_id = cus.get(i).getId();
-
-                            order1.setCus_id(cus_id);
-                            order1.setName(name);
-
-                            countryList.add(order1);// must be the object of empty list initiated
-                        }
-
-                        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(mContext,
-                                android.R.layout.simple_spinner_dropdown_item, countryList);
-                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                        s_cus.setAdapter(adp1);
-                        s_cus.setPrompt("Select Customers");
-
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-                    } else {
-                        String d = response.body().getMessage();
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-
-                    }
-                } else if (response.code() == 401) {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-
-
-                } else if (response.code() == 404) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
-                } else if (response.code() == 500) {
-
-                    Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
-                    Log.d("Error", response.errorBody().toString());
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                } else {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CustomerResponse> call, Throwable t) {
-                call.cancel();
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
     @Override
     public int getItemCount() {
         return WareList.size();
@@ -648,6 +491,11 @@ public class WarehouseAdapter extends RecyclerView.Adapter<WarehouseAdapter.Ware
     public void reloadfragment() {
         WareList.clear();
         notifyDataSetChanged();
+    }
+
+    public void providemodaldata(ArrayList<SpinnerPojo> grouplog, ArrayList<SpinnerPojo> cuslog) {
+        groupList =grouplog;
+        customList =cuslog;
     }
 
     public class WareHolder extends RecyclerView.ViewHolder {

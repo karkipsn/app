@@ -206,15 +206,14 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_SPECIAL;
                         break;
 
-
-                    case R.id.nav_uom:
+                    case R.id.nav_users:
                         navItemIndex = 5;
-                        CURRENT_TAG = TAG_UOM;
+                        CURRENT_TAG = TAG_USER;
                         break;
 
-                    case R.id.nav_users:
+                    case R.id.nav_uom:
                         navItemIndex = 6;
-                        CURRENT_TAG = TAG_USER;
+                        CURRENT_TAG = TAG_UOM;
                         break;
 
 
@@ -387,12 +386,12 @@ public class HomeActivity extends AppCompatActivity {
                 SpecialProgram_Fragment spFragment = new SpecialProgram_Fragment();
                 return spFragment;
 
-            case 6:
+            case 5:
                 // warehouse users
                 User_Fragment uFragment = new User_Fragment();
                 return uFragment;
 
-            case 5:
+            case 6:
                 // unit of measurement
                 UOMFragment uomFragment = new UOMFragment();
                 return  uomFragment;

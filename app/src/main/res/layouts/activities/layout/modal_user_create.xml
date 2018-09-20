@@ -76,37 +76,7 @@
 
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:padding="8dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Last Name"
-                android:paddingBottom="8dp"
-                android:paddingTop="5dp"
-                android:textColorHint="@color/black"
-                android:textSize="18sp" />
-
-
-            <android.support.design.widget.TextInputEditText
-
-                android:id="@+id/user_modal_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:focusableInTouchMode="true"
-                android:inputType="text"
-                android:paddingBottom="8dp"
-                android:paddingLeft="11dp"
-                android:textSize="16sp" />
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -124,7 +94,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/popup_spinner"
             android:padding="10dp"
-            android:entries="@array/User_activated"
             android:paddingBottom="8dp"
             android:spinnerMode="dialog"
             android:textSize="14sp"
@@ -141,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="First Name"
+                android:hint="First Name(*)"
                 android:paddingBottom="8dp"
                 android:paddingTop="5dp"
                 android:textColorHint="@color/black"
@@ -162,6 +131,37 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Last Name(*)"
+                android:paddingBottom="8dp"
+                android:paddingTop="5dp"
+                android:textColorHint="@color/black"
+                android:textSize="18sp" />
+
+
+            <android.support.design.widget.TextInputEditText
+
+                android:id="@+id/user_modal_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusableInTouchMode="true"
+                android:inputType="text"
+                android:paddingBottom="8dp"
+                android:paddingLeft="11dp"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Email"
+                android:hint="Email(*)"
                 android:paddingBottom="8dp"
                 android:paddingTop="5dp"
                 android:textColorHint="@color/black"
@@ -206,7 +206,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Password"
+                android:hint="Password(*)"
                 android:paddingBottom="8dp"
                 android:paddingTop="5dp"
                 android:textColorHint="@color/black"
@@ -239,7 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Confirm Password"
+                android:hint="Confirm Password(*)"
                 android:paddingBottom="8dp"
                 android:textColorHint="@color/black"
                 android:paddingTop="5dp"

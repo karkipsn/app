@@ -4,6 +4,7 @@
 
     <group android:checkableBehavior="single">
         <item android:title="Orders">
+            <menu>
 
             <item
                 android:id="@+id/nav_customers_group"
@@ -12,6 +13,7 @@
             <item
                 android:id="@+id/nav_inactive_items"
                 android:title="@string/nav_inactive_items" />
+            </menu>
 
         </item>
     </group>

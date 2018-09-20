@@ -59,17 +59,21 @@ public class User_Fragment extends Fragment {
     Button create;
 
     UserAdapter uadapter;
+    UserAdapter useradapter;
 
     WarehouseAdapter warehouseAdapter;
 
-    String s_customer, s_program, s_activity ;
+    String s_customer, s_program, s_activity;
     String s_cus1, s_pr1, s_act1, fname1, lname1, s_email1, pass1, cpass1;
-    Long cus_id,s_groups;
-    String[] s_grp1;
+    Long cus_id, s_groups;
 
     ArrayList<User> UserList = new ArrayList<>();
     ArrayList<User> WareList = new ArrayList<>();
     ArrayList<SpinnerPojo> prgList = new ArrayList<>();
+    ArrayList<SpinnerPojo> groupList = new ArrayList<>();
+    ArrayList<SpinnerPojo> spin_cus_list = new ArrayList<>();
+
+
     EditText e_fname, e_lname, e_pass, e_cpass, e_email;
 
 
@@ -97,14 +101,18 @@ public class User_Fragment extends Fragment {
         tabLayout = getActivity().findViewById(R.id.tabs_user);
         viewPager = getActivity().findViewById(R.id.viewpager_user);
 
-       warehouseAdapter = new WarehouseAdapter(WareList, mContext);
+        warehouseAdapter = new WarehouseAdapter(WareList, mContext);
 
-       uadapter = new UserAdapter(UserList, mContext);
+        uadapter = new UserAdapter(UserList, mContext);
+        useradapter = new UserAdapter(UserList, getContext(), User_Fragment.this);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
+
+        loadspinner_customer(email, password);
+        loadspinner_groups(email, password);
         loadAdapter(email, password);
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +142,7 @@ public class User_Fragment extends Fragment {
                 p.dimAmount = 0.7f;
                 wm.updateViewLayout(container, p);
 
-
                 Button submit, cancle;
-
 
                 s_cus = popupView.findViewById(R.id.user_modal_customer);
                 s_prg = popupView.findViewById(R.id.user_modal_special_program);
@@ -151,8 +157,10 @@ public class User_Fragment extends Fragment {
                 submit = popupView.findViewById(R.id.user_modal_submit);
                 cancle = popupView.findViewById(R.id.user_modal_cancel);
 
-                loadspinner_customer(email, password);
-                loadspinner_groups(email, password);
+
+                loadcustomer();
+                loadgroups();
+
                 s_cus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -193,7 +201,7 @@ public class User_Fragment extends Fragment {
 //                        Becuae we are loading value from spinner
                         SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                         s_groups = sp.getCus_id();
-                        Toast.makeText(getContext(),sp.getName(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), sp.getName(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -204,6 +212,8 @@ public class User_Fragment extends Fragment {
                     }
                 });
 
+
+                loadActivation();
                 s_act.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -232,9 +242,9 @@ public class User_Fragment extends Fragment {
                         s_cus1 = String.valueOf(cus_id);
                         s_pr1 = s_program;
 
-                        if(s_activity.equals("Yes")){
+                        if (s_activity.equals("Yes")) {
                             s_act1 = String.valueOf(1);
-                        }else{
+                        } else {
                             s_act1 = String.valueOf(0);
                         }
                         fname1 = e_fname.getText().toString();
@@ -248,15 +258,15 @@ public class User_Fragment extends Fragment {
 //                        Log.d("group1",s_grp1.toString());
 //                        }
 
-                        List<String>list = new ArrayList<>();
+                        List<String> list = new ArrayList<>();
                         list.add(String.valueOf(s_groups));
 
-                        List<String>permission=null;
+                        List<String> permission = null;
 
 //                        List<String>sg2 = String.valueOf(s_groups);
 
                         UserCreatePOJO pojo = new UserCreatePOJO(s_cus1, s_pr1, s_act1, fname1,
-                                lname1, s_email1, pass1, cpass1, list,permission);
+                                lname1, s_email1, pass1, cpass1, list, permission);
 
                         create_users(email, password, pojo, popup);
                     }
@@ -265,6 +275,37 @@ public class User_Fragment extends Fragment {
             }
         });
 
+    }
+
+    private void loadActivation() {
+        List<String>active = new ArrayList<>();
+        active.add("Yes");
+        active.add("No");
+
+            ArrayAdapter<String> adp1 = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_dropdown_item,active );
+            adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+            s_act.setAdapter(adp1);
+            s_act.setPrompt("Select Activation");
+    }
+
+    private void loadgroups() {
+
+        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, groupList);
+
+        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        s_grp.setAdapter(adp3);
+        s_grp.setPrompt("Select Groups");
+    }
+
+    private void loadcustomer() {
+
+        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(getContext(),
+                android.R.layout.simple_spinner_dropdown_item, spin_cus_list);
+        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        s_cus.setAdapter(adp1);
+        s_cus.setPrompt("Select Customers");
     }
 
     private void create_users(String email, String password, UserCreatePOJO pojo, final PopupWindow popup) {
@@ -298,7 +339,7 @@ public class User_Fragment extends Fragment {
                         refresh();
 
 
-                    }else {
+                    } else {
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -328,6 +369,32 @@ public class User_Fragment extends Fragment {
 
     }
 
+
+    public void refresh() {
+
+//   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
+
+        warehouseAdapter.reloadfragment();
+        uadapter.reloadfragment();
+        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
+        frg1.onDestroy();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg1).attach(frg1).commit();
+
+    }
+
+    public void refresh1() {
+
+//   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
+
+//        warehouseAdapter1.reloadfragment();
+//        uadapter1.reloadfragment();
+        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
+        frg1.onDestroy();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg1).attach(frg1).commit();
+
+    }
     private void loadspinner_groups(String email, String password) {
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(),
@@ -351,7 +418,6 @@ public class User_Fragment extends Fragment {
 
                     Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
-                    ArrayList<SpinnerPojo> groupList = new ArrayList<>();
 
                     if (cus != null) {
 
@@ -368,12 +434,12 @@ public class User_Fragment extends Fragment {
                             groupList.add(order1);// must be the object of empty list initiated
 
                         }
-                        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(getContext(),
-                                android.R.layout.simple_spinner_dropdown_item, groupList);
-
-                        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                        s_grp.setAdapter(adp3);
-                        s_grp.setPrompt("Select Groups");
+//                        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(getContext(),
+//                                android.R.layout.simple_spinner_dropdown_item, groupList);
+//
+//                        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+//                        s_grp.setAdapter(adp3);
+//                        s_grp.setPrompt("Select Groups");
 
                     } else {
                         String d = response.body().getMessage();
@@ -431,30 +497,6 @@ public class User_Fragment extends Fragment {
         });
     }
 
-    public void refresh() {
-
-//   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
-
-        warehouseAdapter.reloadfragment();
-        uadapter.reloadfragment();
-        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
-        frg1.onDestroy();
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(frg1).attach(frg1).commit();
-
-    }
-    public void refresh1() {
-
-//   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
-
-//        warehouseAdapter1.reloadfragment();
-//        uadapter1.reloadfragment();
-        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
-        frg1.onDestroy();
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(frg1).attach(frg1).commit();
-
-    }
 
     private void loadspinner_programs(String email, String password, Long cus_id1) {
 
@@ -578,7 +620,6 @@ public class User_Fragment extends Fragment {
 
                     if (cus != null) {
 
-                        ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
                         for (int i = 0; i < cus.size(); i++) {
 
@@ -590,14 +631,14 @@ public class User_Fragment extends Fragment {
                             order1.setCus_id(cus_id);
                             order1.setName(name);
 
-                            countryList.add(order1);// must be the object of empty list initiated
+                            spin_cus_list.add(order1);// must be the object of empty list initiated
                         }
 
-                        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(getContext(),
-                                android.R.layout.simple_spinner_dropdown_item, countryList);
-                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                        s_cus.setAdapter(adp1);
-                        s_cus.setPrompt("Select Customers");
+//                        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(getContext(),
+//                                android.R.layout.simple_spinner_dropdown_item, spin_cus_list);
+//                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+//                        s_cus.setAdapter(adp1);
+//                        s_cus.setPrompt("Select Customers");
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -722,12 +763,16 @@ public class User_Fragment extends Fragment {
                             Bundle bundle1 = new Bundle();
                             Warehouse_Fragment pickf = new Warehouse_Fragment();
                             bundle1.putParcelableArrayList("WareList", WareList);
+                            bundle1.putParcelableArrayList("GroupList", groupList);
+                            bundle1.putParcelableArrayList("CustomerList", spin_cus_list);
                             pickf.setArguments(bundle1);
                             viewPagerAdapter.addFrag(pickf, "Warehouse ");
 
 
                             ClientPortal_Fragment loc = new ClientPortal_Fragment();
                             bundle1.putParcelableArrayList("UserList", UserList);
+                            bundle1.putParcelableArrayList("GroupList", groupList);
+                            bundle1.putParcelableArrayList("CustomerList", spin_cus_list);
                             Log.d("product_ship", UserList.toString());
                             loc.setArguments(bundle1);
                             viewPagerAdapter.addFrag(loc, "ClientPortal Users");

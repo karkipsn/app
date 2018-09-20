@@ -17,9 +17,10 @@
         <item>Pick Velocity Report </item>
         <item>Item DrHistory Report</item>
         <item>Item Sales Report </item>
+        <item>Special Programs</item>
+        <item>Warehouse Users</item>
         <item>Unit Of Measurement</item>
         <item>Field Office</item>
-        <item>Users</item>
 
     </string-array>
 

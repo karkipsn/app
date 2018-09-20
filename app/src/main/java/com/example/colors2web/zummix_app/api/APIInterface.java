@@ -21,8 +21,10 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProductDetailsResponse;
+import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgram;
+import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgramResponse;
 import com.example.colors2web.zummix_app.POJO.Users.GroupResponse;
-import com.example.colors2web.zummix_app.POJO.Users.SProgramResponse;
+import com.example.colors2web.zummix_app.POJO.SpecialProgram.SProgramResponse;
 import com.example.colors2web.zummix_app.POJO.Users.UserCreatePOJO;
 import com.example.colors2web.zummix_app.POJO.Users.UsersResponse;
 import com.example.colors2web.zummix_app.POJO.login.Login;
@@ -109,7 +111,7 @@ public interface APIInterface {
     @GET("orders/searchOrderByTrackingNumber/{order_number}")
     Call<Order2Response> getOrderByTrackingNumber(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
 
-    // box search api =>
+    // box or masterbox search api =>
     @GET("boxes/masterBoxes/{order_number}")
     Call<MasterBoxResponse> getMasterBoxes(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
 
@@ -118,7 +120,7 @@ public interface APIInterface {
     Call<CustomerResponse> getCustomer(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id);
 
     // customers search by parent Customer Id =>Hardcoded for now
-//    @GET("customers/parentCustomer/{parent_id}")
+   //    @GET("customers/parentCustomer/{parent_id}")
     @GET("customers/parentCustomer/0")
     Call<CustomerResponse> getParentCustomer(@Header("email") String email, @Header("Password") String password);
 
@@ -144,12 +146,12 @@ public interface APIInterface {
     Call<PostResponse> postItemSalesHistory(@Header("email") String email, @Header("Password") String password, @Body PostServer itemdr);
 
     //    CityBins API
-//    Get all customers
+    //    Get all customers
     @GET("cityBins/groupedByCustomer/all")
     Call<CityBinsResponse> getBinCustomers(@Header("email") String email, @Header("Password") String password);
 
     //    Retriving bins of individual customer
-//    cityBins/boxCreate/customer/3
+    //    cityBins/boxCreate/customer/3
     @GET("cityBins/boxCreate/customer/{customer_id}")
     Call<CityBinsResponse> getBins(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String cus_id);
 
@@ -180,12 +182,12 @@ public interface APIInterface {
 
 
     //    post for problems
-//    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
+   //    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
     @POST("customerItems/edit/customer/{customerID}/sku/{ItemSku}")
     Call<ProblemResponse> postProblem(@Header("email") String email, @Header("Password") String password, @Path("customerID") String cus_id, @Path("ItemSku") String item_sku, @Body ProblemInput input);
 
     //    Delete for problemsku
-//problemSku/'.$input['id'],
+    //problemSku/'.$input['id'],
     @DELETE("problemSku/{id}")
     Call<ProblemResponse> deleteProblemsku(@Header("email") String email, @Header("Password") String password, @Path("id") String id);
 
@@ -208,18 +210,18 @@ public interface APIInterface {
     Call<ProblemResponse> updatePackage(@Header("email") String email, @Header("Password") String password, @Path("packageId") String packageId, @Body PackageInput input);
 
     //    Box inside MasterBox
-//    boxes/masterBoxes/2465840302/getAllBoxes
+    //boxes/masterBoxes/2465840302/getAllBoxes
     @GET("boxes/masterBoxes/{masterBoxNumber}/getAllBoxes")
     Call<MasterBoxResponse> getMboxBox(@Header("email") String email, @Header("Password") String password, @Path("masterBoxNumber") String mBox);
 
 
     //  Items inside  Box inside MasterBox
-//    boxes/lineItems/boxNumber/2047023661
+    // boxes/lineItems/boxNumber/2047023661
     @GET("boxes/lineItems/boxNumber/{boxNumber}")
     Call<MasterBoxResponse> getMboxBoxItems(@Header("email") String email, @Header("Password") String password, @Path("boxNumber") String box);
 
     //    https://f860f607.ngrok.io/zummix-api/public/orderBatch/allBatchOrders/batchNumber/153596655211
-//    BatchSearch
+     //  BatchSearch
     @GET("orderBatch/allBatchOrders/batchNumber/{batchnumber}")
     Call<BatchResponse> getBatchResponse(@Header("email") String email, @Header("Password") String password, @Path("batchnumber") String batchnumber);
 
@@ -227,8 +229,8 @@ public interface APIInterface {
     @GET("customerItems/inactiveItems/customerId/{customerid}")
     Call<InactiveResponse> getInactiveFilteredResponse(@Header("email") String email, @Header("Password") String password, @Path("customerid") String customerid);
 
-    //    ProductDetails//Address
-//    https://40ecef9e.ngrok.io/zummix-api/public/customerItems/searchedCustomerItemsDetail/1334
+    // ProductDetails//Address
+    // https://40ecef9e.ngrok.io/zummix-api/public/customerItems/searchedCustomerItemsDetail/1334
     @GET("customerItems/searchedCustomerItemsDetail/{itemid}")
     Call<ProductDetailsResponse> getProductitems(@Header("email") String email, @Header("Password") String password, @Path("itemid") String itemid);
 
@@ -238,20 +240,25 @@ public interface APIInterface {
     Call<ProductDetailsResponse> getProductLocations(@Header("email") String email, @Header("Password") String password, @Path("sku_id") String sku_id, @Path("customer_id") String customer_id);
 
 
-    //    ProductDetails//Logs
-//    inventoryLogs/customerId/15/sku/TEST150001/eventType/all
+     // ProductDetails//Logs
+     //inventoryLogs/customerId/15/sku/TEST150001/eventType/all
     @GET("inventoryLogs/customerId/{customer_id}/sku/{sku_id}/eventType/all")
     Call<ProductDetailsResponse> getProductLogs(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id, @Path("sku_id") String sku_id);
 
-    //    GET USERS
+    //GET USERS
     @GET("users")
     Call<UsersResponse> getUsers(@Header("email") String email, @Header("Password") String password);
 
-    //    POST USERS
+    //POST USERS
     @POST("users")
     Call<UsersResponse> createUsers(@Header("email") String email, @Header("Password") String password, @Body UserCreatePOJO pojo);
 
-    //    GET GROUPS
+    //update users
+    @PUT("users/{userId}")
+    Call<UsersResponse> updateusers(@Header("email") String email, @Header("Password") String password, @Path("userId") String userId, @Body UserCreatePOJO pojo);
+
+
+    //GET GROUPS
     @GET("groups")
     Call<GroupResponse> getGroups(@Header("email") String email, @Header("Password") String password);
 
@@ -259,18 +266,21 @@ public interface APIInterface {
     @GET("specialPrograms/getSpecialProgramsByCustomerId/customer/{customer_id}")
     Call<SProgramResponse> getSpecialPrograms(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id);
 
+    //ALl customers with specialprograms
+    @GET("specialPrograms/getCustomersWithSpecialProgramsCount/getAllCustomers")
+    Call<SpecialProgramResponse> getSpecialPCustomers(@Header("email") String email, @Header("Password") String password);
+
+    //creating Special Response
+    @POST("specialPrograms")
+    Call<SpecialProgramResponse> createSpecialPrograms(@Header("email") String email, @Header("Password") String password, @Body SpecialProgram program);
+
+    //updating Special Response
+    @PUT("specialPrograms/{specialProgramId}")
+    Call<SpecialProgramResponse> updateSpecialPrograms(@Header("email") String email, @Header("Password") String password, @Path("specialProgramId") String specialProgramId, @Body SpecialProgram program);
 
 }
 
-//
-//    @GET("/api/users?")
-//    Call<UserList> doGetUserList(@Query("page") String page);// send in network as https://reqres.in/api/users?&page=2
-//
 
-//
-//    @POST("/api/users")
-//    Call<User> createUser(@Body User user);
-//
 //    @FormUrlEncoded
 //    @POST("/api/users?")
 //    Call<UserList> doCreateUserWithField(@Field("name") String name, @Field("job") String job);

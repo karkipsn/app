@@ -12,8 +12,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -33,14 +31,11 @@ import android.widget.Toast;
 import com.example.colors2web.zummix_app.Adapter.UserAdapter.UserAdapter;
 import com.example.colors2web.zummix_app.Adapter.UserAdapter.WarehouseAdapter;
 import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
-import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
-import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.Users.Group;
 import com.example.colors2web.zummix_app.POJO.Users.GroupResponse;
-import com.example.colors2web.zummix_app.POJO.Users.SProgramResponse;
-import com.example.colors2web.zummix_app.POJO.Users.SpecialProgram;
+import com.example.colors2web.zummix_app.POJO.SpecialProgram.SProgramResponse;
+import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgram;
 import com.example.colors2web.zummix_app.POJO.Users.User;
 import com.example.colors2web.zummix_app.POJO.Users.UserCreatePOJO;
 import com.example.colors2web.zummix_app.POJO.Users.UsersResponse;
@@ -50,7 +45,6 @@ import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +57,15 @@ public class User_Fragment extends Fragment {
     Activity mContext;
     APIInterface apiInterface;
     Button create;
-    UserAdapter padapter;
+
+    UserAdapter uadapter;
+
     WarehouseAdapter warehouseAdapter;
 
-    String s_customer, s_program, s_activity, s_groups;
-    String s_cus1, s_pr1, s_act1, fname1, lname1, s_email1, pass1, cpass1, s_grp1;
-    Long cus_id;
+    String s_customer, s_program, s_activity ;
+    String s_cus1, s_pr1, s_act1, fname1, lname1, s_email1, pass1, cpass1;
+    Long cus_id,s_groups;
+    String[] s_grp1;
 
     ArrayList<User> UserList = new ArrayList<>();
     ArrayList<User> WareList = new ArrayList<>();
@@ -100,15 +97,9 @@ public class User_Fragment extends Fragment {
         tabLayout = getActivity().findViewById(R.id.tabs_user);
         viewPager = getActivity().findViewById(R.id.viewpager_user);
 
-//        mrecycleView = view.findViewById(R.id.recycle_view_uom);
-//        padapter = new UserAdapter(UserList, mContext);
-//
-//        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(getActivity());
-////        mrecycleView.setHasFixedSize(true);
-//        mrecycleView.setLayoutManager(mlayoutManager);
-//        mrecycleView.addItemDecoration(new MyDividerItemDecoration(getActivity(), LinearLayoutManager.HORIZONTAL, 16));
-//        mrecycleView.setItemAnimator(new DefaultItemAnimator());
-//        mrecycleView.setAdapter(padapter);
+       warehouseAdapter = new WarehouseAdapter(WareList, mContext);
+
+       uadapter = new UserAdapter(UserList, mContext);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final String email = preferences.getString("email", "");
@@ -201,13 +192,14 @@ public class User_Fragment extends Fragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                        Becuae we are loading value from spinner
                         SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
-                        s_groups = sp.getName();
+                        s_groups = sp.getCus_id();
+                        Toast.makeText(getContext(),sp.getName(),Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
-                        s_groups = sp.getName();
+                        s_groups = sp.getCus_id();
 
                     }
                 });
@@ -233,23 +225,38 @@ public class User_Fragment extends Fragment {
                     }
                 });
 
-
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         s_cus1 = String.valueOf(cus_id);
                         s_pr1 = s_program;
-                        s_act1 = s_activity;
+
+                        if(s_activity.equals("Yes")){
+                            s_act1 = String.valueOf(1);
+                        }else{
+                            s_act1 = String.valueOf(0);
+                        }
                         fname1 = e_fname.getText().toString();
                         lname1 = e_lname.getText().toString();
                         s_email1 = e_pass.getText().toString();
                         pass1 = e_cpass.getText().toString();
                         cpass1 = e_email.getText().toString();
-                        s_grp1 = s_groups;
+
+//                        for (int k=0;k<2;k++){
+//                        s_grp1[k] = String.valueOf(s_groups);
+//                        Log.d("group1",s_grp1.toString());
+//                        }
+
+                        List<String>list = new ArrayList<>();
+                        list.add(String.valueOf(s_groups));
+
+                        List<String>permission=null;
+
+//                        List<String>sg2 = String.valueOf(s_groups);
 
                         UserCreatePOJO pojo = new UserCreatePOJO(s_cus1, s_pr1, s_act1, fname1,
-                                lname1, s_email1, pass1, cpass1, s_grp1);
+                                lname1, s_email1, pass1, cpass1, list,permission);
 
                         create_users(email, password, pojo, popup);
                     }
@@ -361,17 +368,18 @@ public class User_Fragment extends Fragment {
                             groupList.add(order1);// must be the object of empty list initiated
 
                         }
+                        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(getContext(),
+                                android.R.layout.simple_spinner_dropdown_item, groupList);
+
+                        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                        s_grp.setAdapter(adp3);
+                        s_grp.setPrompt("Select Groups");
 
                     } else {
                         String d = response.body().getMessage();
+                        Toast.makeText(getContext(), d, Toast.LENGTH_SHORT).show();
 
                     }
-                    ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(getContext(),
-                            android.R.layout.simple_spinner_dropdown_item, groupList);
-
-                    adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-                    s_grp.setAdapter(adp3);
-                    s_grp.setPrompt("Select Groups");
 
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
@@ -423,10 +431,24 @@ public class User_Fragment extends Fragment {
         });
     }
 
-    private void refresh() {
+    public void refresh() {
 
 //   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
 
+        warehouseAdapter.reloadfragment();
+        uadapter.reloadfragment();
+        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
+        frg1.onDestroy();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg1).attach(frg1).commit();
+
+    }
+    public void refresh1() {
+
+//   this Users tag is declared in activity// nac=vig home activity as TAG_USERS
+
+//        warehouseAdapter1.reloadfragment();
+//        uadapter1.reloadfragment();
         Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
         frg1.onDestroy();
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -636,7 +658,6 @@ public class User_Fragment extends Fragment {
 
     }
 
-
     private void loadAdapter(String email, String password) {
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(),
@@ -658,39 +679,37 @@ public class User_Fragment extends Fragment {
 
                     List<User> order = resp1.getUsers();
 
-                    User uom = new User();
-
                     if (order != null) {
 
                         for (int i = 0; i < order.size(); i++) {
 
 //                            User user = order.get(i).getUser();
+                            User uom = new User();
+//                            Always needs to create fresh instance//if POJO instance is taken outside
 
                             Long customerId = order.get(i).getUser().getCustomerId();
 
+                            Long id = order.get(i).getUser().getId();
                             String fname = order.get(i).getUser().getFirstName();
                             String lname = order.get(i).getUser().getLastName();
                             String memail = order.get(i).getUser().getEmail();
                             String mcreated = order.get(i).getUser().getCreatedAt();
                             List<String> ug = order.get(i).getUserGroup();
 
+
+                            uom.setId(id);
+                            uom.setFirstName(fname);
+                            uom.setLastName(lname);
+                            uom.setEmail(memail);
+                            uom.setCreatedAt(mcreated);
+                            uom.setUserGroup(ug);
+
                             if (customerId == Long.valueOf(0)) {
 
-                                uom.setFirstName(fname);
-                                uom.setLastName(lname);
-                                uom.setEmail(memail);
-                                uom.setCreatedAt(mcreated);
-                                uom.setUserGroup(ug);
                                 WareList.add(uom);
 
                             } else {
 
-                                uom.setFirstName(fname);
-                                uom.setLastName(lname);
-                                uom.setEmail(memail);
-                                uom.setCustomerId(customerId);
-                                uom.setCreatedAt(mcreated);
-                                uom.setUserGroup(ug);
                                 UserList.add(uom);
 
                             }

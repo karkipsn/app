@@ -1,19 +1,40 @@
 package com.example.colors2web.zummix_app.POJO.Users;
 
+import java.util.List;
+
 public class UserCreatePOJO {
 
-    String customer_id;
-    String special_program;
-    String activated;
-    String first_name;
-    String last_name;
-    String email;
-    String password;
-    String password_confirm;
-    String groups;
+    private String customer_id;
+    private String special_program;
+    private String activated;
+    private String first_name;
+    private String last_name;
+    private String email;
+    private String password;
+    private String password_confirm;
 
-    public UserCreatePOJO(String customer_id, String special_program, String activated, String first_name,
-                          String last_name, String email, String password, String password_confirm, String groups) {
+    private List<String>groups;
+    private List<String>permissions;
+
+    public List<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<String> permissions) {
+        this.permissions = permissions;
+    }
+
+    public List<String> getGroup() {
+        return groups;
+    }
+
+    public void setGroup(List<String> groups) {
+        this.groups = groups;
+    }
+
+
+    public UserCreatePOJO(String customer_id, String special_program, String activated, String first_name, String last_name,
+                          String email, String password, String password_confirm, List<String> groups,List<String>permissions) {
         this.customer_id = customer_id;
         this.special_program = special_program;
         this.activated = activated;
@@ -23,6 +44,7 @@ public class UserCreatePOJO {
         this.password = password;
         this.password_confirm = password_confirm;
         this.groups = groups;
+        this.permissions = permissions;
     }
 
     public String getCustomer_id() {
@@ -89,11 +111,5 @@ public class UserCreatePOJO {
         this.password_confirm = password_confirm;
     }
 
-    public String getGroups() {
-        return groups;
-    }
 
-    public void setGroups(String groups) {
-        this.groups = groups;
-    }
 }

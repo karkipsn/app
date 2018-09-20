@@ -41,10 +41,12 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Hom
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.ActiveFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Pick_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sales_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.SpecialPrograms.SpecialProgram_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.UOMFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.User_fragment.User_Fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
+import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 
@@ -83,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_PICK = "Pick velocity Report";
     private static final String TAG_UOM = "Unit Of Measurement";
     private static final String TAG_USER = "Users";
+    private static final String TAG_SPECIAL = "Special Programs";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -198,13 +201,19 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_PICK;
                         break;
 
-                    case R.id.nav_uom:
+                    case R.id.nav_special_programs:
                         navItemIndex = 4;
+                        CURRENT_TAG = TAG_SPECIAL;
+                        break;
+
+
+                    case R.id.nav_uom:
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_UOM;
                         break;
 
                     case R.id.nav_users:
-                        navItemIndex = 5;
+                        navItemIndex = 6;
                         CURRENT_TAG = TAG_USER;
                         break;
 
@@ -374,14 +383,21 @@ public class HomeActivity extends AppCompatActivity {
                 return sales_fragment;
 
             case 4:
-                // unit of measurement
-                UOMFragment uomFragment = new UOMFragment();
-                return uomFragment;
+                // special program
+                SpecialProgram_Fragment spFragment = new SpecialProgram_Fragment();
+                return spFragment;
+
+            case 6:
+                // warehouse users
+                User_Fragment uFragment = new User_Fragment();
+                return uFragment;
 
             case 5:
                 // unit of measurement
-                User_Fragment uFragment = new User_Fragment();
-                return uFragment;
+                UOMFragment uomFragment = new UOMFragment();
+                return  uomFragment;
+
+
 
             default:
                 return new ActiveFragment();

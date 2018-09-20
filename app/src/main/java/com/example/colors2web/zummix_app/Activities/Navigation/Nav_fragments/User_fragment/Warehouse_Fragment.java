@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +48,7 @@ public class Warehouse_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        padapter = new WarehouseAdapter(WList,getContext());
+        padapter = new WarehouseAdapter(WList,getActivity(),Warehouse_Fragment.this);
 
         mrecycleView =view.findViewById(R.id.recycler_view_shipping);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -63,10 +64,16 @@ public class Warehouse_Fragment extends Fragment {
     private void loadAdapter() {
         if (getArguments() != null) {
 
-
             ArrayList<User> logs = getArguments().getParcelableArrayList("WareList");
             Log.d("warelist",logs.toString());
             padapter.updateAnswers(logs);
-
         }
-    }}
+    }
+
+    public void refresh() {
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+    }
+
+}

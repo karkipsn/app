@@ -1,7 +1,8 @@
 
-package com.example.colors2web.zummix_app.POJO.Users;
+package com.example.colors2web.zummix_app.POJO.SpecialProgram;
 
 import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 

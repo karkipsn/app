@@ -1,5 +1,5 @@
 
-package com.example.colors2web.zummix_app.POJO.Users;
+package com.example.colors2web.zummix_app.POJO.SpecialProgram;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -23,6 +23,21 @@ public class SpecialProgram {
     private String mSpecialProgramNumber;
     @SerializedName("updated_at")
     private String mUpdatedAt;
+
+    public SpecialProgram() {
+    }
+
+    public SpecialProgram(Long mCustomerId, String mProgramDescription, String mProgramName, String mSpecialProgramNumber) {
+        this.mCustomerId = mCustomerId;
+        this.mProgramDescription = mProgramDescription;
+        this.mProgramName = mProgramName;
+        this.mSpecialProgramNumber = mSpecialProgramNumber;
+    }
+
+    public SpecialProgram(String mProgramDescription, String mProgramName) {
+        this.mProgramDescription = mProgramDescription;
+        this.mProgramName = mProgramName;
+    }
 
     public String getCompanyName() {
         return mCompanyName;

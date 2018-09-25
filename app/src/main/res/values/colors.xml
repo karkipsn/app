@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#94C83D</color>
-    <color name="colorPrimaryDark">#85B92F</color>
+    <color name="colorPrimary">#007AC9</color>
+    <color name="colorPrimaryDark">#0d00f2</color>
     <color name="textColorPrimary">#FFFFFF</color>
 
     <!--<color name="colorPrimary">#EB0029</color>-->
     <!--&lt;!&ndash;<color name="colorPrimaryDark">#00A1FF</color>&ndash;&gt;-->
     <!--<color name="colorPrimaryDark">#c33e3a</color>-->
     <color name="colorAccent">#000000 </color>
-    <color name="colorStatusBar">#85B92F</color>
+    <color name="colorStatusBar">#0066ff</color>
     <color name="viewBack">#f1f5f8</color>
     <color name="colorAccentSecondary">#ad1a7f</color>
 

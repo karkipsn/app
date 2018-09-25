@@ -44,15 +44,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
 
-
     @BindView(R.id.btnlogin)
     Button signin;
 
     String u_email, u_password;
     APIInterface apiInterface;
     ImageView imageView;
-    @BindView( R.id.coordinatorLayout)
-     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,11 +120,8 @@ public class LoginActivity extends AppCompatActivity {
                     String l_id = String.valueOf(user.getId());
 
 
-//                    if (user != null) {
-//                        Log.d("group_type", group_type);
-//                    }
 
-                    if(group_type.equals("Super Admin")) {
+                    if (group_type.equals("Super Admin")) {
 
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -135,19 +132,21 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("email", u_email);
                         editor.apply();
 
-                        if (progressDialog.isShowing())
+                        if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
+                        }
+
                         signin.setEnabled(true);
 
                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(i);
-                        overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                         Toast.makeText(getApplicationContext(), msg.getType().toString() + "\n" + msg.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
 
-                    }else{
+                    } else {
 
-                          Toast.makeText(getApplicationContext(),"Invalid Credentials",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
 
                         final Snackbar snackbar = Snackbar
                                 .make(coordinatorLayout, "Invalid Credentials", Snackbar.LENGTH_LONG);
@@ -160,6 +159,10 @@ public class LoginActivity extends AppCompatActivity {
                         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         textView.setTextColor(Color.YELLOW);
                         snackbar.show();
+
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
 
                     }
                 } else if (response.code() == 401) {
@@ -192,10 +195,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
 
-                  // Changing message text color
+                    // Changing message text color
                     snackbar.setActionTextColor(Color.RED);
 
-                  // Changing action button text color
+                    // Changing action button text color
                     View sbView = snackbar.getView();
                     TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(Color.YELLOW);

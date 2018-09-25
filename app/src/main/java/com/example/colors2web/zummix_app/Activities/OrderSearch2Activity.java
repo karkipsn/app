@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -244,28 +245,27 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
             final String Path2 = i.getExtras().getString("O_no_by_group");
             if (Path2 != null) {
-                call_next(group_type, email, password, Long.valueOf(Path2));
+                call_next(group_type, email, password, Path2);
             }
 
             final String Path3 = i.getExtras().getString("id1");
             if (Path3 != null) {
-                call_next(group_type, email, password, Long.valueOf(Path3));
+                call_next(group_type, email, password, Path3);
             }
 
             final String Path4 = i.getExtras().getString("tadpt_id");
             if (Path3 != null) {
-                call_next(group_type, email, password, Long.valueOf(Path4));
+                call_next(group_type, email, password, Path4);
             }
 
-//
             final String Path5 = i.getExtras().getString("edit_id");
             if (Path5 != null) {
-                call_next(group_type, email, password, Long.valueOf(Path5));
+                call_next(group_type, email, password, Path5);
             }
 
             final String back = i.getExtras().getString("back_id");
             if (back != null) {
-                call_next(group_type, email, password, Long.valueOf(back));
+                call_next(group_type, email, password, back);
                 Log.d("back", back);
             }
         }
@@ -294,7 +294,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                     if (order != null) {
 
                         Long id1 = order.getId();
-                        call_next(group_type, email, password, id1);
+                        call_next(group_type, email, password, String.valueOf(id1));
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -353,7 +353,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
         });
     }
 
-    private void call_next(final String group_type, final String email, final String password, final Long id) {
+    private void call_next(final String group_type, final String email, final String password, final String id) {
         final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -424,11 +424,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 date.setText(order_date);
 
                                 if (order_type.equals("0")) {
-                                    mship_method.setText("OrderType: " + "Field Office Delivery");
+                                    mship_method.setText("Type: " + "Field Office Delivery");
                                 } else if (ship_method.equals("1")) {
-                                    mship_method.setText("OrderType: " + "Ship To");
+                                    mship_method.setText("Type: " + "Ship To");
                                 } else {
-                                    mship_method.setText("OrderType: " + "VIP Delivery");
+                                    mship_method.setText("Type: " + "VIP Delivery");
                                 }
                                 mship_type.setText(order_type);
 
@@ -862,11 +862,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 date.setText(order_date);
 
                                 if (order_type.equals("0")) {
-                                    mship_type.setText("OrderType: " + "Field Office Delivery");
+                                    mship_type.setText("Type: " + "Field Office Delivery");
                                 } else if (ship_method.equals("1")) {
-                                    mship_type.setText("OrderType: " + "Ship To");
+                                    mship_type.setText("Type: " + "Ship To");
                                 } else {
-                                    mship_type.setText("OrderType: " + "VIP Delivery");
+                                    mship_type.setText("Type: " + "VIP Delivery");
                                 }
                                 mship_method.setText(ship_method);
 //                                ship_btn.setVisibility(View.VISIBLE);
@@ -1270,11 +1270,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             mship_method.setText(ship_method);
 
                             if (order_type.equals("0")) {
-                                mship_type.setText("OrderType: " + "Field Office Delivery");
+                                mship_type.setText("Type: " + "Field Office Delivery");
                             } else if (ship_method.equals("1")) {
-                                mship_type.setText("OrderType: " + "Ship To");
+                                mship_type.setText("Type: " + "Ship To");
                             } else {
-                                mship_type.setText("OrderType: " + "VIP Delivery");
+                                mship_type.setText("Type: " + "VIP Delivery");
                             }
 
 
@@ -1703,40 +1703,71 @@ public class OrderSearch2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
-                final String email = preferences.getString("email", "");
-                final String password = preferences.getString("password", "");
-                final String l_id = preferences.getString("l_id", "");
-                String or_id = id;
-                String is_exped = "1";
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderSearch2Activity.this);
+                alertDialogBuilder.setMessage("Are you sure,You wanted to make Expedite ?");
+
+                        alertDialogBuilder.setPositiveButton("yes",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+
+//                                        Toast.makeText(OrderSearch2Activity.this,"You clicked yes button",Toast.LENGTH_LONG).show();
+
+                                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                                        final String email = preferences.getString("email", "");
+                                        final String password = preferences.getString("password", "");
+                                        final String l_id = preferences.getString("l_id", "");
+//                                        String or_id = id;
+                                        String is_exped = "1";
 
 
-                EditExpedite sm1 = new EditExpedite(is_exped, l_id);
+                                        EditExpedite sm1 = new EditExpedite(is_exped, l_id);
+                                        Call<OrderEditResponse> call = apiInterface.putmarkExpedite(email, password, id, sm1);
 
-                Call<OrderEditResponse> call = apiInterface.putmarkExpedite(email, password, or_id, sm1);
+                                        call.enqueue(new Callback<OrderEditResponse>() {
+                                            @Override
+                                            public void onResponse(Call<OrderEditResponse> call, Response<OrderEditResponse> response) {
+                                                if (response.isSuccessful()) {
 
-                call.enqueue(new Callback<OrderEditResponse>() {
+                                                    Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
+
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<OrderEditResponse> call, Throwable t) {
+
+                                                Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
+                                                call.cancel();
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<OrderEditResponse> call, Response<OrderEditResponse> response) {
-                        if (response.isSuccessful()) {
-
-                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            finish();
-                            startActivity(getIntent());
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<OrderEditResponse> call, Throwable t) {
-
-                        Toast.makeText(getApplicationContext(), "Fails to Upload", Toast.LENGTH_SHORT).show();
-                        call.cancel();
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
                     }
                 });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+                Button buttonbackground = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+//                buttonbackground.setBackgroundColor(Color.BLUE);
+                buttonbackground.setTextColor(Color.BLUE);
+
+                Button buttonbackground1 = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+//                buttonbackground1.setBackgroundColor(Color.BLUE);
+                buttonbackground1.setTextColor(Color.BLUE);
 
             }
         });
@@ -1747,7 +1778,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
         btn_ship_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "I am Clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "I am Clicked", Toast.LENGTH_SHORT).show();
 
                 showpopup1_order_type(ords_no, id, order_type);
 
@@ -2068,66 +2099,6 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
     }
 
-
-//    private void setupViewPager(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
-//                                String special_inst, String order_date, String ship_method, String order_type, String order_status,
-//                                String edit_shipping_address, String emp_id, ArrayList<ItemDetail> itmList,
-//                                ArrayList<OrderShippingAddressesDetail> shipList, ArrayList<OrderLog> logList,
-//                                ArrayList<Box> boxList, ArrayList<MasterBox> mBoxList) {
-//
-//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//
-//
-//        Bundle bundle = new Bundle();
-//        OneFragment one = new OneFragment();
-//        bundle.putString("store_name", store_name);
-//        bundle.putString("store_email", store_email);
-//        bundle.putString("order_no", order_no);
-//        bundle.putString("special_inst", special_inst);
-//        bundle.putString("order_date", order_date);
-//        bundle.putString("ship_method", ship_method);
-//        bundle.putString("order_type", order_type);
-//        bundle.putString("order_status", order_status);
-//        bundle.putString("emp_id", emp_id);
-//
-//        one.setArguments(bundle);
-//        adapter.addFrag(one, "Order Details");
-//
-//        Bundle b = new Bundle();
-//        b.putString("b_id", id);
-//        b.putString("order_status", order_status);
-//        b.putString("order_type", order_type);
-//        b.putString("edit_shipping_address", edit_shipping_address);
-//        Frag_Shipping_Adderss two = new Frag_Shipping_Adderss();
-//        b.putParcelableArrayList("shipping_detail", shipList);
-//        two.setArguments(b);
-//        adapter.addFrag(two, "Shipping Add");
-//
-//        Frag_OrderLogs three = new Frag_OrderLogs();
-//        b.putParcelableArrayList("logs_detail", logList);
-//        three.setArguments(b);
-//        adapter.addFrag(three, "Order Logs");
-//
-//        Frag_ItemDetails four = new Frag_ItemDetails();
-//        b.putParcelableArrayList("item_detail", itmList);
-//        four.setArguments(b);
-//        Log.d("display", itmList.toString());
-//        adapter.addFrag(four, "Line Items");
-//
-//        Frag_Box five = new Frag_Box();
-//        b.putParcelableArrayList("box_detail", boxList);
-//        five.setArguments(b);
-//        adapter.addFrag(five, "Boxes");
-//
-//
-//        Frag_MasterBox six = new Frag_MasterBox();
-//        b.putParcelableArrayList("masterbox_detail", mBoxList);
-//        six.setArguments(b);
-//        adapter.addFrag(six, "Master Box");
-//
-//        viewPager.setAdapter(adapter);
-//
-//    }
 
     private void setupViewPager1(ViewPager viewPager, String id, String store_name, String store_email, String order_no,
                                  String special_inst, String order_date, String ship_method, String edit_shipping_address,

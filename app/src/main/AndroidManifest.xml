@@ -88,12 +88,11 @@
 
         </activity>
 
-        <!-- <activity android:name=".Activities.BoxSearchActivity" -->
-        <!-- android:label="Order Details" -->
-        <!-- android:parentActivityName=".Activities.OrderGroupByCustomerActivity"> -->
+        <activity android:name=".Activities.Navigation.Nav_fragments.dashboard_fragments.DashboardDetailsActivity"
+            android:label="OPen Orders">
 
+        </activity>
 
-        <!-- </activity> -->
 
         <activity
             android:name=".Activities.BarcodeActivity.BarcodeMain"

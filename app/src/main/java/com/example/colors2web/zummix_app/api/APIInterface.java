@@ -5,6 +5,9 @@ import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchResponse;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityEditResponse;
+import com.example.colors2web.zummix_app.POJO.Cron_Details.CompanyResponse;
+import com.example.colors2web.zummix_app.POJO.Cron_Details.CronDetailsResponse;
+import com.example.colors2web.zummix_app.POJO.Cron_jobs.CronJobResponse;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
 import com.example.colors2web.zummix_app.POJO.InactiveCustomers.InactiveResponse;
 import com.example.colors2web.zummix_app.POJO.OrderEdit.EditExpedite;
@@ -101,7 +104,7 @@ public interface APIInterface {
     //trace id from order search and send that id as variable here
     //    orderSearch2
     @GET("orders/{order_number}")
-    Call<JsonElement> getsecsearch(@Header("email") String email, @Header("Password") String password, @Path("order_number") Long order_number);
+    Call<JsonElement> getsecsearch(@Header("email") String email, @Header("Password") String password, @Path("order_number") String order_number);
 
     // tracking number search api
     @GET("orders/searchOrderByTrackingNumber/{order_number}")
@@ -120,7 +123,7 @@ public interface APIInterface {
     Call<CustomerResponse> getCustomer(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id);
 
     // customers search by parent Customer Id =>Hardcoded for now
-   //    @GET("customers/parentCustomer/{parent_id}")
+    //    @GET("customers/parentCustomer/{parent_id}")
     @GET("customers/parentCustomer/0")
     Call<CustomerResponse> getParentCustomer(@Header("email") String email, @Header("Password") String password);
 
@@ -182,7 +185,7 @@ public interface APIInterface {
 
 
     //    post for problems
-   //    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
+    //    /customerItems/edit/customer/'.$input['customer_id'].'/sku/'.$input['item_sku_number']
     @POST("customerItems/edit/customer/{customerID}/sku/{ItemSku}")
     Call<ProblemResponse> postProblem(@Header("email") String email, @Header("Password") String password, @Path("customerID") String cus_id, @Path("ItemSku") String item_sku, @Body ProblemInput input);
 
@@ -221,7 +224,7 @@ public interface APIInterface {
     Call<MasterBoxResponse> getMboxBoxItems(@Header("email") String email, @Header("Password") String password, @Path("boxNumber") String box);
 
     //    https://f860f607.ngrok.io/zummix-api/public/orderBatch/allBatchOrders/batchNumber/153596655211
-     //  BatchSearch
+    //  BatchSearch
     @GET("orderBatch/allBatchOrders/batchNumber/{batchnumber}")
     Call<BatchResponse> getBatchResponse(@Header("email") String email, @Header("Password") String password, @Path("batchnumber") String batchnumber);
 
@@ -240,8 +243,8 @@ public interface APIInterface {
     Call<ProductDetailsResponse> getProductLocations(@Header("email") String email, @Header("Password") String password, @Path("sku_id") String sku_id, @Path("customer_id") String customer_id);
 
 
-     // ProductDetails//Logs
-     //inventoryLogs/customerId/15/sku/TEST150001/eventType/all
+    // ProductDetails//Logs
+    //inventoryLogs/customerId/15/sku/TEST150001/eventType/all
     @GET("inventoryLogs/customerId/{customer_id}/sku/{sku_id}/eventType/all")
     Call<ProductDetailsResponse> getProductLogs(@Header("email") String email, @Header("Password") String password, @Path("customer_id") String customer_id, @Path("sku_id") String sku_id);
 
@@ -278,6 +281,23 @@ public interface APIInterface {
     @PUT("specialPrograms/{specialProgramId}")
     Call<SpecialProgramResponse> updateSpecialPrograms(@Header("email") String email, @Header("Password") String password, @Path("specialProgramId") String specialProgramId, @Body SpecialProgram program);
 
+    //    Retreiving cron_job Reports
+//    /cron_jobs/batchAndOrderDetailsV2/from/2017-09-01/to/2018-09-21
+    @GET("cron_jobs/batchAndOrderDetailsV2/from/{from}/to/{to}")
+    Call<CronJobResponse> getCronJobs(@Header("email") String email, @Header("Password") String password,
+                                      @Path("from") String from, @Path("to") String to);
+
+//    http://732b4c9a.ngrok.io/zummix-api/public/orders/status/totalOrders/customer/all/orderType/1/from/2018-09-01/to/2018-09-21
+//    Details on clicking cronjobs fields
+    @GET("orders/status/{orderstatus}/customer/{customer_id}/orderType/{ordertype}/from/{from}/to/{to}")
+    Call<CronDetailsResponse> getCronJobsDetails(@Header("email") String email, @Header("Password") String password,
+                                                 @Path("orderstatus") String orderstatus, @Path("customer_id") String customer_id, @Path("ordertype") String ordertype,
+                                                 @Path("from") String from, @Path("to") String to);
+
+
+//    FOr cron job's company name //2
+    @GET("customers/{customer_id}")
+    Call<CompanyResponse> getCOmpanyName(@Header("email") String email, @Header("password") String password);
 }
 
 

@@ -53,9 +53,7 @@ public class UOMFragment extends Fragment {
     List<UOM> UList = new ArrayList<>();
 
     public UOMFragment() {
-    }
-
-    ;
+    };
 
     @Nullable
     @Override

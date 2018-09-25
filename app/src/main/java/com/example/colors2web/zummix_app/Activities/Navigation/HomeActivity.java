@@ -44,6 +44,7 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sal
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.SpecialPrograms.SpecialProgram_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.UOMFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.User_fragment.User_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.main_dashboard_fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
@@ -80,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "Dashboard";
+    private static final String TAG_GROUP = "Customer Group";
     private static final String TAG_DR = "Item DrHistory";
     private static final String TAG_Sales = "Item Sales report";
     private static final String TAG_PICK = "Pick velocity Report";
@@ -180,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
 
-                    case R.id.nav_customers_group:
+                    case R.id.nav_dashboard:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
@@ -214,6 +216,11 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_uom:
                         navItemIndex = 6;
                         CURRENT_TAG = TAG_UOM;
+                        break;
+
+                    case R.id.nav_customers_group:
+                        navItemIndex = 7;
+                        CURRENT_TAG = TAG_GROUP;
                         break;
 
 
@@ -349,7 +356,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
@@ -363,8 +369,8 @@ public class HomeActivity extends AppCompatActivity {
         switch (navItemIndex) {
             case 0:
                 // home// Customers Groups
-                Home_Fragment home_fragment = new Home_Fragment();
-                return home_fragment;
+                main_dashboard_fragment d_fragment = new main_dashboard_fragment();
+                return d_fragment;
 
             case 1:
                 // pick fragment
@@ -396,6 +402,10 @@ public class HomeActivity extends AppCompatActivity {
                 UOMFragment uomFragment = new UOMFragment();
                 return  uomFragment;
 
+            case 7:
+                // unit of measurement
+                Home_Fragment hfragment = new Home_Fragment();
+                return  hfragment;
 
 
             default:

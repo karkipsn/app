@@ -119,6 +119,7 @@ public class Pick_Fragment extends Fragment {
                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 mform1 = format.format(c.getTime());
                 datePickerDialog.show();
+                mto.requestFocus();
             }
         });
 
@@ -143,6 +144,7 @@ public class Pick_Fragment extends Fragment {
                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 mto1 = format.format(c.getTime());
                 datePickerDialog.show();
+                mto.clearFocus();
             }
         });
 

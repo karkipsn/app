@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="From(*)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dashboard_from"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:background="@drawable/common_textview"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="To(*)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dashboard_to"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:background="@drawable/common_textview"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/dashboard_submit"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Submit"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/textColorPrimary"
+            android:textStyle="bold" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@color/white"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/green_dark" />
+
+        <android.support.v4.view.ViewPager
+
+            android:id="@+id/viewpager_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/elevation"
+            app:layout_constraintTop_toBottomOf="@id/ord2_card1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+</LinearLayout>

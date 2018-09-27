@@ -72,27 +72,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Submit"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_round"
             android:textColor="@color/textColorPrimary"
             android:textStyle="bold" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs_dashboard"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/white"
-            app:tabMode="scrollable"
-            app:tabTextColor="@color/green_dark" />
+    <FrameLayout
+        android:id="@+id/frame_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="0dp">
 
-        <android.support.v4.view.ViewPager
-
-            android:id="@+id/viewpager_dashboard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/elevation"
-            app:layout_constraintTop_toBottomOf="@id/ord2_card1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
+    </FrameLayout>
 
 </LinearLayout>

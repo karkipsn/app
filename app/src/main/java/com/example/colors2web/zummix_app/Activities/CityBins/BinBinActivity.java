@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.BinsAdapter.BinAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
@@ -72,7 +73,7 @@ public class BinBinActivity extends AppCompatActivity {
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(BinBinActivity.this, LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(binAdapter);
 

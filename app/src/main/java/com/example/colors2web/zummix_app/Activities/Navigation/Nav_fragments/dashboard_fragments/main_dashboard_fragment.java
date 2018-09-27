@@ -57,13 +57,14 @@ import retrofit2.Response;
 public class main_dashboard_fragment extends Fragment {
 
 
+    private static final String TAG_DASHBOARD1_FRAGMENT = "Dashboard1";
     APIInterface apiInterface;
     Context mContext;
 
     TextView mform, mto;
     Button btn_submit;
-    TabLayout tableLayout;
-    ViewPager viewPager;
+//    TabLayout tableLayout;
+//    ViewPager viewPager;
 
     Integer mYear, mMonth, mDay;
     String mform1, mto1;
@@ -94,6 +95,7 @@ public class main_dashboard_fragment extends Fragment {
 
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,8 +105,9 @@ public class main_dashboard_fragment extends Fragment {
         mto = getActivity().findViewById(R.id.dashboard_to);
 
         btn_submit = getActivity().findViewById(R.id.dashboard_submit);
-        viewPager = getActivity().findViewById(R.id.viewpager_dashboard);
-        tableLayout = getActivity().findViewById(R.id.tabs_dashboard);
+
+//        viewPager = getActivity().findViewById(R.id.viewpager_dashboard);
+//        tableLayout = getActivity().findViewById(R.id.tabs_dashboard);
 
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -185,6 +188,44 @@ public class main_dashboard_fragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
+
+        if (OfficeList != null) {
+            OfficeList.clear();
+        }
+        if (ShipTOList != null) {
+            ShipTOList.clear();
+        }
+        if (TotalOfficeList != null) {
+            TotalOfficeList.clear();
+        }
+        if (TotalShipTOList != null) {
+            TotalShipTOList.clear();
+        }
+        if (TotalVipList != null) {
+            TotalVipList.clear();
+        }
+        if (VipList != null) {
+            VipList.clear();
+        }
+        if (WeekOfficeList != null) {
+            WeekOfficeList.clear();
+        }
+        if (WeekShipTOList != null) {
+            WeekShipTOList.clear();
+        }
+        if (WeekTotalOfficeList != null) {
+            WeekTotalOfficeList.clear();
+        }
+        if (WeekTotalShipTOList != null) {
+            WeekTotalShipTOList.clear();
+        }
+        if (WeekTotalVipList != null) {
+            WeekTotalVipList.clear();
+        }
+        if (WeekVipList != null) {
+            WeekVipList.clear();
+        }
+
         Call<CronJobResponse> call = apiInterface.getCronJobs(email, password, from, to);
         call.enqueue(new Callback<CronJobResponse>() {
             @Override
@@ -192,7 +233,6 @@ public class main_dashboard_fragment extends Fragment {
                 if (response.isSuccessful()) {
 
                     CronJobResponse res = response.body();
-
 
                     if (res.getmReturnType().equals("success")) {
 
@@ -235,6 +275,7 @@ public class main_dashboard_fragment extends Fragment {
                                 of.setmTotalShippedOrders(mtotal_shipped_orders);
                                 of.setmTotalIor(mtotal_ior);
 
+
                                 OfficeList.add(of);
                             }
 
@@ -243,7 +284,7 @@ public class main_dashboard_fragment extends Fragment {
                         if (ship != null) {
 
                             for (int i = 0; i < ship.size(); i++) {
-                                ShipToOrder sipto= new ShipToOrder();
+                                ShipToOrder sipto = new ShipToOrder();
 
                                 String mcustomer_name1 = ship.get(i).getmCustomerName();
                                 Long mcustomer_id1 = ship.get(i).getmCustomerId();
@@ -300,7 +341,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < total_ship.size(); i++) {
 
-                                TotalShipToOrder tsto= new TotalShipToOrder();
+                                TotalShipToOrder tsto = new TotalShipToOrder();
 
 
                                 Long mno_of_orders = total_ship.get(i).getmNoOfOrders();
@@ -328,7 +369,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < total_vip.size(); i++) {
 
-                                TotalVipOrder vipz= new TotalVipOrder();
+                                TotalVipOrder vipz = new TotalVipOrder();
 
                                 Long mno_of_orders = total_vip.get(i).getmNoOfOrders();
                                 Long mtotal_open_orders = total_vip.get(i).getmTotalOpenOrders();
@@ -354,7 +395,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < vip.size(); i++) {
 
-                                VipOrder vip1= new VipOrder();
+                                VipOrder vip1 = new VipOrder();
 
                                 String mcustomer_name = vip.get(i).getmCustomerName();
                                 Long mcustomer_id = vip.get(i).getmCustomerId();
@@ -383,7 +424,7 @@ public class main_dashboard_fragment extends Fragment {
                         if (week_office != null) {
 
                             for (int i = 0; i < week_office.size(); i++) {
-                                WeekOfficeOrder of= new WeekOfficeOrder();
+                                WeekOfficeOrder of = new WeekOfficeOrder();
 
                                 String mcustomer_name = week_office.get(i).getmCustomerName();
                                 Long mcustomer_id = week_office.get(i).getmCustomerId();
@@ -414,7 +455,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < week_ship.size(); i++) {
 
-                                WeekShipToOrder sipto= new WeekShipToOrder();
+                                WeekShipToOrder sipto = new WeekShipToOrder();
 
                                 String mcustomer_name1 = week_ship.get(i).getmCustomerName();
                                 Long mcustomer_id1 = week_ship.get(i).getmCustomerId();
@@ -471,7 +512,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < week_total_ship.size(); i++) {
 
-                                WeekTotalShipToOrder tsto= new WeekTotalShipToOrder();
+                                WeekTotalShipToOrder tsto = new WeekTotalShipToOrder();
 
                                 Long mno_of_orders = total_ship.get(i).getmNoOfOrders();
                                 Long mtotal_open_orders = total_ship.get(i).getmTotalOpenOrders();
@@ -496,7 +537,7 @@ public class main_dashboard_fragment extends Fragment {
                         if (week_total_vip != null) {
 
                             for (int i = 0; i < week_total_vip.size(); i++) {
-                                WeekTotalVipOrder vipz= new WeekTotalVipOrder();
+                                WeekTotalVipOrder vipz = new WeekTotalVipOrder();
 
                                 Long mno_of_orders = week_total_vip.get(i).getmNoOfOrders();
                                 Long mtotal_open_orders = week_total_vip.get(i).getmTotalOpenOrders();
@@ -522,7 +563,7 @@ public class main_dashboard_fragment extends Fragment {
 
                             for (int i = 0; i < week_vip.size(); i++) {
 
-                                WeekVipOrder vip1= new WeekVipOrder();
+                                WeekVipOrder vip1 = new WeekVipOrder();
 
                                 String mcustomer_name = week_vip.get(i).getmCustomerName();
                                 Long mcustomer_id = week_vip.get(i).getmCustomerId();
@@ -546,47 +587,59 @@ public class main_dashboard_fragment extends Fragment {
 
                                 WeekVipList.add(vip1);
                             }
-
-
                         }
 
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("OfficeList", OfficeList);
+                        bundle.putParcelableArrayList("ShipTOList", ShipTOList);
+                        Log.d("ship_main", ShipTOList.toString());
+                        bundle.putParcelableArrayList("TotalOfficeList", TotalOfficeList);
+                        bundle.putParcelableArrayList("TotalShipTOList", TotalShipTOList);
+                        bundle.putParcelableArrayList("TotalVipList", TotalVipList);
+                        bundle.putParcelableArrayList("VipList", VipList);
 
-                        tableLayout.setupWithViewPager(viewPager);
+                        bundle.putParcelableArrayList("WeekOfficeList", WeekOfficeList);
+                        bundle.putParcelableArrayList("WeekShipTOList", WeekShipTOList);
+                        bundle.putParcelableArrayList("WeekTotalOfficeList", WeekTotalOfficeList);
+                        bundle.putParcelableArrayList("WeekTotalShipTOList", WeekTotalShipTOList);
+                        bundle.putParcelableArrayList("WeekTotalVipList", WeekTotalVipList);
+                        bundle.putParcelableArrayList("WeekVipList", WeekVipList);
+                        bundle.putString("from", from);
+                        bundle.putString("to", to);
 
-                        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-
-
-                        Bundle bundle1 = new Bundle();
-                        Daily_fragment daily = new Daily_fragment();
-
-                        bundle1.putParcelableArrayList("OfficeList", OfficeList);
-                        bundle1.putParcelableArrayList("ShipTOList", ShipTOList);
-                        bundle1.putParcelableArrayList("TotalOfficeList", TotalOfficeList);
-                        bundle1.putParcelableArrayList("TotalShipTOList", TotalShipTOList);
-                        bundle1.putParcelableArrayList("TotalVipList", TotalVipList);
-                        bundle1.putParcelableArrayList("VipList", VipList);
-                        bundle1.putString("from",from);
-                        bundle1.putString("to",to);
-
-                        daily.setArguments(bundle1);
-                        viewPagerAdapter.addFrag(daily, "Today Reports ");
+                        dashboard_fragment1 dash = new dashboard_fragment1();
+                        dash.setArguments(bundle);
+////                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//
+                        getChildFragmentManager().beginTransaction().
+                                replace(R.id.frame_dashboard, dash).
+                                commit();
 
 
-                        Bundle bundle2 = new Bundle();
-                        Weekly_Fragment weekly = new Weekly_Fragment();
-                        bundle2.putParcelableArrayList("WeekOfficeList", WeekOfficeList);
-                        bundle2.putParcelableArrayList("WeekShipTOList", WeekShipTOList);
-                        bundle2.putParcelableArrayList("WeekTotalOfficeList", WeekTotalOfficeList);
-                        bundle2.putParcelableArrayList("WeekTotalShipTOList", WeekTotalShipTOList);
-                        bundle2.putParcelableArrayList("WeekTotalVipList", WeekTotalVipList);
-                        bundle2.putParcelableArrayList("WeekVipList", WeekVipList);
-                        bundle2.putString("from",from);
-                        bundle2.putString("to",to);
+//                        Fragment f = getChildFragmentManager().findFragmentById(R.id.frame_dashboard);
+//                        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//
+//                        if (f == null) {
+//                            Log.d("TAG", "onCreateView: fragment doesn't exist");
+//                            dashboard_fragment1 dash = new dashboard_fragment1();
+//                            dash.setArguments(bundle);
+//                            transaction.add(R.id.frame_dashboard, dash);
+//                        } else {
+//                            Log.d("TAG", "onCreateView: fragment already exists");
+//                            transaction.replace(R.id.frame_dashboard, f);
+//                        }
+//                        transaction.commit();
 
-                        weekly.setArguments(bundle2);
-                        viewPagerAdapter.addFrag(weekly, "Weekly Reports");
-
-                        viewPager.setAdapter(viewPagerAdapter);
+//                        getChildFragmentManager() is called it is child fragment of another fragment and also
+//                        fragmentstatepageadapter is used instead of page adapter
+//                        getActivity().getSupportFragmentManager().executePendingTransactions();
+//                        If you're targeting sdk 24 and above you can use:
+//
+//FragmentTransaction.commitNow()
+//instead of commit()
+//If you're targeting older versions, try calling:
+//FragmentManager.executePendingTransactions()
+//after the call to commit()
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();

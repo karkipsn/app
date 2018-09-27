@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.SpecialPrograms;
+package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.items_elementory;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -17,11 +17,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.Frag_Elementary;
+import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ItemsElementory;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
-import com.example.colors2web.zummix_app.POJO.SpecialProgram.Customer;
-import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgramResponse;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
@@ -33,9 +33,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SpecialProgram_Fragment extends Fragment {
+public class Items_Elementory_Fragment extends Fragment {
 
-    private static final String TAG_DISPLAY_FRAGMENT = "DISPALY_FRAGMENT" ;
+    private static final String TAG_ELEMENTORY_FRAGMENT = "Items_Elementory_FRAGMENT" ;
     Spinner spinner1;
     Button submit;
     Long cus_id;
@@ -90,23 +90,20 @@ public class SpecialProgram_Fragment extends Fragment {
             public void onClick(View v) {
 
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("cus_id", String.valueOf(cus_id));
-                        Special_display_Frag inActive = new Special_display_Frag();
-                        inActive.setArguments(bundle);
-                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                Bundle bundle = new Bundle();
+                bundle.putString("ciid", String.valueOf(cus_id));
+                Frag_Elementary inActive = new Frag_Elementary();
+                inActive.setArguments(bundle);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 
-                        getActivity().getSupportFragmentManager().beginTransaction().
-                                add(R.id.frame_special_program, inActive).
-                                addToBackStack(TAG_DISPLAY_FRAGMENT).
-                                commit();
-
-//                         getSupportFragmentManager().beginTransaction().
-//                        replace(R.id.frame_toolbar, new SearchFragment()).
-//                        addToBackStack(TAG_FRAGMENT).commit();
-//                overridePendingTransition(R.anim.search_push_left_in, R.anim.search_push_left_out);
-                    }
-                });
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        add(R.id.frame_special_program, inActive).
+                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+                        commit();
+//                Not checked the null condition or empty condition as i think is not necessary
+                
+            }
+        });
 
     }
 
@@ -120,44 +117,63 @@ public class SpecialProgram_Fragment extends Fragment {
         progressDialog.show();
 
 
-        Call<SpecialProgramResponse> call = apiInterface.getSpecialPCustomers(email, password);
-        call.enqueue(new Callback<SpecialProgramResponse>() {
+        Call<OrdGrpByCus> call = apiInterface.getOrdersbyGroup(email, password);
+        call.enqueue(new Callback<OrdGrpByCus>() {
             @Override
-            public void onResponse(Call<SpecialProgramResponse> call, Response<SpecialProgramResponse> response) {
+            public void onResponse(Call<OrdGrpByCus> call, Response<OrdGrpByCus> response) {
 
                 if (response.isSuccessful()) {
-                    SpecialProgramResponse resp1 = response.body();
+                    OrdGrpByCus resp1 = response.body();
 
-                    List<Customer> order = resp1.getCustomers();
-
+                    List<Order> order = resp1.getOrders();
                     Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (order != null) {
 
-
-                        ArrayList<SpinnerPojo> cuslist = new ArrayList<>();
+                        ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
                         for (int i = 0; i < order.size(); i++) {
 
                             SpinnerPojo order1 = new SpinnerPojo();
 
-                            String name = order.get(i).getCompanyName();
-                            Long cus_id = order.get(i).getId();
+                            String name = order.get(i).getCustomerName();
+                            Long cus_id = order.get(i).getCustomerId();
 
                             order1.setCus_id(cus_id);
                             order1.setName(name);
 
-                            cuslist.add(order1);
+                            countryList.add(order1);
+//                            spin.add(name);
+//                            spin_value.add(cus_id);
                         }
+                        Log.d("spinner_list", countryList.toString());
+
 
                         ArrayAdapter<SpinnerPojo> adapter2 = new ArrayAdapter<SpinnerPojo>(getContext(),
-                                android.R.layout.simple_spinner_item, cuslist);
+                                android.R.layout.simple_spinner_item, countryList);
 
                         adapter2.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
                         spinner1.setAdapter(adapter2);
 
                         spinner1.setPrompt("Select Customers");
+                        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
+                                cus_id = sp.getCus_id();
+
+                                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
+                                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+                                Log.d("cus_id", String.valueOf(cus_id));
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+                                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
+                                cus_id = sp.getCus_id();
+                            }
+                        });
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -206,7 +222,7 @@ public class SpecialProgram_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SpecialProgramResponse> call, Throwable t) {
+            public void onFailure(Call<OrdGrpByCus> call, Throwable t) {
                 call.cancel();
                 Log.e("response-failure", t.toString());
                 Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
@@ -216,4 +232,5 @@ public class SpecialProgram_Fragment extends Fragment {
             }
         });
     }
+
 }

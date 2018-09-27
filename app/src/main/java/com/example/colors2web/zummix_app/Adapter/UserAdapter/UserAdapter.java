@@ -509,22 +509,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     public void providemodaldata(ArrayList<SpinnerPojo> grouplog, ArrayList<SpinnerPojo> cuslog) {
 
-//        ArrayAdapter<SpinnerPojo> adp3 = new ArrayAdapter<SpinnerPojo>(mContext,
-//                android.R.layout.simple_spinner_dropdown_item, grouplog);
-//
-//        adp3.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-//        s_grp.setAdapter(adp3);
-//        s_grp.setPrompt("Select Groups");
-
         groupList = grouplog;
         customList = cuslog;
 
-
-//        ArrayAdapter<SpinnerPojo> adp1 = new ArrayAdapter<SpinnerPojo>(mContext,
-//                android.R.layout.simple_spinner_dropdown_item, cuslog);
-//        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-//        s_cus.setAdapter(adp1);
-//        s_cus.setPrompt("Select Customers");
     }
 
     public class UserHolder extends RecyclerView.ViewHolder {

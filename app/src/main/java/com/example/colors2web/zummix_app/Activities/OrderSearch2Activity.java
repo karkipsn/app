@@ -594,28 +594,36 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 }
 
 //                                status.setText(order_status);
+                                if(ispaused != null){
                                 if (ispaused.equals("1")) {
                                     paused.setVisibility(View.VISIBLE);
-                                }
-                                if (isready.equals("1")) {
+                                }}
+
+                                if (isready != null &&isready.equals("1")) {
                                     ready.setVisibility(View.VISIBLE);
                                 }
-                                if (ispp.equals("1")) {
+
+                                if (ispp != null && ispp.equals("1")) {
                                     pp.setVisibility(View.VISIBLE);
                                 }
+
+                                if(isexpedite != null){
                                 if (isexpedite.equals("1")) {
                                     expedite.setVisibility(View.VISIBLE);
                                 } else {
                                     mexpedite.setVisibility(View.VISIBLE);
                                     makeExpedite(ords_no, id);
-                                }
-                                if (isready_now.equals("1")) {
+                                }}
+
+                                if (isready != null &&isready_now.equals("1")) {
                                     ready.setVisibility(View.VISIBLE);
                                 }
-                                if (isprinted.equals("1")) {
+
+                                if (isprinted != null &&isprinted.equals("1")) {
                                     printed.setVisibility(View.VISIBLE);
                                 }
-                                if (isrefund.equals("1")) {
+
+                                if (isrefund != null && isrefund.equals("1")) {
                                     refunded.setVisibility(View.VISIBLE);
                                 }
 
@@ -1012,8 +1020,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                                 .getResources().getColor(R.color.green_light));
                                         break;
 
-                                    case "Order Tupe Changed ":
-                                        status.setText("Order Tupe Changed ");
+                                    case "Order Type Changed ":
+                                        status.setText("Order Type Changed ");
                                         status.setTextColor(status
                                                 .getResources().getColor(R.color.green_light));
                                         break;
@@ -1029,28 +1037,36 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                 }
 
 //                                status.setText(order_status);
-                                if (ispaused.equals("1")) {
-                                    paused.setVisibility(View.VISIBLE);
-                                }
-                                if (isready.equals("1")) {
+                                if(ispaused != null){
+                                    if (ispaused.equals("1")) {
+                                        paused.setVisibility(View.VISIBLE);
+                                    }}
+
+                                if (isready != null &&isready.equals("1")) {
                                     ready.setVisibility(View.VISIBLE);
                                 }
-                                if (ispp.equals("1")) {
+
+                                if (ispp != null && ispp.equals("1")) {
                                     pp.setVisibility(View.VISIBLE);
                                 }
-                                if (isexpedite.equals("1")) {
-                                    expedite.setVisibility(View.VISIBLE);
-                                } else {
-                                    mexpedite.setVisibility(View.VISIBLE);
-                                    makeExpedite(ords_no, id);
-                                }
-                                if (isready_now.equals("1")) {
+
+                                if(isexpedite != null){
+                                    if (isexpedite.equals("1")) {
+                                        expedite.setVisibility(View.VISIBLE);
+                                    } else {
+                                        mexpedite.setVisibility(View.VISIBLE);
+                                        makeExpedite(ords_no, id);
+                                    }}
+
+                                if (isready != null &&isready_now.equals("1")) {
                                     ready.setVisibility(View.VISIBLE);
                                 }
-                                if (isprinted.equals("1")) {
+
+                                if (isprinted != null &&isprinted.equals("1")) {
                                     printed.setVisibility(View.VISIBLE);
                                 }
-                                if (isrefund.equals("1")) {
+
+                                if (isrefund != null && isrefund.equals("1")) {
                                     refunded.setVisibility(View.VISIBLE);
                                 }
 
@@ -1435,28 +1451,36 @@ public class OrderSearch2Activity extends AppCompatActivity {
                             }
 //                            status.setText(order_status);
 
-                            if (ispaused.equals("1")) {
-                                paused.setVisibility(View.VISIBLE);
-                            }
-                            if (isready.equals("1")) {
+                            if(ispaused != null){
+                                if (ispaused.equals("1")) {
+                                    paused.setVisibility(View.VISIBLE);
+                                }}
+
+                            if (isready != null &&isready.equals("1")) {
                                 ready.setVisibility(View.VISIBLE);
                             }
-                            if (ispp.equals("1")) {
+
+                            if (ispp != null && ispp.equals("1")) {
                                 pp.setVisibility(View.VISIBLE);
                             }
-                            if (isexpedite.equals("1")) {
-                                expedite.setVisibility(View.VISIBLE);
-                            } else {
-                                mexpedite.setVisibility(View.VISIBLE);
-                                makeExpedite(ords_no, id);
-                            }
-                            if (isready_now.equals("1")) {
+
+                            if(isexpedite != null){
+                                if (isexpedite.equals("1")) {
+                                    expedite.setVisibility(View.VISIBLE);
+                                } else {
+                                    mexpedite.setVisibility(View.VISIBLE);
+                                    makeExpedite(ords_no, id);
+                                }}
+
+                            if (isready != null &&isready_now.equals("1")) {
                                 ready.setVisibility(View.VISIBLE);
                             }
-                            if (isprinted.equals("1")) {
+
+                            if (isprinted != null &&isprinted.equals("1")) {
                                 printed.setVisibility(View.VISIBLE);
                             }
-                            if (isrefund.equals("1")) {
+
+                            if (isrefund != null && isrefund.equals("1")) {
                                 refunded.setVisibility(View.VISIBLE);
                             }
 

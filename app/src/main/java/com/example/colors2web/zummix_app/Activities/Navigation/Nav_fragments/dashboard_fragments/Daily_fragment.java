@@ -17,6 +17,7 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.das
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.page_fragments.Total_Ship_To_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.page_fragments.Total_Vip_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.page_fragments.Vip_Fragment;
+import com.example.colors2web.zummix_app.Adapter.VIewPagerAdapterProduct;
 import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
 import com.example.colors2web.zummix_app.POJO.Cron_jobs.OfficeOrder;
 import com.example.colors2web.zummix_app.POJO.Cron_jobs.ShipToOrder;
@@ -34,14 +35,20 @@ public class Daily_fragment extends Fragment {
     TabLayout tabLayout;
 
     ArrayList<OfficeOrder> OfficeList;
-    ArrayList<ShipToOrder> ShipTOListOfficeList;
+    ArrayList<ShipToOrder> ShipTOListOfficeList = null;
     ArrayList<TotalOfficeOrder> TotalOfficeListOfficeList;
-    ArrayList<TotalShipToOrder> TotalShipTOListOfficeList;
+    ArrayList<TotalShipToOrder> TotalShipTOListOfficeList = null;
     ArrayList<TotalVipOrder> TotalVipListOfficeList;
     ArrayList<VipOrder> VipListOfficeList;
     String from1,to1;
+    VIewPagerAdapterProduct adapter;
 
     public Daily_fragment() {
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
@@ -65,15 +72,10 @@ public class Daily_fragment extends Fragment {
 
 
             ShipTOListOfficeList = getArguments().getParcelableArrayList("ShipTOList");
-            Log.d("ShipTOListOfficeList",ShipTOListOfficeList.toString());
             TotalShipTOListOfficeList = getArguments().getParcelableArrayList("TotalShipTOList");
-            Log.d("TotalShipTO",TotalShipTOListOfficeList.toString());
             OfficeList = getArguments().getParcelableArrayList("OfficeList");
-            Log.d("OfficeList",OfficeList.toString());
             TotalOfficeListOfficeList = getArguments().getParcelableArrayList("TotalOfficeList");
-            Log.d("TotalOfficeList",TotalOfficeListOfficeList.toString());
             VipListOfficeList = getArguments().getParcelableArrayList("VipList");
-            Log.d("VipListOfficeList",VipListOfficeList.toString());
             TotalVipListOfficeList = getArguments().getParcelableArrayList("TotalVipList");
             from1 = getArguments().getString("from");
             to1 = getArguments().getString("to");
@@ -81,8 +83,11 @@ public class Daily_fragment extends Fragment {
         }
 
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+
+         adapter = new VIewPagerAdapterProduct(getFragmentManager());
+//        viewPager.removeAllViews();
 
         Bundle bundle1 = new Bundle();
 
@@ -126,8 +131,11 @@ public class Daily_fragment extends Fragment {
         bundle1.putString("from", from1);
         bundle1.putString("to", to1);
         total_vip.setArguments(bundle1);
-        adapter.addFrag(total_vip, "VIP Orders ");
+        adapter.addFrag(total_vip, "Total VIP Orders ");
 
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
+//        viewPager.setOffscreenPageLimit(1);
+//        viewPager.setSaveFromParentEnabled(false);
     }
 }

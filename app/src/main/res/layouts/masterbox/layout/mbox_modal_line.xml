@@ -21,9 +21,10 @@
             android:layout_height="wrap_content"
             android:text="CANCEL"
             android:id="@+id/pop_up_cancel"
+            android:background="@drawable/button_round"
             android:layout_gravity="right"
             android:textSize="18sp"
-            android:textColor="@color/primary_dark"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

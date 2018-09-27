@@ -1,32 +1,30 @@
-package com.example.colors2web.zummix_app.Activities.CityBins;
+package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.city_bins_fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.CityBins.BinHomeActivity;
+import com.example.colors2web.zummix_app.Activities.CityBins.CreateCityBinsActivity;
 import com.example.colors2web.zummix_app.Adapter.BinsAdapter.HomeAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
-import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBins;
 import com.example.colors2web.zummix_app.POJO.CityBins.CityBinsResponse;
 import com.example.colors2web.zummix_app.R;
-import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
@@ -37,118 +35,68 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BinHomeActivity extends AppCompatActivity {
+public class city_bins_fragment extends Fragment {
+
     HomeAdapter homeAdapter;
-    Toolbar toolbar;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
     TextView customer_id,create_bins;
-    List<CityBins>BinList = new ArrayList<>();
-    private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
-
+    List<CityBins> BinList = new ArrayList<>();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_citybins_home);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_city_bins, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
 //        customer_id = findViewById(R.id.cus_parent_Id);
-        create_bins = findViewById(R.id.create_bins_order);
+        create_bins = view.findViewById(R.id.create_bins_order);
         create_bins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(BinHomeActivity.this,CreateCityBinsActivity.class);
+                Intent intent  = new Intent(getContext(),CreateCityBinsActivity.class);
                 startActivity(intent);
 
             }
         });
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BinHomeActivity.super.onBackPressed();
-            }
-        });
 
-        mrecycleView = findViewById(R.id.recycle_view_bins);
-        homeAdapter = new HomeAdapter(BinHomeActivity.this,BinList);
+        mrecycleView = view.findViewById(R.id.recycle_view_bins);
+        homeAdapter = new HomeAdapter(getActivity(),BinList);
 
-        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(getContext());
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
 //        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
-        mrecycleView.addItemDecoration(new MyDividerItemDecoration(BinHomeActivity.this, LinearLayoutManager.HORIZONTAL, 16));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
 
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(homeAdapter);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
-        
         loadAdapter(email, password);
-
+        
     }
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu2, menu);
-        ImageView img;
-
-        img = (ImageView) menu.findItem(R.id.image).getActionView();
-        img.setImageResource(android.R.drawable.ic_menu_search);
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.frame_toolbar, new SearchFragment()).
-                        addToBackStack(TAG_FRAGMENT).commit();
-            }
-        });
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-
-            case R.id.image:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-//        moveTaskToBack(true);
-
-    }
-
     private void loadAdapter(String email, String password) {
 
-        
 
-        final ProgressDialog progressDialog = new ProgressDialog(BinHomeActivity.this,
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext(),
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -165,7 +113,7 @@ public class BinHomeActivity extends AppCompatActivity {
 
                     List<CityBins> cus = resp1.getCityBins();
 
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (cus != null) {
 
@@ -208,7 +156,7 @@ public class BinHomeActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
@@ -218,7 +166,7 @@ public class BinHomeActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 }else if (response.code() == 500) {
 
@@ -226,11 +174,11 @@ public class BinHomeActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Internal Server Error", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 }
                 else {
-                    Toast.makeText(BinHomeActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
@@ -244,9 +192,8 @@ public class BinHomeActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Toast.makeText(BinHomeActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }

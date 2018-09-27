@@ -34,6 +34,10 @@ public class Vip_Fragment extends Fragment {
 
     public Vip_Fragment() {
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

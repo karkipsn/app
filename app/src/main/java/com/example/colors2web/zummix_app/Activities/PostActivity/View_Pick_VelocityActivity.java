@@ -137,7 +137,6 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
 
                     }
                 }
-
             }
 
         }

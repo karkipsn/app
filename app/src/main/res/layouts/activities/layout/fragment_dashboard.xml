@@ -6,6 +6,10 @@
     android:orientation="vertical">
 
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
 
     <android.support.design.widget.TabLayout
@@ -13,8 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/white"
-        app:tabMode="scrollable"
-        app:tabTextColor="@color/green_dark" />
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+         />
+    </android.support.design.widget.AppBarLayout>
+    <!--app:tabTextColor="@color/green_dark"-->
 
     <android.support.v4.view.ViewPager
 
@@ -25,5 +32,5 @@
         app:layout_constraintTop_toBottomOf="@id/ord2_card1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    
+
 </LinearLayout>

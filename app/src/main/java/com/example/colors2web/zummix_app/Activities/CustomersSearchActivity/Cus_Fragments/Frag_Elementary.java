@@ -80,8 +80,6 @@ public class Frag_Elementary extends Fragment {
             Bundle bundle = this.getArguments();
             cus_id = bundle.getString("ciid");
             Log.d("cus_id",cus_id);
-        }else{
-            Log.d("cus_id","null babey");
         }
 
         loadAdapter(cus_id);

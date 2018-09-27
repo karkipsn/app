@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.colors2web.zummix_app.Activities.ProductDetails.Fragments.Frag_Inv_Logs;
@@ -28,13 +29,24 @@ public class VIewPagerAdapterProduct extends FragmentStatePagerAdapter {
         super.destroyItem(container, position, object);
     }
 
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return VIewPagerAdapterProduct.POSITION_NONE;
+
+    }
 
     @Override
     public Fragment getItem(int position) {
+
       return mFragmentList.get(position);
 
     }
 
+    @Override
+    public void destroyItem(@NonNull View container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
+        mFragmentList.remove(position);
+    }
 
     @Override
     public int getCount() {
@@ -45,7 +57,6 @@ public class VIewPagerAdapterProduct extends FragmentStatePagerAdapter {
 
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
-
         notifyDataSetChanged();
     }
 

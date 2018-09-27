@@ -51,6 +51,10 @@ public class FieldOffice_fragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -66,6 +70,7 @@ public class FieldOffice_fragment extends Fragment {
         mrecycleView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(padapter);
+        padapter.cleardata();
         loadAdapter();
     }
 

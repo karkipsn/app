@@ -23,14 +23,14 @@ import com.example.colors2web.zummix_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShipTo_Fragment  extends Fragment{
+public class ShipTo_Fragment extends Fragment {
 
-   D_ShipToAdapter padapter;
+    D_ShipToAdapter padapter;
     RecyclerView mrecycleView;
     List<ShipToOrder> UList = new ArrayList<>();
     Context mContext;
     TextView nulldisplay;
-    String from1,to1;
+    String from1, to1;
 
 
     public ShipTo_Fragment() {
@@ -51,46 +51,71 @@ public class ShipTo_Fragment  extends Fragment{
 
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       padapter = new D_ShipToAdapter(UList, getContext());
+        mrecycleView = view.findViewById(R.id.recycler_view_shipping);
+
+        if(padapter != null){
+            padapter.onDetachedFromRecyclerView(mrecycleView);
+            padapter.notifyDataSetChanged();
+        }
+        padapter = new D_ShipToAdapter(UList, getContext(),ShipTo_Fragment.this);
+
 
         nulldisplay = view.findViewById(R.id.null_textview);
 
-        mrecycleView = view.findViewById(R.id.recycler_view_shipping);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mLayoutManager);
 
         mrecycleView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
-       mrecycleView.setAdapter(padapter);
+        mrecycleView.setAdapter(padapter);
+
         loadAdapter();
     }
 
     private void loadAdapter() {
 
+//        padapter.cleardata();
+
         if (getArguments() != null) {
 
             ArrayList<ShipToOrder> logs1 = getArguments().getParcelableArrayList("WeekShipTOList");
-            from1 =getArguments().getString("from");
-            to1 =getArguments().getString("to");
-//            Log.d("ShipTO1",logs1.toString());
-            padapter.updateAnswers(logs1,from1,to1);
+            from1 = getArguments().getString("from");
+            to1 = getArguments().getString("to");
+            UList.clear();
+            padapter.notifyDataSetChanged();
+            padapter.updateAnswers(logs1, from1, to1);
 
-            if(logs1 ==null){
+            if (logs1 == null) {
                 nulldisplay.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 nulldisplay.setVisibility(View.VISIBLE);
             }
-
 
         }
     }
 
     public void refresh() {
+
+//         warehouseAdapter.reloadfragment();
+//        uadapter.reloadfragment();
+//        Fragment frg1 = getFragmentManager().findFragmentByTag("Users");
+//        frg1.onDestroy();
+//        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(frg1).attach(frg1).commit();
+
+        padapter.cleardata();
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();

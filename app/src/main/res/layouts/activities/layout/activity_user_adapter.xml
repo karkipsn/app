@@ -141,7 +141,7 @@
                         android:id="@+id/user_adpt_update"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:background="@drawable/flag_gardient"
+                        android:background="@drawable/button_round"
                         android:text="Update"
                         android:textColor="@color/white"
                         android:textSize="18sp"

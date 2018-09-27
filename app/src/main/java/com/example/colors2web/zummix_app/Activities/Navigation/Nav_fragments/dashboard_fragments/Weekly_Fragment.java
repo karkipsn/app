@@ -24,6 +24,7 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.das
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.week_page_fragments.page_fragments.Week_Total_Ship_To_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.week_page_fragments.page_fragments.Week_Total_Vip_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.week_page_fragments.page_fragments.Week_Vip_Fragment;
+import com.example.colors2web.zummix_app.Adapter.VIewPagerAdapterProduct;
 import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
 import com.example.colors2web.zummix_app.POJO.Cron_jobs.WeekOfficeOrder;
 import com.example.colors2web.zummix_app.POJO.Cron_jobs.WeekShipToOrder;
@@ -55,6 +56,10 @@ public class Weekly_Fragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 
     @Nullable
     @Override
@@ -83,7 +88,11 @@ public class Weekly_Fragment extends Fragment {
 
         }
         tabLayout.setupWithViewPager(viewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        VIewPagerAdapterProduct adapter = new VIewPagerAdapterProduct(getFragmentManager());
+
 
         Bundle bundle1 = new Bundle();
 
@@ -127,8 +136,9 @@ public class Weekly_Fragment extends Fragment {
         bundle1.putString("from", from1);
         bundle1.putString("to", to1);
         total_vip.setArguments(bundle1);
-        adapter.addFrag(total_vip, "VIP Orders ");
+        adapter.addFrag(total_vip, "Total VIP Orders ");
 
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
 
     }

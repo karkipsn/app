@@ -81,14 +81,6 @@ public class WD_ShipToAdapter extends RecyclerView.Adapter<WD_ShipToAdapter.Ship
                 @Override
                 public void onClick(View v) {
 
-//                    dashboard_details_fragment  frag = new dashboard_details_fragment();
-//                    Bundle b = new Bundle();
-//                    b.putString("order_status","totalOrders");
-//                    b.putString("customer_id",customer_id);
-//                    b.putString("ordertype","1");
-//                    b.putString("from",from);
-//                    b.putString("to",to);
-//                    frag.setArguments(b);
 
                     order_status = "totalOrders";
                     call_details_api(order_status, customer_id, order_type, from, to);
@@ -133,6 +125,8 @@ public class WD_ShipToAdapter extends RecyclerView.Adapter<WD_ShipToAdapter.Ship
         holder.pover.setText(hoverdue);
 
         if (hoverdue != null && !hoverdue.equals("0")) {
+            holder.pover.setTextColor(holder.pover.getResources().getColor(R.color.colorPrimaryDark));
+
             holder.pover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -146,6 +140,9 @@ public class WD_ShipToAdapter extends RecyclerView.Adapter<WD_ShipToAdapter.Ship
         }
         holder.batch.setText(batched);
         if (batched != null && !batched.equals("0")) {
+
+            holder.batch.setTextColor(holder.batch.getResources().getColor(R.color.colorPrimaryDark));
+
             holder.batch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -159,6 +156,9 @@ public class WD_ShipToAdapter extends RecyclerView.Adapter<WD_ShipToAdapter.Ship
         }
         holder.bover.setText(boverdue);
         if (boverdue != null && !boverdue.equals("0")) {
+
+            holder.bover.setTextColor(holder.bover.getResources().getColor(R.color.colorPrimaryDark));
+
             holder.bover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,122 +187,19 @@ public class WD_ShipToAdapter extends RecyclerView.Adapter<WD_ShipToAdapter.Ship
         holder.ior.setText(String.valueOf(ship.getmTotalIor()));
 
 
+
     }
 
     private void call_details_api(String order_status, String customer_id, String order_type, String from, String to) {
 
-        final ArrayList<Order> UList = new ArrayList<>();
-
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        final String email = preferences.getString("email", "");
-        final String password = preferences.getString("password", "");
-
-        final ProgressDialog progressDialog = new ProgressDialog(mContext,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
-
-
-        Call<CronDetailsResponse> call = apiInterface.getCronJobsDetails
-                (email, password, order_status, customer_id, order_type, from, to);
-
-        call.enqueue(new Callback<CronDetailsResponse>() {
-            @Override
-            public void onResponse(Call<CronDetailsResponse> call, Response<CronDetailsResponse> response) {
-
-                CronDetailsResponse response1 = response.body();
-                if (response.isSuccessful()) {
-
-                    if (response1.getReturnType().equals("success")) {
-
-                        List<Order> order = response1.getOrders();
-                        for (int i = 0; i < order.size(); i++) {
-
-                            Order o = new Order();
-
-                            String ono = order.get(i).getOrderNumber();
-                            String state = order.get(i).getCustomerState();
-                            String country = order.get(i).getCustomerCountry();
-                            String zip = order.get(i).getCustomerZip();
-                            String ord_status = order.get(i).getOrderStatus();
-                            String sip_method = order.get(i).getShipMethod();
-                            String ord_date = order.get(i).getOrderDate();
-
-                            o.setOrderNumber(ono);
-                            o.setCustomerState(state);
-                            o.setCustomerCountry(country);
-                            o.setCustomerZip(zip);
-                            o.setOrderStatus(ord_status);
-                            o.setShipMethod(sip_method);
-                            o.setOrderDate(ord_date);
-
-                            UList.add(o);
-                        }
-//                        padapter.updateAnswers(UList);
-                        Intent intent = new Intent(mContext, DashboardDetailsActivity.class);
-                        intent.putParcelableArrayListExtra("UList", UList);
-                        mContext.startActivity(intent);
-
-
-                    } else {
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        Toast.makeText(mContext, " No data for th date Range", Toast.LENGTH_SHORT).show();
-
-
-                    }
-
-                } else if (response.code() == 401) {
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-
-                } else if (response.code() == 404) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
-                } else if (response.code() == 500) {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-
-                    Toast.makeText(mContext, "Internal Server Error", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    if (progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
-                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-
-
-            @Override
-            public void onFailure(Call<CronDetailsResponse> call, Throwable t) {
-
-                call.cancel();
-                Log.e("response-failure", t.toString());
-                Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-            }
-        });
-
+        Intent intent = new Intent(mContext, DashboardDetailsActivity.class);
+        intent.putExtra("order_status",order_status);
+        intent.putExtra("customer_id",customer_id);
+        intent.putExtra("order_type",order_type);
+        intent.putExtra("from",from);
+        intent.putExtra("to",to);
+        mContext.startActivity(intent);
     }
-
 
     @Override
     public int getItemCount() {

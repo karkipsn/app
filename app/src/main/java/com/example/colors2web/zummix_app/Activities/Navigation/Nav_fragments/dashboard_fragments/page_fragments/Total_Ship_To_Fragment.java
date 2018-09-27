@@ -37,6 +37,11 @@ public class Total_Ship_To_Fragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -67,6 +72,7 @@ public class Total_Ship_To_Fragment extends Fragment {
         mrecycleView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(padapter);
+
         loadAdapter();
     }
 
@@ -77,6 +83,8 @@ public class Total_Ship_To_Fragment extends Fragment {
             ArrayList<TotalShipToOrder> logs1 = getArguments().getParcelableArrayList("WeekTotalShipTOList");
             from1 = getArguments().getString("from");
             to1 = getArguments().getString("to");
+            UList.clear();
+            padapter.cleardata();
             padapter.updateAnswers(logs1,from1,to1);
 
             if(logs1 ==null){
@@ -90,7 +98,7 @@ public class Total_Ship_To_Fragment extends Fragment {
     }
 
     public void refresh() {
-
+           padapter.cleardata();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }

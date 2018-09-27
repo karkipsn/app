@@ -9,7 +9,7 @@
     <!--&lt;!&ndash;<color name="colorPrimaryDark">#00A1FF</color>&ndash;&gt;-->
     <!--<color name="colorPrimaryDark">#c33e3a</color>-->
     <color name="colorAccent">#000000 </color>
-    <color name="colorStatusBar">#0066ff</color>
+    <color name="colorStatusBar">#007AC9</color>
     <color name="viewBack">#f1f5f8</color>
     <color name="colorAccentSecondary">#ad1a7f</color>
 
@@ -25,9 +25,9 @@
 
 
 
-    <color name="primary">#94C83D</color>
-    <color name="primary_dark">#94C83D</color>
-    <color name="primary_darker">#94C83D</color>
+    <color name="primary">#007AC9</color>
+    <color name="primary_dark">#007AC9</color>
+    <color name="primary_darker">#007AC9</color>
     <color name="accent">#FFFFFF</color>
 
     <color name="black">#000000</color>

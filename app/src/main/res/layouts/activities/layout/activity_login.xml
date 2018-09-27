@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:text="Sign In"
-                android:background="#94C83D"
+                android:background="@color/colorPrimary"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

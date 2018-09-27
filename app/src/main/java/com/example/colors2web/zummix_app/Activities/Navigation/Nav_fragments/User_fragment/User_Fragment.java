@@ -73,9 +73,7 @@ public class User_Fragment extends Fragment {
     ArrayList<SpinnerPojo> groupList = new ArrayList<>();
     ArrayList<SpinnerPojo> spin_cus_list = new ArrayList<>();
 
-
     EditText e_fname, e_lname, e_pass, e_cpass, e_email;
-
 
     Spinner s_cus, s_act, s_prg, s_grp;
 

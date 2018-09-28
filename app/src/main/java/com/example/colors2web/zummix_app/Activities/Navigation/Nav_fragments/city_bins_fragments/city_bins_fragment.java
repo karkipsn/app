@@ -92,6 +92,7 @@ public class city_bins_fragment extends Fragment {
         loadAdapter(email, password);
         
     }
+
     private void loadAdapter(String email, String password) {
 
 

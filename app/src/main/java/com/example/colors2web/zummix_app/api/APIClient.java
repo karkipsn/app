@@ -39,9 +39,9 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-//           .baseUrl("http://192.168.0.101/zummix/zummix-api/public/")
+           .baseUrl("http://192.168.0.110/zummix/zummix-api/public/")
 //             .baseUrl("http://2db93c8c.ngrok.io/zummix-api/public/")
-               .baseUrl("https://zumsapi.com/")
+//               .baseUrl("https://zumsapi.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
 //                .addConverterFactory(GsonConverterFactory.create(b_deserializer))
                 .client(client)

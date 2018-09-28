@@ -101,7 +101,8 @@ public class Items_Elementory_Fragment extends Fragment {
                         addToBackStack(TAG_ELEMENTORY_FRAGMENT).
                         commit();
 //                Not checked the null condition or empty condition as i think is not necessary
-                
+//                Bcoz we are displaying it in this same child fragment so I am replacing the frame layout
+
             }
         });
 

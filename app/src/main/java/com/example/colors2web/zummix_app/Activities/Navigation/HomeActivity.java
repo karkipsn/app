@@ -167,10 +167,10 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // Loading profile image
-//        Glide.with(this).load(R.mipmap.ic_launcher_zummix).apply(RequestOptions.circleCropTransform()).
-//                into(imgProfile);
-        Glide.with(this).load(R.drawable.ic_launcher_voxship).
-                apply(RequestOptions.bitmapTransform(new BrightnessFilterTransformation())).into(imgProfile);
+        Glide.with(this).load(R.mipmap.ic_launcher_voxship).apply(RequestOptions.circleCropTransform()).
+                into(imgProfile);
+//        Glide.with(this).load(R.drawable.logo).
+//                apply(RequestOptions.bitmapTransform(new BrightnessFilterTransformation())).into(imgProfile);
 
     }
 

@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 //                .bitmapTransform(new BlurTransformation())
 //                .into(imageView);
 
-        Glide.with(this).load(R.drawable.ic_launcher_voxship).
+        Glide.with(this).load(R.drawable.logo).
                 apply(RequestOptions.bitmapTransform(new BrightnessFilterTransformation())).into(imageView);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);

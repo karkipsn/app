@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -63,8 +64,8 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
     @BindView(R.id.city_create_city)
     TextView mcity;
 
-    @BindView(R.id.city_create_country)
-    TextView mcountry;
+//    @BindView(R.id.city_create_country)
+//    TextView mcountry;
 
     @BindView(R.id.city_create_state)
     TextView mstate;
@@ -111,6 +112,9 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
     @BindView(R.id.customer_spinner_header)
     TextView cusheader;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -152,11 +156,9 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
         if (intent != null) {
             cus_id = intent.getExtras().getString("customer_id");
             bin_id = intent.getExtras().getString("bin_id");
-            Log.d("bin_id", bin_id);
         }
 
         loaddata(email, password, cus_id, bin_id);
-
 
         loadCountrySpinner();
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -262,6 +264,27 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
             }
         });
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mbin.setText(null);
+                mshipname.setText(null);
+                madd1.setText(null);
+                madd2.setText(null);
+                mcity.setText(null);
+                mstate.setText(null);
+                mzip.setText(null);
+                mname.setText(null);
+                mname2.setText(null);
+                mmphone.setText(null);
+                mmphone2.setText(null);
+                mmemail2.setText(null);
+                mmemail.setText(null);
+
+                loaddata(email, password, cus_id, bin_id);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         msubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,6 +396,8 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void load_mx_stateSPinner() {
 
@@ -764,7 +789,6 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         countrySpinner.setAdapter(adapter);
 
-        Log.d("spinner_country", countryList.toString());
 
     }
 

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +39,8 @@ public class Frag_InActive extends Fragment {
     String cus_id;
     String pbalance,pick,request ,replenish,orderedq;
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     List<StoreInactiveItem> ItmList = new ArrayList<>();
 
     public Frag_InActive() {
@@ -55,7 +58,7 @@ public class Frag_InActive extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_inactive, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inactive_child, container, false);
         return rootView;
     }
 
@@ -67,6 +70,7 @@ public class Frag_InActive extends Fragment {
         iadapter = new InActiveAdapter(ItmList);
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //        mrecyclerView.setHasFixedSize(true);
@@ -85,7 +89,20 @@ public class Frag_InActive extends Fragment {
             Log.d("cus_id","null babey");
         }
 
+//        if(ItmList != null){
+//            ItmList.clear();
+//            iadapter.notifyDataSetChanged();
+//        }
         loadAdapter(cus_id);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ItmList.clear();
+                iadapter.notifyDataSetChanged();
+                loadAdapter(cus_id);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void loadAdapter(String cus_id) {

@@ -65,9 +65,6 @@ public class CreateCityBinsActivity extends AppCompatActivity {
     @BindView(R.id.city_create_city)
     TextView mcity;
 
-    @BindView(R.id.city_create_country)
-    TextView mcountry;
-
     @BindView(R.id.city_create_state)
     TextView mstate;
 

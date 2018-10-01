@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,7 @@ public class BinBinActivity extends AppCompatActivity {
     BinAdapter binAdapter;
     Toolbar toolbar;
     APIInterface apiInterface;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     String cus_id;
     String cus_id_inner;
     RecyclerView mrecycleView;
@@ -54,6 +56,9 @@ public class BinBinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citybins_home);
         apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
 
         toolbar = findViewById(R.id.toolbar);
@@ -82,6 +87,14 @@ public class BinBinActivity extends AppCompatActivity {
         final String password = preferences.getString("password", "");
 
         loadAdapter(email, password);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         create_bins = findViewById(R.id.create_bins_order);
 

@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -149,6 +150,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
     String selection;
     String pshipp;
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         final MenuInflater inflater = getMenuInflater();
@@ -203,6 +206,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
         btn_ship_method = findViewById(R.id.btn_edit_ship_method);
         btn_ship_type = findViewById(R.id.btn_edit_shipping_type);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 //        btn_ship_type.setVisibility(View.VISIBLE);
 
         ButterKnife.bind(this);
@@ -231,6 +236,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
         final String password = preferences.getString("password", "");
         final String group_type = preferences.getString("group_type", "");
         final String l_id = preferences.getString("l_id", "");
+
 
         Log.d("PathMail", email);
 
@@ -269,6 +275,50 @@ public class OrderSearch2Activity extends AppCompatActivity {
                 Log.d("back", back);
             }
         }
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (i != null) {
+
+                    final String Path = i.getExtras().getString("OPath");
+                    if (Path != null) {
+                        call(group_type, email, password, Path);
+                    }
+
+                    final String Path2 = i.getExtras().getString("O_no_by_group");
+                    if (Path2 != null) {
+                        call_next(group_type, email, password, Path2);
+                    }
+
+                    final String Path3 = i.getExtras().getString("id1");
+                    if (Path3 != null) {
+                        call_next(group_type, email, password, Path3);
+                    }
+
+                    final String Path4 = i.getExtras().getString("tadpt_id");
+                    if (Path3 != null) {
+                        call_next(group_type, email, password, Path4);
+                    }
+
+                    final String Path5 = i.getExtras().getString("edit_id");
+                    if (Path5 != null) {
+                        call_next(group_type, email, password, Path5);
+                    }
+
+                    final String back = i.getExtras().getString("back_id");
+                    if (back != null) {
+                        call_next(group_type, email, password, back);
+                        Log.d("back", back);
+                    }
+                }
+
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
 
     }
 

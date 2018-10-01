@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,8 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
     ShippingLogsAdapter radapter;
     String Order;
     List<OrderShippingAddressLog> OList = new ArrayList<>();
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,20 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
 
         mrecyclerView.setAdapter(radapter);
         loadAdapter(email, password);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
+
     }
 
 // TODO:   OrderDetails Page Bata Order Number Lini

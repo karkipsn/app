@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,9 +48,12 @@ public class BatchSearchActivity extends AppCompatActivity {
     @BindView(R.id.recycle_view)
     RecyclerView mrecycleView;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mswipeRefreshLayout;
+
     APIInterface apiInterface;
     BatchAdapter badapter;
-    List<BatchOrder> BatchList= new ArrayList<>();
+    List<BatchOrder> BatchList = new ArrayList<>();
     String bid;
 
 
@@ -65,7 +69,7 @@ public class BatchSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        PickAdapter = new Pick_Velocity_BoxAdapter(BoxList,ItemsList);
-        badapter = new BatchAdapter(getApplicationContext(),BatchList);
+        badapter = new BatchAdapter(getApplicationContext(), BatchList);
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
 //        mrecycleView.setHasFixedSize(true);
@@ -74,6 +78,7 @@ public class BatchSearchActivity extends AppCompatActivity {
         mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(badapter);
+        mswipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,18 +88,27 @@ public class BatchSearchActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if(intent!=null){
-        bid = intent.getExtras().getString("biid");
+        if (intent != null) {
+            bid = intent.getExtras().getString("biid");
 
         }
         loadAdapter(bid);
+
+        mswipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAdapter(bid);
+                mswipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
 
     private void loadAdapter(String bids) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(BatchSearchActivity.this);
-        String email = preferences.getString("email","");
-        String password = preferences.getString("password","");
+        String email = preferences.getString("email", "");
+        String password = preferences.getString("password", "");
 
         final ProgressDialog progressDialog = new ProgressDialog(BatchSearchActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -103,7 +117,7 @@ public class BatchSearchActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        Call<BatchResponse> call =apiInterface.getBatchResponse(email,password,bids);
+        Call<BatchResponse> call = apiInterface.getBatchResponse(email, password, bids);
         call.enqueue(new Callback<BatchResponse>() {
             @Override
             public void onResponse(Call<BatchResponse> call, Response<BatchResponse> response) {
@@ -120,9 +134,9 @@ public class BatchSearchActivity extends AppCompatActivity {
 
                         BatchOrder batchOrder = new BatchOrder();
                         String batch_no = null;
-                        for(int i=0;i<cus.size();i++) {
+                        for (int i = 0; i < cus.size(); i++) {
 
-                             batch_no = String.valueOf(cus.get(0).getBatchNumber());
+                            batch_no = String.valueOf(cus.get(0).getBatchNumber());
 
                             String store = cus.get(i).getCustomerName();
                             String order = cus.get(i).getOrderNumber();
@@ -147,7 +161,7 @@ public class BatchSearchActivity extends AppCompatActivity {
                             batchOrder.setCustomerOfficeName(cus_ofc);
                         }
 
-                        toolbar.setTitle("Batch:"+ batch_no);
+                        toolbar.setTitle("Batch:" + batch_no);
                         BatchList.add(batchOrder);
                         badapter.updateAnswers(BatchList);
 

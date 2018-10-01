@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,13 +62,16 @@ public class main_dashboard_fragment extends Fragment {
     APIInterface apiInterface;
     Context mContext;
 
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     TextView mform, mto;
     Button btn_submit;
 //    TabLayout tableLayout;
 //    ViewPager viewPager;
 
     Integer mYear, mMonth, mDay;
-    String mform1, mto1;
+    String mform1, mto1, from, to;
 
     ArrayList<OfficeOrder> OfficeList = new ArrayList<>();
     ArrayList<ShipToOrder> ShipTOList = new ArrayList<>();
@@ -108,6 +112,9 @@ public class main_dashboard_fragment extends Fragment {
 
 //        viewPager = getActivity().findViewById(R.id.viewpager_dashboard);
 //        tableLayout = getActivity().findViewById(R.id.tabs_dashboard);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -169,14 +176,27 @@ public class main_dashboard_fragment extends Fragment {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String from = mform.getText().toString();
-                String to = mto.getText().toString();
+                from = mform.getText().toString();
+                to = mto.getText().toString();
 
                 call_cron_jobs(email, password, from, to);
             }
         });
 
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                call_cron_jobs(email, password, from, to);
+
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
     }
+
 
     private void call_cron_jobs(String email, String password, final String from, final String to) {
 

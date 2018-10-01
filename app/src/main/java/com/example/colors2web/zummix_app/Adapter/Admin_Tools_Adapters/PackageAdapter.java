@@ -1,5 +1,7 @@
 package com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -34,12 +36,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageHolder> {
-    Context mContext;
-    List<Packages> PackList;
-    RadioButton prb;
-    String status, radio;
+    private Activity mContext;
+    private List<Packages> PackList;
+    private RadioButton prb;
+    private String status, radio;
 
-    public PackageAdapter(Context applicationContext, List<Packages> pList) {
+    public PackageAdapter(Activity applicationContext, List<Packages> pList) {
         mContext = applicationContext;
         PackList = pList;
     }
@@ -176,6 +178,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                     @Override
                     public void onClick(View v) {
 
+                       ProgressDialog progressDialog = new ProgressDialog(mContext, R.style.AppTheme_Dark_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.show();
+
                         String qname = pname.getText().toString();
                         String qweight = pweight.getText().toString();
                         String qlength = plength.getText().toString();
@@ -216,7 +224,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                         final String l_id = preferences.getString("l_id", "");
 
                         PackageInput input = new PackageInput(qname, qlength, qwidth, qheight, l_id, qweight, qcost, status);
-                        putPackage(email, password, group_type, l_id, input, id, popup);
+                        putPackage(email, password, group_type, l_id, input, id, popup,progressDialog);
 
                     }
                 });
@@ -234,7 +242,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
     }
 
     private void putPackage(String email, String password, String group_type, String l_id,
-                            PackageInput input, Long id, final PopupWindow popup) {
+                            PackageInput input, Long id, final PopupWindow popup, final ProgressDialog progressDialog) {
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         String p_id = String.valueOf(id);
@@ -250,12 +258,19 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                         Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         popup.dismiss();
 
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+
 //                        ((Activity)mContext).finish();
 //                        ((Activity)mContext).startActivity(((Activity) mContext).getIntent());
 
                     } else {
                         String d = response.body().getMessage();
                         Toast.makeText(mContext, d, Toast.LENGTH_SHORT).show();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
 
 
                     }
@@ -264,6 +279,9 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                     Toast.makeText(mContext, " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
 
 
                 } else if (response.code() == 404) {
@@ -271,14 +289,23 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                     Toast.makeText(mContext, "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
                 } else if (response.code() == 500) {
 
                     Toast.makeText(mContext, "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
 
 
                 } else {
                     Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    if (progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
                 }
             }
 
@@ -288,6 +315,9 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                 Log.e("response-failure", t.toString());
                 Toast.makeText(mContext, "Network Error", Toast.LENGTH_SHORT).show();
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
             }
         });
     }

@@ -335,12 +335,9 @@ public class D_ShipToAdapter extends RecyclerView.Adapter<D_ShipToAdapter.ShipHo
     }
 
     public void updateAnswers(ArrayList<ShipToOrder> logs1, String from1, String to1) {
-        ShipList.clear();
-        notifyDataSetChanged();
 
         ShipList = logs1;
         notifyDataSetChanged();
-        Log.d("shiplist1",ShipList.toString());
         from = from1;
         to = to1;
 
@@ -350,11 +347,7 @@ public class D_ShipToAdapter extends RecyclerView.Adapter<D_ShipToAdapter.ShipHo
 
         final int size = ShipList.size();
         ShipList.clear();
-        Log.d("shiplist",ShipList.toString());
         notifyItemRangeRemoved(0, size);
-        Log.d("shiplist1",ShipList.toString());
-//            ShipList.clear();
-//            notifyDataSetChanged();
 
     }
 

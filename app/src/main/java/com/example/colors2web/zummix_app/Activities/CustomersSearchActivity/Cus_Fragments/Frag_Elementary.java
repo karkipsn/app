@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +39,8 @@ public class Frag_Elementary extends Fragment {
     String cus_id;
     String pbalance,pick,request ,replenish,orderedq;
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     public Frag_Elementary() {
         // Required empty public constructor
@@ -54,7 +57,7 @@ public class Frag_Elementary extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_inactive, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inactive_child, container, false);
         return rootView;
     }
 
@@ -66,6 +69,10 @@ public class Frag_Elementary extends Fragment {
         iadapter = new CustomerItemsAdapter(ItmList);
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
 //        mrecyclerView.setHasFixedSize(true);
@@ -82,7 +89,20 @@ public class Frag_Elementary extends Fragment {
             Log.d("cus_id",cus_id);
         }
 
+
         loadAdapter(cus_id);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                ItmList.clear();
+                iadapter.notifyDataSetChanged();
+                loadAdapter(cus_id);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
     }
 
     private void loadAdapter(String cus_id) {

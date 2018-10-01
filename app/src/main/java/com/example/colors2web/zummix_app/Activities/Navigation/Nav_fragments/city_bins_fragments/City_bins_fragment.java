@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,13 +36,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class city_bins_fragment extends Fragment {
+public class City_bins_fragment extends Fragment {
 
     HomeAdapter homeAdapter;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
     TextView customer_id,create_bins;
     List<CityBins> BinList = new ArrayList<>();
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class city_bins_fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
 //        customer_id = findViewById(R.id.cus_parent_Id);
         create_bins = view.findViewById(R.id.create_bins_order);
@@ -90,8 +94,23 @@ public class city_bins_fragment extends Fragment {
         final String password = preferences.getString("password", "");
 
         loadAdapter(email, password);
-        
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                BinList.clear();
+                homeAdapter.notifyDataSetChanged();
+
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
+        
+
 
     private void loadAdapter(String email, String password) {
 

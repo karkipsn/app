@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,10 @@ public class ProductSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView mrecyclerView;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     ItemSearchAdapter iadapter;
 
     List<CustomerItem> ItmList = new ArrayList<>();
@@ -70,6 +75,7 @@ public class ProductSearchActivity extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         iadapter = new ItemSearchAdapter(ProductSearchActivity.this, ItmList);
 
@@ -92,7 +98,6 @@ public class ProductSearchActivity extends AppCompatActivity {
         Log.d("PathMail", email);
 
 
-
         final Intent i = getIntent();
 
         if (i != null) {
@@ -102,6 +107,16 @@ public class ProductSearchActivity extends AppCompatActivity {
                 call(email, password, Path);
             }
         }
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                final String Path = i.getExtras().getString("OPath");
+                if (Path != null) {
+                    call(email, password, Path);
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
 
     }

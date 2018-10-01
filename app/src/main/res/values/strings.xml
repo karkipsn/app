@@ -14,13 +14,19 @@
     <string-array name="nav_item_activity_titles">
 
         <item> Dashboard </item>
+        <item>Customers</item>
+        <item>InActive Items</item>
         <item>Pick Velocity Report </item>
         <item>Item DrHistory Report</item>
         <item>Item Sales Report </item>
         <item>Special Programs</item>
         <item>Warehouse Users</item>
         <item>Unit Of Measurement</item>
-        <item>Customers</item>
+        <item>Customers List</item>
+        <item>Items Inventory</item>
+        <item>City Bins</item>
+        <item>Packages</item>
+        <item>Problem SKU</item>
 
     </string-array>
 

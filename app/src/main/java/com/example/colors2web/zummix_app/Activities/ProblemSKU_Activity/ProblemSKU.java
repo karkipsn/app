@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,9 @@ public class ProblemSKU extends AppCompatActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView mrecycleview ;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout ;
 
     APIInterface apiInterface;
 
@@ -95,6 +99,18 @@ public class ProblemSKU extends AppCompatActivity {
         mrecycleview.setAdapter(cadapter);
 
         loadAdapter( email, password);
+
+
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadAdapter( email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
     }
 
     private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";

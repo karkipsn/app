@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,7 @@ public class DashboardDetailsActivity extends AppCompatActivity {
     RecyclerView mrecyclerView;
     DetailsAdapter iadapter;
     main_dashboard_fragment fragment;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     List<Order> ItmList = new ArrayList<>();
 
@@ -75,6 +77,10 @@ public class DashboardDetailsActivity extends AppCompatActivity {
             }
         });
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
 
         iadapter = new DetailsAdapter(ItmList, DashboardDetailsActivity.this);
 
@@ -90,6 +96,18 @@ public class DashboardDetailsActivity extends AppCompatActivity {
 
         mrecyclerView.setAdapter(iadapter);
         loadAdapter();
+
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadAdapter();
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
 
     }
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +41,8 @@ public class GroupCusDetails extends AppCompatActivity {
     RecyclerView mrecycleview;
     APIInterface apiInterface;
     CustomerDetailsAdapter cadapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     List<Order> orderList = new ArrayList<>();
 
@@ -62,6 +65,11 @@ public class GroupCusDetails extends AppCompatActivity {
 
         mrecycleview = findViewById(R.id.recycle_view);
 
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
         cadapter = new CustomerDetailsAdapter(getApplicationContext(), orderList);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -80,10 +88,17 @@ public class GroupCusDetails extends AppCompatActivity {
         mrecycleview.setItemAnimator(new DefaultItemAnimator());
 
         mrecycleview.setAdapter(cadapter);
-        String cus_id = getIntent().getStringExtra("cus_id");
-        Log.d("cus_id", cus_id);
+
+        final String cus_id = getIntent().getStringExtra("cus_id");
 
         loadAdapter(cus_id, email, password);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAdapter(cus_id, email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 

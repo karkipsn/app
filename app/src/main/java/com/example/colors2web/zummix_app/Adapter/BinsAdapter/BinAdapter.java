@@ -19,8 +19,8 @@ import com.example.colors2web.zummix_app.R;
 import java.util.List;
 
 public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
-    List<CityBins> BinList;
-    Context mcontext;
+    private List<CityBins> BinList;
+   private Context mcontext;
 
 
     public BinAdapter(List<CityBins> binList, Context mcontext) {

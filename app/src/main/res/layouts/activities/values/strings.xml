@@ -11,7 +11,7 @@
     <string name="nav_pick_velocity">Pick Velocity Report</string>
     <string name="nav_de_shipment">Item Dr History</string>
     <string name="nav_sales_report">Item Sales Report</string>
-    <string name="nav_city_bins">Field Office</string>
+    <string name="nav_city_bins">City Bins</string>
     <string name="nav_inactive_items">InActive Items</string>
     <string name="nav_parent_id">Customers List</string>
     <string name="nav_customer_items">Customer Inventory</string>

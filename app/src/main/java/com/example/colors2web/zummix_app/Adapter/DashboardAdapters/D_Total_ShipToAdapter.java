@@ -218,8 +218,6 @@ public class D_Total_ShipToAdapter extends RecyclerView.Adapter<D_Total_ShipToAd
         notifyItemRangeRemoved(0, size);
 
         WeekShipList =logs1;
-        Log.d("logs1",logs1.toString());
-        Log.d("week1",WeekShipList.toString());
 
         from =from1;
         to =to1;
@@ -230,9 +228,7 @@ public class D_Total_ShipToAdapter extends RecyclerView.Adapter<D_Total_ShipToAd
 
         final int size = WeekShipList.size();
         WeekShipList.clear();
-        Log.d("WeekShipList",WeekShipList.toString());
         notifyItemRangeRemoved(0, size);
-        Log.d("WeekShipList1",WeekShipList.toString());
 //            ShipList.clear();
 //            notifyDataSetChanged();
 

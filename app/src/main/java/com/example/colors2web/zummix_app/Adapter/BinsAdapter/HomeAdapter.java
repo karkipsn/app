@@ -18,7 +18,8 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
 
-    Activity mActivity;List<CityBins> BinList;
+    private Activity mActivity;
+    private List<CityBins> BinList;
 
 
     public HomeAdapter(Activity mActivity, List<CityBins> binList) {

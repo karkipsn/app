@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.items_elementory;
+package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.items_inventory;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.Cus_Fragments.Frag_Elementary;
-import com.example.colors2web.zummix_app.Activities.CustomersSearchActivity.ItemsElementory;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.OrdGrpByCus;
 import com.example.colors2web.zummix_app.POJO.OrderByCus.Order;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
@@ -33,12 +33,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Items_Elementory_Fragment extends Fragment {
+public class Items_Inventory_Fragment extends Fragment {
 
-    private static final String TAG_ELEMENTORY_FRAGMENT = "Items_Elementory_FRAGMENT" ;
+    private static final String TAG_ELEMENTORY_FRAGMENT = "Items_Elementory_FRAGMENT";
     Spinner spinner1;
     Button submit;
     Long cus_id;
+//    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +64,9 @@ public class Items_Elementory_Fragment extends Fragment {
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         spinner1 = view.findViewById(R.id.special_program_spinner);
         submit = view.findViewById(R.id.special_program_btn_submit);
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+//        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 
         spinner(email, password, apiInterface);
 
@@ -89,23 +93,38 @@ public class Items_Elementory_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                call_final();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("ciid", String.valueOf(cus_id));
-                Frag_Elementary inActive = new Frag_Elementary();
-                inActive.setArguments(bundle);
-                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-
-                getActivity().getSupportFragmentManager().beginTransaction().
-                        add(R.id.frame_special_program, inActive).
-                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
-                        commit();
-//                Not checked the null condition or empty condition as i think is not necessary
-//                Bcoz we are displaying it in this same child fragment so I am replacing the frame layout
 
             }
         });
 
+
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                call_final();
+//                mSwipeRefreshLayout.setRefreshing(false);
+//
+//            }
+//        });
+
+    }
+
+    private void call_final() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("ciid", String.valueOf(cus_id));
+        Frag_Elementary inActive = new Frag_Elementary();
+        inActive.setArguments(bundle);
+        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+        getActivity().getSupportFragmentManager().beginTransaction().
+                add(R.id.frame_special_program, inActive).
+                addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+                commit();
+//                Not checked the null condition or empty condition as i think is not necessary
+//                Bcoz we are displaying it in this same child fragment so I am replacing the frame layout
     }
 
     private void spinner(String email, String password, APIInterface apiInterface) {

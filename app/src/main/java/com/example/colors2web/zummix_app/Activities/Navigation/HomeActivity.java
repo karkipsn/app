@@ -39,12 +39,18 @@ import com.example.colors2web.zummix_app.Activities.LoginActivity;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Dr_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Home_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.ActiveFragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.InActive_fragment.Inactive_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Package_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Pick_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Problem_SKU_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Sales_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.SpecialPrograms.SpecialProgram_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.UOMFragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.User_fragment.User_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.city_bins_fragments.City_bins_fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.main_dashboard_fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.fragment_customers_list.Customer_list_fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.items_inventory.Items_Inventory_Fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
@@ -56,6 +62,7 @@ import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 
 public class HomeActivity extends AppCompatActivity {
+
 
 
     @BindView(R.id.nav_view)
@@ -78,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
+    public static int tryIndex = 0;
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "Dashboard";
@@ -88,6 +96,12 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_UOM = "Unit Of Measurement";
     private static final String TAG_USER = "Users";
     private static final String TAG_SPECIAL = "Special Programs";
+    private static final String TAG_INACTIVE = "Inactive Customers";
+    private static final String TAG_CITYBINS = "City Bins";
+    private static final String TAG_CUSTOMERLIST = "Customer List";
+    private static final String TAG_CUSTOMERITEMS = "Items Inventory";
+    private static final String TAG_PACKAGES = "Packages";
+    private static final String TAG_PROBLEM ="Problem SKU" ;
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -187,80 +201,104 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_HOME;
                         break;
 
-                    case R.id.nav_pick_velocity:
+                    case R.id.nav_customers_group:
                         navItemIndex = 1;
+                        CURRENT_TAG = TAG_GROUP;
+                        break;
+
+                    case R.id.nav_inactive_items:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_INACTIVE;
+                        break;
+
+                    case R.id.nav_pick_velocity:
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_DR;
                         break;
 
 
                     case R.id.nav_dr_shipment:
-                        navItemIndex = 2;
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_Sales;
                         break;
 
                     case R.id.nav_sales_report:
-                        navItemIndex = 3;
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_PICK;
                         break;
 
                     case R.id.nav_special_programs:
-                        navItemIndex = 4;
+                        navItemIndex =6;
                         CURRENT_TAG = TAG_SPECIAL;
                         break;
 
                     case R.id.nav_users:
-                        navItemIndex = 5;
+                        navItemIndex =7;
                         CURRENT_TAG = TAG_USER;
                         break;
 
                     case R.id.nav_uom:
-                        navItemIndex = 6;
+                        navItemIndex =8;
                         CURRENT_TAG = TAG_UOM;
                         break;
 
-                    case R.id.nav_customers_group:
-                        navItemIndex = 7;
-                        CURRENT_TAG = TAG_GROUP;
-                        break;
-
-
-                    case R.id.nav_city_bins:
-                        startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
-                        drawerLayout.closeDrawers();
-                        break;
-
-
-                    case R.id.nav_inactive_items:
-                        startActivity(new Intent(HomeActivity.this, InActiveActivity.class));
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        drawerLayout.closeDrawers();
-                        break;
-
-
                     case R.id.nav_parent_id:
-                        startActivity(new Intent(HomeActivity.this, ByParentId.class));
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        drawerLayout.closeDrawers();
+                        navItemIndex =9;
+                        CURRENT_TAG = TAG_CUSTOMERLIST;
                         break;
 
                     case R.id.nav_customer_items:
-                        startActivity(new Intent(HomeActivity.this, ItemsElementory.class));
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        drawerLayout.closeDrawers();
+                        navItemIndex = 10;
+                        CURRENT_TAG = TAG_CUSTOMERITEMS;
                         break;
 
+                    case R.id.nav_city_bins:
+                        navItemIndex = 11;
+                        CURRENT_TAG = TAG_CITYBINS;
+                        break;
 
                     case R.id.nav_packages:
-                        startActivity(new Intent(HomeActivity.this, PackageActivity.class));
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        drawerLayout.closeDrawers();
+                        navItemIndex = 12;
+                        CURRENT_TAG = TAG_PACKAGES;
                         break;
 
                     case R.id.nav_problem_sku:
-                        startActivity(new Intent(HomeActivity.this, ProblemSKU.class));
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        drawerLayout.closeDrawers();
+                        navItemIndex = 13;
+                        CURRENT_TAG = TAG_PROBLEM;
                         break;
+
+
+//                    case R.id.nav_city_bins:
+//                        startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
+//                        drawerLayout.closeDrawers();
+//                        break;
+
+
+
+//                    case R.id.nav_parent_id:
+//                        startActivity(new Intent(HomeActivity.this, ByParentId.class));
+//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                        drawerLayout.closeDrawers();
+//                        break;
+
+//                    case R.id.nav_customer_items:
+//                        startActivity(new Intent(HomeActivity.this, ItemsElementory.class));
+//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                        drawerLayout.closeDrawers();
+//                        break;
+
+
+//                    case R.id.nav_packages:
+//                        startActivity(new Intent(HomeActivity.this, PackageActivity.class));
+//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                        drawerLayout.closeDrawers();
+//                        break;
+
+//                    case R.id.nav_problem_sku:
+//                        startActivity(new Intent(HomeActivity.this, ProblemSKU.class));
+//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                        drawerLayout.closeDrawers();
+//                        break;
 
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -373,39 +411,70 @@ public class HomeActivity extends AppCompatActivity {
                 return d_fragment;
 
             case 1:
+                // Customers Group
+                Home_Fragment hfragment = new Home_Fragment();
+                return  hfragment;
+
+            case 2:
+                // unit of measurement
+                Inactive_Fragment ifragment = new Inactive_Fragment();
+                return  ifragment;
+
+            case 3:
                 // pick fragment
                 Pick_Fragment pick_fragment = new Pick_Fragment();
                 return pick_fragment;
 
-            case 2:
+            case 4:
 //                De Shipment fragment
                 Dr_Fragment dr_fragment = new Dr_Fragment();
                 return dr_fragment;
 
-            case 3:
+            case 5:
                 // sales fragment
                 Sales_Fragment sales_fragment = new Sales_Fragment();
                 return sales_fragment;
 
-            case 4:
+            case 6:
                 // special program
                 SpecialProgram_Fragment spFragment = new SpecialProgram_Fragment();
                 return spFragment;
 
-            case 5:
+            case 7:
                 // warehouse users
                 User_Fragment uFragment = new User_Fragment();
                 return uFragment;
 
-            case 6:
+            case 8:
                 // unit of measurement
                 UOMFragment uomFragment = new UOMFragment();
                 return  uomFragment;
 
-            case 7:
+            case 9:
                 // unit of measurement
-                Home_Fragment hfragment = new Home_Fragment();
-                return  hfragment;
+                Customer_list_fragment clfragment = new Customer_list_fragment();
+                return  clfragment;
+
+            case 10:
+                // item inventory //
+                Items_Inventory_Fragment ivfragment = new Items_Inventory_Fragment();
+                return  ivfragment;
+
+            case 11:
+                // unit of measurement
+                 City_bins_fragment cfragment = new City_bins_fragment();
+                return  cfragment;
+
+            case 12:
+                // unit of measurement
+                Package_Fragment packfragment = new Package_Fragment();
+                return  packfragment;
+
+            case 13:
+                // unit of measurement
+                Problem_SKU_Fragment probfragment = new Problem_SKU_Fragment();
+                return  probfragment;
+
 
 
             default:

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -25,14 +25,30 @@
                 android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleMargin="@dimen/activity_horizontal_margin_narrow"></android.support.v7.widget.Toolbar>
+                app:titleMargin="@dimen/activity_horizontal_margin_narrow">
+
+            </android.support.v7.widget.Toolbar>
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nested_scrollview"
+       >
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,39 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
 
-                <!--<TextView-->
-                <!--android:id="@+id/heading_text"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="top"-->
-                <!--android:text="Select Customer*" />-->
-
-
-                <!--<AutoCompleteTextView-->
-                <!--android:id="@+id/item_sales_spinner"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/heading_text"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:text="Select Company"-->
-                <!--android:clickable="true"-->
-                <!--android:cursorVisible="false"-->
-                <!--android:drawableEnd="@android:drawable/arrow_down_float"-->
-                <!--android:dropDownHeight="wrap_content"-->
-
-                <!--android:focusable="false"-->
-                <!--android:inputType="none"-->
-                <!--android:maxLines="1"-->
-                <!--android:textSize="20sp"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--app:layout_constraintLeft_toLeftOf="parent"-->
-                <!--app:layout_constraintRight_toRightOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent" />-->
-                <!--</RelativeLayout>-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -209,28 +193,6 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/city_create_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="City*" />
-                </android.support.design.widget.TextInputLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,58 +212,67 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/citybins_spineheader"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="State(*):"
-                            android:layout_gravity="top"
-                            android:layout_marginBottom="@dimen/margin_down"
-                            android:paddingStart="@dimen/margin_down"
-                            android:textColor="@color/iron"
-                            android:textColorHint="@color/iron"
-                            android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/citybins_spineheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="State(*):"
+                        android:layout_gravity="top"
+                        android:layout_marginBottom="@dimen/margin_down"
+                        android:paddingStart="@dimen/margin_down"
+                        android:textColor="@color/iron"
+                        android:textColorHint="@color/iron"
+                        android:visibility="gone" />
 
-                        <Spinner
-                            android:id="@+id/us_state_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/popup_spinner"
-                            android:padding="10dp"
-                            android:layout_marginRight="30dp"
-                            android:spinnerMode="dialog"
-                            android:textSize="14sp"
-                            android:visibility="gone"
+                    <Spinner
+                        android:id="@+id/us_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:layout_marginRight="30dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
 
-                            />
+                        />
 
-                        <Spinner
-                            android:id="@+id/mx_state_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/popup_spinner"
-                            android:padding="10dp"
-                            android:layout_marginRight="30dp"
-                            android:spinnerMode="dialog"
-                            android:textSize="14sp"
-                            android:visibility="gone"
+                    <Spinner
+                        android:id="@+id/mx_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:layout_marginRight="30dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
 
-                            />
+                        />
 
-                        <Spinner
-                            android:id="@+id/ca_state_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/popup_spinner"
-                            android:padding="10dp"
-                            android:layout_marginRight="30dp"
-                            android:spinnerMode="dialog"
-                            android:textSize="14sp"
-                            android:visibility="gone"
+                    <Spinner
+                        android:id="@+id/ca_state_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/popup_spinner"
+                        android:padding="10dp"
+                        android:layout_marginRight="30dp"
+                        android:spinnerMode="dialog"
+                        android:textSize="14sp"
+                        android:visibility="gone"
 
-                            />
+                        />
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
 
 
                 <android.support.design.widget.TextInputLayout
@@ -310,20 +281,12 @@
                     android:layout_weight="1">
 
                     <EditText
-                        android:id="@+id/city_create_country"
+                        android:id="@+id/city_create_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Country*" />
-
+                        android:hint="City*" />
                 </android.support.design.widget.TextInputLayout>
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
 
                 <android.support.design.widget.TextInputLayout
@@ -341,6 +304,28 @@
 
 
             </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<EditText-->
+                        <!--android:id="@+id/city_create_zip"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="Zip*" />-->
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+
+
+            <!--</LinearLayout>-->
 
 
             <LinearLayout
@@ -449,7 +434,10 @@
 
         </LinearLayout>
 
-    </ScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</android.support.design.widget.CoordinatorLayout>

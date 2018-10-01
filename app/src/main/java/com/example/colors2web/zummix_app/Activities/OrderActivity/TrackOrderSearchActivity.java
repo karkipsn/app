@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,9 +42,10 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
     Toolbar toolbar;
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mrecyclerView;
     TrackingAdapter tadapter;
+    private String Path;
 
     List<OrderDetail> ordList = new ArrayList<>();
 
@@ -55,6 +57,10 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -78,11 +84,16 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
 
         if (i != null) {
 
-            final String Path = i.getExtras().getString("OPath");
-            if (Path != null) {
-                call_next(email, password, Path);
-            }
+            Path = i.getExtras().getString("OPath");
         }
+        call_next(email, password, Path);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                call_next(email, password, Path);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
 

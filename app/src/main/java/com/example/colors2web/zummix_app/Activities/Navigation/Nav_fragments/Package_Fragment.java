@@ -1,36 +1,36 @@
-package com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity;
+package com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Adapter.Admin_Tools_Adapters.PackageAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.PackageInput;
@@ -40,7 +40,6 @@ import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.customers.CustomerResponse;
 import com.example.colors2web.zummix_app.POJO.customers.Customers;
 import com.example.colors2web.zummix_app.R;
-import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
@@ -53,10 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PackageActivity extends AppCompatActivity {
-
-    @BindView(R.id.toolbar)
-    Toolbar mtoolbar ;
+public class Package_Fragment extends Fragment {
 
     @BindView(R.id.recycle_view)
     RecyclerView mrecycleview ;
@@ -66,6 +62,9 @@ public class PackageActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     PackageAdapter padapter;
 
     List<Packages> PList =new ArrayList<>();
@@ -74,43 +73,39 @@ public class PackageActivity extends AppCompatActivity {
     String radio1,radio,status,package_type,customer_id;
     RadioButton prb,prb1;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+       View view = inflater.inflate(R.layout.fragment_package,container,false);
+        ButterKnife.bind(this,view);
+        return  view;
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_common_with_button);
-        ButterKnife.bind(this);
-
-
-        //for toolbarsetup with back arrow
-        setSupportActionBar(mtoolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
         final String group_type = preferences.getString("group_type", "");
         final String l_id = preferences.getString("l_id", "");
 
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
-
-        mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View popupView = inflater.inflate(R.layout.modal_create_package, null);
 
-                WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
                 Display display = wm.getDefaultDisplay();
 
                 int height = display.getHeight();
@@ -210,6 +205,12 @@ public class PackageActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.show();
+
                         String qname =pname.getText().toString();
                         String qsku =psku.getText().toString();
                         String qweight =pweight.getText().toString();
@@ -253,13 +254,13 @@ public class PackageActivity extends AppCompatActivity {
                             package_type="0";
                         }
                         if(cus_id!=null){
-                         customer_id =cus_id.toString();}
+                            customer_id =cus_id.toString();}
 
 
                         PackageInput input = new PackageInput(customer_id,qname,qlength,qwidth,qheight,l_id,l_id,
                                 qweight,qsku,qcost,status,package_type);
 
-                        postActivity(email,password,group_type,l_id,input);
+                        postActivity(email,password,group_type,l_id,input,progressDialog,popup);
 
 
                     }
@@ -274,30 +275,38 @@ public class PackageActivity extends AppCompatActivity {
             }
         });
 
-        padapter = new PackageAdapter(PackageActivity.this,PList);
+        padapter = new PackageAdapter(getActivity(),PList);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
 
-        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(getContext());
         mrecycleview.setHasFixedSize(true);
         mrecycleview.setLayoutManager(mlayoutManager);
 
-        mrecycleview.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.HORIZONTAL, 16));
+        mrecycleview.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
         mrecycleview.setItemAnimator(new DefaultItemAnimator());
 
         mrecycleview.setAdapter(padapter);
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                PList.clear();
+                padapter.notifyDataSetChanged();
+
+                loadAdapter( email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
         loadAdapter( email, password);
     }
 
-    private void postActivity(String email, String password, String group_type, String l_id, PackageInput input) {
-
-        final ProgressDialog progressDialog = new ProgressDialog(PackageActivity.this, R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
+    private void postActivity(String email, String password, String group_type, String l_id, PackageInput input,
+                              final ProgressDialog progressDialog, final PopupWindow popup) {
 
 
         Call<ProblemResponse> call = apiInterface.postPackage(email, password,input);
@@ -309,18 +318,17 @@ public class PackageActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ProblemResponse resp1 = response.body();
                     if(resp1.getReturnType().equals("success")){
-                        Toast.makeText(PackageActivity.this,resp1.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),resp1.getMessage(),Toast.LENGTH_SHORT).show();
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
-                        finish();
-                        startActivity(getIntent());
-
+                        popup.dismiss();
+                        refresh();
 
                     } else {
                         String d = response.body().getMessage();
-                        Toast.makeText(PackageActivity.this,d,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),d,Toast.LENGTH_SHORT).show();
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -332,7 +340,7 @@ public class PackageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
@@ -342,11 +350,11 @@ public class PackageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(getApplicationContext(), "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
                     if (progressDialog.isShowing()) {
@@ -354,7 +362,7 @@ public class PackageActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(PackageActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -365,11 +373,19 @@ public class PackageActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 Log.e("response-failure", t.toString());
-                Toast.makeText(PackageActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
 
+    private void refresh() {
+
+        PList.clear();
+        padapter.notifyDataSetChanged();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 
     private boolean Validation(String qname) {
@@ -392,32 +408,32 @@ public class PackageActivity extends AppCompatActivity {
 
                     List<Customers> cus = resp1.getmCustomer();
 
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (cus != null) {
 
-                            ArrayList<SpinnerPojo> countryList = new ArrayList<>();
+                        ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
                         for (int i = 0; i < cus.size(); i++) {
 
-                                SpinnerPojo order1 = new SpinnerPojo();
+                            SpinnerPojo order1 = new SpinnerPojo();
 
-                                String name = cus.get(i).getCompanyName();
-                                Long cus_id = cus.get(i).getId();
+                            String name = cus.get(i).getCompanyName();
+                            Long cus_id = cus.get(i).getId();
 
-                                order1.setCus_id(cus_id);
-                                order1.setName(name);
+                            order1.setCus_id(cus_id);
+                            order1.setName(name);
 
-                                countryList.add(order1);// must be the object of empty list initiated
+                            countryList.add(order1);// must be the object of empty list initiated
 
                         }
 
-                        ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(PackageActivity.this,
+                        ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(getContext(),
                                 android.R.layout.simple_spinner_dropdown_item, countryList);
                         adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
 
                         Customer.setAdapter(adp1);
-//                        Customer.setAdapter(new ArrayAdapter<SpinnerPojo>(PackageActivity.this,
+//                        Customer.setAdapter(new ArrayAdapter<SpinnerPojo>(getContext(),
 //                                android.R.layout.simple_spinner_dropdown_item, countryList));
 
 
@@ -429,7 +445,7 @@ public class PackageActivity extends AppCompatActivity {
                 } else if (response.code() == 401) {
 
 
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
@@ -437,18 +453,18 @@ public class PackageActivity extends AppCompatActivity {
 
 
 
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(getApplicationContext(), "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
 
 
                 } else {
 
-                    Toast.makeText(PackageActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -458,15 +474,15 @@ public class PackageActivity extends AppCompatActivity {
                 call.cancel();
 
                 Log.e("response-failure", t.toString());
-                Toast.makeText(PackageActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
-        }
+    }
 
     private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
     private void loadAdapter( String email, String password) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(PackageActivity.this, R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(getContext(), R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
@@ -485,7 +501,7 @@ public class PackageActivity extends AppCompatActivity {
 
                     List<Packages> order = resp1.getmPackages();
 
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (order != null) {
 
@@ -538,7 +554,7 @@ public class PackageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
 
 
@@ -548,11 +564,11 @@ public class PackageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
 
-                    Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
 
-                    Toast.makeText(getApplicationContext(), "Server Broken", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Server Broken", Toast.LENGTH_LONG).show();
                     Log.d("Error", response.errorBody().toString());
 
                     if (progressDialog.isShowing()) {
@@ -560,7 +576,7 @@ public class PackageActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(PackageActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -572,60 +588,10 @@ public class PackageActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 Log.e("response-failure", t.toString());
-                Toast.makeText(PackageActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu2, menu);
-        ImageView img;
-
-        img = (ImageView) menu.findItem(R.id.image).getActionView();
-        img.setImageResource(android.R.drawable.ic_menu_search);
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.frame_toolbar, new SearchFragment()).
-                        addToBackStack(TAG_FRAGMENT).commit();
-            }
-        });
-
-        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-
-            case R.id.image:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
-
-//        moveTaskToBack(true);
-    }
-
-
-}

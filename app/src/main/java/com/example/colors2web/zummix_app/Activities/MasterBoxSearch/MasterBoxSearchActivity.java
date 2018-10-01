@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -48,6 +49,7 @@ import retrofit2.Response;
 public class MasterBoxSearchActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
+    private String Path;
 
     @BindView(R.id.cus_cus_id)
     TextView cus_id;
@@ -57,6 +59,9 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
 
     @BindView(R.id.tabs_customer)
     TabLayout tabLayout;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.viewpager_customer)
     ViewPager viewPager;
@@ -75,6 +80,7 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
 
         //  tablayout with pageviewer set up
         tabLayout.setupWithViewPager(viewPager);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -87,12 +93,21 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
 
         if (i != null) {
 
-            final String Path = i.getExtras().getString("OPath");
-            if (Path != null) {
-                call(email, password, Path);
-            }
+            Path = i.getExtras().getString("OPath");
+
+            call(email, password, Path);
+
         }
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                call(email, password, Path);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         final MenuInflater inflater = getMenuInflater();
@@ -282,7 +297,6 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                     setup_viewpager(shipping_address, fieldOffice, companyDetails, MasterBoxList);
 
 
-
                 } else if (response.code() == 401) {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
@@ -318,7 +332,6 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
 
     private void setup_viewpager(OrderShippingAddress shipping_address, FieldOffice fieldOffice,
                                  CompanyDetails companyDetails, ArrayList<MasterBox> masterBoxList) {
-
 
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

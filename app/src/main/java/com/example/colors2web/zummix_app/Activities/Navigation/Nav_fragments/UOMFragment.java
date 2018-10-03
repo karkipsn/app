@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,13 +48,16 @@ public class UOMFragment extends Fragment {
     APIInterface apiInterface;
     Button create;
     UOMAdapter padapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     String uominput;
     int navItemIndex;
     private Bundle savedState = null;
     List<UOM> UList = new ArrayList<>();
 
     public UOMFragment() {
-    };
+    }
+
+    ;
 
     @Nullable
     @Override
@@ -80,12 +84,28 @@ public class UOMFragment extends Fragment {
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(padapter);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
         final String l_id = preferences.getString("l_id", "");
 
         loadAdapter(email, password);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                UList.clear();
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +182,7 @@ public class UOMFragment extends Fragment {
                         popup.dismiss();
                         padapter.resetdata();
 
-                       refresh();
+                        refresh();
 //                        savedState = saveState();
 
                     } else {

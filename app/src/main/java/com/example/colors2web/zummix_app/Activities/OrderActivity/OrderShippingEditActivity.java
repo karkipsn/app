@@ -101,6 +101,8 @@ public class OrderShippingEditActivity extends AppCompatActivity {
     String cus_id, s_state, state;
     String s_country = null;
 
+    ArrayList<OrderShippingAddressesDetail> ShippingList;
+
     String updated_by, customer_fname, customer_lname, customer_email, customer_phone1,
             customer_address1, customer_address2, customer_city, customer_country,
             customer_state, customer_zip, comment;
@@ -135,12 +137,8 @@ public class OrderShippingEditActivity extends AppCompatActivity {
         Intent i = getIntent();
         if (i != null) {
             odr = i.getExtras().getString("o_id_edit", "");
-//            Parcelable[] detail = i.getExtras().getParcelableArray("details");
-            Log.d("edit_order_no", odr);
-//            Log.d("detail", detail.toString());
+           ShippingList = i.getExtras().getParcelableArrayList("ShippingList");
         }
-
-
 
 
         loadCountrySpinner();
@@ -245,6 +243,18 @@ public class OrderShippingEditActivity extends AppCompatActivity {
 
             }
         });
+
+
+        mcustomer_fname.setText(ShippingList.get(0).getCustomerFname());
+        mcustomer_lname.setText(ShippingList.get(0).getCustomerLname());
+        mcustomer_email.setText(ShippingList.get(0).getCustomerEmail());
+        mcustomer_phone1.setText(ShippingList.get(0).getCustomerPhone1());
+        mcustomer_address1.setText(ShippingList.get(0).getCustomerAddress1());
+        mcustomer_address2.setText(ShippingList.get(0).getCustomerAddress2());
+        mcustomer_state.setText(ShippingList.get(0).getCustomerState());
+        mcustomer_city.setText(ShippingList.get(0).getCustomerCity());
+        mcustomer_zip.setText(ShippingList.get(0).getCustomerZip());
+        mcomment.setText(ShippingList.get(0).getNote());
 
 
         moedit.setOnClickListener(new View.OnClickListener() {
@@ -733,7 +743,6 @@ public class OrderShippingEditActivity extends AppCompatActivity {
 //        Yo bata ni tei page mai pathauni
 
 
-
         OrderEditPut editPut = new OrderEditPut(customer_fname, customer_lname, customer_email, customer_phone1,
                 customer_address1, customer_address2
                 , customer_city, customer_country, customer_state, customer_zip, comment, updated_by);
@@ -763,9 +772,15 @@ public class OrderShippingEditActivity extends AppCompatActivity {
                             Intent intent = new Intent(OrderShippingEditActivity.this, OrderSearch2Activity.class);
                             intent.putExtra("edit_id", odr);
                             startActivity(intent);
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
                             break;
 
                         case "error":
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
                             Toast.makeText(getApplicationContext(), resp1.getMessage() + "\n" + "Please Review Order and Try again", Toast.LENGTH_SHORT).show();
                             break;
                     }

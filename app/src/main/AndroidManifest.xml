@@ -47,12 +47,21 @@
         <activity
             android:name=".Activities.PostActivity.Item_DR_HistoryActivity"
             android:label="Item Dr History"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
+
+        </activity>
 
         <activity
             android:name=".Activities.MasterBoxSearch.MasterBoxSearchActivity"
-            android:label="Master/Box Details"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+            android:label="Master/Box Details">
+
+        </activity>
+
+        <activity
+            android:name=".Activities.MasterBoxSearch.MasterBoxSearch2Activity"
+            android:label="Master/Box Details">
+
+        </activity>
 
 
         <activity
@@ -61,11 +70,9 @@
             android:theme="@style/AppTheme.Dark"></activity>
 
 
-
         <activity
             android:name=".Activities.OrderSearch2Activity"
-            android:label="Order Details"
-            >
+            android:label="Order Details">
 
         </activity>
         <activity
@@ -80,7 +87,7 @@
 
         <activity
             android:name=".Activities.OrderActivity.TrackOrderSearchActivity"
-            android:label="Order Details" />
+            android:label="Tracking Order Details Of:" />
 
         <activity
             android:name=".Activities.ProductDetails.ProductSearchActivity"
@@ -88,8 +95,9 @@
 
         </activity>
 
-        <activity android:name=".Activities.Navigation.Nav_fragments.dashboard_fragments.DashboardDetailsActivity"
-            android:label="OPen Orders">
+        <activity
+            android:name=".Activities.Navigation.Nav_fragments.dashboard_fragments.DashboardDetailsActivity"
+            android:label="Open Orders">
 
         </activity>
 
@@ -112,12 +120,10 @@
 
         <activity
             android:name=".Activities.BarcodeActivity.BarcodeAPI_Activity"
-            android:label="Order Details"
-            />
+            android:label="Order Details" />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByActiveCustomers"
-            android:label="Active Customers"
-           />
+            android:label="Active Customers" />
         <activity
             android:name=".Activities.CustomersSearchActivity.ByCustomerId"
             android:label="Customers" />

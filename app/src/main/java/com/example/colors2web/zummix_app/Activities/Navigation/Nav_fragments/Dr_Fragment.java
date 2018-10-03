@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,7 @@ public class Dr_Fragment extends Fragment {
     String mform1, mto1;
     ImageView img;
     Long cus_id;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public Dr_Fragment() {
 
@@ -84,6 +86,11 @@ public class Dr_Fragment extends Fragment {
         msku.setVisibility(View.VISIBLE);
 
         mform = getActivity().findViewById(R.id.item_dr_from);
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 
         mto = getActivity().findViewById(R.id.item_dr_to);
 
@@ -143,6 +150,20 @@ public class Dr_Fragment extends Fragment {
                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 mto1 = format.format(c.getTime());
                 datePickerDialog.show();
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                msku.setText(null);
+                mform.setText(null);
+                mto.setText(null);
+
+                Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+
             }
         });
 

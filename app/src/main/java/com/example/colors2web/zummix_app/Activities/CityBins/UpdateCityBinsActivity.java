@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,6 +118,9 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    @BindView(R.id.linearview)
+    LinearLayout linearLayout;
+
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -122,7 +128,7 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
     APIInterface apiInterface;
     ImageView img;
     String bin_id, cus_id;
-    String  s_state, state;
+    String s_state, state;
     String s_country = null;
 
     String mbins, mship_to_name, maddress1, maddress2, mmcity, mmcountry, mmstate, mmzip, mmanager1_name,
@@ -264,6 +270,7 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
             }
         });
 
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -396,7 +403,6 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
         });
 
     }
-
 
 
     private void load_mx_stateSPinner() {
@@ -808,45 +814,45 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     CityEditResponse resp1 = response.body();
 
-                    if(resp1.getReturnType().equals("success")){
+                    if (resp1.getReturnType().equals("success")) {
 
-                    CityBin cus = resp1.getCityBin();
+                        CityBin cus = resp1.getCityBin();
 
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
 
-                            mbins = cus.getBin();
-                            mship_to_name = cus.getShipToName();
-                            maddress1 = cus.getAddress1();
-                            maddress2 = cus.getAddress2();
-                            mmcity = cus.getCity();
-                            mmcountry = cus.getCountry();
-                            mmstate = cus.getState();
-                            mmzip = cus.getZip();
-                            mmanager1_name = cus.getManager1Name();
-                            mmanager1_email = cus.getManager1Email();
-                            mmanager1_phone = cus.getManager1Phone();
-                            mmanager2_name = cus.getManager2Name();
-                            mmanager2_email = cus.getManager2Email();
-                            mcompany_email = cus.getCompanyEmail();
-                            mmanager2_phone = cus.getManager2Phone();
+                        mbins = cus.getBin();
+                        mship_to_name = cus.getShipToName();
+                        maddress1 = cus.getAddress1();
+                        maddress2 = cus.getAddress2();
+                        mmcity = cus.getCity();
+                        mmcountry = cus.getCountry();
+                        mmstate = cus.getState();
+                        mmzip = cus.getZip();
+                        mmanager1_name = cus.getManager1Name();
+                        mmanager1_email = cus.getManager1Email();
+                        mmanager1_phone = cus.getManager1Phone();
+                        mmanager2_name = cus.getManager2Name();
+                        mmanager2_email = cus.getManager2Email();
+                        mcompany_email = cus.getCompanyEmail();
+                        mmanager2_phone = cus.getManager2Phone();
 
-                            mbin.setText(mbins);
-                            mshipname.setText(mship_to_name);
-                            madd1.setText(maddress1);
-                            madd2.setText(maddress2);
-                            mcity.setText(mmcity);
+                        mbin.setText(mbins);
+                        mshipname.setText(mship_to_name);
+                        madd1.setText(maddress1);
+                        madd2.setText(maddress2);
+                        mcity.setText(mmcity);
 //                            mcountry.setText(mmcountry);
-                            mstate.setText(mmstate);
-                            mzip.setText(mmzip);
-                            mname.setText(mmanager1_name);
-                            mname2.setText(mmanager2_name);
-                            mmphone.setText(mmanager1_phone);
-                            mmphone2.setText(mmanager2_phone);
-                            mmemail2.setText(mmanager2_email);
-                            mmemail.setText(mmanager1_email);
+                        mstate.setText(mmstate);
+                        mzip.setText(mmzip);
+                        mname.setText(mmanager1_name);
+                        mname2.setText(mmanager2_name);
+                        mmphone.setText(mmanager1_phone);
+                        mmphone2.setText(mmanager2_phone);
+                        mmemail2.setText(mmanager2_email);
+                        mmemail.setText(mmanager1_email);
 
-                        
+
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -953,4 +959,17 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+//    @Override
+//    public boolean canChildScrollUp() {
+//        if (scrollView != null)
+//            return scrollView.canScrollVertically(-1);
+//
+//        return false;
+//    }
 }

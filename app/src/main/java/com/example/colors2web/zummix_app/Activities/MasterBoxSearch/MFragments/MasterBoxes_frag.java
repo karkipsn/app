@@ -24,11 +24,10 @@ public class MasterBoxes_frag extends Fragment {
 
     RecyclerView srecycleview;
     MBoxAdapter kadapter;
-
     List<MasterBox> MBoxList = new ArrayList<>();
 
     public MasterBoxes_frag() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -49,9 +48,9 @@ public class MasterBoxes_frag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        kadapter = new MBoxAdapter(getContext(),MBoxList);
+        kadapter = new MBoxAdapter(getActivity(), MBoxList);
 
-        srecycleview = getActivity().findViewById(R.id.recycler_view_shipping);
+        srecycleview = view.findViewById(R.id.recycler_view_shipping);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //            mrecyclerView.setHasFixedSize(true);
@@ -71,7 +70,9 @@ public class MasterBoxes_frag extends Fragment {
 
         if (getArguments() != null) {
 
-            ArrayList<MasterBox> boxes = (ArrayList<MasterBox>)getArguments().getSerializable("masterBoxList");
+            ArrayList<MasterBox> boxes = (ArrayList<MasterBox>) getArguments().getSerializable("masterBoxList");
             kadapter.updateAnswers(boxes);
-            Log.d("masterboxList",boxes.toString());
-}}}
+            Log.d("masterboxList", boxes.toString());
+        }
+    }
+}

@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.BarcodeActivity.BarcodeMain;
+import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MasterBoxSearch2Activity;
 import com.example.colors2web.zummix_app.Activities.OrderActivity.TrackOrderSearchActivity;
 import com.example.colors2web.zummix_app.Activities.ProductDetails.ProductSearchActivity;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MasterBoxSearchActivity;
@@ -503,7 +504,7 @@ public class SearchFragment extends Fragment {
 
                     if (Ordlist!= null) {
 
-                        Intent intent3 = new Intent(getContext(), MasterBoxSearchActivity.class);
+                        Intent intent3 = new Intent(getContext(), MasterBoxSearch2Activity.class);
                         intent3.putExtra("OPath", oPath);
                         startActivity(intent3);
                         if (progressDialog.isShowing()) {

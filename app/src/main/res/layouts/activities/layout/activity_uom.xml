@@ -26,6 +26,11 @@
             android:textColor="@color/primary_dark"
             android:textSize="16sp"/>
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -34,6 +39,8 @@
             android:id="@+id/recycle_view_uom">
 
         </android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
 

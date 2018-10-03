@@ -110,6 +110,8 @@ public class ProductSearchActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+                ItmList.clear();
                 final String Path = i.getExtras().getString("OPath");
                 if (Path != null) {
                     call(email, password, Path);

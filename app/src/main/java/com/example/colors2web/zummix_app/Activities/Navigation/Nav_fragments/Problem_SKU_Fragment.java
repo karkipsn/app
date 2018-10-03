@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,7 +75,7 @@ public class Problem_SKU_Fragment extends Fragment {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
-        cadapter = new ProblemAdapter(getActivity(),PList);
+        cadapter = new ProblemAdapter(getActivity(),Problem_SKU_Fragment.this,PList);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -216,5 +217,13 @@ public class Problem_SKU_Fragment extends Fragment {
                 Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void refresh() {
+
+        PList.clear();
+        cadapter.notifyDataSetChanged();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 }

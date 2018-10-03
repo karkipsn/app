@@ -18,9 +18,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.BatchAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchOrder;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchResponse;
@@ -75,7 +77,7 @@ public class BatchSearchActivity extends AppCompatActivity {
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayout.HORIZONTAL,16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(badapter);
         mswipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -97,6 +99,7 @@ public class BatchSearchActivity extends AppCompatActivity {
         mswipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                BatchList.clear();
                 loadAdapter(bid);
                 mswipeRefreshLayout.setRefreshing(false);
             }
@@ -138,6 +141,7 @@ public class BatchSearchActivity extends AppCompatActivity {
 
                             batch_no = String.valueOf(cus.get(0).getBatchNumber());
 
+                            Long id = cus.get(i).getId();
                             String store = cus.get(i).getCustomerName();
                             String order = cus.get(i).getOrderNumber();
                             String ordertype = cus.get(i).getOrderType();
@@ -149,6 +153,7 @@ public class BatchSearchActivity extends AppCompatActivity {
                             String is_refunded = cus.get(i).getIsRefunded();
                             String cus_ofc = cus.get(i).getCustomerOfficeName();
 
+                            batchOrder.setId(id);
                             batchOrder.setCustomerName(store);
                             batchOrder.setOrderNumber(order);
                             batchOrder.setOrderType(ordertype);

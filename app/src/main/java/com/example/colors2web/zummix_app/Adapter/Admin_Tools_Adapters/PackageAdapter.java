@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Package_Fragment;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.PackageInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.Packages;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
@@ -40,8 +41,15 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
     private List<Packages> PackList;
     private RadioButton prb;
     private String status, radio;
+    Package_Fragment package_fragment;
 
-    public PackageAdapter(Activity applicationContext, List<Packages> pList) {
+    public PackageAdapter(Activity applicationContext,Package_Fragment pfragment, List<Packages> pList) {
+        mContext = applicationContext;
+        this.package_fragment = pfragment;
+        PackList = pList;
+    }
+
+    public PackageAdapter(Activity applicationContext,List<Packages> pList) {
         mContext = applicationContext;
         PackList = pList;
     }
@@ -118,7 +126,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
 
                 Button submit, cancle;
                 final EditText pname, psku, pweight, plength, pwidth, pheight, pcost;
-                RadioGroup pradio;
+                final RadioGroup pradio;
 
 
                 pname = popupView.findViewById(R.id.pack_adpt_name);
@@ -157,13 +165,12 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                             case R.id.yes:
 
                                 prb = popupView.findViewById(checkedId);
-                                radio = prb.getText().toString();
-                                Log.d("radio", radio);
+                                radio = "YES";
                                 break;
 
                             case R.id.no:
                                 prb = popupView.findViewById(checkedId);
-                                radio = prb.getText().toString();
+                                radio = "NO";
                                 break;
                         }
                     }
@@ -208,6 +215,31 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                                 pweight.setError("Invalid Weight");
                             }
                             pname.setError("Invalid Name");
+                        }
+
+
+                        if (pradio.getCheckedRadioButtonId() == -1) {
+                            // no radio buttons are checked
+                            if (statuz.equals("1")) {
+                                radio ="YES";
+                            } else {
+                                radio ="NO";
+                            }
+
+                        } else {
+                            int selectedId = pradio.getCheckedRadioButtonId();
+                            switch (selectedId) {
+                                case R.id.yes:
+
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "YES";
+                                    break;
+
+                                case R.id.no:
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "NO";
+                                    break;
+                            }
                         }
 
                         if (radio.equals("YES")) {
@@ -257,6 +289,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.PackageH
                     if (resp1.getReturnType().equals("success")) {
                         Toast.makeText(mContext, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         popup.dismiss();
+                        package_fragment.refresh();
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();

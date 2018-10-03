@@ -6,10 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,17 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.CompanyDetails_frag;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.FieldOffice_frag;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.MasterBoxes_frag;
-import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MFragments.ShippingAddress_frag;
+import com.example.colors2web.zummix_app.Adapter.BoxAdapters.MBoxAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.CompanyDetails;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.FieldOffice;
+import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBox;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBoxResponse;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.OrderShippingAddress;
-import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.MasterBox;
-
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
@@ -45,26 +42,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class MasterBoxSearchActivity extends AppCompatActivity {
+public class MasterBoxSearch2Activity extends AppCompatActivity {
 
     APIInterface apiInterface;
     private String Path;
 
-    @BindView(R.id.cus_cus_id)
-    TextView cus_id;
 
     @BindView(R.id.toolbar)
     Toolbar ctoolbar;
 
-    @BindView(R.id.tabs_customer)
-    TabLayout tabLayout;
+    @BindView(R.id.m_storename)
+    TextView store;
+
+    @BindView(R.id.m_masterbox)
+    TextView master_box;
+
+    @BindView(R.id.m_fieldOffice)
+    TextView mfield_office;
+
+    MBoxAdapter mBoxAdapter;
+    RecyclerView mrecycleview;
+
 
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
-    @BindView(R.id.viewpager_customer)
-    ViewPager viewPager;
 
     ArrayList<MasterBox> MasterBoxList = new ArrayList<>();
     String cid1;
@@ -72,19 +73,36 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.customer_customerid);
-
+        setContentView(R.layout.activity_masterbox_final);
         ButterKnife.bind(this);
 
         //for toolbarsetup with back arrow
         setSupportActionBar(ctoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //  tablayout with pageviewer set up
-        tabLayout.setupWithViewPager(viewPager);
+        ctoolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//                super.onBackPressed();
+            }
+        });
+
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
+        mBoxAdapter = new MBoxAdapter(MasterBoxSearch2Activity.this,MasterBoxList);
         apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        mrecycleview = findViewById(R.id.recycle_view_mbox);
+        RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
+        mrecycleview.setHasFixedSize(true);
+        mrecycleview.setLayoutManager(mlayoutManager);
+
+        mrecycleview.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.HORIZONTAL, 16));
+        mrecycleview.setItemAnimator(new DefaultItemAnimator());
+
+        mrecycleview.setAdapter(mBoxAdapter);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String email = preferences.getString("email", "");
@@ -96,7 +114,6 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
         if (i != null) {
 
             Path = i.getExtras().getString("OPath");
-
             call(email, password, Path);
 
         }
@@ -104,53 +121,17 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+                MasterBoxList.clear();
                 call(email, password, Path);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu2, menu);
-        ImageView img;
-
-        img = (ImageView) menu.findItem(R.id.image).getActionView();
-        img.setImageResource(android.R.drawable.ic_menu_search);
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).commit();
-            }
-        });
-
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-
-            case R.id.image:
-
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
-
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void call(String email, String password, String path) {
 
-        final ProgressDialog progressDialog = new ProgressDialog(MasterBoxSearchActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(MasterBoxSearch2Activity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -197,7 +178,6 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                         shipping_address.setCustomerZip(zip);
                         shipping_address.setCustomerCountry(country);
 
-                        cus_id.setText(id);
                     }
 
                     FieldOffice field = resp.getFieldOffice();
@@ -226,6 +206,14 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                         fieldOffice.setState(state);
                         fieldOffice.setZip(zip);
                         fieldOffice.setCountry(country);
+
+                        String address = add1 +" "+ city +" "+
+                                state +" "+ zip+" "+country;
+
+                        mfield_office.setText(address);
+
+                    }else{
+                        mfield_office.setText(null);
                     }
 
                     CompanyDetails comp = resp.getCompanyDetails();
@@ -246,6 +234,10 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                         String state = comp.getCompanyState();
                         String zip = comp.getCompanyZip();
                         String country = comp.getCompanyCountry();
+                        String compNy_name = comp.getCompanyName();
+
+                        store.setText(compNy_name);
+
 
                         companyDetails.setId(Long.valueOf(id));
                         companyDetails.setParentId(Long.valueOf(parent_id));
@@ -261,8 +253,6 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                         companyDetails.setCompanyZip(zip);
                         companyDetails.setCompanyCountry(country);
                     }
-
-
 
 
                     List<MasterBox> box = resp.getMasterBoxes();
@@ -290,13 +280,15 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                             methods.setCompanyEmail(email);
 
                             MasterBoxList.add(methods);
+
+                            master_box.setText(box.get(0).getMasterBoxCode());
                         }
+                        mBoxAdapter.updateAnswers(MasterBoxList);
                     }
 
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                    setup_viewpager(shipping_address, fieldOffice, companyDetails, MasterBoxList);
 
 
                 } else if (response.code() == 401) {
@@ -312,7 +304,7 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                    Toast.makeText(MasterBoxSearchActivity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MasterBoxSearch2Activity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -325,44 +317,55 @@ public class MasterBoxSearchActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Toast.makeText(MasterBoxSearchActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MasterBoxSearch2Activity.this, "Network Error", Toast.LENGTH_SHORT).show();
 
             }
         });
 
     }
 
-    private void setup_viewpager(OrderShippingAddress shipping_address, FieldOffice fieldOffice,
-                                 CompanyDetails companyDetails, ArrayList<MasterBox> masterBoxList) {
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu2, menu);
+        ImageView img;
+
+        img = (ImageView) menu.findItem(R.id.image).getActionView();
+        img.setImageResource(android.R.drawable.ic_menu_search);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.main_toolbar, new SearchFragment()).commit();
+            }
+        });
+
+        return true;
+    }
 
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
 
-        ShippingAddress_frag address = new ShippingAddress_frag();
-        Bundle b = new Bundle();
-        b.putSerializable("shipping_address", shipping_address);
-        address.setArguments(b);
-        adapter.addFrag(address, "Shipping Address");
+            case R.id.image:
 
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.main_toolbar, new SearchFragment()).addToBackStack(null).commit();
 
-        FieldOffice_frag f_frag = new FieldOffice_frag();
-        Bundle c = new Bundle();
-        c.putSerializable("fieldOffice", fieldOffice);
-        f_frag.setArguments(c);
-        adapter.addFrag(f_frag, "Field Office");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        CompanyDetails_frag frag = new CompanyDetails_frag();
-        Bundle d = new Bundle();
-        d.putSerializable("companyDetails", companyDetails);
-        frag.setArguments(d);
-        adapter.addFrag(frag, "Company Details");
-
-        MasterBoxes_frag mfrag = new MasterBoxes_frag();
-        Bundle f = new Bundle();
-        f.putSerializable("masterBoxList", masterBoxList);
-        mfrag.setArguments(f);
-        adapter.addFrag(mfrag, "Master Boxes");
-
-        viewPager.setAdapter(adapter);
+    @Override
+    public void onBackPressed() {
+//       moveTaskToBack(true);
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        super.onBackPressed();
     }
 }

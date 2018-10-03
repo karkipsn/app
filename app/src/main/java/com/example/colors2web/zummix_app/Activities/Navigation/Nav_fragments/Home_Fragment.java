@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,7 @@ public class Home_Fragment extends Fragment {
     APIInterface apiInterface;
     RecyclerView mrecyclerView;
     GroupByCusADapter radapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     ImageView img;
     String spine;
@@ -68,6 +70,10 @@ public class Home_Fragment extends Fragment {
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
         radapter = new GroupByCusADapter(getContext(), CusList);
 
         mrecyclerView = getActivity().findViewById(R.id.recycle_view);
@@ -83,6 +89,17 @@ public class Home_Fragment extends Fragment {
 
         mrecyclerView.setAdapter(radapter);
         loadAdapter(email, password);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                CusList.clear();
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
 
 
     }

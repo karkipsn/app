@@ -19,6 +19,7 @@ import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -114,6 +115,7 @@ public class CreateCityBinsActivity extends AppCompatActivity {
     String cus_id, s_state, state;
     String s_country = null;
     Intent intent;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     String bin_id;
 
     @Override
@@ -132,6 +134,11 @@ public class CreateCityBinsActivity extends AppCompatActivity {
         });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String email = preferences.getString("email", "");
@@ -165,7 +172,7 @@ public class CreateCityBinsActivity extends AppCompatActivity {
 
                 if (s_country.equals("CA")) {
 
-                   sheader.setVisibility(View.VISIBLE);
+                    sheader.setVisibility(View.VISIBLE);
                     ca_Spinner.setVisibility(View.VISIBLE);
                     us_Spinner.setVisibility(View.GONE);
                     mx_Spinner.setVisibility(View.GONE);
@@ -255,6 +262,30 @@ public class CreateCityBinsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mbin.setText(null);
+                mshipname.setText(null);
+                madd1.setText(null);
+                madd2.setText(null);
+                mcity.setText(null);
+                mstate.setText(null);
+                mzip.setText(null);
+                mname.setText(null);
+                mmphone.setText(null);
+                mname2.setText(null);
+                mmphone2.setText(null);
+                mmemail.setText(null);
+                mmemail2.setText(null);
+                sheader.setText(null);
+
+                mSwipeRefreshLayout.setRefreshing(false);
 
             }
         });

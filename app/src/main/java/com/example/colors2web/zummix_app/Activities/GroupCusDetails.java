@@ -63,8 +63,6 @@ public class GroupCusDetails extends AppCompatActivity {
            }
        });
 
-        mrecycleview = findViewById(R.id.recycle_view);
-
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -78,7 +76,7 @@ public class GroupCusDetails extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-
+        mrecycleview = findViewById(R.id.recycle_view);
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(this);
         mrecycleview.setHasFixedSize(true);
         mrecycleview.setLayoutManager(mlayoutManager);

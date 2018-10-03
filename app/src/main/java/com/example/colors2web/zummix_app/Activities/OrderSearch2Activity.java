@@ -206,8 +206,9 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
         btn_ship_method = findViewById(R.id.btn_edit_ship_method);
         btn_ship_type = findViewById(R.id.btn_edit_shipping_type);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 //        btn_ship_type.setVisibility(View.VISIBLE);
 
         ButterKnife.bind(this);
@@ -248,6 +249,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
             if (Path != null) {
                 call(group_type, email, password, Path);
             }
+//            mbox_ord
+            final String mbox_ord = i.getExtras().getString("mbox_ord");
+            if (mbox_ord != null) {
+                call(group_type, email, password, mbox_ord);
+            }
 
             final String Path2 = i.getExtras().getString("O_no_by_group");
             if (Path2 != null) {
@@ -260,8 +266,13 @@ public class OrderSearch2Activity extends AppCompatActivity {
             }
 
             final String Path4 = i.getExtras().getString("tadpt_id");
-            if (Path3 != null) {
+            if (Path4 != null) {
                 call_next(group_type, email, password, Path4);
+            }
+
+            final String Path6 = i.getExtras().getString("batch_id");
+            if (Path6 != null) {
+                call_next(group_type, email, password, Path6);
             }
 
             final String Path5 = i.getExtras().getString("edit_id");
@@ -288,6 +299,12 @@ public class OrderSearch2Activity extends AppCompatActivity {
                         call(group_type, email, password, Path);
                     }
 
+                    // mbox_ord
+                    final String mbox_ord = i.getExtras().getString("mbox_ord");
+                    if (mbox_ord != null) {
+                        call(group_type, email, password, mbox_ord);
+                    }
+
                     final String Path2 = i.getExtras().getString("O_no_by_group");
                     if (Path2 != null) {
                         call_next(group_type, email, password, Path2);
@@ -299,7 +316,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
                     }
 
                     final String Path4 = i.getExtras().getString("tadpt_id");
-                    if (Path3 != null) {
+                    if (Path4 != null) {
                         call_next(group_type, email, password, Path4);
                     }
 
@@ -308,12 +325,19 @@ public class OrderSearch2Activity extends AppCompatActivity {
                         call_next(group_type, email, password, Path5);
                     }
 
+                    final String Path6 = i.getExtras().getString("batch_id");
+                    if (Path6 != null) {
+                        call_next(group_type, email, password, Path6);
+                    }
+
                     final String back = i.getExtras().getString("back_id");
                     if (back != null) {
                         call_next(group_type, email, password, back);
                         Log.d("back", back);
                     }
                 }
+
+                Toast.makeText(getApplicationContext(), "Refreshed", Toast.LENGTH_SHORT).show();
 
                 mSwipeRefreshLayout.setRefreshing(false);
 
@@ -420,7 +444,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
-                    Toast.makeText(getApplicationContext(), "Data is accessed", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Data is accessed", Toast.LENGTH_SHORT).show();
                     JsonElement element = response.body();
 
                     if (element.getAsJsonObject().getAsJsonObject("orderDetails").get("boxes") instanceof JsonArray) {
@@ -770,6 +794,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     customer_city = ord1.get(i).getCustomerCity();
                                     customer_state = ord1.get(i).getCustomerState();
                                     customer_zip = ord1.get(i).getCustomerZip();
+                                    String notes =ord1.get(i).getNote();
+                                    String addd2 =ord1.get(i).getCustomerAddress2();
 
 
                                     ship.setCustomerFname(fname);
@@ -778,12 +804,12 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     ship.setCustomerAddress1(address);
                                     ship.setCustomerEmail(email);
                                     ship.setCustomerOfficeName(office);
-
-
                                     ship.setCustomerCountry(customer_country);
                                     ship.setCustomerCity(customer_city);
                                     ship.setCustomerState(customer_state);
                                     ship.setCustomerZip(customer_zip);
+                                    ship.setNote(notes);
+                                    ship.setCustomerAddress2(addd2);
 
                                     ShipList.add(ship);
                                 }
@@ -836,10 +862,14 @@ public class OrderSearch2Activity extends AppCompatActivity {
                                     MasterBox mbox1 = new MasterBox();
 
                                     String box_no = mbox.get(k).getBoxNumber();
+                                    String mbox_no = mbox.get(k).getMasterBoxCode();
                                     String created_at = mbox.get(k).getCreatedAt();
                                     String barcode = mbox.get(k).getBarcodeFileName();
+                                    String tracking = mbox.get(k).getMasterBoxTrackingCode();
 
                                     mbox1.setBoxNumber(box_no);
+                                    mbox1.setMasterBoxCode(mbox_no);
+                                    mbox1.setMasterBoxTrackingCode(tracking);
                                     mbox1.setCreatedAt(created_at);
                                     mbox1.setBarcodeFileName(barcode);
 
@@ -1837,11 +1867,11 @@ public class OrderSearch2Activity extends AppCompatActivity {
 
                 Button buttonbackground = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 //                buttonbackground.setBackgroundColor(Color.BLUE);
-                buttonbackground.setTextColor(Color.BLUE);
+                buttonbackground.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                 Button buttonbackground1 = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
 //                buttonbackground1.setBackgroundColor(Color.BLUE);
-                buttonbackground1.setTextColor(Color.BLUE);
+                buttonbackground1.setTextColor(getResources().getColor(R.color.colorPrimary));
 
             }
         });
@@ -2292,40 +2322,8 @@ public class OrderSearch2Activity extends AppCompatActivity {
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
           public void onClick(View v) {
-////                Alert Dailog adding
-//
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderSearch2Activity.this);
-//                alertDialogBuilder.setMessage("Are you sure,You wanted to cancel Order?");
-//
-//                alertDialogBuilder.setPositiveButton("Proceed",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface arg0, int arg1) {
-////                                        Toast.makeText(OrderSearch2Activity.this,"You clicked yes
-////                                                button",Toast.LENGTH_LONG).show();
-//                                    }
-//                                });
-//
-//                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-//                    Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                });
-//
-//                AlertDialog alertDialog = alertDialogBuilder.create();
-//                alertDialog.show();
-//            }
-
-
-
 
                 String ad;
-
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
-                final String l_id = preferences.getString("l_id", "");
-
-
                 if (type.equals("Super Admin")) {
                     ad = String.valueOf(1);
                 } else {
@@ -2333,105 +2331,139 @@ public class OrderSearch2Activity extends AppCompatActivity {
                 }
 
                 String status = "Cancelled";
-                OrderCancel cancel = new OrderCancel(cus_id, status, ad, l_id, l_id);
 
-                final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
-                        R.style.AppTheme_Dark_Dialog);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OrderSearch2Activity.this);
+                final String l_id = preferences.getString("l_id", "");
 
-                Call<OrderCancel> call = apiInterface.putCancel(email, password, ords_no, cancel);
+                final OrderCancel cancel = new OrderCancel(cus_id, status, ad, l_id, l_id);
 
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                call.enqueue(new Callback<OrderCancel>() {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderSearch2Activity.this);
+                alertDialogBuilder.setMessage("Are you sure,You wanted to cancle the Order?");
+
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                                       Toast.makeText(OrderSearch2Activity.this,"You clicked yes button",Toast.LENGTH_LONG).show();
+                                //codes ..................
+
+                                final ProgressDialog progressDialog = new ProgressDialog(OrderSearch2Activity.this,
+                                        R.style.AppTheme_Dark_Dialog);
+                                progressDialog.setIndeterminate(true);
+                                progressDialog.setCancelable(false);
+                                progressDialog.setMessage("Loading...");
+                                progressDialog.show();
+
+                                Call<OrderCancel> call = apiInterface.putCancel(email, password, ords_no, cancel);
+
+                                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                                call.enqueue(new Callback<OrderCancel>() {
+                                    @Override
+                                    public void onResponse(Call<OrderCancel> call, Response<OrderCancel> response) {
+
+                                        OrderCancel cres = response.body();
+
+                                        if (response.isSuccessful()) {
+                                            String returntype = cres.getmReturnType();
+
+                                            if (returntype.equals("success")) {
+                                                Toast.makeText(getApplicationContext(), "Order Cancel Successfull.", Toast.LENGTH_SHORT).show();
+
+                                                if (progressDialog.isShowing()) {
+                                                    progressDialog.dismiss();
+                                                }
+
+                                                finish();
+                                                startActivity(getIntent());
+
+                                            } else {
+                                                if (progressDialog.isShowing()) {
+                                                    progressDialog.dismiss();
+                                                }
+                                                Toast.makeText(getApplicationContext(), cres.getmMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        } else if (response.code() == 401) {
+
+                                            Toast.makeText(getApplicationContext(), "  Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
+                                            Log.d("Error", response.errorBody().toString());
+
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+
+
+                                        } else if (response.code() == 404) {
+
+                                            Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
+                                            Log.d("Error", response.errorBody().toString());
+
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+
+                                        } else if (response.code() == 500) {
+
+                                            Toast.makeText(getApplicationContext(), "Server Broken", Toast.LENGTH_LONG).show();
+                                            Log.d("Error", response.errorBody().toString());
+
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+
+                                        } else {
+                                            Toast.makeText(OrderSearch2Activity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
+                                            Log.d("Api_error_default", response.errorBody().toString());
+
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+                                        }
+                                    }
+
+
+                                    @Override
+                                    public void onFailure(Call<OrderCancel> call, Throwable t) {
+                                        if (t instanceof IOException) {
+                                            call.cancel();
+
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+                                            Toast.makeText(OrderSearch2Activity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            call.cancel();
+                                            Log.e("response-failure", t.toString());
+                                            if (progressDialog.isShowing()) {
+                                                progressDialog.dismiss();
+                                            }
+                                            Toast.makeText(OrderSearch2Activity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                                            // todo log to some central bug tracking service
+                                        }
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<OrderCancel> call, Response<OrderCancel> response) {
-
-                        OrderCancel cres = response.body();
-
-                        if (response.isSuccessful()) {
-                            String returntype = cres.getmReturnType();
-
-                            if (returntype.equals("success")) {
-//                                cancel_button.setVisibility(View.GONE);
-                                if (progressDialog.isShowing()) {
-                                    progressDialog.dismiss();
-                                }
-//                                call_next(type, email, password, order);
-//                                call(type, email, password, ords_no);
-
-                                finish();
-                                startActivity(getIntent());
-
-                            } else {
-                                if (progressDialog.isShowing()) {
-                                    progressDialog.dismiss();
-                                }
-                                Toast.makeText(getApplicationContext(), cres.getmMessage(), Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else if (response.code() == 401) {
-
-                            Toast.makeText(getApplicationContext(), "  Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                            Log.d("Error", response.errorBody().toString());
-
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-
-
-                        } else if (response.code() == 404) {
-
-                            Toast.makeText(getApplicationContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                            Log.d("Error", response.errorBody().toString());
-
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-
-                        } else if (response.code() == 500) {
-
-                            Toast.makeText(getApplicationContext(), "Server Broken", Toast.LENGTH_LONG).show();
-                            Log.d("Error", response.errorBody().toString());
-
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-
-                        } else {
-                            Toast.makeText(OrderSearch2Activity.this, "Operation Failed", Toast.LENGTH_SHORT).show();
-                            Log.d("Api_error_default", response.errorBody().toString());
-
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-                        }
-                    }
-
-
-                    @Override
-                    public void onFailure(Call<OrderCancel> call, Throwable t) {
-                        if (t instanceof IOException) {
-                            call.cancel();
-
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-                            Toast.makeText(OrderSearch2Activity.this, "Network Error", Toast.LENGTH_SHORT).show();
-                        } else {
-                            call.cancel();
-                            Log.e("response-failure", t.toString());
-                            if (progressDialog.isShowing()) {
-                                progressDialog.dismiss();
-                            }
-                            Toast.makeText(OrderSearch2Activity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
-                            // todo log to some central bug tracking service
-                        }
-
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
                     }
                 });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+                Button buttonbackground = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+                buttonbackground.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                Button buttonbackground1 = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+                buttonbackground1.setTextColor(getResources().getColor(R.color.colorPrimary));
 
             }
         });

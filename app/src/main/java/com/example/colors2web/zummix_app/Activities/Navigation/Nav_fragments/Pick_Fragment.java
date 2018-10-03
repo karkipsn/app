@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,8 @@ public class Pick_Fragment extends Fragment {
     String mform1, mto1;
     ImageView img;
     Long cus_id;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     public Pick_Fragment() {
 
@@ -82,6 +85,11 @@ public class Pick_Fragment extends Fragment {
 
         msku = getActivity().findViewById(R.id.item_dr_sku);
         msku.setVisibility(View.GONE);
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+
 
         mform = getActivity().findViewById(R.id.item_dr_from);
 
@@ -147,6 +155,21 @@ public class Pick_Fragment extends Fragment {
                 mto.clearFocus();
             }
         });
+
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mform.setText(null);
+                mto.setText(null);
+
+                Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

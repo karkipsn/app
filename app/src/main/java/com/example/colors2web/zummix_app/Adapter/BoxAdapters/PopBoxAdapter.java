@@ -1,23 +1,26 @@
 package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.LineItems;
@@ -34,9 +37,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHolder> {
-    List<Boxes> BoxList;
-    Context mContext;
-    List<LineItems> LineList = new ArrayList<>();
+   private List<Boxes> BoxList;
+   private Context mContext;
+   private List<LineItems> LineList = new ArrayList<>();
+   PopupWindow pop1;
+   PopBox2Adapter kadapter;
 
     public PopBoxAdapter( Context mContext, List<Boxes> boxList) {
         this.mContext = mContext;
@@ -52,22 +57,43 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
 
     @Override
     public void onBindViewHolder(@NonNull final PopBoxAdapter.PopBoxHolder holder, int position) {
+
         Boxes boxes = BoxList.get(position);
 
         final String box_no=boxes.getBoxNumber();
         holder.package_no.setText(box_no);
-        holder.order_no.setText(boxes.getOrderNumber());
+
+
+        holder.package_no.setTextColor(holder.package_no.getResources().getColor(R.color.colorPrimary));
+
+        final String o_numb =boxes.getOrderNumber();
+        holder.order_no.setText(o_numb);
+        holder.order_no.setTextColor(holder.order_no.getResources().getColor(R.color.colorPrimary));
+
+        holder.order_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OrderSearch2Activity.class);
+                intent.putExtra("mbox_ord",o_numb);
+                mContext.startActivity(intent);
+                pop1.dismiss();
+            }
+        });
+
 
 
         holder.package_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                final ProgressDialog progressDialog = new ProgressDialog(mContext,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
 
-//                    PopBox2Adapter kadapter;
-//                    kadapter = new PopBox2Adapter(mContext,LineList);
-//                    loadAdapter(box_no,kadapter);
-
+                loadAdapter(box_no,progressDialog);
 
                 LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View popupView = inflater.inflate(R.layout.mbox_modal_line, null);
@@ -79,7 +105,7 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                 int width = display.getWidth();
 
                 final PopupWindow popup = new PopupWindow(popupView,
-                        (int) (width*0.8), WindowManager.LayoutParams.WRAP_CONTENT);
+                        (int) (width*0.9), WindowManager.LayoutParams.WRAP_CONTENT);
                 popup.setFocusable(true);
                 popup.setOutsideTouchable(true);
                 popup.setAnimationStyle(android.R.style.Animation_Dialog);
@@ -93,27 +119,27 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                 wm.updateViewLayout(container, p);
 
                 RecyclerView rv = popupView.findViewById(R.id.recycle_view);
-                Button cancel = popupView.findViewById(R.id.pop_up_cancel);
+                TextView cancel = popupView.findViewById(R.id.pop_up_cancel);
 
-
-                final PopBox2Adapter kadapter;
                 kadapter = new PopBox2Adapter(mContext,LineList);
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-//            mrecyclerView.setHasFixedSize(true);
                 rv.setLayoutManager(mLayoutManager);
 
                 rv.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.HORIZONTAL, 16));
-//            mrecyclerView.addItemDecoration(new SimpleItemDecoration(getContext()));
                 rv.setItemAnimator(new DefaultItemAnimator());
-
                 rv.setAdapter(kadapter);
-                loadAdapter(box_no,kadapter);
+
+
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
 
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         popup.dismiss();
+                        pop1.dismiss();
                         kadapter.updateAnswers2();
                     }
                 });
@@ -123,7 +149,7 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
 
     }
 
-    private void loadAdapter(String box_no, final PopBox2Adapter kadapter) {
+    private void loadAdapter(String box_no, final ProgressDialog progressDialog) {
 //        api adapter loading
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         String email = preferences.getString("email","");
@@ -143,9 +169,11 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
 
                         List<LineItems>items = res.getmLineItems();
 //                   List<Boxes>arraylist = new ArrayList<>();
-                        LineItems b = new LineItems();
+
 
                         for(int i = 0;i<items.size();i++){
+
+                            LineItems b = new LineItems();
 
                             String msku = items.get(i).getItemSku();
                             String mname = items.get(i).getItemName();
@@ -155,16 +183,26 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                             b.setItemName(mname);
                             b.setBoxQuantity(mqty);
                             LineList.add(b);
-                        }
 
-                        kadapter.updateAnswers(LineList);
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                            kadapter.updateAnswers(LineList);
+                        }
                     }
                     else{
-                        Toast.makeText(mContext,res.getReturnType(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext,res.getReturnType(),Toast.LENGTH_SHORT).show();
+                        Log.d("rrrr",res.getReturnType());
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                        }
 
                     }}
                 else {
                     Toast.makeText(mContext,"Operation Failed",Toast.LENGTH_SHORT).show();
+                    if(progressDialog.isShowing()){
+                        progressDialog.dismiss();
+                    }
                 }
             }
 
@@ -173,11 +211,12 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                 Toast.makeText(mContext,"Network Failure",Toast.LENGTH_SHORT).show();
 
                 call.cancel();
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
 
             }
         });
-
-
 
     }
 
@@ -196,11 +235,18 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
         notifyDataSetChanged();
     }
 
+    public void updateAnswers(List<Boxes> bList, PopupWindow popup) {
+        BoxList =bList;
+        pop1 =popup;
+        notifyDataSetChanged();
+    }
+
     public class PopBoxHolder extends RecyclerView.ViewHolder {
 
         TextView package_no, order_no;
         public PopBoxHolder(View itemView) {
             super(itemView);
+
             package_no = itemView.findViewById(R.id.pop_box_adp_pack_no);
             order_no = itemView.findViewById(R.id.pop_box_adp_orderno);
         }

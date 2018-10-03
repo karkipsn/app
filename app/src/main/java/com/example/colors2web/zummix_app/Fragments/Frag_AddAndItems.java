@@ -33,7 +33,7 @@ public class Frag_AddAndItems extends Fragment {
 //    ANothe adapter
 
     List<ItemDetail> ItmList = new ArrayList<>();
-    List<OrderShippingAddressesDetail> ShipList =new ArrayList<>();
+    ArrayList<OrderShippingAddressesDetail> ShipList =new ArrayList<>();
 
     String o_id,order_status,order_type,edit_shipping_address;
 
@@ -90,9 +90,6 @@ public class Frag_AddAndItems extends Fragment {
             order_status = getArguments().getString("order_status");
             order_type = getArguments().getString("order_type");
             edit_shipping_address = getArguments().getString("edit_shipping_address");
-            Log.d("order_type",order_type);
-            Log.d("order_status",order_status);
-            Log.d("o_id",o_id);
 
             ArrayList<ItemDetail> arraylist = getArguments().getParcelableArrayList("item_detail");
             ladapter.updateAnswers(arraylist);

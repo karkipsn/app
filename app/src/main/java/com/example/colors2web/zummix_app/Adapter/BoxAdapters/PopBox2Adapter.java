@@ -46,8 +46,7 @@ public class PopBox2Adapter extends RecyclerView.Adapter<PopBox2Adapter.Pop2Hold
     }
 
     public void updateAnswers(List<LineItems> lineList) {
-//        TO check the duplicated data try only
-//        lineList.clear();  //but it clears all the data
+
         LineList =lineList;
         notifyDataSetChanged();
     }

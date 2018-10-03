@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
@@ -62,6 +63,7 @@ public class User_Fragment extends Fragment {
     UserAdapter useradapter;
 
     WarehouseAdapter warehouseAdapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     String s_customer, s_program, s_activity;
     String s_cus1, s_pr1, s_act1, fname1, lname1, s_email1, pass1, cpass1;
@@ -108,10 +110,27 @@ public class User_Fragment extends Fragment {
         final String email = preferences.getString("email", "");
         final String password = preferences.getString("password", "");
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
 
         loadspinner_customer(email, password);
         loadspinner_groups(email, password);
         loadAdapter(email, password);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                UserList.clear();
+                WareList.clear();
+                loadAdapter(email, password);
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +272,6 @@ public class User_Fragment extends Fragment {
 
 //                        for (int k=0;k<2;k++){
 //                        s_grp1[k] = String.valueOf(s_groups);
-//                        Log.d("group1",s_grp1.toString());
 //                        }
 
                         List<String> list = new ArrayList<>();
@@ -359,7 +377,6 @@ public class User_Fragment extends Fragment {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Log.e("response-failure", t.toString());
                 Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -456,7 +473,6 @@ public class User_Fragment extends Fragment {
 
                     }
                     Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
 
 
                 } else if (response.code() == 404) {
@@ -465,13 +481,11 @@ public class User_Fragment extends Fragment {
                         progressDialog.dismiss();
                     }
                     Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
                     Toast.makeText(getContext(), "Server Broken", Toast.LENGTH_LONG).show();
-                    Log.d("Error", response.errorBody().toString());
 
 
                 } else {
@@ -489,7 +503,6 @@ public class User_Fragment extends Fragment {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Log.e("response-failure", t.toString());
                 Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -554,7 +567,6 @@ public class User_Fragment extends Fragment {
 
 
                     Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
@@ -563,13 +575,11 @@ public class User_Fragment extends Fragment {
 
 
                     Toast.makeText(getContext(), "InValid Web Address", Toast.LENGTH_SHORT).show();
-                    Log.d("Error", response.errorBody().toString());
                 } else if (response.code() == 500) {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
                     Toast.makeText(getContext(), "Server Broken", Toast.LENGTH_LONG).show();
-                    Log.d("Error", response.errorBody().toString());
 
 
                 } else {
@@ -771,7 +781,6 @@ public class User_Fragment extends Fragment {
                             bundle1.putParcelableArrayList("UserList", UserList);
                             bundle1.putParcelableArrayList("GroupList", groupList);
                             bundle1.putParcelableArrayList("CustomerList", spin_cus_list);
-                            Log.d("product_ship", UserList.toString());
                             loc.setArguments(bundle1);
                             viewPagerAdapter.addFrag(loc, "ClientPortal Users");
 

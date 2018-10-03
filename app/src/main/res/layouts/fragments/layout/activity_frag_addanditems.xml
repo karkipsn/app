@@ -1,40 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="40dp"-->
-        <!--android:layout_marginEnd="20dp">-->
-        <!--<Button-->
-            <!--android:layout_width="200dp"-->
-            <!--android:padding="10dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Edit Shipping Address"-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/btn_edit_shipf"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:padding="10dp"-->
-            <!--android:layout_toRightOf="@id/btn_edit_shipf"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:visibility="gone"-->
-            <!--android:text="View Logs"-->
-            <!--android:id="@+id/btn_view_shiplogs"/>-->
-        <!---->
-    <!--</RelativeLayout>-->
-
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
         <LinearLayout android:layout_width="match_parent"
@@ -46,15 +17,13 @@
                 android:layout_margin="@dimen/margin_down"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical">
-            </android.support.v7.widget.RecyclerView>
-
+                android:scrollbars="vertical"/>
 
         </LinearLayout>
 
-
-
-
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
 
     <android.support.v7.widget.RecyclerView
@@ -66,4 +35,11 @@
 
     </LinearLayout>
 
-</ScrollView>
+    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+<!--</ScrollView>-->
+</LinearLayout>

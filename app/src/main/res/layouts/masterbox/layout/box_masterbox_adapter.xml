@@ -8,15 +8,12 @@
     android:id="@+id/linear_pop_to_display"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:elevation="3dp"
@@ -29,9 +26,35 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1.0"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="6"-->
+                        <!--android:text= "Order Id"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textStyle="bold" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/box_box_oid"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:textSize="16sp" />-->
+
+                <!--</LinearLayout>-->
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:padding="10dp"
                     android:orientation="horizontal">
@@ -41,12 +64,12 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="6"
-                        android:text= "Order Id"
+                        android:text="MasterBox #"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/box_box_oid"
+                        android:id="@+id/box_mbox_no"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
@@ -79,56 +102,32 @@
                         android:textSize="16sp" />
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1.0"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="6"
-                        android:text=" Box No."
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="6"-->
+                        <!--android:text=" Box No."-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textStyle="bold" />-->
 
-                    <TextView
-                        android:id="@+id/box_box_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="5"
-                        android:textSize="16sp" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/box_box_no"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:textSize="16sp" />-->
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                <!--</LinearLayout>-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="6"
-                        android:text="MasterBox No."
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/box_mbox_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="5"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -155,62 +154,62 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <!--<LinearLayout-->
 
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.0"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="6"
-                        android:text="Customer Name"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="6"-->
+                        <!--android:text="Customer Name"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textStyle="bold" />-->
 
-                    <TextView
-                        android:id="@+id/box_cus_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="5"
-                        android:textSize="16sp" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/box_cus_name"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:textSize="16sp" />-->
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.0"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="6"
-                        android:text="Email"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="6"-->
+                        <!--android:text="Email"-->
+                        <!--android:textSize="16sp"-->
+                        <!--android:textStyle="bold" />-->
 
-                    <TextView
-                        android:id="@+id/box_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="5"
-                        android:textSize="16sp" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/box_email"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal"-->
+                        <!--android:layout_weight="5"-->
+                        <!--android:textSize="16sp" />-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
             </LinearLayout>
 
     </android.support.v7.widget.CardView>
-    </ScrollView>
+
 
 </LinearLayout>
 

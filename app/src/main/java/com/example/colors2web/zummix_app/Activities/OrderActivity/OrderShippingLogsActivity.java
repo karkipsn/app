@@ -139,6 +139,7 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
                 switch (returntype){
 
                     case "success":
+
                         List< OrderShippingAddressLog> log = response1.getOrderShippingAddressLogs();
                         ArrayList<OrderShippingAddressLog>LogList = new ArrayList<>();
                         if(log!=null){
@@ -177,6 +178,7 @@ public class OrderShippingLogsActivity extends AppCompatActivity {
                         break;
 
                     case "error":
+
                         if(progressDialog.isShowing()){
                             progressDialog.dismiss();
                         }

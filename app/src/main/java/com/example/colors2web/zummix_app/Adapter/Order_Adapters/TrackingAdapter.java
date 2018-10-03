@@ -35,15 +35,20 @@ public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.Tracki
     public void onBindViewHolder(@NonNull TrackingAdapter.TrackingHolder holder, int position) {
         OrderDetail od = Olist.get(position);
 
-        holder.id.setText(String.valueOf(od.getId()));
-        holder.email.setText(od.getCustomerEmail());
-        holder.ono.setText(od.getOrderNumber());
-        holder.ostatus.setText(od.getOrderStatus());
+        holder.order_no.setText(od.getOrderNumber());
+        holder.office.setText(od.getCustomerOfficeName());
+        holder.emp_id.setText(od.getEmployeeId());
+        holder.ship_to.setText(od.getShipTo());
+        holder.ship_method.setText(od.getShipMethod());
+        holder.tracking.setText(od.getTrackingCode());
+        holder.date.setText(od.getOrderDate());
 
         final String tadpt_id =String.valueOf(od.getId());
-        holder.id.setOnClickListener(new View.OnClickListener() {
+
+        holder.order_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent in = new Intent(mcontext, OrderSearch2Activity.class);
                 in.putExtra("tadpt_id",tadpt_id);
                 mcontext.startActivity(in);
@@ -62,13 +67,16 @@ public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.Tracki
     }
 
     public class TrackingHolder extends RecyclerView.ViewHolder {
-        TextView id,email,ono,ostatus;
+        TextView order_no,office,emp_id,ship_to,ship_method,tracking,date;
         public TrackingHolder(View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.tr_ad_view1);
-            email = itemView.findViewById(R.id.tr_ad_view2);
-            ono = itemView.findViewById(R.id.tr_ad_view3);
-            ostatus = itemView.findViewById(R.id.tr_ad_view4);
+            order_no = itemView.findViewById(R.id.tr_ad_view1);
+            office = itemView.findViewById(R.id.tr_ad_view2);
+            emp_id = itemView.findViewById(R.id.tr_ad_view3);
+            ship_to = itemView.findViewById(R.id.tr_ad_view4);
+            ship_method = itemView.findViewById(R.id.tr_ad_view5);
+            tracking = itemView.findViewById(R.id.tr_ad_view6);
+            date = itemView.findViewById(R.id.tr_ad_view7);
         }
     }
 }

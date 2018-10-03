@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -100,6 +101,9 @@ public class ProductDetails extends AppCompatActivity {
     @BindView(R.id.ipr_cus_view_more)
     TextView view_more;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
 //    @BindView(R.id.ipr_cus_a2s)
 //    TextView a2s;
@@ -144,6 +148,14 @@ public class ProductDetails extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
+
+
+
+
         if (getIntent() != null) {
             item_id = getIntent().getExtras().getString("id");
             customer_id = getIntent().getExtras().getString("customer_id");
@@ -152,6 +164,16 @@ public class ProductDetails extends AppCompatActivity {
             loadaddress();
 
             tabLayout.setupWithViewPager(viewPager);
+
+            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    loadaddress();
+                    mSwipeRefreshLayout.setRefreshing(false);
+
+                }
+            });
 
         }
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

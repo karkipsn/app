@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,19 +53,16 @@ public class GroupByCusADapter extends RecyclerView.Adapter<GroupByCusADapter.Gr
 
         holder.total.setText(String.valueOf(th4));
         holder.store.setText(store);
-        Log.d("store", store);
         holder.dview.setText("View Details");
         holder.dview.setTextColor(holder.dview.getResources().getColor(R.color.colorPrimary));
 
         final String cus_id = String.valueOf(ord.getCustomerId());
-        Log.d("idcus", String.valueOf(ord.getCustomerId()));
 
         holder.dview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mcontext, GroupCusDetails.class);
                 i.putExtra("cus_id", cus_id);
-                Log.d("cus_id", cus_id);
                 mcontext.startActivity(i);
             }
         });

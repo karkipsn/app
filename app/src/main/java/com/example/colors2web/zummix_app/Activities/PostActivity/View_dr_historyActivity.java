@@ -14,8 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.colors2web.zummix_app.Adapter.ReportsAdapters.Dr_history_Adapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.PostSearch.DrShipment;
 import com.example.colors2web.zummix_app.R;
@@ -52,7 +54,7 @@ public class View_dr_historyActivity extends AppCompatActivity {
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayout.HORIZONTAL,16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(dr_history_adapter);
         loadAdapter();

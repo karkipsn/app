@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Activities.OrderActivity;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,12 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShippingLogsAdapter extends RecyclerView.Adapter<ShippingLogsAdapter.LogViewHolder> {
+    private Context mContext;
 
     public ShippingLogsAdapter(List<OrderShippingAddressLog> logList) {
         LogList = logList;
     }
 
-    List<OrderShippingAddressLog> LogList;
+   private List<OrderShippingAddressLog> LogList;
+
+    public ShippingLogsAdapter(Context montext, ArrayList<OrderShippingAddressLog> logList) {
+        this.mContext =montext;
+        this.LogList =logList;
+    }
 
     @NonNull
     @Override
@@ -50,6 +57,11 @@ public class ShippingLogsAdapter extends RecyclerView.Adapter<ShippingLogsAdapte
 
     public void updateAnswers(ArrayList<OrderShippingAddressLog> logList) {
         LogList = logList;
+        notifyDataSetChanged();
+    }
+
+    public void updateAnswer2() {
+        LogList.clear();
         notifyDataSetChanged();
     }
 

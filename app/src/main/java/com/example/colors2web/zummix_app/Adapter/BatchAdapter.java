@@ -1,6 +1,7 @@
 package com.example.colors2web.zummix_app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.colors2web.zummix_app.Activities.OrderSearch2Activity;
 import com.example.colors2web.zummix_app.POJO.BatchNumber.BatchOrder;
 import com.example.colors2web.zummix_app.R;
 
@@ -40,6 +42,18 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchAdapter.BatchHolder>
 
         holder.store.setText(order.getShipToName());
         holder.ono.setText(order.getOrderNumber());
+        holder.ono.setTextColor(holder.ono.getResources().getColor(R.color.colorPrimary));
+        final String batch_id = String.valueOf(order.getId());
+
+        holder.ono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(mContext, OrderSearch2Activity.class);
+                in.putExtra("batch_id",batch_id);
+                mContext.startActivity(in);
+            }
+        });
+
         holder.shipto.setText(order.getShipToName());
         holder.otype.setText(order.getOrderType());
 

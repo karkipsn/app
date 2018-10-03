@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.Problem_SKU_Fragment;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemInput;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemResponse;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.ProblemSKUs;
@@ -48,22 +49,24 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
     private TextView mweight;
     private Spinner spinner,
             spinnerCountry;
+    Problem_SKU_Fragment pfragment;
 
-    private String uom, country;
+    private String uom, country, sku_remove1;
 
     private RadioButton prb;
     private String sku_remove, radio;
 
 
-    List<ProblemSKUs> ProblemList;
-
-//    public ProblemAdapter(Context context, List<ProblemSKUs> pList) {
-//        this.mActivity = context;
-//        this.ProblemList = pList;
-//    }
+   private List<ProblemSKUs> ProblemList;
 
     public ProblemAdapter(Activity mActivity, List<ProblemSKUs> problemList) {
         this.mActivity = mActivity;
+        ProblemList = problemList;
+    }
+
+    public ProblemAdapter(Activity mActivity, Problem_SKU_Fragment fragment, List<ProblemSKUs> problemList) {
+        this.mActivity = mActivity;
+        this.pfragment = fragment;
         ProblemList = problemList;
     }
 
@@ -141,6 +144,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 final EditText price, weight;
                 TextView i_name;
                 final RadioGroup radioGroup;
+                final RadioButton radioYes, radioNo;
                 Button post, cancel;
 
                 i_name = popupView.findViewById(R.id.pop_prob_name);
@@ -158,27 +162,28 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 post = popupView.findViewById(R.id.pop_prob_submit);
                 cancel = popupView.findViewById(R.id.prop_prob_cancel);
 
-                final String qprice = price.getText().toString();
-                final String qweight = weight.getText().toString();
-
                 radioGroup = popupView.findViewById(R.id.toggle_prob_adapter);
-                radioGroup.check(R.id.yes);
+                radioYes = popupView.findViewById(R.id.yesm);
+                radioNo = popupView.findViewById(R.id.nom);
+
+                radioGroup.check(R.id.yesm);
+
 
                 radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                         switch (checkedId) {
-                            case R.id.yes:
+                            case R.id.yesm:
 
                                 prb = popupView.findViewById(checkedId);
-                                radio = prb.getText().toString();
+                                radio = "YES";
                                 sku_remove = "1";
                                 break;
 
-                            case R.id.no:
+                            case R.id.nom:
                                 prb = popupView.findViewById(checkedId);
-                                radio = prb.getText().toString();
+                                radio = "NO";
                                 sku_remove = "0";
                                 break;
                         }
@@ -190,22 +195,16 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 loadCountrySpinner();
 
 
-
-
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         uom = parent.getItemAtPosition(position).toString();
 
-
-                        Log.d("uom", String.valueOf(uom));
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         uom = parent.getItemAtPosition(0).toString();
-
-                        Log.d("uom1", String.valueOf(uom));
 
                     }
                 });
@@ -217,14 +216,12 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                         Country sp = (Country) parent.getItemAtPosition(position);
                         country = sp.getCode();
-                        Log.d("Country", country);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         Country sp = (Country) parent.getItemAtPosition(0);
                         country = sp.getCode();
-                        Log.d("Country1", country);
                     }
                 });
 
@@ -232,6 +229,33 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
                 post.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        String qprice = price.getText().toString();
+                        String qweight = weight.getText().toString();
+
+                        if (radioGroup.getCheckedRadioButtonId() == -1) {
+                            // no radio buttons are checked
+                            sku_remove = "1";
+                        } else {
+                            // one of the radio buttons is checked
+//                            sku_remove1 =sku_remove;
+                            int selectedId = radioGroup.getCheckedRadioButtonId();
+                            switch (selectedId) {
+                                case R.id.yesm:
+
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "YES";
+                                    sku_remove = "1";
+                                    break;
+
+                                case R.id.nom:
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "NO";
+                                    sku_remove = "0";
+                                    break;
+                            }
+                        }
+
 
                         ProblemInput input = new ProblemInput(qprice, qweight, uom, country);
                         insert_popup(email, password, l_id, group_type, cus_id, item_sku, input, sku_remove, popup, id);
@@ -251,7 +275,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
     }
 
     private void insert_popup(final String email, final String password, String l_id, String group_type,
-                              String cus_id, String item_sku, final ProblemInput input, final String sku_remove,
+                              String cus_id, String item_sku, final ProblemInput input, final String sku_r,
                               final PopupWindow popup, final String id) {
 
         final APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -266,7 +290,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                     if (resp1.getReturnType().equals("success")) {
                         Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
-                        if (sku_remove.equals("1")) {
+                        if (sku_r.equals("1")) {
                             call_delete(email, password, id, apiInterface, popup);
 //                            delete API
                         } else {
@@ -332,6 +356,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                         Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
                         popup.dismiss();
+                        pfragment.refresh();
 
                     } else {
                         String d = response.body().getMessage();
@@ -383,8 +408,8 @@ public class ProblemAdapter extends RecyclerView.Adapter<ProblemAdapter.ProblemH
 
                     if (resp1.getReturnType().equals("success")) {
                         Toast.makeText(mActivity, resp1.getMessage(), Toast.LENGTH_SHORT).show();
-
                         popup.dismiss();
+                        pfragment.refresh();
 
                     } else {
                         String d = response.body().getMessage();

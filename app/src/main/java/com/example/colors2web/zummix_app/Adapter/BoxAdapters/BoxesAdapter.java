@@ -65,6 +65,7 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
          final String box_number = box.getBoxNumber();
         holder.box_no.setText(box_number);
 
+        holder.master.setText(box.getMasterBoxCode());
 
         holder.created.setText(box.getCreatedAt());
         holder.tracking_code.setText(box.getTrackingCode());
@@ -215,7 +216,7 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
     }
 
     public class BoxesHolder extends RecyclerView.ViewHolder {
-        TextView box_no, created,tracking_code;
+        TextView box_no, created,tracking_code,master;
         ImageView barcode;
         public BoxesHolder(View itemView) {
             super(itemView);
@@ -224,6 +225,7 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
 
             created=itemView.findViewById(R.id.rv_created_at);
             tracking_code=itemView.findViewById(R.id.rv_tracking_code);
+            master=itemView.findViewById(R.id.rv_mboxno);
             barcode=itemView.findViewById(R.id.box_imageview);
 
         }

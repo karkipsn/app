@@ -68,6 +68,7 @@ public class Package_Fragment extends Fragment {
     PackageAdapter padapter;
 
     List<Packages> PList =new ArrayList<>();
+    ArrayList<SpinnerPojo> countryList = new ArrayList<>();
     Spinner Customer;
     Long cus_id;
     String radio1,radio,status,package_type,customer_id;
@@ -131,7 +132,12 @@ public class Package_Fragment extends Fragment {
 
 
                 Customer =popupView.findViewById(R.id.pack_customer_spinner);
-                loadSpinner(email,password);
+
+                ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(getContext(),
+                        android.R.layout.simple_spinner_dropdown_item, countryList);
+                adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+
+                Customer.setAdapter(adp1);
 
                 Customer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -161,7 +167,11 @@ public class Package_Fragment extends Fragment {
 //                radiogroup //send these radiogroup inside the button
 
                 pradio =popupView.findViewById(R.id.toggle_update);
+                pradio.check(R.id.yes);
+
+
                 pradio1 =popupView.findViewById(R.id.toggle1);
+                pradio1.check(R.id.yes1);
 
                 pradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
@@ -241,6 +251,49 @@ public class Package_Fragment extends Fragment {
                             pname.setError("Invalid Name");
                         }
 
+                        if (pradio.getCheckedRadioButtonId() == -1) {
+                            // no radio buttons are checked
+                            radio = "YES";
+
+                        } else {
+                            // one of the radio buttons is checked
+//                            sku_remove1 =sku_remove;
+                            int selectedId = pradio.getCheckedRadioButtonId();
+                            switch (selectedId) {
+                                case R.id.yes:
+
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "YES";
+                                    break;
+
+                                case R.id.no:
+                                    prb = popupView.findViewById(selectedId);
+                                    radio = "NO";
+                                    break;
+                            }
+                        }
+
+                        if (pradio1.getCheckedRadioButtonId() == -1) {
+                            // no radio buttons are checked
+                            radio1 = "YES";
+
+                        } else {
+                            // one of the radio buttons is checked
+//                            sku_remove1 =sku_remove;
+                            int selectedId1 = pradio1.getCheckedRadioButtonId();
+                            switch (selectedId1) {
+                                case R.id.yes1:
+
+                                    prb = popupView.findViewById(selectedId1);
+                                    radio1 = "YES";
+                                    break;
+
+                                case R.id.no1:
+                                    prb = popupView.findViewById(selectedId1);
+                                    radio1 = "NO";
+                                    break;
+                            }
+                        }
 
                         if(radio.equals("YES")){
                             status ="1";
@@ -256,11 +309,14 @@ public class Package_Fragment extends Fragment {
                         if(cus_id!=null){
                             customer_id =cus_id.toString();}
 
+                            Log.d("radio1",radio1);
+                            Log.d("radio",radio);
+
 
                         PackageInput input = new PackageInput(customer_id,qname,qlength,qwidth,qheight,l_id,l_id,
                                 qweight,qsku,qcost,status,package_type);
 
-                        postActivity(email,password,group_type,l_id,input,progressDialog,popup);
+                       postActivity(email,password,group_type,l_id,input,progressDialog,popup);
 
 
                     }
@@ -275,7 +331,7 @@ public class Package_Fragment extends Fragment {
             }
         });
 
-        padapter = new PackageAdapter(getActivity(),PList);
+        padapter = new PackageAdapter(getActivity(),Package_Fragment.this,PList);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -303,6 +359,7 @@ public class Package_Fragment extends Fragment {
         });
 
         loadAdapter( email, password);
+        loadSpinner(email,password);
     }
 
     private void postActivity(String email, String password, String group_type, String l_id, PackageInput input,
@@ -379,7 +436,7 @@ public class Package_Fragment extends Fragment {
 
     }
 
-    private void refresh() {
+    public void refresh() {
 
         PList.clear();
         padapter.notifyDataSetChanged();
@@ -412,7 +469,6 @@ public class Package_Fragment extends Fragment {
 
                     if (cus != null) {
 
-                        ArrayList<SpinnerPojo> countryList = new ArrayList<>();
 
                         for (int i = 0; i < cus.size(); i++) {
 
@@ -428,11 +484,11 @@ public class Package_Fragment extends Fragment {
 
                         }
 
-                        ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(getContext(),
-                                android.R.layout.simple_spinner_dropdown_item, countryList);
-                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-
-                        Customer.setAdapter(adp1);
+//                        ArrayAdapter<SpinnerPojo> adp1 =new ArrayAdapter<SpinnerPojo>(getContext(),
+//                                android.R.layout.simple_spinner_dropdown_item, countryList);
+//                        adp1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+//
+//                        Customer.setAdapter(adp1);
 //                        Customer.setAdapter(new ArrayAdapter<SpinnerPojo>(getContext(),
 //                                android.R.layout.simple_spinner_dropdown_item, countryList));
 

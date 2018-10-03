@@ -66,7 +66,6 @@ public class Warehouse_Fragment extends Fragment {
         if (getArguments() != null) {
 
             ArrayList<User> logs = getArguments().getParcelableArrayList("WareList");
-            Log.d("warelist",logs.toString());
             padapter.updateAnswers(logs);
 
             ArrayList<SpinnerPojo> grouplog = getArguments().getParcelableArrayList("GroupList");

@@ -18,9 +18,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.Order_Adapters.TrackingAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.OrderTrack.OrderDetail;
 import com.example.colors2web.zummix_app.POJO.OrderTrack.OrdertrackResponse;
@@ -58,6 +60,14 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                finish();
+            }
+        });
+
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
@@ -71,7 +81,7 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         mrecyclerView.setHasFixedSize(true);
         mrecyclerView.setLayoutManager(layoutManager);
 
-        mrecyclerView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayout.HORIZONTAL,16));
         mrecyclerView.setItemAnimator(new DefaultItemAnimator());
         mrecyclerView.setAdapter(tadapter);
 
@@ -90,6 +100,7 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                ordList.clear();
                 call_next(email, password, Path);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -143,7 +154,9 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+//       moveTaskToBack(true);
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        super.onBackPressed();
     }
 
 
@@ -172,16 +185,29 @@ public class TrackOrderSearchActivity extends AppCompatActivity {
 
                             OrderDetail ordT = new OrderDetail();
 
+
                             String id = String.valueOf(List.get(i).getId());
                             String email = List.get(i).getCustomerEmail();
                             String ono = List.get(i).getOrderNumber();
                             String ostatus = List.get(i).getOrderStatus();
+                            String trac_code = List.get(i).getTrackingCode();
+                            String ship_to = List.get(i).getShipTo();
+                            String ship_method = List.get(i).getShipMethod();
+                            String emp_id = List.get(i).getEmployeeId();
+                            String cus_ofc = List.get(i).getCustomerOfficeName();
+                            String odate = List.get(i).getOrderDate();
 
 
                             ordT.setId(Long.valueOf(id));
                             ordT.setCustomerEmail(email);
                             ordT.setOrderNumber(ono);
                             ordT.setOrderStatus(ostatus);
+                            ordT.setTrackingCode(trac_code);
+                            ordT.setShipTo(ship_to);
+                            ordT.setShipMethod(ship_method);
+                            ordT.setEmployeeId(emp_id);
+                            ordT.setCustomerOfficeName(cus_ofc);
+                            ordT.setOrderDate(odate);
 
                             ordList.add(ordT);
 

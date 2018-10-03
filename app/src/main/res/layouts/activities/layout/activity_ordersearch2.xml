@@ -3,90 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:id="@+id/frame_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingStart="0dp">
-
-
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/toolbar_top"
-                        android:background="@color/colorPrimary"
-                        app:layout_scrollFlags="scroll|enterAlways"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                        app:titleMargin="@dimen/activity_horizontal_margin_narrow">
-
-
-                    </android.support.v7.widget.Toolbar>
-
-                </FrameLayout>
-
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ord2_card1"
-            android:layout_marginLeft="@dimen/margin_down"
-            android:layout_marginRight="@dimen/margin_down"
-            android:layout_marginTop="@dimen/margin_down"
-            android:layout_marginBottom="@dimen/margin_down"
-            android:elevation="@dimen/elevation">
-
-
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+                <LinearLayout
+                    android:id="@+id/main_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/frame_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingStart="0dp">
+
+
+                        <android.support.v7.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/toolbar_top"
+                            android:background="@color/colorPrimary"
+                            app:layout_scrollFlags="scroll|enterAlways"
+                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                            app:titleMargin="@dimen/activity_horizontal_margin_narrow">
+
+
+                        </android.support.v7.widget.Toolbar>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/ord2_card1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_down"
+                android:layout_marginLeft="@dimen/margin_down"
+                android:layout_marginRight="@dimen/margin_down"
+                android:layout_marginTop="@dimen/margin_down"
+                android:elevation="@dimen/elevation">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/ord2_storename"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:gravity="left"
-                        android:padding="2dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
-                    <!--<TextView-->
+                        <TextView
+                            android:id="@+id/ord2_storename"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:gravity="left"
+                            android:padding="2dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <!--<TextView-->
                         <!--android:id="@+id/ord2_sdate"-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="match_parent"-->
@@ -97,185 +97,185 @@
                         <!--android:textColor="@color/black"-->
                         <!--android:textSize="16sp"-->
                         <!--android:textStyle="bold" />-->
-                    <TextView
-                        android:id="@+id/ord2_status"
+                        <TextView
+                            android:id="@+id/ord2_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_margin="3dp"
+                            android:layout_weight="6"
+                            android:gravity="right"
+                            android:padding="4dp"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <Button
+                            android:id="@+id/cancel_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:layout_weight="6"
+                            android:background="@drawable/flag_gardient"
+                            android:backgroundTint="@color/pink"
+                            android:gravity="center"
+                            android:paddingLeft="2dp"
+                            android:text="CANCEL "
+                            android:textColor="@color/white"
+                            android:visibility="gone"
+
+                            />
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:gravity="right"
-                        android:layout_gravity="right"
-                        android:padding="4dp"
-                        android:layout_weight="6"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
-
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_weight="6"
-                        android:paddingLeft="2dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:id="@+id/cancel_button"
-                        android:background="@drawable/flag_gardient"
-                        android:backgroundTint="@color/pink"
-                        android:visibility="gone"
-                        android:text="CANCEL "
-
-                        />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="@dimen/margin_down"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/ord2_sdate1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ord2_sdate"
+                        android:layout_marginBottom="@dimen/margin_down"
                         android:layout_weight="1"
-                        android:gravity="left"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
 
-                    <TextView
-                        android:id="@+id/paused"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/ord2_sdate1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ord2_sdate"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+
+                        <TextView
+                            android:id="@+id/paused"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Paused"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/ready_to_batch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Ready"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/refunded"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Refunded"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/spp_request"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="PP Request"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/expedite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Expedite"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/ship_it_now_batch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Ship It Now"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/batch_printed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text="Batch Printed"
+                            android:textColor="@color/white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:text="Paused"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/ready_to_batch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:text="Ready"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"  />
-
-                    <TextView
-                        android:id="@+id/refunded"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:text="Refunded"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"  />
-
-                    <TextView
-                        android:id="@+id/spp_request"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:text="PP Request"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"  />
+                        <TextView
+                            android:id="@+id/ord2_ship_method"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:gravity="left"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="2dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
 
-                    <TextView
-                        android:id="@+id/expedite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:visibility="gone"
-                        android:text="Expedite"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp" />
+                        <Button
+                            android:id="@+id/btn_edit_ship_method"
+                            android:layout_width="44dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:paddingLeft="3dp"
+                            android:paddingRight="3dp"
+                            android:text="EDIT "
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/ship_it_now_batch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:padding="4dp"
-                        android:visibility="gone"
-                        android:text="Ship It Now"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/batch_printed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/flag_gardient"
-                        android:layout_margin="4dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:padding="4dp"
-                        android:visibility="gone"
-                        android:text="Batch Printed"
-                        android:textSize="10sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ord2_ship_method"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:gravity="left"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
-
-
-                    <Button
-                        android:layout_width="44dp"
-                        android:layout_height="28dp"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="3dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:id="@+id/btn_edit_ship_method"
-                        android:background="@drawable/flag_gardient"
-                        android:visibility="gone"
-                        android:text="EDIT "/>
-
-                    <!--<Button-->
+                        <!--<Button-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="28dp"-->
                         <!--android:id="@+id/btn_shipmethod2"-->
@@ -290,83 +290,96 @@
                         <!--android:layout_margin="4dp"-->
                         <!--android:textColor="@color/black"-->
                         <!--android:textSize="16sp"/>-->
-                </LinearLayout>
+                    </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/ord2_ship_type"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        android:gravity="left"
-                        android:visibility="visible"
-                        android:layout_margin="4dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ord2_ship_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:gravity="left"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingTop="2dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
 
 
-                    <Button
-                        android:layout_width="44dp"
-                        android:layout_height="28dp"
-                        android:paddingLeft="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:gravity="center"
-                        android:paddingRight="2dp"
-                        android:textColor="@color/white"
-                        android:id="@+id/btn_edit_shipping_type"
-                        android:background="@drawable/flag_gardient"
-                        android:visibility="gone"
-                        android:text="EDIT "/>
+                        <Button
+                            android:id="@+id/btn_edit_shipping_type"
+                            android:layout_width="44dp"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:text="EDIT "
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:id="@+id/btn_expedite"
-                        android:paddingLeft="2dp"
-                        android:gravity="center"
-                        android:layout_marginLeft="4dp"
-                        android:paddingRight="2dp"
-                        android:visibility="gone"
-                        android:background="@drawable/flag_gardient"
-                        android:text=" Make Expedite"
-                        android:textColor="@color/white"
-                        />
+                        <Button
+                            android:id="@+id/btn_expedite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="4dp"
+                            android:background="@drawable/flag_gardient"
+                            android:gravity="center"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:text=" Make Expedite"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@color/white"
+                    app:tabMode="scrollable"
+                    app:tabTextColor="@color/green_dark" />
+
+
+                <android.support.v4.view.ViewPager
+
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/elevation"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
             </LinearLayout>
 
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@color/white"
-            app:tabTextColor="@color/green_dark"
-            app:tabMode="scrollable" />
-
-
-        <android.support.v4.view.ViewPager
-
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/elevation"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>

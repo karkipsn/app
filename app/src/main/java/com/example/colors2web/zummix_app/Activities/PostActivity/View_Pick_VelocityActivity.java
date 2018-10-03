@@ -13,8 +13,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.colors2web.zummix_app.Adapter.ReportsAdapters.Pick_Velocity_BoxAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.PostSearch.Boxes;
 import com.example.colors2web.zummix_app.POJO.PostSearch.CustomerItems;
@@ -60,7 +62,8 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
 //        mrecycleView.setHasFixedSize(true);
         mrecycleView.setLayoutManager(mlayoutManager);
 
-        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+//        mrecycleView.addItemDecoration(new SimpleItemDecoration(this));
+        mrecycleView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayout.HORIZONTAL,16));
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(PickAdapter);
         loadAdapter();

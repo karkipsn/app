@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/create_special_program"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:padding="10dp"
-            android:layout_margin="2dp"
-            android:text="Create Special Program"
-            android:textColor="@color/primary"
-            android:background="@color/white"
-            android:textSize="16sp"
-            android:clickable="true"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/create_special_program"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:padding="10dp"
+        android:layout_margin="2dp"
+        android:text="Create Special Program"
+        android:textColor="@color/primary"
+        android:background="@color/white"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:textStyle="bold" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
         <android.support.v7.widget.RecyclerView
@@ -37,4 +47,7 @@
 
     </LinearLayout>
 
-</ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

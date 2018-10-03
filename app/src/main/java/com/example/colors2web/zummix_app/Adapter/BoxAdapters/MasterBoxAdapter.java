@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Adapter.BoxAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -38,121 +39,130 @@ import retrofit2.Response;
 
 
 public class MasterBoxAdapter extends RecyclerView.Adapter<MasterBoxAdapter.MasterBoxHolder> {
-        List<MasterBox> mboxList;
-        private Context mContext;
-    List<Boxes>BList = new ArrayList<>();
+
+    List<MasterBox> mboxList;
+    private Activity mContext;
+
+    List<Boxes> BList = new ArrayList<>();
 
 
-        public MasterBoxAdapter(Context context,
+    public MasterBoxAdapter(Activity context, List<MasterBox> mList) {
+        this.mContext = context;
+        this.mboxList = mList;
+    }
 
-                                List<MasterBox> mList) {
-            this.mContext =context;
-            this.mboxList =mList;
-        }
+    @NonNull
 
-        @NonNull
+    @Override
+    public MasterBoxHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.actitvity_adapter_boxes, parent, false);
+        return new MasterBoxHolder(view);
+    }
 
-        @Override
-        public MasterBoxHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.actitvity_adapter_boxes,parent,false);
-            return new MasterBoxHolder(view);
-        }
+    @Override
+    public void onBindViewHolder(@NonNull final MasterBoxHolder holder, int position) {
 
-        @Override
-        public void onBindViewHolder(@NonNull final MasterBoxHolder holder, int position) {
-            MasterBox box = mboxList.get(position);
+        MasterBox box = mboxList.get(position);
 
-            holder.box_no.setText(box.getBoxNumber());
-            holder.created.setText(box.getCreatedAt());
+        holder.box_no.setText(box.getBoxNumber());
+        holder.box_no.setTextColor(holder.box_no.getResources().getColor(R.color.colorPrimary));
 
-            String url = box.getBarcodeFileName();
-            String url1 =" http://5840c423.ngrok.io/zummix-api/public/barcodes/";
+        holder.mbox_no.setText(box.getMasterBoxCode());
+        holder.tracking.setText(box.getMasterBoxTrackingCode());
+        holder.created.setText(box.getCreatedAt());
 
-            Glide.with(mContext).load(url1+url).into(holder.barcode);
-            Log.d("url",url1+url);
+//        String url = box.getBarcodeFileName();
+//        String url1 = " http://5840c423.ngrok.io/zummix-api/public/barcodes/";
+//
+//        Glide.with(mContext).load(url1 + url).into(holder.barcode);
+//        Log.d("url", url1 + url);
 
 //        Picasso.get().load(url1+url).into(holder.barcode);
 
-            final String mbox_number = box.getBoxNumber();
-            holder.box_no.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View popupView = inflater.inflate(R.layout.mbox_modal_masterbox, null);
 
-                    WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-                    Display display = wm.getDefaultDisplay();
+        final String mbox_number = box.getMasterBoxCode();
+        loadAdapter(mbox_number);
+        holder.box_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    int height = display.getHeight();
-                    int width = display.getWidth();
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View popupView = inflater.inflate(R.layout.mbox_modal_masterbox, null);
 
-                    final PopupWindow popup = new PopupWindow(popupView,
-                            (int) (width*0.8), WindowManager.LayoutParams.WRAP_CONTENT);
-                    popup.setFocusable(true);
-                    popup.setOutsideTouchable(true);
-                    popup.setAnimationStyle(android.R.style.Animation_Dialog);
+                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+                Display display = wm.getDefaultDisplay();
 
-                    popup.showAtLocation(holder.box_no, Gravity.CENTER, 0, 0); //Displaying popup
+                int height = display.getHeight();
+                int width = display.getWidth();
 
-                    final View container = (View) popup.getContentView().getParent();
-                    WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
-                    p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-                    p.dimAmount = 0.7f;
-                    wm.updateViewLayout(container, p);
+                final PopupWindow popup = new PopupWindow(popupView,
+                        (int) (width * 0.9), WindowManager.LayoutParams.WRAP_CONTENT);
+                popup.setFocusable(true);
+                popup.setOutsideTouchable(true);
+                popup.setAnimationStyle(android.R.style.Animation_Dialog);
 
-                    RecyclerView rv = popupView.findViewById(R.id.recycle_view);
-                    Button cancel = popupView.findViewById(R.id.pop_up_cancel);
+                popup.showAtLocation(holder.box_no, Gravity.CENTER, 0, 0); //Displaying popup
+
+                final View container = (View) popup.getContentView().getParent();
+                WindowManager.LayoutParams p = (WindowManager.LayoutParams) container.getLayoutParams();
+                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                p.dimAmount = 0.7f;
+                wm.updateViewLayout(container, p);
+
+                RecyclerView rv = popupView.findViewById(R.id.recycle_view);
+                TextView cancel = popupView.findViewById(R.id.pop_up_cancel);
 
 
-                    final PopBoxAdapter kadapter;
-                    kadapter = new PopBoxAdapter(mContext,BList);
+                final PopBoxAdapter kadapter;
+                kadapter = new PopBoxAdapter(mContext, BList);
 
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
 //            mrecyclerView.setHasFixedSize(true);
-                    rv.setLayoutManager(mLayoutManager);
+                rv.setLayoutManager(mLayoutManager);
 
-                    rv.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.HORIZONTAL, 16));
+                rv.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.HORIZONTAL, 16));
 //            mrecyclerView.addItemDecoration(new SimpleItemDecoration(getContext()));
-                    rv.setItemAnimator(new DefaultItemAnimator());
+                rv.setItemAnimator(new DefaultItemAnimator());
 
-                    rv.setAdapter(kadapter);
-                    loadAdapter(mbox_number,kadapter);
+                rv.setAdapter(kadapter);
+//                kadapter.updateAnswers(BList);
+                kadapter.updateAnswers(BList, popup);
 
-                    cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popup.dismiss();
-                        }
-                    });
-                }
-            });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popup.dismiss();
+                    }
+                });
+            }
+        });
 
-        }
+    }
 
-    private void loadAdapter(String master_box_no, final PopBoxAdapter kadapter) {
+    private void loadAdapter(String master_box_no) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String email = preferences.getString("email","");
-        String password = preferences.getString("password","");
+        String email = preferences.getString("email", "");
+        String password = preferences.getString("password", "");
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<MasterBoxResponse> call  =apiInterface.getMboxBox(email,password,master_box_no);
+        Call<MasterBoxResponse> call = apiInterface.getMboxBox(email, password, master_box_no);
         call.enqueue(new Callback<MasterBoxResponse>() {
             @Override
             public void onResponse(Call<MasterBoxResponse> call, Response<MasterBoxResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     MasterBoxResponse res = response.body();
 
-                    if(res.getReturnType().equals("success")){
+                    if (res.getReturnType().equals("success")) {
 
-                        List <Boxes> boxes = res.getmBoxes();
+                        List<Boxes> boxes = res.getmBoxes();
 //                   List<Boxes>arraylist = new ArrayList<>();
-                        Boxes b = new Boxes();
 
-                        for(int i = 0;i<boxes.size();i++){
+                        for (int i = 0; i < boxes.size(); i++) {
 
+                            Boxes b = new Boxes();
                             String mpack = boxes.get(i).getBoxNumber();
                             String mord = boxes.get(i).getOrderNumber();
 
@@ -161,20 +171,19 @@ public class MasterBoxAdapter extends RecyclerView.Adapter<MasterBoxAdapter.Mast
                             BList.add(b);
                         }
 
-                        kadapter.updateAnswers(BList);
-                    }
-                    else{
-                        Toast.makeText(mContext,res.getReturnType(),Toast.LENGTH_SHORT).show();
+//                        kadapter.updateAnswers(BList);
+                    } else {
+                        Toast.makeText(mContext, res.getReturnType(), Toast.LENGTH_SHORT).show();
 
-                    }}
-                else {
-                    Toast.makeText(mContext,"Operation Failed",Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, "Operation Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<MasterBoxResponse> call, Throwable t) {
-                Toast.makeText(mContext,"Network Failure",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Network Failure", Toast.LENGTH_SHORT).show();
 
                 call.cancel();
 
@@ -185,28 +194,31 @@ public class MasterBoxAdapter extends RecyclerView.Adapter<MasterBoxAdapter.Mast
 
 
     @Override
-        public int getItemCount() {
-            return mboxList.size();
-        }
+    public int getItemCount() {
+        return mboxList.size();
+    }
 
-        public void updateAnswers(List<MasterBox> List) {
-            mboxList =List;
-            notifyDataSetChanged();
+    public void updateAnswers(List<MasterBox> List) {
+        mboxList = List;
+        notifyDataSetChanged();
 
-        }
+    }
 
-        public class MasterBoxHolder extends RecyclerView.ViewHolder {
-            TextView box_no, created;
-            ImageView barcode;
-            public MasterBoxHolder(View itemView) {
-                super(itemView);
+    public class MasterBoxHolder extends RecyclerView.ViewHolder {
+        TextView box_no, created,tracking,mbox_no;
+        ImageView barcode;
 
-                box_no=itemView.findViewById(R.id.rv_boxno);
-                created=itemView.findViewById(R.id.rv_created_at);
-                barcode=itemView.findViewById(R.id.box_imageview);
+        public MasterBoxHolder(View itemView) {
+            super(itemView);
 
-            }
+            box_no = itemView.findViewById(R.id.rv_boxno);
+            mbox_no = itemView.findViewById(R.id.rv_mboxno);
+            created = itemView.findViewById(R.id.rv_created_at);
+            tracking = itemView.findViewById(R.id.rv_tracking_code);
+            barcode = itemView.findViewById(R.id.box_imageview);
+
         }
     }
+}
 
 

@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,7 @@ public class Sales_Fragment extends Fragment {
     Integer mYear, mMonth, mDay;
     String mform1, mto1;
     Long cus_id;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public Sales_Fragment(){
 
@@ -80,6 +82,11 @@ public class Sales_Fragment extends Fragment {
         msku = getActivity().findViewById(R.id.item_dr_sku);
         msku.setVisibility(View.VISIBLE);
         mform = getActivity().findViewById(R.id.item_dr_from);
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
         mto = getActivity().findViewById(R.id.item_dr_to);
         btn_submit = getActivity().findViewById(R.id.btn_item_dr_submit);
 
@@ -136,6 +143,20 @@ public class Sales_Fragment extends Fragment {
                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                 mto1 = format.format(c.getTime());
                 datePickerDialog.show();
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                msku.setText(null);
+                mform.setText(null);
+                mto.setText(null);
+
+                Toast.makeText(getContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+
             }
         });
 
@@ -333,7 +354,7 @@ public class Sales_Fragment extends Fragment {
                                          Intent intent = new Intent(getContext(),View_salesHistoryActivity.class);
                                          intent.putExtra("OrList", (Serializable) OrList);
                                          startActivity(intent);
-                                         Log.d("check_list", OrList.toString());
+
                                          if (progressDialog.isShowing()) {
                                              progressDialog.dismiss();
                                          }
@@ -349,7 +370,6 @@ public class Sales_Fragment extends Fragment {
                                          progressDialog.dismiss();
                                      }
                                      Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
-                                     Log.d("Error", response.errorBody().toString());
 
                                  } else if (response.code() == 404) {
 

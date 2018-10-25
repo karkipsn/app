@@ -119,6 +119,11 @@ public class CreateCityBinsActivity extends AppCompatActivity {
     String bin_id;
 
     @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        super.onBackPressed();    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citybin_create);
@@ -126,10 +131,12 @@ public class CreateCityBinsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CreateCityBinsActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
             }
         });
 

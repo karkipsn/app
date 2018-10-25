@@ -32,7 +32,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Activities.BarcodeActivity.BarcodeMain;
+import com.example.colors2web.zummix_app.Activities.BarcodeActivity.ScannerActivity;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MasterBoxSearch2Activity;
+import com.example.colors2web.zummix_app.Activities.Navigation.HomeActivity;
 import com.example.colors2web.zummix_app.Activities.OrderActivity.TrackOrderSearchActivity;
 import com.example.colors2web.zummix_app.Activities.ProductDetails.ProductSearchActivity;
 import com.example.colors2web.zummix_app.Activities.MasterBoxSearch.MasterBoxSearchActivity;
@@ -49,6 +51,8 @@ import com.example.colors2web.zummix_app.POJO.OrderTrack.OrdertrackResponse;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProSearchRes;
 import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
 
@@ -66,7 +70,7 @@ public class SearchFragment extends Fragment {
     TextView textView;
     EditText editText;
     ImageView bar;
-    ImageView mb1,mb2;
+    ImageView mb1, mb2;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -78,8 +82,8 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.activity_search_fragment, container, false);
-        mb1=getActivity().findViewById(R.id.image);
-        mb2=getActivity().findViewById(R.id.image_try);
+        mb1 = getActivity().findViewById(R.id.image);
+        mb2 = getActivity().findViewById(R.id.image_try);
 
         return rootView;
     }
@@ -140,7 +144,7 @@ public class SearchFragment extends Fragment {
 
         spinner = getActivity().findViewById(R.id.fmainspinnerz);
 
-        ArrayAdapter<CharSequence>adapter1 = ArrayAdapter.createFromResource(getContext(),R.array.spinner_array,
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(), R.array.spinner_array,
                 android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setAdapter(adapter1);
@@ -201,11 +205,10 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(i == KeyEvent.KEYCODE_BACK) {
+                if (i == KeyEvent.KEYCODE_BACK) {
                     editText.clearFocus();
                     return true;
-                }
-                else return false;
+                } else return false;
             }
         });
 
@@ -224,62 +227,85 @@ public class SearchFragment extends Fragment {
             }
         });
 
+
         bar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Barcode Clicked", Toast.LENGTH_SHORT).show();
 
-                Intent barcode = new Intent(getActivity(), BarcodeMain.class);
-                barcode.putExtra("categories", spine);
-                startActivity(barcode);
-              getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                getActivity().overridePendingTransition(getResources().getAnimation(R.anim.pus), R.anim.push_left_out);
+//                Intent barcode = new Intent(getActivity(), BarcodeMain.class);
+//                barcode.putExtra("categories", spine);
+//                startActivity(barcode);
+//              getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+                IntentIntegrator.forSupportFragment(SearchFragment.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+
             }
         });
-//        editText.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(editText) {
-//
-//            @Override
-//            public boolean onDrawableClick() {
-//                editText.getText().clear();
-//                editText.setShowSoftInputOnFocus(false);
-//                editText.onEditorAction(EditorInfo.IME_ACTION_DONE);
-//                editText.setCursorVisible(false);
-//
-//
-//
-////                editText.setShowSoftInputOnFocus(false);
-////
-////                View view = getActivity().getCurrentFocus();
-////                if (view != null) {
-////                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-////                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-////                }
-//
-////                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-////                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.RESULT_UNCHANGED_HIDDEN);
-//                return true;
-//            }
-//
-//        });
-//
 
-
-//        toolbar.inflateMenu(R.menu.search_menu);
-//        toolbar.setOnMenuItemClickListener(this);
 
     }
 
-//    Do this same with some button
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getContext(), "Scan Cancelled", Toast.LENGTH_LONG).show();
+
+            } else {
+                //show dialogue with result// This is used to copy the contents from the clip
+//                showResultDialogue(result.getContents());
+                String barstring = result.getContents();
+                Toast.makeText(getContext(), "Scanned result is :" + result.getContents(), Toast.LENGTH_LONG).show();
+
+                if (spine != null) {
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    final String email = preferences.getString("email", "");
+                    final String password = preferences.getString("password", "");
+
+                    switch (spine) {
+
+                        case "Order":
+                            call_order2(email, password, barstring);
+                            break;
+
+                        case "Product":
+                            call_item(email, password, barstring);
+                            break;
+
+                        case "Tracking Number":
+                            call_tracking_number(email, password, barstring);
+                            break;
+
+                        case "Box/Master Box":
+                            call_box(email, password, barstring);
+                            break;
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Error in Process", Toast.LENGTH_SHORT).show();
+                }
+//                }
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    //    Do this same with some button
 //    Try with floating action button
 
-
     @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-        // Do something that differs the Activity's menu here
-//        super.onCreateOptionsMenu(menu, inflater);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
 
         inflater.inflate(R.menu.search_menu2, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
 
         MenuItem item = menu.getItem(0);
         MenuItem item1 = menu.getItem(1);
@@ -287,19 +313,16 @@ public class SearchFragment extends Fragment {
         item.setVisible(false);
         item1.setVisible(true);
 
-        ImageView img,try2;
+        ImageView img, try2;
 
-//        img = (ImageView) menu.findItem(R.id.image).getActionView();
-//        img.setVisibility(View.GONE);
+
         try2 = (ImageView) menu.findItem(R.id.image_try).getActionView();
-//        try2.setVisibility(View.VISIBLE);
-//        img.setImageResource(android.R.drawable.ic_menu_search);
 
         try2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(getFragmentManager().getBackStackEntryCount() > 0) {
+                if (getFragmentManager().getBackStackEntryCount() > 0) {
 
                     getFragmentManager().popBackStack();
 
@@ -336,12 +359,12 @@ public class SearchFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
-                    if(getFragmentManager().getBackStackEntryCount() > 0) {
+                    if (getFragmentManager().getBackStackEntryCount() > 0) {
 
-                            getFragmentManager().popBackStack();
-                            getActivity().overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+                        getFragmentManager().popBackStack();
+                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 
 //                        getActivity().getFragmentManager().popBackStack();
 //                        yo garda chai last ma iflate bhako item dekaune raixa
@@ -386,7 +409,7 @@ public class SearchFragment extends Fragment {
                         break;
 
                     case "Batch Status":
-                        call_batch(email,password,OPath);
+                        call_batch(email, password, OPath);
                         break;
 
                 }
@@ -500,9 +523,9 @@ public class SearchFragment extends Fragment {
                     MasterBoxResponse resp1 = response.body();
 
                     String message = resp1.getMessage();
-                   OrderShippingAddress Ordlist = resp1.getOrderShippingAddress();
+                    OrderShippingAddress Ordlist = resp1.getOrderShippingAddress();
 
-                    if (Ordlist!= null) {
+                    if (Ordlist != null) {
 
                         Intent intent3 = new Intent(getContext(), MasterBoxSearch2Activity.class);
                         intent3.putExtra("OPath", oPath);
@@ -815,7 +838,6 @@ public class SearchFragment extends Fragment {
             }
         });
     }
-
 
 
 }

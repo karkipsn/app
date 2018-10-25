@@ -85,13 +85,17 @@ android {
         implementation 'info.androidhive:barcode-reader:1.1.5'
 
         // google vision library
-        implementation 'com.google.android.gms:play-services-vision:15.0.2'
+        implementation 'com.google.android.gms:play-services-vision:16.2.0'
 
         /*Add QR Library Here Zxing library*/
         implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+//        Firebase Implementation
+        implementation 'com.google.firebase:firebase-core:16.0.4'
+        implementation 'com.google.firebase:firebase-messaging:17.3.3'
     }
 }
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
+apply plugin: 'com.google.gms.google-services'

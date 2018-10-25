@@ -14,8 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel_id"/>
+
+
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activities.Navigation.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
@@ -25,10 +30,17 @@
             </intent-filter>
         </activity>
 
+        <!--<activity android:name=".Activities.Navigation.HomeActivity">-->
+        <!--   </activity>-->
+        <!--android:name=".SplashActivity"-->
 
-        <!--<activity-->
-        <!--android:name=".Activities.InActiveActivity"-->
-        <!--android:label="InActive Customer"-->
+
+        <activity
+        android:name=".app_firebase.TryActivity"
+        android:label="Try Activity">
+
+        </activity>
+
         <!--android:theme="@style/MyMaterialTheme">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN" />-->
@@ -41,6 +53,11 @@
         <!--android:name=".Activities.OrderActivity.OrderEditActivity"-->
         <!--android:label="Shipping Address"-->
         <!--android:parentActivityName=".Activities.OrderSearch2Activity">-->
+
+        <!--</activity>-->
+
+        <!--<activity android:name=".app_firebase.TryActivity"-->
+            <!--android:label="TryActivity">-->
 
         <!--</activity>-->
 
@@ -110,17 +127,18 @@
 
         <activity
             android:name=".Activities.BarcodeActivity.ScannerActivity"
-            android:label="SCANNED VIEW"
-            android:supportsRtl="true"></activity>
+            android:label="SCANING "
+            android:supportsRtl="true">
+
+        </activity>
 
         <activity
             android:name=".Activities.BarcodeActivity.Barcode_ScanActivity"
             android:label="SCAN"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
 
-        <activity
-            android:name=".Activities.BarcodeActivity.BarcodeAPI_Activity"
-            android:label="Order Details" />
+        </activity>
+
         <activity
             android:name=".Activities.CustomersSearchActivity.ByActiveCustomers"
             android:label="Active Customers" />
@@ -140,38 +158,36 @@
         <activity
             android:name=".Activities.OrderActivity.OrderShippingEditActivity"
             android:label="Shipping Address Form">
-
-
         </activity>
 
         <activity
             android:name=".Activities.PostActivity.View_dr_historyActivity"
             android:label="DrShipment History"
             android:parentActivityName=".Activities.PostActivity.Item_DR_HistoryActivity">
-
         </activity>
 
         <activity
             android:name=".Activities.PostActivity.View_Pick_VelocityActivity"
             android:label="Pick Velocity Report"
-            android:parentActivityName=".Activities.PostActivity.Pick_Velocity_ReportActivity"></activity>
+            android:parentActivityName=".Activities.PostActivity.Pick_Velocity_ReportActivity">
+
+        </activity>
 
         <activity
             android:name=".Activities.PostActivity.View_salesHistoryActivity"
             android:label="Item Sales History"
-            android:parentActivityName=".Activities.PostActivity.Item_Sales_HistoryActivity"></activity>
+            android:parentActivityName=".Activities.PostActivity.Item_Sales_HistoryActivity">
+
+        </activity>
 
         <activity
             android:name=".Activities.PostActivity.Item_Sales_HistoryActivity"
             android:label="Item Sales History"
-            android:parentActivityName=".Activities.OrderGroupByCustomerActivity"></activity>
+            android:parentActivityName=".Activities.OrderGroupByCustomerActivity">
 
-        <!-- <activity android:name=".Activities.PostActivity.Item_DR_HistoryActivity" -->
-        <!-- android:label="Dr History" -->
-        <!-- android:parentActivityName=".Activities.OrderGroupByCustomerActivity"> -->
+        </activity>
 
 
-        <!-- </activity> -->
 
         <activity
             android:name=".Activities.PostActivity.Pick_Velocity_ReportActivity"
@@ -193,11 +209,6 @@
         <activity
             android:name=".Activities.CityBins.UpdateCityBinsActivity"
             android:label="Update City Bins"></activity>
-
-        <activity android:name=".Activities.Navigation.HomeActivity">
-
-
-        </activity>
 
         <activity
             android:name=".Activities.ProblemSKU_Activity.PackageActivity"
@@ -225,6 +236,26 @@
             android:label="Searched Item Details">
 
         </activity>
+        <activity android:name=".Activities.TicketActivity.TicketDetailsActivity"
+            android:label="TicketDetails"/>
+
+        <!-- Firebase Notifications -->
+        <service
+            android:name=".services_firebase.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services_firebase.MyFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
 
     </application>
 

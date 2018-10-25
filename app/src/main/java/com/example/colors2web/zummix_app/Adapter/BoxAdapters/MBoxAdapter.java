@@ -155,7 +155,6 @@ public class MBoxAdapter extends RecyclerView.Adapter<MBoxAdapter.MBoxHolder> {
                     if (res.getReturnType().equals("success")) {
 
                         List<Boxes> boxes = res.getmBoxes();
-//                   List<Boxes>arraylist = new ArrayList<>();
 
                         for (int i = 0; i < boxes.size(); i++) {
                             Boxes b = new Boxes();

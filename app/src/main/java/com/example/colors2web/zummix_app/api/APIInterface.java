@@ -26,6 +26,9 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProductDetailsResponse;
 import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgram;
 import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgramResponse;
+import com.example.colors2web.zummix_app.POJO.TicketDetails.TicketDetialsResponse;
+import com.example.colors2web.zummix_app.POJO.Tickets.ReturnTicketResponse;
+import com.example.colors2web.zummix_app.POJO.Tickets.TicketResponse;
 import com.example.colors2web.zummix_app.POJO.Users.GroupResponse;
 import com.example.colors2web.zummix_app.POJO.SpecialProgram.SProgramResponse;
 import com.example.colors2web.zummix_app.POJO.Users.UserCreatePOJO;
@@ -194,11 +197,9 @@ public interface APIInterface {
     @DELETE("problemSku/{id}")
     Call<ProblemResponse> deleteProblemsku(@Header("email") String email, @Header("Password") String password, @Path("id") String id);
 
-
     //    Update for problemsku
     @PUT("problemSku/{id}")
     Call<ProblemResponse> updateProblemsku(@Header("email") String email, @Header("Password") String password, @Path("id") String id, @Body ProblemInput input);
-
 
     //    Packages
     @GET("packages/customer/0")
@@ -298,6 +299,19 @@ public interface APIInterface {
 //    FOr cron job's company name //2
     @GET("customers/{customer_id}")
     Call<CompanyResponse> getCOmpanyName(@Header("email") String email, @Header("password") String password);
+
+    //    FOr supportportal Tickets
+    @GET("tickets")
+    Call<TicketResponse> getTickets(@Header("email") String email, @Header("password") String password);
+
+    //    For Return Tickets
+    @GET("returnTickets")
+    Call<ReturnTicketResponse> getReturnTickets(@Header("email") String email, @Header("password") String password);
+
+//    GET Ticket Details
+    @GET("stores/{id}/supports/{supportid}")
+    Call<TicketDetialsResponse>getTicketDetails(@Header("email") String email, @Header("password") String password,
+                                                @Path("id") String id, @Path("supportid") String supportid);
 }
 
 

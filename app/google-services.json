@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "316080022635",
+    "firebase_url": "https://zummixapp.firebaseio.com",
+    "project_id": "zummixapp",
+    "storage_bucket": "zummixapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316080022635:android:d3b306db023a7f36",
+        "android_client_info": {
+          "package_name": "com.example.colors2web.zummix_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316080022635-antj6ku2ep2uq26ocofmmqkikqlp8lmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4eZ8IrJDo1fbIOxmUFn153IpzKFSPSt8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

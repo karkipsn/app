@@ -16,6 +16,7 @@ import com.example.colors2web.zummix_app.R;
 import java.util.List;
 
 public class ParentAdapter_customer extends RecyclerView.Adapter<ParentAdapter_customer.ParentHolder> {
+
     Context mContext;
     List<Customers> Plist;
 
@@ -51,15 +52,15 @@ public class ParentAdapter_customer extends RecyclerView.Adapter<ParentAdapter_c
         holder.t5.setText(coadd);
         final String id = String.valueOf(customers.getId());
 
-        holder.t1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext,ByCustomerId.class);
-                intent.putExtra("cid",id);
-                mContext.startActivity(intent);
-                
-            }
-        });
+//        holder.t1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext,ByCustomerId.class);
+//                intent.putExtra("cid",id);
+//                mContext.startActivity(intent);
+//
+//            }
+//        });
 
     }
 

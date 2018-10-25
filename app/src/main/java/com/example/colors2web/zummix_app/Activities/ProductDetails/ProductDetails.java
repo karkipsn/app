@@ -694,6 +694,23 @@ public class ProductDetails extends AppCompatActivity {
 
         viewPager.setAdapter(viewPagerAdapter);
 
+        viewPager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled( int position, float v, int i1 ) {
+            }
+
+            @Override
+            public void onPageSelected( int position ) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int state ) {
+                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            }
+        } );
+
+
+
 
 //        It is functional and it is only hided
 //        Frag_Inv_Logs ilogs = new Frag_Inv_Logs();
@@ -710,6 +727,13 @@ public class ProductDetails extends AppCompatActivity {
 
 //        viewPager.setOffscreenPageLimit(3);
 
+    }
+
+    private void enableDisableSwipeRefresh(boolean b) {
+
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(b);
+        }
     }
 
     @Override

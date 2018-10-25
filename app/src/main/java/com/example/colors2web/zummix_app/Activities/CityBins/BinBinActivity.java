@@ -57,17 +57,19 @@ public class BinBinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_citybins_home);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BinBinActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
             }
         });
 
@@ -156,8 +158,8 @@ public class BinBinActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-//       moveTaskToBack(true);
-       super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        super.onBackPressed();
 
     }
 
@@ -203,21 +205,21 @@ public class BinBinActivity extends AppCompatActivity {
                             String created_at = cus.get(i).getCreatedAt();
 //                            String customer_id = String.valueOf(cus.get(i).getCustomerId());
                             String customer_id = cus.get(i).getCustomerId();
-                            String mbin =cus.get(i).getBin();
-                            String mship_to_name =cus.get(i).getShipToName();
-                            String maddress1 =cus.get(i).getAddress1();
-                            String maddress2 =cus.get(i).getAddress2();
-                            String mcity =cus.get(i).getCity();
-                            String mcountry =cus.get(i).getCountry();
-                            String mstate =cus.get(i).getState();
-                            String mzip =cus.get(i).getZip();
-                            String mmanager1_name =cus.get(i).getManager1Name();
-                            String mmanager1_email =cus.get(i).getManager1Email();
-                            String mmanager1_phone =cus.get(i).getmManager1Phone();
-                            String mmanager2_name =cus.get(i).getManager2Name();
-                            String mmanager2_email =cus.get(i).getManager2Email();
-                            String mcompany_email =cus.get(i).getCompanyEmail();
-                            String mmanager2_phone =cus.get(i).getmManager2Phone();
+                            String mbin = cus.get(i).getBin();
+                            String mship_to_name = cus.get(i).getShipToName();
+                            String maddress1 = cus.get(i).getAddress1();
+                            String maddress2 = cus.get(i).getAddress2();
+                            String mcity = cus.get(i).getCity();
+                            String mcountry = cus.get(i).getCountry();
+                            String mstate = cus.get(i).getState();
+                            String mzip = cus.get(i).getZip();
+                            String mmanager1_name = cus.get(i).getManager1Name();
+                            String mmanager1_email = cus.get(i).getManager1Email();
+                            String mmanager1_phone = cus.get(i).getmManager1Phone();
+                            String mmanager2_name = cus.get(i).getManager2Name();
+                            String mmanager2_email = cus.get(i).getManager2Email();
+                            String mcompany_email = cus.get(i).getCompanyEmail();
+                            String mmanager2_phone = cus.get(i).getmManager2Phone();
 
 
                             bin.setCity(city);

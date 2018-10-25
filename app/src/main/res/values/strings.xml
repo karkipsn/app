@@ -27,6 +27,8 @@
         <item>City Bins</item>
         <item>Packages</item>
         <item>Problem SKU</item>
+        <item>Tickets</item>
+        <item>Return Tickets</item>
 
     </string-array>
 

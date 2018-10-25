@@ -158,7 +158,6 @@ public class MasterBoxAdapter extends RecyclerView.Adapter<MasterBoxAdapter.Mast
                     if (res.getReturnType().equals("success")) {
 
                         List<Boxes> boxes = res.getmBoxes();
-//                   List<Boxes>arraylist = new ArrayList<>();
 
                         for (int i = 0; i < boxes.size(); i++) {
 

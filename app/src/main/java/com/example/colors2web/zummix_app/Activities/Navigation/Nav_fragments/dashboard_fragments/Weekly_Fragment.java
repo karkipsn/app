@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class Weekly_Fragment extends Fragment {
     ArrayList<WeekTotalShipToOrder> WeekTotalShipTOList;
     ArrayList<WeekTotalVipOrder> WeekTotalVipList;
     ArrayList<WeekVipOrder> WeekVipList;
+    SwipeRefreshLayout swipe;
 
     public Weekly_Fragment() {
     }
@@ -71,8 +73,9 @@ public class Weekly_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tabLayout = getActivity().findViewById(R.id.tabs_weekly);
-        viewPager = getActivity().findViewById(R.id.viewpager_weekly);
+        tabLayout = view.findViewById(R.id.tabs_weekly);
+        viewPager = view.findViewById(R.id.viewpager_weekly);
+        swipe = getActivity().findViewById(R.id.swipeToRefresh);
 
         if (getArguments() != null) {
 
@@ -141,5 +144,27 @@ public class Weekly_Fragment extends Fragment {
         adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
 
+        viewPager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled( int position, float v, int i1 ) {
+            }
+
+            @Override
+            public void onPageSelected( int position ) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int state ) {
+                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            }
+        } );
     }
-}
+
+    private void enableDisableSwipeRefresh(boolean enable) {
+        if (swipe != null) {
+            swipe.setEnabled(enable);
+        }
+    }
+
+    }
+

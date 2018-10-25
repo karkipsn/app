@@ -7,7 +7,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -47,6 +49,7 @@ public class dashboard_fragment1 extends Fragment {
     ArrayList<WeekTotalVipOrder> WeekTotalVipList;
     ArrayList<WeekVipOrder> WeekVipList;
     String from,to;
+    SwipeRefreshLayout swipe;
 
     private boolean shouldRefreshOnResume = false;
 
@@ -87,9 +90,14 @@ public class dashboard_fragment1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewPager = getActivity().findViewById(R.id.viewpager_dashboard);
-        tableLayout = getActivity().findViewById(R.id.tabs_dashboard);
+        viewPager = view.findViewById(R.id.viewpager_dashboard);
+        tableLayout = view.findViewById(R.id.tabs_dashboard);
 
+        swipe =getActivity().findViewById(R.id.swipeToRefresh);
+
+        if(swipe.isActivated()){
+            swipe.setEnabled(false);
+        }
 
 
         if (getArguments() != null) {
@@ -114,6 +122,26 @@ public class dashboard_fragment1 extends Fragment {
        }
 
         viewpagerloader();
+        viewPager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled( int position, float v, int i1 ) {
+            }
+
+            @Override
+            public void onPageSelected( int position ) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int state ) {
+                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            }
+        } );
+    }
+
+    private void enableDisableSwipeRefresh(boolean enable) {
+        if (swipe != null) {
+            swipe.setEnabled(enable);
+        }
     }
 //    @Override
 //    public void onResume() {

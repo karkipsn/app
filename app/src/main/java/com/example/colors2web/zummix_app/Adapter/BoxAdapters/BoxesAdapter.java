@@ -64,22 +64,23 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
 
          final String box_number = box.getBoxNumber();
         holder.box_no.setText(box_number);
+        holder.box_no.setTextColor(holder.box_no.getResources().getColor(R.color.colorPrimary));
 
         holder.master.setText(box.getMasterBoxCode());
 
         holder.created.setText(box.getCreatedAt());
         holder.tracking_code.setText(box.getTrackingCode());
 
-        String url2 = box.getBarcodeFileName();
-
-        String url1 = Constant.url+"/barcodes/";
-
-        Glide.with(mContext).load(url1+url2).into(holder.barcode);
-        Log.d("url",url1+url2);
+//        String url2 = box.getBarcodeFileName();
+//
+//        String url1 = Constant.url+"/barcodes/";
+//
+//        Glide.with(mContext).load(url1+url2).into(holder.barcode);
+//        Log.d("url",url1+url2);
 
 //        Picasso.get().load(url1+url).into(holder.barcode);
 
-        holder.box_no.setOnClickListener(new View.OnClickListener() {
+           holder.box_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -107,18 +108,16 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
                 wm.updateViewLayout(container, p);
 
                 final RecyclerView rv = popupView.findViewById(R.id.recycle_view);
-                Button cancel = popupView.findViewById(R.id.pop_up_cancel);
+                TextView cancel = popupView.findViewById(R.id.pop_up_cancel);
 
 
                 final PopBox2Adapter kadapter;
                 kadapter = new PopBox2Adapter(mContext,LineList);
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-//            mrecyclerView.setHasFixedSize(true);
                 rv.setLayoutManager(mLayoutManager);
 
                 rv.addItemDecoration(new MyDividerItemDecoration(mContext, LinearLayoutManager.HORIZONTAL, 16));
-//            mrecyclerView.addItemDecoration(new SimpleItemDecoration(getContext()));
                 rv.setItemAnimator(new DefaultItemAnimator());
 
                 rv.setAdapter(kadapter);
@@ -160,11 +159,10 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
                     if(res.getReturnType().equals("success")){
 
                         List<LineItems>items = res.getmLineItems();
-//                   List<Boxes>arraylist = new ArrayList<>();
-                        LineItems b = new LineItems();
 
                         for(int i = 0;i<items.size();i++){
 
+                            LineItems b = new LineItems();
                             String msku = items.get(i).getItemSku();
                             String mname = items.get(i).getItemName();
                             String mqty = items.get(i).getBoxQuantity();

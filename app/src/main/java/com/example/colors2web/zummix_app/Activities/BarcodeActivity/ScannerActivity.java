@@ -17,23 +17,37 @@ public class ScannerActivity extends AppCompatActivity implements
 
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
-    private Button switchFlashlightButton;
+    private Button switchFlashlightButton,cancelbutton;
     private boolean isFlashLightOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+//                ScannerActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
 
         //Initialize barcode scanner view
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         //set torch listener
         barcodeScannerView.setTorchListener(this);
+        barcodeScannerView.setSoundEffectsEnabled(true);
 
         //switch flashlight button
         switchFlashlightButton = findViewById(R.id.switch_flashlight);
+        cancelbutton = findViewById(R.id.scan_cancel);
 
         // if the device does not have flashlight in its camera,
         // then remove the switch flashlight button...
@@ -47,6 +61,15 @@ public class ScannerActivity extends AppCompatActivity implements
                 }
             });
         }
+
+
+        cancelbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScannerActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
 
         //start capture
         capture = new CaptureManager(this, barcodeScannerView);
@@ -73,8 +96,6 @@ public class ScannerActivity extends AppCompatActivity implements
         }
 
     }
-
-
 
     @Override
     public void onTorchOn() {
@@ -103,6 +124,13 @@ public class ScannerActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         capture.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
     }
 
     @Override

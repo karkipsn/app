@@ -97,9 +97,9 @@ public class User_Fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        create = getActivity().findViewById(R.id.uom_create);
-        tabLayout = getActivity().findViewById(R.id.tabs_user);
-        viewPager = getActivity().findViewById(R.id.viewpager_user);
+        create = view.findViewById(R.id.uom_create);
+        tabLayout = view.findViewById(R.id.tabs_user);
+        viewPager = view.findViewById(R.id.viewpager_user);
 
         warehouseAdapter = new WarehouseAdapter(WareList, mContext);
 
@@ -786,6 +786,22 @@ public class User_Fragment extends Fragment {
 
                             viewPager.setAdapter(viewPagerAdapter);
 
+                            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int state) {
+                                    enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );                                }
+                            });
+
 //                        padapter.updateAdapter(UserList);
 
                             if (progressDialog.isShowing()) {
@@ -847,5 +863,11 @@ public class User_Fragment extends Fragment {
             }
         });
 
+    }
+
+    private void enableDisableSwipeRefresh(boolean b) {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(b);
+        }
     }
 }

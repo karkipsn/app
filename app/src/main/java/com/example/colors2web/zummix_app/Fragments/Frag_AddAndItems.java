@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class Frag_AddAndItems extends Fragment {
     ArrayList<OrderShippingAddressesDetail> ShipList =new ArrayList<>();
 
     String o_id,order_status,order_type,edit_shipping_address;
+    SwipeRefreshLayout swipe;
 
 
     public Frag_AddAndItems() {
@@ -43,7 +45,6 @@ public class Frag_AddAndItems extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
     }
@@ -60,6 +61,9 @@ public class Frag_AddAndItems extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        swipe = getActivity().findViewById(R.id.swipeToRefresh);
+        swipe.setEnabled(false);
 
         ladapter = new LineItemsAdapter(ItmList);
 

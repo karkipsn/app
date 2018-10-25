@@ -51,6 +51,8 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.cit
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.dashboard_fragments.main_dashboard_fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.fragment_customers_list.Customer_list_fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.items_inventory.Items_Inventory_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tickets_fragments.ReturnTicket_Fragment;
+import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tickets_fragments.Ticket_Fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
@@ -62,8 +64,6 @@ import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.gpu.BrightnessFilterTransformation;
 
 public class HomeActivity extends AppCompatActivity {
-
-
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -101,7 +101,9 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_CUSTOMERLIST = "Customer List";
     private static final String TAG_CUSTOMERITEMS = "Items Inventory";
     private static final String TAG_PACKAGES = "Packages";
-    private static final String TAG_PROBLEM ="Problem SKU" ;
+    private static final String TAG_PROBLEM ="Problem SKU";
+    private static final String TAG_TICKETS ="Tickets";
+    private static final String TAG_RETURNTICKETS ="ReturnTickets";
 
     public static String CURRENT_TAG = TAG_HOME;
 
@@ -267,6 +269,16 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_PROBLEM;
                         break;
 
+                    case R.id.nav_tickets:
+                        navItemIndex = 14;
+                        CURRENT_TAG = TAG_TICKETS;
+                        break;
+
+                    case R.id.nav_return_tickets:
+                        navItemIndex = 15;
+                        CURRENT_TAG = TAG_RETURNTICKETS;
+                        break;
+
 
 //                    case R.id.nav_city_bins:
 //                        startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
@@ -303,6 +315,9 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_logout:
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                         drawerLayout.closeDrawers();
+                        SharedPreferences preferences =PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear().apply();
                         finish();
 //                        Clearing the session data left !!! Call it to method and clear it
                         break;
@@ -474,6 +489,16 @@ public class HomeActivity extends AppCompatActivity {
                 // unit of measurement
                 Problem_SKU_Fragment probfragment = new Problem_SKU_Fragment();
                 return  probfragment;
+
+            case 14:
+                // unit of measurement
+                Ticket_Fragment ticketfragment = new Ticket_Fragment();
+                return  ticketfragment;
+
+            case 15:
+                // unit of measurement
+                ReturnTicket_Fragment rticketfragment = new ReturnTicket_Fragment();
+                return  rticketfragment;
 
 
 

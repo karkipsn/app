@@ -149,6 +149,7 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateCityBinsActivity.super.onBackPressed();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
             }
         });
 
@@ -957,6 +958,8 @@ public class UpdateCityBinsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
         super.onBackPressed();
     }
 

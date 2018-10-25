@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -97,6 +98,9 @@ public class OrderShippingEditActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     String odr;
     String cus_id, s_state, state;
     String s_country = null;
@@ -111,7 +115,8 @@ public class OrderShippingEditActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        moveTaskToBack(true);
+
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
         super.onBackPressed();
     }
 
@@ -127,10 +132,13 @@ public class OrderShippingEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
             }
         });
 
@@ -139,7 +147,6 @@ public class OrderShippingEditActivity extends AppCompatActivity {
             odr = i.getExtras().getString("o_id_edit", "");
            ShippingList = i.getExtras().getParcelableArrayList("ShippingList");
         }
-
 
         loadCountrySpinner();
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -257,10 +264,38 @@ public class OrderShippingEditActivity extends AppCompatActivity {
         mcomment.setText(ShippingList.get(0).getNote());
 
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                
+                mcustomer_fname.setText(ShippingList.get(0).getCustomerFname());
+                mcustomer_lname.setText(ShippingList.get(0).getCustomerLname());
+                mcustomer_email.setText(ShippingList.get(0).getCustomerEmail());
+                mcustomer_phone1.setText(ShippingList.get(0).getCustomerPhone1());
+                mcustomer_address1.setText(ShippingList.get(0).getCustomerAddress1());
+                mcustomer_address2.setText(ShippingList.get(0).getCustomerAddress2());
+                mcustomer_state.setText(ShippingList.get(0).getCustomerState());
+                mcustomer_city.setText(ShippingList.get(0).getCustomerCity());
+                mcustomer_zip.setText(ShippingList.get(0).getCustomerZip());
+                mcomment.setText(ShippingList.get(0).getNote());
+
+                Toast.makeText(getApplicationContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
+
+
+
         moedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                
+                boolean fieldsOK = validate(new EditText[] {mcustomer_fname,mcustomer_lname,mcustomer_email,
+                        mcustomer_phone1,mcustomer_address1,mcustomer_city,mcustomer_zip,mcomment  });
+                
                 customer_fname = mcustomer_fname.getText().toString();
                 customer_lname = mcustomer_lname.getText().toString();
                 customer_email = mcustomer_email.getText().toString();
@@ -277,6 +312,8 @@ public class OrderShippingEditActivity extends AppCompatActivity {
                 customer_zip = mcustomer_zip.getText().toString();
                 comment = mcomment.getText().toString();
 
+                if(fieldsOK ==true){
+
                 final ProgressDialog progressDialog = new ProgressDialog(OrderShippingEditActivity.this,
                         R.style.AppTheme_Dark_Dialog);
                 progressDialog.setIndeterminate(true);
@@ -284,11 +321,24 @@ public class OrderShippingEditActivity extends AppCompatActivity {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
 
-
-                doputorder(progressDialog);
+                doputorder(progressDialog);}
 
             }
         });
+    }
+
+    private boolean validate(EditText[] fields){
+
+        for(int i = 0; i < fields.length; i++){
+
+            EditText currentField = fields[i];
+            if(currentField.getText().toString().length() <= 0){
+                currentField.setError("Must not be Empty");
+//                currentField.setHint("Must not be Empty");
+                return false;
+            }
+        }
+        return true;
     }
 
     private void load_mx_stateSPinner() {

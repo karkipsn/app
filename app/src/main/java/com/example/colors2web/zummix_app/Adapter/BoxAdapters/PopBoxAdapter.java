@@ -168,8 +168,6 @@ public class PopBoxAdapter extends RecyclerView.Adapter<PopBoxAdapter.PopBoxHold
                     if(res.getReturnType().equals("success")){
 
                         List<LineItems>items = res.getmLineItems();
-//                   List<Boxes>arraylist = new ArrayList<>();
-
 
                         for(int i = 0;i<items.size();i++){
 

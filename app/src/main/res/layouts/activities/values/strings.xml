@@ -21,13 +21,16 @@
     <string name="nav_problem_sku"> Problem SKU</string>
     <string name="nav_users"> Warehouse Users</string>
     <string name="special_programs"> Special Programs</string>
-
+    <string name="nav_ticket"> Tickets</string>
+    <string name="nav_return_ticket"> Return Tickets</string>
+    <string name="mark_closed"> Mark Closed</string>
 
     <dimen name="switch_track_height">30dp</dimen>
     <dimen name="switch_track_width">25dp</dimen>
     <dimen name="switch_radius">15dp</dimen>
     <dimen name="switch_selector_padding">2dp</dimen>
     <dimen name="switch_stroke_height">0dp</dimen>
+
 
 
     <dimen name="switch_thumb_radius">15dp</dimen>

@@ -76,7 +76,6 @@
 
     </LinearLayout>
 
-
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/dashboard_submit"
             style="?android:textAppearanceSmall"

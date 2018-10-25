@@ -55,6 +55,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
+import static android.view.View.SCROLL_INDICATOR_LEFT;
+import static android.view.View.SCROLL_INDICATOR_RIGHT;
+
 public class main_dashboard_fragment extends Fragment {
 
 
@@ -176,10 +180,19 @@ public class main_dashboard_fragment extends Fragment {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 from = mform.getText().toString();
                 to = mto.getText().toString();
+                boolean fieldsOK = validate(new TextView[]{mform, mto});
 
-                call_cron_jobs(email, password, from, to);
+                if (fieldsOK) {
+
+                    call_cron_jobs(email, password, from, to);
+                }
+//                else{
+//                    Toast.makeText(getContext(),"Date cannot be Null",Toast.LENGTH_SHORT).show();
+//
+//                }
             }
         });
 
@@ -188,13 +201,38 @@ public class main_dashboard_fragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                call_cron_jobs(email, password, from, to);
+                from = mform.getText().toString();
+                to = mto.getText().toString();
+                boolean fieldsOK = validate(new TextView[]{mform, mto});
+
+                if (fieldsOK) {
+
+                    call_cron_jobs(email, password, from, to);
+                }
 
                 mSwipeRefreshLayout.setRefreshing(false);
 
             }
         });
 
+    }
+
+    private boolean validate(TextView[] textViews) {
+
+
+        for (int i = 0; i < textViews.length; i++) {
+
+            TextView currentField = textViews[i];
+
+            if (currentField.getText().toString().length() <= 0) {
+
+                currentField.setHint("Must be Valid date");
+                Toast.makeText(getContext(),"Date cannot be Null",Toast.LENGTH_SHORT).show();
+
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -627,39 +665,14 @@ public class main_dashboard_fragment extends Fragment {
                         bundle.putString("from", from);
                         bundle.putString("to", to);
 
+
                         dashboard_fragment1 dash = new dashboard_fragment1();
                         dash.setArguments(bundle);
-////                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-//
+
                         getChildFragmentManager().beginTransaction().
                                 replace(R.id.frame_dashboard, dash).
                                 commit();
 
-
-//                        Fragment f = getChildFragmentManager().findFragmentById(R.id.frame_dashboard);
-//                        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//
-//                        if (f == null) {
-//                            Log.d("TAG", "onCreateView: fragment doesn't exist");
-//                            dashboard_fragment1 dash = new dashboard_fragment1();
-//                            dash.setArguments(bundle);
-//                            transaction.add(R.id.frame_dashboard, dash);
-//                        } else {
-//                            Log.d("TAG", "onCreateView: fragment already exists");
-//                            transaction.replace(R.id.frame_dashboard, f);
-//                        }
-//                        transaction.commit();
-
-//                        getChildFragmentManager() is called it is child fragment of another fragment and also
-//                        fragmentstatepageadapter is used instead of page adapter
-//                        getActivity().getSupportFragmentManager().executePendingTransactions();
-//                        If you're targeting sdk 24 and above you can use:
-//
-//FragmentTransaction.commitNow()
-//instead of commit()
-//If you're targeting older versions, try calling:
-//FragmentManager.executePendingTransactions()
-//after the call to commit()
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();

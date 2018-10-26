@@ -1,8 +1,11 @@
 package com.example.colors2web.zummix_app.POJO.Tickets;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Tickets {
+public class Tickets implements Parcelable {
 
     @SerializedName("id")
     private String mid;
@@ -87,6 +90,52 @@ public class Tickets {
 
     @SerializedName("store_url")
     private String mstore_url;
+
+    public Tickets() {
+    }
+
+    protected Tickets(Parcel in) {
+        mid = in.readString();
+        mstore_id = in.readString();
+        mticket_number = in.readString();
+        mcustomer_name = in.readString();
+        mcustomer_email = in.readString();
+        mticket_title = in.readString();
+        mticket_type = in.readString();
+        morder = in.readString();
+        mattachment = in.readString();
+        mticket_description = in.readString();
+        mreply = in.readString();
+        mcreated_at = in.readString();
+        mupdated_at = in.readString();
+        mcreated_by = in.readString();
+        mupdated_by = in.readString();
+        mticket_status = in.readString();
+        mescalate_to_corporate = in.readString();
+        maddress1 = in.readString();
+        maddress2 = in.readString();
+        mcity = in.readString();
+        mstate = in.readString();
+        mcountry = in.readString();
+        mzip = in.readString();
+        mshipping_label = in.readString();
+        mtracking_number = in.readString();
+        mshipping_cost = in.readString();
+        mstore_name = in.readString();
+        mstore_url = in.readString();
+    }
+
+    public static final Creator<Tickets> CREATOR = new Creator<Tickets>() {
+        @Override
+        public Tickets createFromParcel(Parcel in) {
+            return new Tickets(in);
+        }
+
+        @Override
+        public Tickets[] newArray(int size) {
+            return new Tickets[size];
+        }
+    };
 
     public String getMid() {
         return mid;
@@ -310,5 +359,42 @@ public class Tickets {
 
     public void setMstore_url(String mstore_url) {
         this.mstore_url = mstore_url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mid);
+        dest.writeString(mstore_id);
+        dest.writeString(mticket_number);
+        dest.writeString(mcustomer_name);
+        dest.writeString(mcustomer_email);
+        dest.writeString(mticket_title);
+        dest.writeString(mticket_type);
+        dest.writeString(morder);
+        dest.writeString(mattachment);
+        dest.writeString(mticket_description);
+        dest.writeString(mreply);
+        dest.writeString(mcreated_at);
+        dest.writeString(mupdated_at);
+        dest.writeString(mcreated_by);
+        dest.writeString(mupdated_by);
+        dest.writeString(mticket_status);
+        dest.writeString(mescalate_to_corporate);
+        dest.writeString(maddress1);
+        dest.writeString(maddress2);
+        dest.writeString(mcity);
+        dest.writeString(mstate);
+        dest.writeString(mcountry);
+        dest.writeString(mzip);
+        dest.writeString(mshipping_label);
+        dest.writeString(mtracking_number);
+        dest.writeString(mshipping_cost);
+        dest.writeString(mstore_name);
+        dest.writeString(mstore_url);
     }
 }

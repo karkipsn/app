@@ -62,8 +62,8 @@ public class Frag_AddAndItems extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        swipe = getActivity().findViewById(R.id.swipeToRefresh);
-        swipe.setEnabled(false);
+//        swipe = getActivity().findViewById(R.id.swipeToRefresh);
+//        swipe.setEnabled(false);
 
         ladapter = new LineItemsAdapter(ItmList);
 

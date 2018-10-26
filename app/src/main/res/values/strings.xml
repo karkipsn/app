@@ -27,6 +27,12 @@
         <item>City Bins</item>
         <item>Packages</item>
         <item>Problem SKU</item>
+        <item>Support</item>
+
+    </string-array>
+
+    <string-array name="nav_item_ticket_titles">
+
         <item>Tickets</item>
         <item>Return Tickets</item>
 

@@ -55,6 +55,8 @@ import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tic
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tickets_fragments.Ticket_Fragment;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.PackageActivity;
 import com.example.colors2web.zummix_app.Activities.ProblemSKU_Activity.ProblemSKU;
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketActivity;
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
@@ -142,16 +144,20 @@ public class HomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//               onCreateOptionsMenu(view.);
+
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(HomeActivity.this, TicketNavigActivity.class));
+//                isDestroyed();
             }
         });
-
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         // load nav menu header data
         loadNavHeader();
+
+
 
         // initializing navigation menu
         setUpNavigationView();
@@ -269,15 +275,15 @@ public class HomeActivity extends AppCompatActivity {
                         CURRENT_TAG = TAG_PROBLEM;
                         break;
 
-                    case R.id.nav_tickets:
-                        navItemIndex = 14;
-                        CURRENT_TAG = TAG_TICKETS;
-                        break;
+//                    case R.id.nav_tickets:
+//                        navItemIndex = 14;
+//                        CURRENT_TAG = TAG_TICKETS;
+//                        break;
 
-                    case R.id.nav_return_tickets:
-                        navItemIndex = 15;
-                        CURRENT_TAG = TAG_RETURNTICKETS;
-                        break;
+//                    case R.id.nav_return_tickets:
+//                        navItemIndex = 15;
+//                        CURRENT_TAG = TAG_RETURNTICKETS;
+//                        break;
 
 
 //                    case R.id.nav_city_bins:
@@ -287,11 +293,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-//                    case R.id.nav_parent_id:
-//                        startActivity(new Intent(HomeActivity.this, ByParentId.class));
-//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                        drawerLayout.closeDrawers();
-//                        break;
+                    case R.id.nav_tickets:
+                        startActivity(new Intent(HomeActivity.this, TicketNavigActivity.class));
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        break;
 
 //                    case R.id.nav_customer_items:
 //                        startActivity(new Intent(HomeActivity.this, ItemsElementory.class));
@@ -376,6 +382,8 @@ public class HomeActivity extends AppCompatActivity {
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
             drawerLayout.closeDrawers();
 
+            toggleFab();
+
             return;
         }
 
@@ -403,6 +411,8 @@ public class HomeActivity extends AppCompatActivity {
 
         //Closing drawer on item click
         drawerLayout.closeDrawers();
+
+        toggleFab();
 
         // refresh toolbar menu
         invalidateOptionsMenu();
@@ -490,15 +500,15 @@ public class HomeActivity extends AppCompatActivity {
                 Problem_SKU_Fragment probfragment = new Problem_SKU_Fragment();
                 return  probfragment;
 
-            case 14:
-                // unit of measurement
-                Ticket_Fragment ticketfragment = new Ticket_Fragment();
-                return  ticketfragment;
+//            case 14:
+//                // unit of measurement
+//                Ticket_Fragment ticketfragment = new Ticket_Fragment();
+//                return  ticketfragment;
 
-            case 15:
-                // unit of measurement
-                ReturnTicket_Fragment rticketfragment = new ReturnTicket_Fragment();
-                return  rticketfragment;
+//            case 15:
+//                // unit of measurement
+//                ReturnTicket_Fragment rticketfragment = new ReturnTicket_Fragment();
+//                return  rticketfragment;
 
 
 
@@ -507,7 +517,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -583,5 +592,14 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
 
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    // show or hide the fab
+    private void toggleFab() {
+//        if (navItemIndex == 0)
+//            fab.show();
+//        else
+//            fab.hide();
+        fab.show();
     }
 }

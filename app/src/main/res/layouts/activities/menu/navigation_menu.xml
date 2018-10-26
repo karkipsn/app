@@ -121,11 +121,11 @@
 
                     <item
                         android:id="@+id/nav_tickets"
-                        android:title="@string/nav_ticket" />
+                        android:title="@string/nav_support" />
 
-                    <item
-                        android:id="@+id/nav_return_tickets"
-                        android:title="@string/nav_return_ticket" />
+                    <!--<item-->
+                        <!--android:id="@+id/nav_return_tickets"-->
+                        <!--android:title="@string/nav_return_ticket" />-->
 
 
                 </group>

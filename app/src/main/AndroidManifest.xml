@@ -239,6 +239,14 @@
         <activity android:name=".Activities.TicketActivity.TicketDetailsActivity"
             android:label="TicketDetails"/>
 
+        <activity android:name=".Activities.TicketActivity.TicketSearchActivity"
+            />
+
+        <activity android:name=".Activities.TicketActivity.TicketActivity"
+            />
+        <activity android:name=".Activities.TicketActivity.TicketNavigActivity"
+            />
+
         <!-- Firebase Notifications -->
         <service
             android:name=".services_firebase.MyFirebaseMessagingService"

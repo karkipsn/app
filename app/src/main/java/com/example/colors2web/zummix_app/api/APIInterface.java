@@ -288,7 +288,7 @@ public interface APIInterface {
     Call<CronJobResponse> getCronJobs(@Header("email") String email, @Header("Password") String password,
                                       @Path("from") String from, @Path("to") String to);
 
-//    http://732b4c9a.ngrok.io/zummix-api/public/orders/status/totalOrders/customer/all/orderType/1/from/2018-09-01/to/2018-09-21
+    //    http://732b4c9a.ngrok.io/zummix-api/public/orders/status/totalOrders/customer/all/orderType/1/from/2018-09-01/to/2018-09-21
 //    Details on clicking cronjobs fields
     @GET("orders/status/{orderstatus}/customer/{customer_id}/orderType/{ordertype}/from/{from}/to/{to}")
     Call<CronDetailsResponse> getCronJobsDetails(@Header("email") String email, @Header("Password") String password,
@@ -296,7 +296,7 @@ public interface APIInterface {
                                                  @Path("from") String from, @Path("to") String to);
 
 
-//    FOr cron job's company name //2
+    //    FOr cron job's company name //2
     @GET("customers/{customer_id}")
     Call<CompanyResponse> getCOmpanyName(@Header("email") String email, @Header("password") String password);
 
@@ -308,10 +308,16 @@ public interface APIInterface {
     @GET("returnTickets")
     Call<ReturnTicketResponse> getReturnTickets(@Header("email") String email, @Header("password") String password);
 
-//    GET Ticket Details
+    //    GET Ticket Details
     @GET("stores/{id}/supports/{supportid}")
-    Call<TicketDetialsResponse>getTicketDetails(@Header("email") String email, @Header("password") String password,
-                                                @Path("id") String id, @Path("supportid") String supportid);
+    Call<TicketDetialsResponse> getTicketDetails(@Header("email") String email, @Header("password") String password,
+                                                 @Path("id") String id, @Path("supportid") String supportid);
+
+    //    For Return Tickets
+    @GET("search_tickets/{ticket_number}")
+    Call<TicketResponse> getSearchTickets(@Header("email") String email, @Header("password") String password, @Path("ticket_number") String ticket_number);
+
+
 }
 
 

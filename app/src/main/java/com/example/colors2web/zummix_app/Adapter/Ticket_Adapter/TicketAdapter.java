@@ -76,6 +76,10 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketHold
         notifyDataSetChanged();
     }
 
+    public void cleardata() {
+        TList.clear();
+    }
+
     public class TicketHolder extends RecyclerView.ViewHolder {
         TextView store, created, customer, order, ticket, updated, status;
 

@@ -15,14 +15,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <Button
             android:id="@+id/create_bins_order"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:textColor="@color/colorPrimary"
             android:gravity="center"
             android:text="Create City Bin"
-            android:textSize="16sp" />
+             />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view_bins"

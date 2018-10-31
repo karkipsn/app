@@ -80,12 +80,11 @@ public class TicketNavigActivity extends AppCompatActivity {
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
-    public static int tryIndex = 0;
 
-    // tags used to attach the fragments
 
     private static final String TAG_TICKETS = "Tickets";
     private static final String TAG_RETURNTICKETS = "ReturnTickets";
+    private static final String TAG_VOX_DASHBOARD = "Vox_Dashboard";
 
     public static String CURRENT_TAG = TAG_TICKETS;
 
@@ -122,9 +121,9 @@ public class TicketNavigActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-//                startActivity(new Intent(TicketNavigActivity.this, HomeActivity.class));
-//                isDestroyed();
-                finish();
+                startActivity(new Intent(TicketNavigActivity.this, HomeActivity.class));
+                isDestroyed();
+//                finish();
             }
         });
 
@@ -186,18 +185,12 @@ public class TicketNavigActivity extends AppCompatActivity {
                         break;
 
 
-//                    case R.id.nav_city_bins:
-//                        startActivity(new Intent(HomeActivity.this, BinHomeActivity.class));
-//                        drawerLayout.closeDrawers();
-//                        break;
-
-
-//
-//                    case R.id.nav_tickets:
-//                        startActivity(new Intent(HomeActivity.this, TicketActivity.class));
-//                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                        drawerLayout.closeDrawers();
-//                        break;
+                    case R.id.nav_main_dashboard:
+                        startActivity(new Intent(TicketNavigActivity.this, HomeActivity.class));
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        drawerLayout.closeDrawers();
+                        finish();
+                        break;
 
 
                     case R.id.nav_logout:
@@ -328,9 +321,7 @@ public class TicketNavigActivity extends AppCompatActivity {
             default:
                 return new Ticket_Fragment();
         }
-
     }
-
 
     @Override
     public void onBackPressed() {

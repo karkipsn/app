@@ -21,6 +21,7 @@ import com.example.colors2web.zummix_app.POJO.Tickets.ReturnTicket;
 import com.example.colors2web.zummix_app.POJO.Tickets.ReturnTicketResponse;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
+import com.example.colors2web.zummix_app.api.APIClient1;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class ReturnTicket_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        apiInterface = APIClient1.getClient().create(APIInterface.class);
         tabLayout = view.findViewById(R.id.tabs_returnticket);
         viewPager = view.findViewById(R.id.viewpager_returnticket);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);

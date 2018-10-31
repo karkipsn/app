@@ -576,8 +576,6 @@ public class Package_Fragment extends Fragment {
                             String mcost = order.get(i).getPackageCost();
                             String mstatus = order.get(i).getStatus();
 
-
-
                             dis.setId(id);
                             dis.setCompanyName(mCustomer);
                             dis.setPackageName(mpname);

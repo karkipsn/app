@@ -39,7 +39,6 @@ public class Problem_SKU_Fragment extends Fragment {
 
     @BindView(R.id.recycle_view)
     RecyclerView mrecycleview ;
-    
 
     APIInterface apiInterface;
 
@@ -78,7 +77,6 @@ public class Problem_SKU_Fragment extends Fragment {
         cadapter = new ProblemAdapter(getActivity(),Problem_SKU_Fragment.this,PList);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
-
 
         RecyclerView.LayoutManager mlayoutManager = new LinearLayoutManager(getContext());
         mrecycleview.setHasFixedSize(true);

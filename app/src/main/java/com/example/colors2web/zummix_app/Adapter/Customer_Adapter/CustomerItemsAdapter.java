@@ -80,7 +80,11 @@ public class CustomerItemsAdapter extends RecyclerView.Adapter<CustomerItemsAdap
 
 
         Long as = qoh1 - customerItem.getRequestedQuantity() - customerItem.getOrderedQuantity();
-        holder.a2s.setText(String.valueOf(as));
+        if(as>0){
+        holder.a2s.setText(String.valueOf(as));}
+        else {
+            holder.a2s.setText("0");
+        }
     }
 
 

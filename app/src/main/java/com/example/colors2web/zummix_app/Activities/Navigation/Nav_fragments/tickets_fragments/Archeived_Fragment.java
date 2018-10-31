@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ public class Archeived_Fragment extends Fragment {
     List<ReturnTicket> UList = new ArrayList<>();
     Context mContext;
     TextView text;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public Archeived_Fragment() {
     }
@@ -55,6 +57,10 @@ public class Archeived_Fragment extends Fragment {
 
         padapter = new ArcheivedReturnAdapter(getContext(),UList);
         text = view.findViewById(R.id.display_null);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout.setEnabled(false);
 
         mrecycleView = view.findViewById(R.id.recycler_view_customer);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());

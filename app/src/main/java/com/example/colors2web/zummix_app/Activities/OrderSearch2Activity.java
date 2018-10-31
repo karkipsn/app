@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Fragments.Frag_AddAndItems;
 import com.example.colors2web.zummix_app.Fragments.Frag_Box;
 import com.example.colors2web.zummix_app.Fragments.Frag_MasterBox;
@@ -143,6 +145,9 @@ public class OrderSearch2Activity extends AppCompatActivity {
     @BindView(R.id.batch_printed)
     TextView printed;
 
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
 //    @BindView(R.id.btn_shipmethod2)
 //    Button ship_btn;
 
@@ -223,6 +228,16 @@ public class OrderSearch2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 OrderSearch2Activity.super.onBackPressed();
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(OrderSearch2Activity.this, TicketNavigActivity.class));
+                isDestroyed();
+
             }
         });
 

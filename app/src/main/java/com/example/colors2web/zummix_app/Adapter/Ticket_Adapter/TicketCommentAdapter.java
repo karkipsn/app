@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.colors2web.zummix_app.POJO.TicketDetails.Comments;
+import com.example.colors2web.zummix_app.POJO.TicketDetails.Support;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.User;
 import com.example.colors2web.zummix_app.R;
 
@@ -21,6 +22,7 @@ public class TicketCommentAdapter extends RecyclerView.Adapter<TicketCommentAdap
     Context mContext;
     List<Comments> CommentList;
     List<User>UsetList;
+    Support support1;
 
     public TicketCommentAdapter(Context mContext, List<Comments> commentList) {
         this.mContext = mContext;
@@ -44,12 +46,17 @@ public class TicketCommentAdapter extends RecyclerView.Adapter<TicketCommentAdap
 
 //            User user = UsetList.get(i);
             String id = String.valueOf(UsetList.get(i).getId());
+            Long created_by =comments.getCreatedBy();
 
             if(id.equals(createdby)){
                 String user_name = UsetList.get(i).getName();
                 holder.user.setText(String.valueOf(user_name));
                 holder.user.setTextColor(holder.user.getResources().getColor(R.color.colorPrimary));
-
+            }
+            if(created_by == 0){
+                String user_name = support1.getCustomerName();
+                holder.user.setText(String.valueOf(user_name));
+                holder.user.setTextColor(holder.user.getResources().getColor(R.color.colorPrimary));
             }
         }
 
@@ -63,9 +70,10 @@ public class TicketCommentAdapter extends RecyclerView.Adapter<TicketCommentAdap
         return CommentList.size();
     }
 
-    public void updateAdapter(ArrayList<Comments> comments, ArrayList<User> users) {
+    public void updateAdapter(ArrayList<Comments> comments, ArrayList<User> users, Support support) {
         CommentList = comments;
         UsetList = users;
+        support1 =support;
         notifyDataSetChanged();
     }
 

@@ -1,5 +1,6 @@
 package com.example.colors2web.zummix_app.Adapter.ReportsAdapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.colors2web.zummix_app.POJO.PostSearch.Boxes;
+import com.example.colors2web.zummix_app.POJO.PostSearch.CustomerItems;
 import com.example.colors2web.zummix_app.POJO.SpecialPOJO.MergeBCI;
 import com.example.colors2web.zummix_app.R;
 
@@ -14,12 +17,14 @@ import java.util.List;
 
 public class Pick_Velocity_BoxAdapter extends RecyclerView.Adapter<Pick_Velocity_BoxAdapter.VelociyHolder> {
 
-//    List<Boxes> BoxList;
-//    List<CustomerItems> ItemsList;
+    List<Boxes> BoxList;
+    List<CustomerItems> ItemsList;
+    Context mcontext;
     List<MergeBCI>CombList;
 
-//    public Pick_Velocity_BoxAdapter(Context mcontext, List<Boxes> boxList) {
+//    public Pick_Velocity_BoxAdapter(Context mcontext,List<CustomerItems> cusList, List<Boxes> boxList) {
 //        this.mcontext = mcontext;
+//        ItemsList = cusList;
 //        BoxList = boxList;
 //    }
 
@@ -43,6 +48,7 @@ public class Pick_Velocity_BoxAdapter extends RecyclerView.Adapter<Pick_Velocity
 
     @Override
     public void onBindViewHolder(@NonNull Pick_Velocity_BoxAdapter.VelociyHolder holder, int position) {
+
         MergeBCI ItmList = CombList.get(position);
 
         holder.sku.setText(ItmList.getCi().getItemSkuNumber());
@@ -56,18 +62,23 @@ public class Pick_Velocity_BoxAdapter extends RecyclerView.Adapter<Pick_Velocity
                 ItmList.getCi().getSectionNumber() + "" + ItmList.getCi().getSectionLevel() + "" + ItmList.getCi().getPickBin();
 
         String qoh1 = ItmList.getCi().getReplenish();
-        if (qoh1 != null) {
-            Long qohh = ItmList.getCi().getPick() + Long.valueOf(qoh1);
-            holder.qoh.setText(String.valueOf(qohh));
-        } else {
+        Long pick1 = ItmList.getCi().getPick();
 
-            Long qohh = ItmList.getCi().getPick();
+        if (qoh1 != null && pick1!=null ) {
+            Long qohh = pick1 + Long.valueOf(qoh1);
             holder.qoh.setText(String.valueOf(qohh));
+
+        }else if (qoh1 != null && pick1 == null ) {
+            holder.qoh.setText(qoh1);
+        }
+        else{
+            holder.qoh.setText(String.valueOf(pick1));
         }
 
         holder.location.setText(loc);
 
        if(ItmList.getBi()!= null){
+
         holder.total_picked.setText(ItmList.getBi().getTotalPickedQty());
         holder.pdate.setText(ItmList.getBi().getCreatedAt());
         holder.unique.setText(String.valueOf(ItmList.getBi().getUniqueOrders()));}
@@ -79,8 +90,8 @@ public class Pick_Velocity_BoxAdapter extends RecyclerView.Adapter<Pick_Velocity
 
        }
 
-
-//                holder.sku.setText(ItmList.getItemSkuNumber());
+//
+//        holder.sku.setText(ItmList.getItemSkuNumber());
 //        holder.name.setText(ItmList.getItemName());
 //        holder.replenish.setText(ItmList.getReplenish());
 //        holder.pick.setText(String.valueOf(ItmList.getPick()));
@@ -89,43 +100,51 @@ public class Pick_Velocity_BoxAdapter extends RecyclerView.Adapter<Pick_Velocity
 //                ItmList.getSectionNumber() + "" + ItmList.getSectionLevel() + "" + ItmList.getPickBin();
 //
 //        String qoh1 = ItmList.getReplenish();
-//        if (qoh1 != null) {
-//            Long qohh = ItmList.getPick() + Long.valueOf(qoh1);
-//            holder.qoh.setText(String.valueOf(qohh));
-//        } else {
+//        Long pick1 = ItmList.getPick();
 //
-//            Long qohh = ItmList.getPick();
+//        if (qoh1 != null && pick1!=null ) {
+//            Long qohh = pick1 + Long.valueOf(qoh1);
 //            holder.qoh.setText(String.valueOf(qohh));
+//
+//        }else if (qoh1 != null && pick1 == null ) {
+//            holder.qoh.setText(qoh1);
+//        }
+//        else{
+//            holder.qoh.setText(String.valueOf(pick1));
 //        }
 //
 //        holder.location.setText(loc);
-//        Log.d("position",String.valueOf(position));
 //
-//        for(int i =0;i<position;i++){
-//            Boxes boxList = BoxList.get(i);
+//        Boxes blist = BoxList.get(position);
+//        if(ItmList.getItemSkuNumber().equals( blist.getItemSku())){
 //
-//        if(ItmList.getItemSkuNumber().equals(BoxList.get(i).getItemSku())){
+//            holder.total_picked.setText(blist.getTotalPickedQty());
+//            holder.pdate.setText(blist.getCreatedAt());
+//            holder.unique.setText(String.valueOf(blist.getUniqueOrders()));}
+//        else {
+//            holder.total_picked.setText("");
+//            holder.pdate.setText("");
+//            holder.unique.setText("");
 //
-//            holder.total_picked.setText(boxList.getTotalPickedQty());
-//            holder.pdate.setText(boxList.getCreatedAt());
-//            holder.unique.setText(String.valueOf(boxList.getUniqueOrders()));
-//        }}
-
+//        }
     }
 
-//    public void updateAnswers( List<Boxes> BItem,List<CustomerItems> CItem) {
-//        BoxList = BItem;
-//        ItemsList = CItem;
-//        notifyDataSetChanged();
-//    }
-    public void updateAnswers(List<MergeBCI>BItem){
-        CombList = BItem;
+    public void updateAnswers( List<Boxes> BItem,List<CustomerItems> CItem) {
+        BoxList = BItem;
+        ItemsList = CItem;
         notifyDataSetChanged();
     }
+
 
     @Override
     public int getItemCount() {
         return CombList.size();
+    }
+
+
+    public void updateAnswers(List<MergeBCI> newarray) {
+        CombList =newarray;
+        notifyDataSetChanged();
     }
 
     public class VelociyHolder extends RecyclerView.ViewHolder {

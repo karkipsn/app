@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.BatchAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
@@ -53,6 +55,9 @@ public class BatchSearchActivity extends AppCompatActivity {
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout mswipeRefreshLayout;
 
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
     APIInterface apiInterface;
     BatchAdapter badapter;
     List<BatchOrder> BatchList = new ArrayList<>();
@@ -69,6 +74,16 @@ public class BatchSearchActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(BatchSearchActivity.this, TicketNavigActivity.class));
+                isDestroyed();
+            }
+        });
+
 
 //        PickAdapter = new Pick_Velocity_BoxAdapter(BoxList,ItemsList);
         badapter = new BatchAdapter(getApplicationContext(), BatchList);

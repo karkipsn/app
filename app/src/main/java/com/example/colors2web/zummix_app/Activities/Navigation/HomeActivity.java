@@ -147,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                 startActivity(new Intent(HomeActivity.this, TicketNavigActivity.class));
-//                isDestroyed();
+                isDestroyed();
             }
         });
 

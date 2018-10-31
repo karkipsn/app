@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,10 +19,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.BinsAdapter.BinAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
@@ -47,7 +50,7 @@ public class BinBinActivity extends AppCompatActivity {
     String cus_id;
     String cus_id_inner;
     RecyclerView mrecycleView;
-    TextView create_bins;
+    Button create_bins;
     List<CityBins> BinList = new ArrayList<>();
     private final static String TAG_FRAGMENT = "SEARCH_FRAGMENT";
 
@@ -73,6 +76,18 @@ public class BinBinActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(BinBinActivity.this, TicketNavigActivity.class));
+                isDestroyed();
+
+            }
+        });
+
         mrecycleView = findViewById(R.id.recycle_view_bins);
         binAdapter = new BinAdapter(BinList, getApplicationContext());
 
@@ -93,6 +108,7 @@ public class BinBinActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                binAdapter.clearlist();
                 loadAdapter(email, password);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -107,7 +123,6 @@ public class BinBinActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("cus_id_inner", cus_id_inner);
                 intent.putExtras(b);
-                Log.d("cus_id_inner", cus_id_inner);
                 startActivity(intent);
                 finish();
             }

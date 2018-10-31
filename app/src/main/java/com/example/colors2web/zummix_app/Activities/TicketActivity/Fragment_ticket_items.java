@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ public class Fragment_ticket_items extends Fragment {
     List<ReturnedItem> UList = new ArrayList<>();
     Context mContext;
     TextView text;
+    SwipeRefreshLayout mswipeRefreshLayout;
 
     public Fragment_ticket_items() {
     }
@@ -42,7 +44,7 @@ public class Fragment_ticket_items extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_customer_list, container, false);
+        return inflater.inflate(R.layout.fragment_ticket_items, container, false);
 
     }
 
@@ -52,6 +54,10 @@ public class Fragment_ticket_items extends Fragment {
 
         padapter = new TicketLineItemsAdapter(getContext(),UList);
         text = view.findViewById(R.id.display_null);
+
+        mswipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mswipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mswipeRefreshLayout.setEnabled(false);
 
         mrecycleView = view.findViewById(R.id.recycler_view_customer);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -77,7 +83,6 @@ public class Fragment_ticket_items extends Fragment {
                 text.setVisibility(View.VISIBLE);
                 text.setText("You have no return items");
             }
-
         }
     }
 

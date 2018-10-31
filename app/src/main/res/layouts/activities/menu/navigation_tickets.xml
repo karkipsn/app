@@ -4,20 +4,25 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:title="Support">
+        <item
+            android:id="@+id/nav_tickets"
+            android:title="@string/nav_ticket" />
+
+        <item
+            android:id="@+id/nav_return_tickets"
+            android:title="@string/nav_return_ticket" />
+
+
+
+        <item android:title="Vox Shipping Dashboard">
             <menu>
                 <group
                     android:id="@+id/group5"
                     android:checkableBehavior="single">
 
                     <item
-                        android:id="@+id/nav_tickets"
-                        android:title="@string/nav_ticket" />
-
-                    <item
-                        android:id="@+id/nav_return_tickets"
-                        android:title="@string/nav_return_ticket" />
-
+                        android:id="@+id/nav_main_dashboard"
+                        android:title="@string/nav_main_dashboard" />
 
                 </group>
 
@@ -28,14 +33,11 @@
         <group  android:checkableBehavior="single"
             android:id="@+id/groupx">
 
-            <item
-                android:id="@+id/nav_logout"
-                android:title="@string/nav_logout" />
 
             <item
-                android:id="@+id/nav_logout1"
+                android:id="@+id/nav_logout"
                 android:title="@string/nav_logout"
-                android:visible="false"/>
+                />
             <item
                 android:id="@+id/nav_logout2"
                 android:title="@string/nav_logout"

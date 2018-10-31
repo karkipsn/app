@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.BoxAdapters.MBoxAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.MasterBoxSearch.CompanyDetails;
@@ -60,9 +62,11 @@ public class MasterBoxSearch2Activity extends AppCompatActivity {
     @BindView(R.id.m_fieldOffice)
     TextView mfield_office;
 
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
     MBoxAdapter mBoxAdapter;
     RecyclerView mrecycleview;
-
 
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -88,6 +92,17 @@ public class MasterBoxSearch2Activity extends AppCompatActivity {
 //                super.onBackPressed();
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(MasterBoxSearch2Activity.this, TicketNavigActivity.class));
+                isDestroyed();
+
+            }
+        });
+
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 

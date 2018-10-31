@@ -57,9 +57,9 @@ public class Inactive_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_inactive,container,false);
-        ButterKnife.bind(this,view);
-        return  view;
+        View view = inflater.inflate(R.layout.fragment_inactive, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -74,25 +74,7 @@ public class Inactive_Fragment extends Fragment {
         final String password = preferences.getString("password", "");
 
         spinner(email, password);
-
-        mbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Bundle bundle = new Bundle();
-                bundle.putString("cus_id", String.valueOf(cus_id));
-                Frag_InActive inActive = new Frag_InActive();
-                inActive.setArguments(bundle);
-//                getContext().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-
-                getFragmentManager().beginTransaction().
-                        add(R.id.frame_inactive, inActive).
-                        commit();
-            }
-        });
-
-
-
+        mbutton.setVisibility(View.GONE);
 
     }
 
@@ -158,18 +140,35 @@ public class Inactive_Fragment extends Fragment {
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                                 cus_id = sp.getCus_id();
 
-                                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-                                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-                                Log.d("cus_id", String.valueOf(cus_id));
+                                Bundle bundle = new Bundle();
+                                bundle.putString("cus_id", String.valueOf(cus_id));
+                                Frag_InActive inActive = new Frag_InActive();
+                                inActive.setArguments(bundle);
+
+                                getFragmentManager().beginTransaction().
+                                        add(R.id.frame_inactive, inActive).
+                                        commit();
+//                                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
+//                                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+//                                Log.d("cus_id", String.valueOf(cus_id));
                             }
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
                                 cus_id = sp.getCus_id();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("cus_id", String.valueOf(cus_id));
+                                Frag_InActive inActive = new Frag_InActive();
+                                inActive.setArguments(bundle);
+//                getContext().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+                                getFragmentManager().beginTransaction().
+                                        add(R.id.frame_inactive, inActive).
+                                        commit();
                             }
                         });
-
 
 //                        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 //                        Display display = wm.getDefaultDisplay();
@@ -244,7 +243,6 @@ public class Inactive_Fragment extends Fragment {
                         progressDialog.dismiss();
                     }
                     Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
-
                 }
             }
 

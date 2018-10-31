@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.Order_Adapters.ItemSearchAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.CustomerItem;
@@ -53,6 +55,7 @@ public class ProductSearchActivity extends AppCompatActivity {
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     ItemSearchAdapter iadapter;
+    FloatingActionButton fab;
 
     List<CustomerItem> ItmList = new ArrayList<>();
 
@@ -69,6 +72,18 @@ public class ProductSearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ProductSearchActivity.super.onBackPressed();
                 overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+            }
+        });
+
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(ProductSearchActivity.this, TicketNavigActivity.class));
+                isDestroyed();
+
             }
         });
 

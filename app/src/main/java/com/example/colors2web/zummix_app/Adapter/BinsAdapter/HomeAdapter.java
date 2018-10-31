@@ -57,6 +57,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         holder.bin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String customer_id = String.valueOf(bins.getCustomerId());
                 Intent intent = new Intent(mActivity, BinBinActivity.class);
                 intent.putExtra("customer_id",customer_id);

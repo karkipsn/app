@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.Order_Adapters.InActiveAdapter;
@@ -38,6 +39,7 @@ public class Frag_InActive extends Fragment {
     InActiveAdapter iadapter;
     String cus_id;
     String pbalance,pick,request ,replenish,orderedq;
+    TextView textView;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -71,6 +73,7 @@ public class Frag_InActive extends Fragment {
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
         mSwipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
+        textView = view.findViewById(R.id.inventory_null);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //        mrecyclerView.setHasFixedSize(true);
@@ -101,6 +104,7 @@ public class Frag_InActive extends Fragment {
                 iadapter.notifyDataSetChanged();
                 loadAdapter(cus_id);
                 mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getContext(),"Successfully Refreshed",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -196,7 +200,8 @@ public class Frag_InActive extends Fragment {
                         Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
 
                         iadapter.updateAnswers(ItmList);
-                        Log.d("Entered"," Enterded");
+                        textView.setVisibility(View.GONE);
+
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -205,8 +210,8 @@ public class Frag_InActive extends Fragment {
 
                     } else {
                         String d = response.body().getMessage();
+                        textView.setText(d);
                         Toast.makeText(getContext(), d, Toast.LENGTH_LONG).show();
-                        Log.d("Entered","Not Enterded");
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }

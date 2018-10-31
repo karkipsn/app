@@ -10,9 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class APIClient {
-
+public class APIClient1 {
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -39,18 +37,11 @@ public class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-//           .baseUrl("http://192.168.0.109/zummix/zummix-api/public/")
-//             .baseUrl("http://2db93c8c.ngrok.io/zummix-api/public/")
-//                .baseUrl("http://192.168.0.116:8080/api/")
-                .baseUrl("https://zumsapi.com/")
+                .baseUrl("http://voxteststores.com/supportportalstaging/public/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
 //                .addConverterFactory(GsonConverterFactory.create(b_deserializer))
                 .client(client)
                 .build();
 
         return retrofit;
-    }
-//    FOr local host run your project with your ip address with hosts in laravel
-//    php artisan serve --host 192.168.0.110 --port 8080
-
-}
+}}

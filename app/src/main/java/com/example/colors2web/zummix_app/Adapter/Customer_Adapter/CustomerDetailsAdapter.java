@@ -89,6 +89,11 @@ public class CustomerDetailsAdapter extends RecyclerView.Adapter<CustomerDetails
         notifyDataSetChanged();
     }
 
+    public void clearlist() {
+        ordList.clear();
+        notifyDataSetChanged();
+    }
+
     public class DetailsHolder extends RecyclerView.ViewHolder {
         TextView t1,t2,t3,t4,t5,t6,t7,t8,status;
         Button more;

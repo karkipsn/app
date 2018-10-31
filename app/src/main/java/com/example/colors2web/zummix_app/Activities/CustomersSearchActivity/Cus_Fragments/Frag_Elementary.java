@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.CustomerItemsAdapter;
@@ -38,6 +39,8 @@ public class Frag_Elementary extends Fragment {
     List<CustomerItem> ItmList = new ArrayList<>();
     String cus_id;
     String pbalance,pick,request ,replenish,orderedq;
+    TextView textview;
+
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -69,6 +72,7 @@ public class Frag_Elementary extends Fragment {
         iadapter = new CustomerItemsAdapter(ItmList);
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
+        textview = view.findViewById(R.id.inventory_null);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -89,8 +93,8 @@ public class Frag_Elementary extends Fragment {
             Log.d("cus_id",cus_id);
         }
 
-
         loadAdapter(cus_id);
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -211,6 +215,7 @@ public class Frag_Elementary extends Fragment {
 
                         }
 
+                        textview.setVisibility(View.GONE);
                         iadapter.updateAnswers(ItmList);//adapter's content is updated and update function is called;
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
@@ -219,6 +224,8 @@ public class Frag_Elementary extends Fragment {
 
                     } else {
                         String d = response.body().getMessage();
+                        textview.setText(d);
+                        textview.setVisibility(View.VISIBLE);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }

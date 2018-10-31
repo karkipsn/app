@@ -1,10 +1,12 @@
 package com.example.colors2web.zummix_app.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.Customer_Adapter.CustomerDetailsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.CusGroupDetails.CustomerGroup;
@@ -42,6 +45,7 @@ public class GroupCusDetails extends AppCompatActivity {
     APIInterface apiInterface;
     CustomerDetailsAdapter cadapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    FloatingActionButton fab;
 
 
     List<Order> orderList = new ArrayList<>();
@@ -56,13 +60,25 @@ public class GroupCusDetails extends AppCompatActivity {
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               finish();
-           }
-       });
+        mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(GroupCusDetails.this, TicketNavigActivity.class));
+                isDestroyed();
+//                finish();
+            }
+        });
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -90,11 +106,14 @@ public class GroupCusDetails extends AppCompatActivity {
         final String cus_id = getIntent().getStringExtra("cus_id");
 
         loadAdapter(cus_id, email, password);
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                cadapter.clearlist();
                 loadAdapter(cus_id, email, password);
                 mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(GroupCusDetails.this, "Successfully Refreshed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -170,7 +189,7 @@ public class GroupCusDetails extends AppCompatActivity {
                     CustomerGroup resp1 = response.body();
 
                     List<Order> order = resp1.getOrders();
-                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                     if (order != null) {
 
@@ -219,6 +238,8 @@ public class GroupCusDetails extends AppCompatActivity {
                         String d = response.body().getMessage();
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), resp1.getMessage().toString(), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 } else if (response.code() == 401) {

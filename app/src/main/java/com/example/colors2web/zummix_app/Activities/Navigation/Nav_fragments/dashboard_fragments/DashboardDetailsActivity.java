@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.DashboardAdapters.DetailsAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Cron_Details.CronDetailsResponse;
@@ -52,6 +54,7 @@ public class DashboardDetailsActivity extends AppCompatActivity {
     DetailsAdapter iadapter;
     main_dashboard_fragment fragment;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    FloatingActionButton fab;
 
     List<Order> ItmList = new ArrayList<>();
 
@@ -73,6 +76,18 @@ public class DashboardDetailsActivity extends AppCompatActivity {
 //               fragment.refresh();
 
                 finish();
+
+            }
+        });
+
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(DashboardDetailsActivity.this, TicketNavigActivity.class));
+                isDestroyed();
 
             }
         });

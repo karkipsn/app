@@ -29,6 +29,7 @@ import com.example.colors2web.zummix_app.POJO.Tickets.Tickets;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.SearchFragment;
 import com.example.colors2web.zummix_app.api.APIClient;
+import com.example.colors2web.zummix_app.api.APIClient1;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class TicketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_activity);
 
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        apiInterface = APIClient1.getClient().create(APIInterface.class);
         textView= findViewById(R.id.display_null);
 
         toolbar = findViewById(R.id.ticket_details_toolbar);

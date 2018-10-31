@@ -89,8 +89,8 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketHold
             store = itemView.findViewById(R.id.ticket_sname);
             created = itemView.findViewById(R.id.ticket_created_at);
             customer = itemView.findViewById(R.id.ticket_cname);
-            order = itemView.findViewById(R.id.ticket_ticket);
-            ticket = itemView.findViewById(R.id.ticket_order);
+            order = itemView.findViewById(R.id.ticket_order);
+            ticket = itemView.findViewById(R.id.ticket_ticket);
             updated = itemView.findViewById(R.id.ticket_updated_at);
             status = itemView.findViewById(R.id.ticket_status);
 

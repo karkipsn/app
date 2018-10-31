@@ -29,6 +29,9 @@ public class MergeBCI {
     public MergeBCI(CustomerItems ci) {
         this.ci = ci;
     }
+    public MergeBCI() {
+
+    }
 
     public MergeBCI(CustomerItems ci, Boxes bi) {
         this.ci =ci;

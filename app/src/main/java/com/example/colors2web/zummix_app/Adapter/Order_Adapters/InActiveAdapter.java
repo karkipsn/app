@@ -64,7 +64,12 @@ public class InActiveAdapter extends RecyclerView.Adapter<InActiveAdapter.InActi
         holder.commit.setText(String.valueOf(item.getmRequestedQuantity()));
 
         Long as = qoh1 - item.getmRequestedQuantity() - item.getmOrderedQuantity();
-        holder.a2s.setText(String.valueOf(as));
+        if(as>0){
+        holder.a2s.setText(String.valueOf(as));}
+        else{
+            holder.a2s.setText("0");
+
+        }
 
 //        pick + replenish =qoh
 //        committed = requesteditem

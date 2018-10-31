@@ -126,6 +126,8 @@ public class User_Fragment extends Fragment {
                 UserList.clear();
                 WareList.clear();
                 loadAdapter(email, password);
+
+                Toast.makeText(getContext(),"Refreshed",Toast.LENGTH_SHORT).show();
                 mSwipeRefreshLayout.setRefreshing(false);
 
             }

@@ -60,8 +60,8 @@ public class Fragment_ticket_details extends Fragment {
         title = view.findViewById(R.id.ticket_details_title);
         store_name = view.findViewById(R.id.ticket_details_store_name);
         description = view.findViewById(R.id.ticket_details_description);
-        tracking = view.findViewById(R.id.ticket_details_tracking);
-        shipping_cost = view.findViewById(R.id.ticket_details_shipping_cost);
+//        tracking = view.findViewById(R.id.ticket_details_tracking);
+//        shipping_cost = view.findViewById(R.id.ticket_details_shipping_cost);
         comment_textview = view.findViewById(R.id.text_recycleview);
         comment_recycleview = view.findViewById(R.id.recyccleview_comments);
         mark_closed = view.findViewById(R.id.text_markclosed);
@@ -83,14 +83,34 @@ public class Fragment_ticket_details extends Fragment {
             }
             if (support != null) {
                 ticket_id.setText(support.getTicketNumber());
-                ticket_type.setText(String.valueOf(support.getTicketType()));
+
+
+                String tt =String.valueOf(support.getTicketType());
+                switch (tt){
+                    case "1":
+                        ticket_type.setText("Order Issue");
+                        break;
+                    case "2":
+                        ticket_type.setText("Return Issue");
+                        break;
+                    case "3":
+                        ticket_type.setText("Payment Issue");
+                        break;
+                    case "4":
+                        ticket_type.setText("Shipping Issue");
+                        break;
+                    case "5":
+                        ticket_type.setText("Other");
+                        break;
+                }
+
                 title.setText(support.getTicketTitle());
                 description.setText(support.getTicketDescription());
                 customer.setText(support.getCustomerName());
                 customer_email.setText(support.getCustomerEmail());
                 order.setText(support.getOrder());
-                tracking.setText(support.getTrackingNumber());
-                shipping_cost.setText(support.getShippingCost());
+//                tracking.setText(support.getTrackingNumber());
+//                shipping_cost.setText(support.getShippingCost());
 
                 String statuss = support.getTicketStatus();
                 //check ticket status for check box or textview of mark closed option
@@ -116,7 +136,7 @@ public class Fragment_ticket_details extends Fragment {
                 comment_recycleview.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
                 comment_recycleview.setItemAnimator(new DefaultItemAnimator());
                 comment_recycleview.setAdapter(cadapter);
-                cadapter.updateAdapter(comments, users);
+                cadapter.updateAdapter(comments, users,support);
                 no_comments.setVisibility(View.GONE);
 
 

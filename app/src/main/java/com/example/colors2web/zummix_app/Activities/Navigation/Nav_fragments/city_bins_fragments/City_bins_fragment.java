@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,8 @@ public class City_bins_fragment extends Fragment {
     HomeAdapter homeAdapter;
     APIInterface apiInterface;
     RecyclerView mrecycleView;
-    TextView customer_id,create_bins;
+    Button create_bins;
+    TextView customer_id;
     List<CityBins> BinList = new ArrayList<>();
     SwipeRefreshLayout mSwipeRefreshLayout;
 

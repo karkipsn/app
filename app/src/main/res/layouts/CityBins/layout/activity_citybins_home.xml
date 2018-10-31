@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -34,6 +34,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
@@ -44,13 +45,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <Button
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/create_bins_order"
                 android:text="Create City Bin"
                 android:layout_gravity="left"
                 android:textSize="16sp"
+                android:textColor="@color/colorPrimaryDark"
                 android:gravity="center"
                 />
 
@@ -62,10 +64,20 @@
                 android:layout_marginTop="@dimen/margin_down"
                 android:scrollbars="vertical" />
 
+
         </LinearLayout>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -3,18 +3,23 @@ package com.example.colors2web.zummix_app.Activities.PostActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.colors2web.zummix_app.Activities.TicketActivity.TicketNavigActivity;
 import com.example.colors2web.zummix_app.Adapter.ReportsAdapters.Pick_Velocity_BoxAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
@@ -40,6 +45,8 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
     List<Boxes> blist;
     List<MergeBCI>newarray;
     ImageView img;
+    FloatingActionButton fab;
+//    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +61,24 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        fab = findViewById(R.id.fab);
+
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+//        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+                startActivity(new Intent(View_Pick_VelocityActivity.this, TicketNavigActivity.class));
+                isDestroyed();
+
+            }
+        });
+
+
         mrecycleView = findViewById(R.id.recycleview_post);
 //        PickAdapter = new Pick_Velocity_BoxAdapter(BoxList,ItemsList);
         PickAdapter = new Pick_Velocity_BoxAdapter(newarray);
@@ -67,6 +92,18 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
         mrecycleView.setItemAnimator(new DefaultItemAnimator());
         mrecycleView.setAdapter(PickAdapter);
         loadAdapter();
+
+
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                loadAdapter();
+//                Toast.makeText(getApplicationContext(), "Refreshed", Toast.LENGTH_SHORT).show();
+//                mSwipeRefreshLayout.setRefreshing(false);
+//
+//            }
+//        });
+
     }
 
 
@@ -121,27 +158,56 @@ public class View_Pick_VelocityActivity extends AppCompatActivity {
         Intent i = getIntent();
         if (i != null) {
 
-             list = (List<CustomerItems>) i.getSerializableExtra("CList");
+            list = (List<CustomerItems>) i.getSerializableExtra("CList");
 
-             blist = (List<Boxes>) i.getSerializableExtra("BList");
+            blist = (List<Boxes>) i.getSerializableExtra("BList");
+
+//            PickAdapter.updateAnswers(list,blist);
 
 
             for(CustomerItems ci:list){
+                MergeBCI bci = new MergeBCI();
+
                 for(Boxes bi:blist){
 
                     if(ci.getItemSkuNumber().equals(bi.getItemSku())){
 
-                      newarray.add(new MergeBCI(ci,bi));
-                        PickAdapter.updateAnswers(newarray);}
+                        bci.setCi(ci);
+                        bci.setBi(bi);
+//                      newarray.add(new MergeBCI(ci,bi));
+//                        newarray.add(bci);
+//                        PickAdapter.updateAnswers(newarray);
+                    }
                     else {
-
-                        newarray.add(new MergeBCI(ci));
-                        PickAdapter.updateAnswers(newarray);
+                        bci.setCi(ci);
 
                     }
                 }
-            }
+                newarray.add(bci);
 
-        }
-    }
+                PickAdapter.updateAnswers(newarray);
+
+            }
+//
+//            for(CustomerItems ci:list){
+//                MergeBCI bci = new MergeBCI();
+//
+//                for(Boxes bi:blist){
+//
+//                    if(!ci.getItemSkuNumber().equals(bi.getItemSku())){
+//
+//                        bci.setCi(ci);
+//                    }
+//                }
+//
+//                newarray.add(bci);
+//
+//                PickAdapter.updateAnswers(newarray);
+//
+//
+//            }
+//
+//
+//        }
+    }}
 }

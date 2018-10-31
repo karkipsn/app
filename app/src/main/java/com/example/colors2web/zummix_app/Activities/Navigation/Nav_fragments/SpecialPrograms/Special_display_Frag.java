@@ -49,6 +49,7 @@ public class Special_display_Frag extends Fragment {
     String cus_id;
     Button create;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    TextView textView;
 
     List<SpecialProgram> PrgList = new ArrayList<>();
 
@@ -76,6 +77,7 @@ public class Special_display_Frag extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
         create = getActivity().findViewById(R.id.create_special_program);
+        textView = view.findViewById(R.id.special_null);
 
         iadapter = new Special_ProgramAdapter(PrgList, getActivity(),Special_display_Frag.this);
 
@@ -329,12 +331,15 @@ public class Special_display_Frag extends Fragment {
                         }
 
                         iadapter.updateAnswers(PrgList);
+                        textView.setVisibility(View.GONE);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
 
                     } else {
                         Toast.makeText(getContext(), resp1.getMessage(), Toast.LENGTH_LONG).show();
+                        textView.setText(resp1.getMessage());
+                        textView.setVisibility(View.VISIBLE);
 
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();

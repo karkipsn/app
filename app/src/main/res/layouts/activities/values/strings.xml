@@ -24,7 +24,8 @@
     <string name="nav_ticket"> Tickets</string>
     <string name="nav_return_ticket"> Return Tickets</string>
     <string name="mark_closed"> Mark Closed</string>
-    <string name="nav_support"> Support</string>
+    <string name="nav_support"> Support Dashboard</string>
+    <string name="nav_main_dashboard"> Vox Shipping Dashboard</string>
 
     <dimen name="switch_track_height">30dp</dimen>
     <dimen name="switch_track_width">25dp</dimen>

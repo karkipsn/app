@@ -76,6 +76,11 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearlist() {
+        BinList.clear();
+        notifyDataSetChanged();
+    }
+
     public class BinViewHolder extends RecyclerView.ViewHolder {
         TextView city, name, created;
 

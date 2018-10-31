@@ -17,6 +17,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.iid.InstanceIdResult;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+
     private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
 
     @Override

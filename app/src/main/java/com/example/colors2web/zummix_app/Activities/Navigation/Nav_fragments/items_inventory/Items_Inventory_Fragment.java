@@ -37,7 +37,7 @@ public class Items_Inventory_Fragment extends Fragment {
 
     private static final String TAG_ELEMENTORY_FRAGMENT = "Items_Elementory_FRAGMENT";
     Spinner spinner1;
-    Button submit;
+        Button submit;
     Long cus_id;
 //    SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -64,40 +64,63 @@ public class Items_Inventory_Fragment extends Fragment {
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         spinner1 = view.findViewById(R.id.special_program_spinner);
         submit = view.findViewById(R.id.special_program_btn_submit);
+        submit.setVisibility(View.GONE);
 //        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
 //        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
 
         spinner(email, password, apiInterface);
 
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
+//                cus_id = sp.getCus_id();
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putString("ciid", String.valueOf(cus_id));
+//                Frag_Elementary inActive = new Frag_Elementary();
+//                inActive.setArguments(bundle);
+//                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//
+//                getActivity().getSupportFragmentManager().beginTransaction().
+//                        add(R.id.frame_special_program, inActive).
+//                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+//                        commit();
+//
+//                Toast.makeText(getContext(),
+//                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+//                Log.d("cus_id", String.valueOf(cus_id));
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
+//                cus_id = sp.getCus_id();
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putString("ciid", String.valueOf(cus_id));
+//                Frag_Elementary inActive = new Frag_Elementary();
+//                inActive.setArguments(bundle);
+//                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//
+//                getActivity().getSupportFragmentManager().beginTransaction().
+//                        add(R.id.frame_special_program, inActive).
+//                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+//                        commit();
+//            }
+//        });
 
-                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
-                cus_id = sp.getCus_id();
-
-                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-                Log.d("cus_id", String.valueOf(cus_id));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
-                cus_id = sp.getCus_id();
-            }
-        });
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                call_final();
-
-
-            }
-        });
+//        submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                call_final();
+//
+//
+//            }
+//        });
 
 
 //        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -111,21 +134,21 @@ public class Items_Inventory_Fragment extends Fragment {
 
     }
 
-    private void call_final() {
-
-        Bundle bundle = new Bundle();
-        bundle.putString("ciid", String.valueOf(cus_id));
-        Frag_Elementary inActive = new Frag_Elementary();
-        inActive.setArguments(bundle);
-        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-
-        getActivity().getSupportFragmentManager().beginTransaction().
-                add(R.id.frame_special_program, inActive).
-                addToBackStack(TAG_ELEMENTORY_FRAGMENT).
-                commit();
-//                Not checked the null condition or empty condition as i think is not necessary
-//                Bcoz we are displaying it in this same child fragment so I am replacing the frame layout
-    }
+//    private void call_final() {
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString("ciid", String.valueOf(cus_id));
+//        Frag_Elementary inActive = new Frag_Elementary();
+//        inActive.setArguments(bundle);
+//        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//
+//        getActivity().getSupportFragmentManager().beginTransaction().
+//                add(R.id.frame_special_program, inActive).
+//                addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+//                commit();
+////                Not checked the null condition or empty condition as i think is not necessary
+////                Bcoz we are displaying it in this same child fragment so I am replacing the frame layout
+//    }
 
     private void spinner(String email, String password, APIInterface apiInterface) {
 
@@ -183,15 +206,35 @@ public class Items_Inventory_Fragment extends Fragment {
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                                 cus_id = sp.getCus_id();
 
-                                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-                                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-                                Log.d("cus_id", String.valueOf(cus_id));
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ciid", String.valueOf(cus_id));
+                                Frag_Elementary inActive = new Frag_Elementary();
+                                inActive.setArguments(bundle);
+                                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+                                getActivity().getSupportFragmentManager().beginTransaction().
+                                        add(R.id.frame_special_program, inActive).
+                                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+                                        commit();
                             }
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
                                 cus_id = sp.getCus_id();
+
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ciid", String.valueOf(cus_id));
+                                Frag_Elementary inActive = new Frag_Elementary();
+                                inActive.setArguments(bundle);
+                                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+                                getActivity().getSupportFragmentManager().beginTransaction().
+                                        add(R.id.frame_special_program, inActive).
+                                        addToBackStack(TAG_ELEMENTORY_FRAGMENT).
+                                        commit();
                             }
                         });
 

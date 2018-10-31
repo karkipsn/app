@@ -63,6 +63,7 @@ public class SpecialProgram_Fragment extends Fragment {
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         spinner1 = view.findViewById(R.id.special_program_spinner);
         submit = view.findViewById(R.id.special_program_btn_submit);
+        submit.setVisibility(View.GONE);
 
         spinner(email, password, apiInterface);
 
@@ -73,40 +74,62 @@ public class SpecialProgram_Fragment extends Fragment {
                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                 cus_id = sp.getCus_id();
 
-                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-                Log.d("cus_id", String.valueOf(cus_id));
+                Bundle bundle = new Bundle();
+                bundle.putString("cus_id", String.valueOf(cus_id));
+                Special_display_Frag inActive = new Special_display_Frag();
+                inActive.setArguments(bundle);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        add(R.id.frame_special_program, inActive).
+                        addToBackStack(TAG_DISPLAY_FRAGMENT).
+                        commit();
+
+//                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
+//                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
+//                Log.d("cus_id", String.valueOf(cus_id));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(0);
                 cus_id = sp.getCus_id();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("cus_id", String.valueOf(cus_id));
+                Special_display_Frag inActive = new Special_display_Frag();
+                inActive.setArguments(bundle);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+
+                getActivity().getSupportFragmentManager().beginTransaction().
+                        add(R.id.frame_special_program, inActive).
+                        addToBackStack(TAG_DISPLAY_FRAGMENT).
+                        commit();
             }
         });
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("cus_id", String.valueOf(cus_id));
-                        Special_display_Frag inActive = new Special_display_Frag();
-                        inActive.setArguments(bundle);
-                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
-
-                        getActivity().getSupportFragmentManager().beginTransaction().
-                                add(R.id.frame_special_program, inActive).
-                                addToBackStack(TAG_DISPLAY_FRAGMENT).
-                                commit();
-
-//                         getSupportFragmentManager().beginTransaction().
-//                        replace(R.id.frame_toolbar, new SearchFragment()).
-//                        addToBackStack(TAG_FRAGMENT).commit();
-//                overridePendingTransition(R.anim.search_push_left_in, R.anim.search_push_left_out);
-                    }
-                });
+//        submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("cus_id", String.valueOf(cus_id));
+//                        Special_display_Frag inActive = new Special_display_Frag();
+//                        inActive.setArguments(bundle);
+//                        getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+//
+//                        getActivity().getSupportFragmentManager().beginTransaction().
+//                                add(R.id.frame_special_program, inActive).
+//                                addToBackStack(TAG_DISPLAY_FRAGMENT).
+//                                commit();
+//
+////                         getSupportFragmentManager().beginTransaction().
+////                        replace(R.id.frame_toolbar, new SearchFragment()).
+////                        addToBackStack(TAG_FRAGMENT).commit();
+////                overridePendingTransition(R.anim.search_push_left_in, R.anim.search_push_left_out);
+//                    }
+//                });
 
     }
 

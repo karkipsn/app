@@ -22,13 +22,16 @@ android {
             res.srcDirs =
                     [
                             'src/main/res/layouts/activities',
+                            'src/main/res/layouts/adapters',
                             'src/main/res/layouts/fragments',
                             'src/main/res/layouts/barcodes',
                             'src/main/res/layouts/customer_fragments',
                             'src/main/res/layouts/Customers',
                             'src/main/res/layouts/post_activity',
                             'src/main/res/layouts/masterbox',
+                            'src/main/res/layouts/modals',
                             'src/main/res/layouts/navigation',
+                            'src/main/res/layouts/tickets',
                             'src/main/res/layouts/CityBins',
                             'src/main/res/layouts/ProblemSKUs',
                             'src/main/res/layouts',

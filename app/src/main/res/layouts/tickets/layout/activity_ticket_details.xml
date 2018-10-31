@@ -10,10 +10,10 @@ android:orientation="vertical"
 app:ignore="NamespaceTypo">
 
 
-<!--<android.support.v4.widget.SwipeRefreshLayout-->
-    <!--android:id="@+id/swipeToRefresh"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -76,9 +76,18 @@ app:ignore="NamespaceTypo">
             app:layout_constraintTop_toBottomOf="@id/ord2_card1"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
     </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-<!--</android.support.v4.widget.SwipeRefreshLayout>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

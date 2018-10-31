@@ -263,6 +263,7 @@ public class Pick_Fragment extends Fragment {
                                                  Toast.makeText(getContext(), "NO boxes found", Toast.LENGTH_LONG).show();
                                              }
                                          }
+
                                          Intent intent = new Intent(getContext(), View_Pick_VelocityActivity.class);
                                          intent.putExtra("CList", (Serializable) CItems);
                                          intent.putExtra("BList", (Serializable) BList);

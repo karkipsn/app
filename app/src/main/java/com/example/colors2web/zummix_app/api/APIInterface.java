@@ -26,7 +26,11 @@ import com.example.colors2web.zummix_app.POJO.ProblemSKU.UOM;
 import com.example.colors2web.zummix_app.POJO.ProductSearch.ProductDetailsResponse;
 import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgram;
 import com.example.colors2web.zummix_app.POJO.SpecialProgram.SpecialProgramResponse;
+import com.example.colors2web.zummix_app.POJO.TicketDetails.CommentInput;
+import com.example.colors2web.zummix_app.POJO.TicketDetails.MarkInput;
+import com.example.colors2web.zummix_app.POJO.TicketDetails.ReplyResponse;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.TicketDetialsResponse;
+import com.example.colors2web.zummix_app.POJO.TicketOrderDetails.TicketOrderDetailsResponse;
 import com.example.colors2web.zummix_app.POJO.Tickets.ReturnTicketResponse;
 import com.example.colors2web.zummix_app.POJO.Tickets.TicketResponse;
 import com.example.colors2web.zummix_app.POJO.Users.GroupResponse;
@@ -308,15 +312,31 @@ public interface APIInterface {
     @GET("returnTickets")
     Call<ReturnTicketResponse> getReturnTickets(@Header("email") String email, @Header("password") String password);
 
-    //    GET Ticket Details
+    //    GET Ticket Support Details
     @GET("stores/{id}/supports/{supportid}")
     Call<TicketDetialsResponse> getTicketDetails(@Header("email") String email, @Header("password") String password,
                                                  @Path("id") String id, @Path("supportid") String supportid);
+
+    //    GET Ticket Order Details
+    @GET("stores/{id}/supports/{supportid}/order/{order_id}")
+    Call<TicketOrderDetailsResponse> getTicketOrderDetails(@Header("email") String email, @Header("password") String password,
+                                                           @Path("id") String id, @Path("supportid") String supportid,
+                                                           @Path("order_id") String order_id );
 
     //    For Return Tickets
     @GET("search_tickets/{ticket_number}")
     Call<TicketResponse> getSearchTickets(@Header("email") String email, @Header("password") String password, @Path("ticket_number") String ticket_number);
 
+//    For Comment reply
+    @PUT("stores/{support_id}")
+    Call<ReplyResponse> putCommentReply(@Header("email") String email, @Header("password") String password, @Path("support_id") String support_id, @Body CommentInput input);
+
+//    For Mark CLose  stores/status/2
+   @PUT("stores/status/{support_id}")
+   Call<ReplyResponse> putMarkClose(@Header("email") String email, @Header("password") String password, @Path("support_id") String support_id, @Body MarkInput input);
+
+    @GET("stores/reopen1/{support_id}")
+    Call<ReplyResponse> getReopen(@Header("email") String email, @Header("password") String password, @Path("support_id") String support_id);
 
 }
 

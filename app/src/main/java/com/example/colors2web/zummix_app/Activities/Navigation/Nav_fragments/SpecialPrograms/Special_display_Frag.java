@@ -83,8 +83,8 @@ public class Special_display_Frag extends Fragment {
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+//        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //        mrecyclerView.setHasFixedSize(true);
@@ -105,16 +105,16 @@ public class Special_display_Frag extends Fragment {
 
         loadAdapter(cus_id);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                PrgList.clear();
-                loadAdapter(cus_id);
-                mSwipeRefreshLayout.setRefreshing(false);
-
-            }
-        });
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//
+//                PrgList.clear();
+//                loadAdapter(cus_id);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//
+//            }
+//        });
 
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -313,6 +313,7 @@ public class Special_display_Frag extends Fragment {
                     if (cus != null) {
 
                         for (int i = 0; i < cus.size(); i++) {
+                            textView.setVisibility(View.GONE);
 
                             SpecialProgram order1 = new SpecialProgram();
 
@@ -331,7 +332,7 @@ public class Special_display_Frag extends Fragment {
                         }
 
                         iadapter.updateAnswers(PrgList);
-                        textView.setVisibility(View.GONE);
+//                        textView.setVisibility(View.GONE);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }

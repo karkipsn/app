@@ -1,4 +1,4 @@
-package com.example.colors2web.zummix_app.Activities.TicketActivity;
+package com.example.colors2web.zummix_app.Activities.TicketActivity.Ticket_Order_Details.OrderFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,24 +16,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.colors2web.zummix_app.Adapter.Ticket_Adapter.TicketLineItemsAdapter;
+import com.example.colors2web.zummix_app.Adapter.Ticket_Adapter.Ticket_PurchaseAdapter;
 import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.ReturnedItem;
+import com.example.colors2web.zummix_app.POJO.TicketOrderDetails.PurchasedProduct;
 import com.example.colors2web.zummix_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment_ticket_items extends Fragment {
+public class Fragment_ticket_order_Purchase extends Fragment {
 
-    TicketLineItemsAdapter padapter;
+    Ticket_PurchaseAdapter padapter;
     RecyclerView mrecycleView;
-    List<ReturnedItem> UList = new ArrayList<>();
+    List<PurchasedProduct> UList = new ArrayList<>();
     Context mContext;
     TextView text;
     SwipeRefreshLayout mswipeRefreshLayout;
-
-    public Fragment_ticket_items() {
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,14 +43,14 @@ public class Fragment_ticket_items extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_ticket_items, container, false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        padapter = new TicketLineItemsAdapter(getContext(),UList);
+
+        padapter = new Ticket_PurchaseAdapter(UList,getContext());
         text = view.findViewById(R.id.display_null);
 
         mswipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
@@ -73,22 +72,17 @@ public class Fragment_ticket_items extends Fragment {
 
         if (getArguments() != null) {
 
-            ArrayList<ReturnedItem> logs1 = getArguments().getParcelableArrayList("ReturnedList");
+            ArrayList<PurchasedProduct> logs1 = getArguments().getParcelableArrayList("PurchaseList");
 
             if(logs1.size()>0){
                 padapter.updateAnswers(logs1);
                 text.setVisibility(View.GONE);
             }else{
                 text.setVisibility(View.VISIBLE);
-                text.setText("You have no return items");
+                text.setText("You have no Purchased items");
             }
         }
     }
 
-    public void refresh() {
-
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
     }
-}
 

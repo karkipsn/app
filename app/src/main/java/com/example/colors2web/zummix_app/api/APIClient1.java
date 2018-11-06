@@ -38,6 +38,7 @@ public class APIClient1 {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://voxteststores.com/supportportalstaging/public/api/")
+//                .baseUrl("http://192.168.0.108:8080/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
 //                .addConverterFactory(GsonConverterFactory.create(b_deserializer))
                 .client(client)

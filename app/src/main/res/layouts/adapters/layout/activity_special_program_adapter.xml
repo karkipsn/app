@@ -114,9 +114,11 @@
                     android:id="@+id/special_adapter_btnup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/flag_gradient_primary"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:text="Update"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -124,8 +126,11 @@
                     android:id="@+id/special_adapter_del"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/flag_gradient_primary"
+                    android:textColor="@color/white"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="Delete"
                     android:textSize="16sp" />
 

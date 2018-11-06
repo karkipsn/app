@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,10 +31,10 @@
             android:id="@+id/special_null"
             android:textSize="16sp"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipeToRefresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
 
     <LinearLayout
@@ -53,7 +54,7 @@
 
     </LinearLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

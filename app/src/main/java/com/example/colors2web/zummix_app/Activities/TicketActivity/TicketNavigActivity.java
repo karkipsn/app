@@ -45,6 +45,7 @@ import com.example.colors2web.zummix_app.POJO.Tickets.TicketResponse;
 import com.example.colors2web.zummix_app.POJO.Tickets.Tickets;
 import com.example.colors2web.zummix_app.R;
 import com.example.colors2web.zummix_app.api.APIClient;
+import com.example.colors2web.zummix_app.api.APIClient1;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
@@ -372,7 +373,7 @@ public class TicketNavigActivity extends AppCompatActivity {
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
 
-                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                APIInterface apiInterface = APIClient1.getClient().create(APIInterface.class);
                 String email = "email";
                 String password = "password";
 

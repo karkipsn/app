@@ -1566,7 +1566,7 @@ public class OrderSearch2Activity extends AppCompatActivity {
         btn_ship_method.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "I am Clicked1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "I am Clicked1", Toast.LENGTH_SHORT).show();
 
                 showpop2_ship_method(ords_no, id, ship_method);
             }

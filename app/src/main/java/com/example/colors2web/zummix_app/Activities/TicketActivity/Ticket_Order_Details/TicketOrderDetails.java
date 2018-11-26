@@ -170,6 +170,8 @@ public class TicketOrderDetails extends AppCompatActivity {
                     TicketOrderDetailsResponse resp1 = response.body();
                     SupportOrderDetails details = resp1.getSupportOrderDetails();
 
+                    if(details!=null){
+
                     Store store = details.getStore();
                     Support support = details.getSupport();
 
@@ -337,7 +339,7 @@ public class TicketOrderDetails extends AppCompatActivity {
                             String product_image = purchasedProducts.get(i).getProductImage();
                             Long ordered_quantity = purchasedProducts.get(i).getOrderedQuantity();
                             String product_price = purchasedProducts.get(i).getProductPrice();
-                            Long item_total_price = purchasedProducts.get(i).getItemTotalPrice();
+                            String item_total_price = purchasedProducts.get(i).getItemTotalPrice();
 
                             purchase.setProductSkuNumber(product_sku_number);
                             purchase.setProductName(product_name);
@@ -403,7 +405,14 @@ public class TicketOrderDetails extends AppCompatActivity {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }
-                } else if (response.code() == 401) {
+                } else{
+                        Toast.makeText(TicketOrderDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                }else if (response.code() == 401) {
                     if (progressDialog.isShowing()) {
                         progressDialog.dismiss();
                     }

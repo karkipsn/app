@@ -27,7 +27,7 @@ public class PurchasedProduct implements Parcelable {
     @SerializedName("is_hym")
     private String mIsHym;
     @SerializedName("item_total_price")
-    private Long mItemTotalPrice;
+    private String mItemTotalPrice;
     @SerializedName("ordered_quantity")
     private Long mOrderedQuantity;
     @SerializedName("pre_sale")
@@ -70,6 +70,7 @@ public class PurchasedProduct implements Parcelable {
         mCreatedAt = in.readString();
         mFreeItem = in.readString();
         mGiftItem = in.readString();
+        mItemTotalPrice = in.readString();
         if (in.readByte() == 0) {
             mId = null;
         } else {
@@ -77,11 +78,11 @@ public class PurchasedProduct implements Parcelable {
         }
         mIsCoinCollection = in.readString();
         mIsHym = in.readString();
-        if (in.readByte() == 0) {
-            mItemTotalPrice = null;
-        } else {
-            mItemTotalPrice = in.readLong();
-        }
+//        if (in.readByte() == 0) {
+//            mItemTotalPrice = null;
+//        } else {
+//            mItemTotalPrice = in.readLong();
+//        }
         if (in.readByte() == 0) {
             mOrderedQuantity = null;
         } else {
@@ -198,11 +199,11 @@ public class PurchasedProduct implements Parcelable {
         mIsHym = isHym;
     }
 
-    public Long getItemTotalPrice() {
+    public String getItemTotalPrice() {
         return mItemTotalPrice;
     }
 
-    public void setItemTotalPrice(Long itemTotalPrice) {
+    public void setItemTotalPrice(String itemTotalPrice) {
         mItemTotalPrice = itemTotalPrice;
     }
 
@@ -343,12 +344,12 @@ public class PurchasedProduct implements Parcelable {
         }
         dest.writeString(mIsCoinCollection);
         dest.writeString(mIsHym);
-        if (mItemTotalPrice == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(mItemTotalPrice);
-        }
+//        if (mItemTotalPrice == null) {
+//            dest.writeByte((byte) 0);
+//        } else {
+//            dest.writeByte((byte) 1);
+//            dest.writeLong(mItemTotalPrice);
+//        }
         if (mOrderedQuantity == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -356,6 +357,7 @@ public class PurchasedProduct implements Parcelable {
             dest.writeLong(mOrderedQuantity);
         }
         dest.writeString(mPreSale);
+        dest.writeString(mItemTotalPrice);
         dest.writeString(mPrintItem);
         if (mProductId == null) {
             dest.writeByte((byte) 0);

@@ -148,7 +148,7 @@ public class OrderLogsAdapter extends RecyclerView.Adapter<OrderLogsAdapter.LogV
                 break;
 
             case "23":
-                holder.ord_status.setText("Order Tupe Changed ");
+                holder.ord_status.setText("Order Type Changed ");
                 holder.ord_status.setTextColor(holder.ord_status.getResources().getColor(R.color.green_light));
                 break;
 

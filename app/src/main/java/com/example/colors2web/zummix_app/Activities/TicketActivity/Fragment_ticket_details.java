@@ -410,7 +410,7 @@ public class Fragment_ticket_details extends Fragment {
 
         String reply = "1";
         String store_url ="";
-        String user_id ="3";
+        String user_id ="1";
         String ticket_status="0";
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(),
@@ -521,7 +521,9 @@ public class Fragment_ticket_details extends Fragment {
 
         String reply = "1";
         String store_url ="";
-        String user_id ="3";
+        String user_id ="1";
+//        in mine local it is 3
+        //in live have to trace user_id
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext(),
                 R.style.AppTheme_Dark_Dialog);
@@ -596,7 +598,6 @@ public class Fragment_ticket_details extends Fragment {
                     progressDialog.dismiss();
                 }
                 Toast.makeText(getContext(), "Operation Failed", Toast.LENGTH_SHORT).show();
-
             }
 
             }

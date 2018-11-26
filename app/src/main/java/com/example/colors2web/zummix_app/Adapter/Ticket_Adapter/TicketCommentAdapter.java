@@ -50,12 +50,17 @@ public class TicketCommentAdapter extends RecyclerView.Adapter<TicketCommentAdap
 
             if(id.equals(createdby)){
                 String user_name = UsetList.get(i).getName();
+                String dates = CommentList.get(i).getCreatedAt();
                 holder.user.setText(String.valueOf(user_name));
+                holder.date.setText(String.valueOf(dates));
                 holder.user.setTextColor(holder.user.getResources().getColor(R.color.colorPrimary));
             }
+
             if(created_by == 0){
                 String user_name = support1.getCustomerName();
+                String dates = CommentList.get(i).getCreatedAt();
                 holder.user.setText(String.valueOf(user_name));
+                holder.date.setText(String.valueOf(dates));
                 holder.user.setTextColor(holder.user.getResources().getColor(R.color.colorPrimary));
             }
         }
@@ -78,11 +83,12 @@ public class TicketCommentAdapter extends RecyclerView.Adapter<TicketCommentAdap
     }
 
     public class CommentHolder extends RecyclerView.ViewHolder {
-        TextView user,comment;
+        TextView user,comment,date;
         public CommentHolder(View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.comment_user);
             comment = itemView.findViewById(R.id.comment_comment);
+            date = itemView.findViewById(R.id.comment_date);
         }
     }
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,8 @@ import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -78,13 +81,14 @@ public class Special_display_Frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         create = getActivity().findViewById(R.id.create_special_program);
         textView = view.findViewById(R.id.special_null);
+        textView.setVisibility(View.GONE);
 
         iadapter = new Special_ProgramAdapter(PrgList, getActivity(),Special_display_Frag.this);
 
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
 
-//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
-//        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //        mrecyclerView.setHasFixedSize(true);
@@ -104,17 +108,27 @@ public class Special_display_Frag extends Fragment {
         }
 
         loadAdapter(cus_id);
+//        mSwipeRefreshLayout.setEnabled(false);
 
-//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                PrgList.clear();
-//                loadAdapter(cus_id);
-//                mSwipeRefreshLayout.setRefreshing(false);
-//
-//            }
-//        });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override public void run() {
+
+
+                        PrgList.clear();
+                        loadAdapter(cus_id);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1000);
+
+
+            }
+        });
 
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -282,6 +296,7 @@ public class Special_display_Frag extends Fragment {
     }
 
     private void loadAdapter(String cus_id) {
+        textView.setVisibility(View.GONE);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String email = preferences.getString("email", "");
@@ -313,7 +328,6 @@ public class Special_display_Frag extends Fragment {
                     if (cus != null) {
 
                         for (int i = 0; i < cus.size(); i++) {
-                            textView.setVisibility(View.GONE);
 
                             SpecialProgram order1 = new SpecialProgram();
 
@@ -328,11 +342,20 @@ public class Special_display_Frag extends Fragment {
                             order1.setId(cus_id);
 
                             PrgList.add(order1);// must be the object of empty list initiated
-
                         }
 
+//                        Collections.sort(PrgList, new Comparator<SpecialProgram>() {
+//                            @Override
+//                            public int compare(SpecialProgram lhs, SpecialProgram rhs) {
+//                                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+////                                return lhs.getId() > rhs.getId() ? -1 : (lhs.customInt < rhs.customInt ) ? 1 : 0;
+//                                return lhs.getProgramName().compareToIgnoreCase(rhs.getProgramName()); // To compare string values
+//
+//                            }
+//                        });
+
                         iadapter.updateAnswers(PrgList);
-//                        textView.setVisibility(View.GONE);
+                        textView.setVisibility(View.GONE);
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
@@ -345,14 +368,9 @@ public class Special_display_Frag extends Fragment {
                         if (progressDialog.isShowing()) {
                             progressDialog.dismiss();
                         }
-//                        String d = response.body().getMessage();
-//                        prgList.add(null);
-
                     }
 
-
                 } else if (response.code() == 401) {
-
 
                     Toast.makeText(getContext(), " Authentication Error:" + "\n" + "Account Not Found", Toast.LENGTH_SHORT).show();
                     Log.d("Error", response.errorBody().toString());

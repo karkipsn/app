@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabMode="scrollable"
              />
         <!--app:tabTextColor="@color/green_dark"-->

@@ -65,7 +65,8 @@
                 android:id="@+id/tabs_customer"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_top"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
+                app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabMode="scrollable" />
 
         </LinearLayout>

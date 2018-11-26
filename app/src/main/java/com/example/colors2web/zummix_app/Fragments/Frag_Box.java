@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.colors2web.zummix_app.Adapter.BoxAdapters.BoxesAdapter;
+import com.example.colors2web.zummix_app.ItemDecoration.MyDividerItemDecoration;
 import com.example.colors2web.zummix_app.ItemDecoration.SimpleItemDecoration;
 import com.example.colors2web.zummix_app.POJO.Order2POJO.Box;
 import com.example.colors2web.zummix_app.R;
@@ -54,8 +55,8 @@ public class Frag_Box extends Fragment {
         brecyclerView.setHasFixedSize(true);
         brecyclerView.setLayoutManager(mLayoutManager);
 
-//        mrecyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
-        brecyclerView.addItemDecoration(new SimpleItemDecoration(getContext()));
+        brecyclerView.addItemDecoration(new MyDividerItemDecoration(getContext(), LinearLayoutManager.HORIZONTAL, 16));
+//        brecyclerView.addItemDecoration(new SimpleItemDecoration(getContext()));
         brecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         brecyclerView.setAdapter(badapter);

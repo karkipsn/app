@@ -39,7 +39,7 @@ public class Ticket_PurchaseAdapter extends RecyclerView.Adapter<Ticket_Purchase
         holder.psku.setText(product.getProductSkuNumber());
         holder.quantity.setText(String.valueOf(product.getOrderedQuantity()));
         holder.pprice.setText(product.getProductPrice());
-        holder.total.setText(String.valueOf(product.getItemTotalPrice()));
+        holder.total.setText(product.getItemTotalPrice());
     }
 
     @Override

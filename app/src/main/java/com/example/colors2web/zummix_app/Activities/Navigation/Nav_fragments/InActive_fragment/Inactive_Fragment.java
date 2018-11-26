@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -126,6 +129,14 @@ public class Inactive_Fragment extends Fragment {
 //                                android.R.layout.simple_list_item_single_choice, countryList);
 //                         mspinner.setAdapter(adapter1);
 
+                        Collections.sort(countryList, new Comparator<SpinnerPojo>() {
+                            @Override
+                            public int compare(SpinnerPojo lhs, SpinnerPojo rhs) {
+
+                                return lhs.getName().compareToIgnoreCase(rhs.getName()); // To compare string values
+                            }
+                        });
+
                         ArrayAdapter<SpinnerPojo> adapter2 = new ArrayAdapter<SpinnerPojo>(getContext(),
                                 android.R.layout.simple_spinner_item, countryList);
 
@@ -140,17 +151,16 @@ public class Inactive_Fragment extends Fragment {
                                 SpinnerPojo sp = (SpinnerPojo) parent.getItemAtPosition(position);
                                 cus_id = sp.getCus_id();
 
+
                                 Bundle bundle = new Bundle();
                                 bundle.putString("cus_id", String.valueOf(cus_id));
                                 Frag_InActive inActive = new Frag_InActive();
                                 inActive.setArguments(bundle);
 
                                 getFragmentManager().beginTransaction().
-                                        add(R.id.frame_inactive, inActive).
+                                        replace(R.id.frame_inactive, inActive).
                                         commit();
-//                                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-//                                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-//                                Log.d("cus_id", String.valueOf(cus_id));
+
                             }
 
                             @Override
@@ -162,10 +172,9 @@ public class Inactive_Fragment extends Fragment {
                                 bundle.putString("cus_id", String.valueOf(cus_id));
                                 Frag_InActive inActive = new Frag_InActive();
                                 inActive.setArguments(bundle);
-//                getContext().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 
                                 getFragmentManager().beginTransaction().
-                                        add(R.id.frame_inactive, inActive).
+                                        replace(R.id.frame_inactive, inActive).
                                         commit();
                             }
                         });

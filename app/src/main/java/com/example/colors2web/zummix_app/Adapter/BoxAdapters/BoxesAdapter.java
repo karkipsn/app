@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
     List<Box> boxList;
     private Context mContext;
     List<LineItems> LineList = new ArrayList<>();
+    TextView master;
 
     public BoxesAdapter(Context mContext,List<Box> boxList) {
         this.mContext = mContext;
@@ -66,7 +68,17 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
         holder.box_no.setText(box_number);
         holder.box_no.setTextColor(holder.box_no.getResources().getColor(R.color.colorPrimary));
 
-        holder.master.setText(box.getMasterBoxCode());
+        String mbox =box.getMasterBoxCode();
+        if(mbox!= null &&mbox.length()>0){
+            holder.layout.setVisibility(View.VISIBLE);
+//            holder.master1.setVisibility(View.VISIBLE);
+            holder.master.setText(box.getMasterBoxCode());
+        }else
+        {
+            holder.layout.setVisibility(View.GONE);
+//            holder.master1.setVisibility(View.GONE);
+
+        }
 
         holder.created.setText(box.getCreatedAt());
         holder.tracking_code.setText(box.getTrackingCode());
@@ -214,7 +226,8 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
     }
 
     public class BoxesHolder extends RecyclerView.ViewHolder {
-        TextView box_no, created,tracking_code,master;
+        TextView box_no, created,tracking_code,master,master1;
+        LinearLayout layout;
         ImageView barcode;
         public BoxesHolder(View itemView) {
             super(itemView);
@@ -224,6 +237,8 @@ public class BoxesAdapter extends RecyclerView.Adapter<BoxesAdapter.BoxesHolder>
             created=itemView.findViewById(R.id.rv_created_at);
             tracking_code=itemView.findViewById(R.id.rv_tracking_code);
             master=itemView.findViewById(R.id.rv_mboxno);
+            layout=itemView.findViewById(R.id.linear_master);
+            master1=itemView.findViewById(R.id.id_master);
             barcode=itemView.findViewById(R.id.box_imageview);
 
         }

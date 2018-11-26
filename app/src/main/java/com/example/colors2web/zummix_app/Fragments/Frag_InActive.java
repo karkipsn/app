@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,13 +51,6 @@ public class Frag_InActive extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -74,6 +68,7 @@ public class Frag_InActive extends Fragment {
         mrecyclerView = getActivity().findViewById(R.id.recycleview_inactive);
         mSwipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
         textView = view.findViewById(R.id.inventory_null);
+        textView.setVisibility(View.GONE);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 //        mrecyclerView.setHasFixedSize(true);
@@ -92,11 +87,9 @@ public class Frag_InActive extends Fragment {
             Log.d("cus_id","null babey");
         }
 
-//        if(ItmList != null){
-//            ItmList.clear();
-//            iadapter.notifyDataSetChanged();
-//        }
         loadAdapter(cus_id);
+//        mSwipeRefreshLayout.setEnabled(false);
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -209,7 +202,9 @@ public class Frag_InActive extends Fragment {
 
 
                     } else {
+
                         String d = response.body().getMessage();
+                        textView.setVisibility(View.VISIBLE);
                         textView.setText(d);
                         Toast.makeText(getContext(), d, Toast.LENGTH_LONG).show();
                         if (progressDialog.isShowing()) {

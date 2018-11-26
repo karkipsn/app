@@ -31,6 +31,7 @@ import com.example.colors2web.zummix_app.Activities.Navigation.HomeActivity;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tickets_fragments.Archeived_Fragment;
 import com.example.colors2web.zummix_app.Activities.Navigation.Nav_fragments.tickets_fragments.Return_Fragment;
 import com.example.colors2web.zummix_app.Adapter.ViewPagerAdapter;
+import com.example.colors2web.zummix_app.POJO.SpecialPOJO.SpinnerPojo;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.Comments;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.ReturnedItem;
 import com.example.colors2web.zummix_app.POJO.TicketDetails.Store;
@@ -46,7 +47,10 @@ import com.example.colors2web.zummix_app.api.APIClient1;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -343,6 +347,17 @@ public class TicketDetailsActivity extends AppCompatActivity {
                                 comments1.setUpdatedBy(updated_by);
 
                                 CommentList.add(comments1);
+
+                                Collections.sort(CommentList, new Comparator<Comments>(){
+                                    public int compare(Comments obj1, Comments obj2) {
+                                        // ## Ascending order
+//                                        return obj2.getCreatedAt().compareToIgnoreCase(obj1.getCreatedAt()); // To compare string values
+                                        if (obj1.getCreatedAt() == null || obj2.getCreatedAt() == null)
+                                            return 0;
+                                        return obj2.getCreatedAt().compareTo(obj1.getCreatedAt());
+
+                                    }
+                                });
                             }
 
                         }

@@ -27,6 +27,8 @@ import com.example.colors2web.zummix_app.api.APIClient;
 import com.example.colors2web.zummix_app.api.APIInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -81,13 +83,10 @@ public class SpecialProgram_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 
                 getActivity().getSupportFragmentManager().beginTransaction().
-                        add(R.id.frame_special_program, inActive).
+                        replace(R.id.frame_special_program, inActive).
                         addToBackStack(TAG_DISPLAY_FRAGMENT).
                         commit();
 
-//                Toast.makeText(getContext(), "Cus ID: " + sp.getCus_id() + ",  " +
-//                        " Name : " + sp.getName(), Toast.LENGTH_SHORT).show();
-//                Log.d("cus_id", String.valueOf(cus_id));
             }
 
             @Override
@@ -102,7 +101,7 @@ public class SpecialProgram_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 
                 getActivity().getSupportFragmentManager().beginTransaction().
-                        add(R.id.frame_special_program, inActive).
+                        replace(R.id.frame_special_program, inActive).
                         addToBackStack(TAG_DISPLAY_FRAGMENT).
                         commit();
             }
@@ -172,6 +171,16 @@ public class SpecialProgram_Fragment extends Fragment {
 
                             cuslist.add(order1);
                         }
+
+                        Collections.sort(cuslist, new Comparator<SpinnerPojo>() {
+                            @Override
+                            public int compare(SpinnerPojo lhs, SpinnerPojo rhs) {
+                                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+//                                return lhs.getId() > rhs.getId() ? -1 : (lhs.customInt < rhs.customInt ) ? 1 : 0;
+                                return lhs.getName().compareToIgnoreCase(rhs.getName()); // To compare string values
+
+                            }
+                        });
 
                         ArrayAdapter<SpinnerPojo> adapter2 = new ArrayAdapter<SpinnerPojo>(getContext(),
                                 android.R.layout.simple_spinner_item, cuslist);

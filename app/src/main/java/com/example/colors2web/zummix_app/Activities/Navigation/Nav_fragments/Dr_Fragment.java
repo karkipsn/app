@@ -42,6 +42,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -222,7 +224,15 @@ public class Dr_Fragment extends Fragment {
 //                            spin.add(name);
 //                            spin_value.add(cus_id);
                         }
-                        Log.d("spinner_list", countryList.toString());
+//                        Log.d("spinner_list", countryList.toString());
+
+                        Collections.sort(countryList, new Comparator<SpinnerPojo>(){
+                            public int compare(SpinnerPojo obj1, SpinnerPojo obj2) {
+                                // ## Ascending order
+                                return obj1.getName().compareToIgnoreCase(obj2.getName()); // To compare string values
+
+                            }
+                        });
 
                         ArrayAdapter<SpinnerPojo>adapter =new ArrayAdapter<SpinnerPojo>(getContext(),
                                 android.R.layout.simple_spinner_item, countryList);
